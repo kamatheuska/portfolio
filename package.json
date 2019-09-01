@@ -1,11 +1,12 @@
 {
   "name": "root",
   "private": true,
-  "scrits": {
+  "scripts": {
     "lint": "eslint . ",
     "lint:watch": "nodemon --exec \"eslint . \"",
     "lint:all": "eslint . ; cd view && npm run lint",
-    "lintFix": "eslint --fix ."
+    "lintFix": "eslint --fix .",
+    "setup": "npm i && node_modules/.bin/lerna bootstrap"
   },
   "devDependencies": {
     "lerna": "^3.16.4",
