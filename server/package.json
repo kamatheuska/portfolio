@@ -1,0 +1,49 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test:integration": "nodemon --ext js --exec 'tape tests/integration/**.*.js | ./node_modules/.bin/tap-spec'",
+    "test:unit": "nodemon --ext js --exec 'tape tests/unit/**.*.js | ./node_modules/.bin/tap-spec'",
+    "test:all": "nodemon --ext js --exec 'tape tests/**/**.*.js | ./node_modules/.bin/tap-spec'",
+    "start": "node server.js",
+    "lint": "eslint . ",
+    "lint:watch": "nodemon --exec \"eslint . \"",
+    "lint:all": "eslint . ; cd view && npm run lint",
+    "lintFix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.4.1",
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "movie-quotes": "^1.0.0",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "supertest": "^3.1.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "semver": "^5.3.0",
+    "url-loader": "^1.0.1"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
