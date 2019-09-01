@@ -9,7 +9,7 @@
   "scripts": {
     "test:integration": "nodemon --ext js --exec 'tape tests/integration/**.*.js | ./node_modules/.bin/tap-spec'",
     "test:unit": "nodemon --ext js --exec 'tape tests/unit/**.*.js | ./node_modules/.bin/tap-spec'",
-    "test:all": "nodemon --ext js --exec 'tape tests/**/**.*.js | ./node_modules/.bin/tap-spec'",
+    "test": "nodemon --ext js --exec 'tape tests/**/**.*.js | ./node_modules/.bin/tap-spec'",
     "start": "node server.js"
   },
   "dependencies": {
