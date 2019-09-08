@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
 const app = express()
-const dist = path.join(__dirname, 'dist/')
+const publicPath = path.join(__dirname, 'public/')
 const config = require('./config')
 const {
     undefinedError,
@@ -16,16 +16,16 @@ if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
 }
 
-console.log(`Printing- - - - dist:`, dist)
+console.log(`Printing- - - - publicPath:`, publicPath)
 
-app.use(express.static(dist))
+app.use(express.static(publicPath))
 app.use(bodyParser.json())
 app.use(require('./routes/weather'))
 app.use(require('./routes/quote'))
 app.use(require('./routes/twitch'))
 
 app.get('/', (req, res) => {
-    res.sendFile(dist + 'index.html')
+    res.sendFile(publicPath + 'index.html')
 })
 
 app.use(assertionError)
