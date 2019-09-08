@@ -1,6 +1,6 @@
 {
   "packages": [
-    "server/",
+    "view/",
     "vue-projects/*"
   ],
   "version": "0.0.0"
