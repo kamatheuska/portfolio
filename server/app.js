@@ -16,6 +16,8 @@ if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
 }
 
+console.log(`Printing- - - - dist:`, dist)
+
 app.use(express.static(dist))
 app.use(bodyParser.json())
 app.use(require('./routes/weather'))
