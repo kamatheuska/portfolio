@@ -6,7 +6,8 @@
         "lint:watch": "nodemon --exec \"eslint . \"",
         "lint:all": "eslint . ; cd view && npm run lint",
         "lintFix": "eslint --fix .",
-        "setup": "npm i && node_modules/.bin/lerna bootstrap"
+        "setup": "npm i && node_modules/.bin/lerna bootstrap",
+        "deploy": "git subtree push --prefix server heroku master"
     },
     "devDependencies": {
         "lerna": "^3.16.4",
@@ -16,5 +17,9 @@
         "eslint-plugin-node": "^8.0.1",
         "eslint-plugin-promise": "^4.1.1",
         "eslint-plugin-standard": "^4.0.0"
+    },
+    "engines": {
+        "node": "10.16.0",
+        "npm": "6.9.0"
     }
 }
