@@ -7,7 +7,7 @@
         "lint:all": "eslint . ; cd view && npm run lint",
         "lintFix": "eslint --fix .",
         "setup": "npm i && node_modules/.bin/lerna bootstrap",
-        "setup:production": "npm run ci && node_modules/.bin/lerna bootstrap",
+        "setup:production": "npm ci && node_modules/.bin/lerna bootstrap",
         "deploy": "npm run setup:production && lerna run build && lerna run test && npm run deploy:heroku", 
         "deploy:heroku": "git subtree push --prefix server heroku master"
     },
