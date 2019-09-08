@@ -7,6 +7,7 @@
         "test": "tests"
     },
     "scripts": {
+        "build": "echo \"No build needed in server\"",
         "test:integration": "tape tests/integration/**.*.js | ./node_modules/.bin/tap-spec",
         "test:unit": "tape tests/unit/**.*.js | ./node_modules/.bin/tap-spec",
         "test": "tape tests/**/**.*.js | ./node_modules/.bin/tap-spec",
