@@ -2,6 +2,7 @@
     "name": "root",
     "private": true,
     "scripts": {
+        "view:serve": "cd view && npm run serve",
         "lint": "eslint . ",
         "lint:watch": "nodemon --exec \"eslint . \"",
         "lint:all": "eslint . ; cd view && npm run lint",

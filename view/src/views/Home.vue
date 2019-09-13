@@ -1,16 +1,29 @@
 <template>
-    <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png" />
-        <div class="container">
-            <h1>Love u Marzi</h1>
-        </div>
+    <div class="Home">
+        <WrittingMachine />
     </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import WrittingMachine from '@/components/WrittingMachine'
 
 export default {
-    name: 'home'
+    name: 'Home',
+    data() {
+        return {
+        }
+    },
+    components: {
+        WrittingMachine
+    }
 };
 </script>
+
+<style>
+.Home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%
+}
+</style>
