@@ -116,6 +116,7 @@ export default {
             .then(() => this.resetText())
             .then(() => this.writeMachineText(this.banners.welcome, 100, 80))
             .then(() => this.delay(2000))
+            .then(() => this.resetText())
             .then(() => this.writeMachineText('And I\nlove\nMarzialina!', 100, 80))
             .catch((error) => {
                 console.error('Error in Machine', error)

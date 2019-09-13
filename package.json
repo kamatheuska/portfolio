@@ -3,6 +3,7 @@
     "private": true,
     "scripts": {
         "view:serve": "cd view && npm run serve",
+        "view:build": "cd view && npm run build",
         "lint": "eslint . ",
         "lint:watch": "nodemon --exec \"eslint . \"",
         "lint:all": "eslint . ; cd view && npm run lint",
