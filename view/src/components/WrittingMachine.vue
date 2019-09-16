@@ -10,11 +10,6 @@ export default {
     name: 'WrittingMachine',
     data() {
         return {
-            banners: {
-                name: 'My\nname\nis\nNicolas\nRamirez',
-                slogan: 'and\nI am a\ncoder',
-                welcome: 'Welcome\nto my\nsite!'
-            },
             writtingMachine: {
                 pauses: [],
                 currentText: '',
@@ -22,12 +17,39 @@ export default {
             }
         }
     },
+    props: {
+        textToType: Array
+    },
     computed: {
         wmachineText() {
             return this.writtingMachine.currentText
         }
     },
     methods: {
+        /**
+         * Returns a promise string after a random timeout for each letter for the text provided
+         * @param {Array} textArray
+         *      @param {string} text - text to be written
+         *      @param {number} delay - delay after the animation
+         * @param {number} maxTime - top duration of a pause
+         * @param {number} minTime - smallest duration of a pause
+         */
+
+        writeMachineText (textArray, maxTime, minTime) {
+            const { text, delay } = textArray.shift();
+            const characters = text.split('');
+            const pauses = this.generatePauses(text.length, maxTime, minTime)
+
+            return this.writeAnimation(pauses, characters, 'writtingMachine', 'currentText')
+                .then(() => this.delay(delay))
+                .then(() => this.resetText())
+                .then(() => {
+                    if (textArray.length !== 0) {
+                        return this.writeMachineText(textArray, maxTime, minTime)
+                    }
+                })
+        },
+
         /** 
          * Generates an array of numbers that represent milisecond values
          * 
@@ -52,20 +74,6 @@ export default {
             }
             return pauses;
         },
-        /**
-         * Returns a promise string after a random timeout for each letter in the text provided
-         * @param {string} text
-         * @param {number} maxTime - top duration of a pause
-         * @param {number} minTime - smallest duration of a pause
-         */
-
-        writeMachineText (text, maxTime, minTime) {
-            const characters = text.split('');
-            this.writtingMachine.pauses = this.generatePauses(text.length, maxTime, minTime)
-            const pauses = [...this.writtingMachine.pauses]
-
-            return this.recursiveTimer(pauses, characters, 'writtingMachine', 'currentText');
-        },
 
         /**
          * Sets a pause for each letter in an array and returns a resolved promise when is done
@@ -76,26 +84,23 @@ export default {
          * @param {string} targetChild 
          */
 
-        recursiveTimer(pauses, characters, targetRoot, targetChild) {
+        writeAnimation(pauses, characters, targetRoot, targetChild) {
             if (characters.length === 0) {
-                return Promise.resolve();
+                return Promise.resolve()
             }
 
             return this.delay(pauses[0])
                 .then(() => {
-                    this[targetRoot][targetChild] += characters[0];
-                    pauses.shift();
+                    this[targetRoot][targetChild] += characters[0]
+                    pauses.shift()
                     characters.shift()
-                    return this.recursiveTimer(pauses, characters, targetRoot, targetChild)
+                    return this.writeAnimation(pauses, characters, targetRoot, targetChild)
                 })
 
                 
         },
 
-        /**
-         * Sets the current text to 0
-         */
-        resetText(dely) {
+        resetText() {
             return new Promise(resolve => {
                 this.writtingMachine.currentText = '';
                 resolve();
@@ -107,19 +112,17 @@ export default {
         }
 
     },
-    mounted() {
-        this.writeMachineText(this.banners.name, 350, 80)
-            .then(() => this.delay(2000))
-            .then(() => this.resetText())
-            .then(() => this.writeMachineText(this.banners.slogan, 100, 80))
-            .then(() => this.delay(1000))
-            .then(() => this.resetText())
-            .then(() => this.writeMachineText(this.banners.welcome, 100, 80))
-            .then(() => this.delay(2000))
-            .then(() => this.resetText())
-            .then(() => this.writeMachineText('And I\nlove\nMarzialina!', 100, 80))
+    created() {
+        const textArrays = [...this.textToType]
+
+        this.$store.dispatch('changeAnimationStatus', true)
+
+        this.writeMachineText(textArrays, 150, 80)
             .catch((error) => {
                 console.error('Error in Machine', error)
+            })
+            .finally(() => {
+                this.$store.dispatch('changeAnimationStatus', false)
             })
     }
 };
