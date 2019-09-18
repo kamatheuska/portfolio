@@ -1,6 +1,8 @@
 <template>
     <div class="WrittingMachine">
-        <span>{{ wmachineText }}</span>
+        <div class="WrittingMachine__text0">{{ wmachineText0 }}</div>
+        <div class="WrittingMachine__text1">{{ wmachineText1 }}</div>
+        <div class="WrittingMachine__text2">{{ wmachineText2 }}</div>
     </div>
 </template>
 
@@ -10,9 +12,14 @@ export default {
     name: 'WrittingMachine',
     data() {
         return {
+            texts: [],
             writtingMachine: {
                 pauses: [],
-                currentText: '',
+                typedTexts: {
+                    0: '',
+                    1: '',
+                    2: ''
+                },
                 done: false
             }
         }
@@ -21,31 +28,39 @@ export default {
         textToType: Array
     },
     computed: {
-        wmachineText() {
-            return this.writtingMachine.currentText
+        wmachineText0() {
+            return this.writtingMachine.typedTexts['0']
+        },
+        wmachineText1() {
+            return this.writtingMachine.typedTexts['1']
+        },
+        wmachineText2() {
+            return this.writtingMachine.typedTexts['2']
         }
     },
     methods: {
         /**
          * Returns a promise string after a random timeout for each letter for the text provided
          * @param {Array} textArray
-         *      @param {string} text - text to be written
-         *      @param {number} delay - delay after the animation
-         * @param {number} maxTime - top duration of a pause
-         * @param {number} minTime - smallest duration of a pause
          */
 
-        writeMachineText (textArray, maxTime, minTime) {
-            const { text, delay } = textArray.shift();
+        writeMachineText (textArray, index = 0) {
+            const { text, delay, maxTime, minTime, reset, callback } = textArray.shift();
             const characters = text.split('');
             const pauses = this.generatePauses(text.length, maxTime, minTime)
 
-            return this.writeAnimation(pauses, characters, 'writtingMachine', 'currentText')
-                .then(() => this.delay(delay))
-                .then(() => this.resetText())
+            return this.writeAnimation(pauses, characters, index)
+                .then(() => {
+                    if (callback) {
+                        callback()
+                    }
+                    return Promise.resolve()
+                })
+                .then(() => !!delay ? this.delay(delay) : Promise.resolve())
+                .then(() => reset ? this.resetText(index) : Promise.resolve())
                 .then(() => {
                     if (textArray.length !== 0) {
-                        return this.writeMachineText(textArray, maxTime, minTime)
+                        return this.writeMachineText(textArray, index + 1)
                     }
                 })
         },
@@ -79,30 +94,28 @@ export default {
          * Sets a pause for each letter in an array and returns a resolved promise when is done
          * 
          * @param {string[]} pauses 
-         * @param {string[]} characters 
-         * @param {string} targetRoot
-         * @param {string} targetChild 
+         * @param {string[]} characters
          */
 
-        writeAnimation(pauses, characters, targetRoot, targetChild) {
+        writeAnimation(pauses, characters, index) {
             if (characters.length === 0) {
                 return Promise.resolve()
             }
 
             return this.delay(pauses[0])
                 .then(() => {
-                    this[targetRoot][targetChild] += characters[0]
+                    this.writtingMachine.typedTexts['' + index] += characters[0]
                     pauses.shift()
                     characters.shift()
-                    return this.writeAnimation(pauses, characters, targetRoot, targetChild)
+                    return this.writeAnimation(pauses, characters, index)
                 })
 
                 
         },
 
-        resetText() {
+        resetText(index) {
             return new Promise(resolve => {
-                this.writtingMachine.currentText = '';
+                this.writtingMachine.typedTexts['' + index] = '';
                 resolve();
             })
         },
@@ -113,11 +126,11 @@ export default {
 
     },
     created() {
-        const textArrays = [...this.textToType]
+        this.texts = [...this.textToType]
 
         this.$store.dispatch('changeAnimationStatus', true)
 
-        this.writeMachineText(textArrays, 150, 80)
+        this.writeMachineText(this.texts)
             .catch((error) => {
                 console.error('Error in Machine', error)
             })
@@ -135,16 +148,23 @@ export default {
 .WrittingMachine {
     height: 100vh;
     padding: 10px;
-    font-size: 3.6rem;
+    width: 100%;
     text-align: right;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    span {
+    div {
+        padding: 5px 30px;
+        width: 80vw;
+        margin: 30px;
         white-space: pre;
         min-width: 200px;
     }
 
+}
+.WrittingMachine__text1 {
+    text-align: left
 }
 
 </style>
