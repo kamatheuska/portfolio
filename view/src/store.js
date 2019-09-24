@@ -7,7 +7,7 @@ export default new Vuex.Store({
     state: {
         intro: {
             animation: {
-                done: false
+                done: true
             },
             skipIntro: false
         }
