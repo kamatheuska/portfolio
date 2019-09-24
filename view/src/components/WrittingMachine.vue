@@ -138,7 +138,7 @@ export default {
             })
             .finally(() => {
                 this.$store.dispatch('changeAnimationStatus', false)
-                // this.$router.push('/home')
+                this.$router.push('/home')
             })
     }
 };
@@ -149,12 +149,15 @@ export default {
 <style lang="less" scoped>
 .WrittingMachine__wrapper {
     position: relative;
+    height: 10px;
 }
 .WrittingMachine {
+    top: 30vh;
+    left: 0;
     position: absolute;
-    height: 100%;
+    height: 10vh;
     padding: 10px;
-    width: 100%;
+    width: 100vw;
     text-align: right;
     display: flex;
     flex-direction: column;
