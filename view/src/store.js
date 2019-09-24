@@ -5,22 +5,24 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        animation: {
-            done: false
-        },
-        skipIntro: false
+        intro: {
+            animation: {
+                done: false
+            },
+            skipIntro: false
+        }
     },
     getters: {
-        showIntroStatus: (state) => state.animation.done
+        isIntroDone: (state) => state.intro.animation.done
     },
     mutations: {
-        setAnimationStatus(state, status) {
-            state.animation.done = status
+        setAnimationStatus(state, isDone) {
+            state.intro.animation.done = isDone
         }
     },
     actions: {
-        changeAnimationStatus({ commit }, status) {
-            commit('setAnimationStatus', status)
+        changeAnimationStatus({ commit }, isDone) {
+            commit('setAnimationStatus', isDone)
         }
     }
 });
