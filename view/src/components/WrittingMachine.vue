@@ -1,8 +1,10 @@
 <template>
-    <div class="WrittingMachine">
-        <div class="WrittingMachine__text0">{{ wmachineText0 }}</div>
-        <div class="WrittingMachine__text1">{{ wmachineText1 }}</div>
-        <div class="WrittingMachine__text2">{{ wmachineText2 }}</div>
+    <div class="WrittingMachine__wrapper">
+        <div class="WrittingMachine">
+            <div class="WrittingMachine__text0">{{ wmachineText0 }}</div>
+            <div class="WrittingMachine__text1">{{ wmachineText1 }}</div>
+            <div class="WrittingMachine__text2">{{ wmachineText2 }}</div>
+        </div>
     </div>
 </template>
 
@@ -136,6 +138,7 @@ export default {
             })
             .finally(() => {
                 this.$store.dispatch('changeAnimationStatus', false)
+                // this.$router.push('/home')
             })
     }
 };
@@ -144,9 +147,12 @@ export default {
 
 
 <style lang="less" scoped>
-
+.WrittingMachine__wrapper {
+    position: relative;
+}
 .WrittingMachine {
-    height: 100vh;
+    position: absolute;
+    height: 100%;
     padding: 10px;
     width: 100%;
     text-align: right;
@@ -161,7 +167,6 @@ export default {
         white-space: pre;
         min-width: 200px;
     }
-
 }
 .WrittingMachine__text1 {
     text-align: left
