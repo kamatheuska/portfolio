@@ -1,6 +1,7 @@
 <template>
-    <div class="Home">
-        <Nav direction="vertical"/>
+    <div class="Projects">
+        <Nav direction="horizontal" />
+        <h1>Projects Here</h1>
     </div>
 </template>
 
@@ -8,12 +9,9 @@
 import Nav from '@/components/Nav'
 
 export default {
-    name: 'Home',
+    name: 'Projects',
     components: {
         Nav
     }
 }
 </script>
-
-<style>
-</style>
