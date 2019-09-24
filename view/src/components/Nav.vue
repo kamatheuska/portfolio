@@ -1,18 +1,26 @@
 <template>
     <nav class="Nav"
         :class="navDirection">
-            <div class="Nav__link">
-                <router-link to="/home">Home</router-link>
-            </div>
-            <div class="Nav__link">
-                <router-link to="/projects">Projects</router-link>
-            </div>
-            <div class="Nav__link">
-                <router-link to="/about">About</router-link>
-            </div>
-            <div class="Nav__link">
-                <router-link to="/">Intro</router-link>
-            </div>
+            <router-link to="/home">
+                <div class="Nav__link">
+                    <span>Home</span>
+                </div>
+            </router-link>
+            <router-link to="/projects">
+                <div class="Nav__link">
+                    <span>Projects</span>
+                </div>
+            </router-link>
+            <router-link to="/about">
+                <div class="Nav__link">
+                    <span>About</span>
+                </div>
+            </router-link>
+            <router-link to="/">
+                <div class="Nav__link">
+                    <span>Intro</span>
+                </div>
+            </router-link>
     </nav>
 </template>
 
@@ -26,7 +34,8 @@ export default {
         ...mapGetters([ 'isIntroDone' ]),
         navDirection () {
             return this.direction === 'horizontal'
-                ? true : false
+                ? 'Nav__horizontal'
+                : 'Nav__vertical'
         }
     },
     props: {
@@ -37,12 +46,35 @@ export default {
 
 <style lang="less">
 .Nav {
-    padding: 2rem 0;
     display: flex;
-    flex-direction: column;
     font-size: 1.2rem;
 }
 .Nav__link {
-    height: 3rem
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-delay: 50ms;
+    transition-duration: 800ms;
+    transition-property: background-color, color;
+
+}
+.Nav__link:hover {
+    background-color: #2c3e50;
+    color: #fff;
+}
+.Nav__horizontal {
+    height: 5rem;
+    padding: 15px 0;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-direction: row;
+}
+.Nav__vertical {
+    height: 3rem;
+    padding: 10px 0;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
 }
 </style>

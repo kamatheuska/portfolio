@@ -1,10 +1,7 @@
 <template>
     <div class="Intro"
         :class="introColor">
-        <nav class="Intro__nav" >
-            <router-link v-show="isIntroDone" to="/home">Skip intro</router-link>
-            <router-link to="/projects">Projects</router-link>
-        </nav>
+        <router-link v-show="isIntroDone" to="/home">Skip intro</router-link>
         <WrittingMachine
             :v-if="isIntroDone"
             :textToType="textForIntro"
@@ -19,6 +16,9 @@ import WrittingMachine from '@/components/WrittingMachine'
 
 export default {
     name: 'Intro',
+    components: {
+        WrittingMachine,
+    },
     data() {
         return {
             textForIntro: [
@@ -73,9 +73,6 @@ export default {
                     return 'Intro__light'
             }
         }
-    },
-    components: {
-        WrittingMachine
     }
 };
 </script>
@@ -83,35 +80,30 @@ export default {
 <style lang="less">
 
 .Intro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     height: 100%;
     font-size: 2rem;
     transition-delay: 100ms;
     transition-duration: 2100ms;
     transition-property: background-color, color;
+    color: #2c3e50;
+    a {
+        font-size: 1.2rem;
+    }
 }
 .Intro__dark {
     background-color: #2c3e50;
     color: #fff;
+    a {
+        color: #fff;
+    }
 
 }
 .Intro__light {
     background-color: #fff;
     color: #2c3e50;
-}
-
-.Intro__nav {
-    padding: 10px;
-    font-size: 0.8rem;
     a {
-        font-weight: bold;
-        text-decoration: none;
-        &.router-link-exact-active {
-            color: #42b983;
-        }
+        color: #2c3e50;
     }
 }
+
 </style>
