@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Weather from '@/views/projects/Weather';
+// import Weather from '@/views/projects/Weather';
 Vue.use(Router);
 
 export default new Router({
@@ -24,7 +24,7 @@ export default new Router({
             children: [
                 {
                     path: 'weather',
-                    component: Weather,
+                    component: () => import(/* webpackChunkName: "weather" */ '@/views/projects/Weather.vue'),
                 }
             ]
 
