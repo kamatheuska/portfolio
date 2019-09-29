@@ -48,33 +48,33 @@ export default {
 .Nav {
     display: flex;
     font-size: 1.2rem;
-}
-.Nav__link {
-    height: 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition-delay: 50ms;
-    transition-duration: 800ms;
-    transition-property: background-color, color;
+    &__link {
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition-delay: 50ms;
+        transition-duration: 800ms;
+        transition-property: background-color, color;
+        &:hover {
+            background-color: #2c3e50;
+            color: #fff;
+        }
 
-}
-.Nav__link:hover {
-    background-color: #2c3e50;
-    color: #fff;
-}
-.Nav__horizontal {
-    height: 5rem;
-    padding: 15px 0;
-    justify-content: space-evenly;
-    width: 100%;
-    flex-direction: row;
-}
-.Nav__vertical {
-    height: 3rem;
-    padding: 10px 0;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 100%;
+    }
+    &__horizontal {
+        height: 5rem;
+        padding: 15px 0;
+        justify-content: space-evenly;
+        width: 100%;
+        flex-direction: row;
+    }
+    &__vertical {
+        height: 3rem;
+        padding: 10px 0;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+    }
 }
 </style>
