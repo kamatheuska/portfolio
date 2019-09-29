@@ -49,7 +49,7 @@ export default {
     display: flex;
     font-size: 1.2rem;
     &__link {
-        height: 5rem;
+        height: 3.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -63,18 +63,17 @@ export default {
 
     }
     &__horizontal {
-        height: 5rem;
-        padding: 15px 0;
+        height: 4rem;
+        padding: 10px 0;
         justify-content: space-evenly;
         width: 100%;
         flex-direction: row;
     }
     &__vertical {
-        height: 3rem;
         padding: 10px 0;
         flex-direction: column;
         justify-content: space-evenly;
-        height: 100%;
+        height: 70%;
     }
 }
 </style>
