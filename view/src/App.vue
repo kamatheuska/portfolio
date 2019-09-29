@@ -7,12 +7,7 @@
 <script>
 import '@/assets/styles.css'
 export default {
-    name: 'App',
-    data() {
-        return {
-            introOver: false
-        }
-    }
+    name: 'App'
 };
 </script>
 
