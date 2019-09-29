@@ -1,9 +1,9 @@
 <template>
-<transition name="fade">
-    <div class="IconsSvg">
-        <component v-bind:is="iconName"></component>
-    </div>
-</transition>
+    <transition name="fade">
+        <div class="IconsSvg">
+            <component v-bind:is="iconName"></component>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -21,21 +21,18 @@ export default {
     name: 'IconsToggler',
     methods: {
         showWeatherIcon(responseIcon) {
-            let iconNames = Object.keys(this.icons);
-
-            iconNames.forEach((iconName, i) => {
+            Object.keys(this.icons).forEach((iconName, i) => {
                 if (iconName === responseIcon) {
                     console.log(iconName, i);
-                    this.showIconAndHideOthers().then(() => {
+                    this.hideAllIcons().then(() => {
                         this.icons[iconName] = !this.icons[iconName];
                     });
                 }
             });
         },
 
-        showIconAndHideOthers() {
-            let keys = Object.keys(this.icons);
-            keys.forEach(key => {
+        hideAllIcons() {
+            Object.keys(this.icons).forEach(key => {
                 this.icons[key] = false;
             });
             return Promise.resolve();
@@ -54,13 +51,6 @@ export default {
         'wind': Wind,
         'thunder': Storm
     },
-    props: ['iconName'],
-    created() {
-        console.log('Printing- - - - -:this.props', this.iconName);
-    }
+    props: ['iconName']
 };
 </script>
-
-<style scoped>
-.IconsSvg {}
-</style>
