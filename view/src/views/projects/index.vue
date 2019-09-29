@@ -1,10 +1,12 @@
 <template>
     <div class="Projects">
+        <Nav direction="horizontal" />
         <div class="Projects__grid"
             v-if="$route.path == '/projects'">
-            <Nav direction="horizontal" />
             <h1>Projects Here</h1>
-            <router-link to="/projects/weather">Weather App</router-link>
+            <ProjectBox
+                v-bind="project"    
+                />
         </div>
         <div class="Projects__detail">
             <router-view />
@@ -14,15 +16,31 @@
 
 <script>
 import Nav from '@/components/Nav'
+import ProjectBox from '@/components/ProjectBox'
 
 export default {
     name: 'Projects',
+    data() {
+        return {
+            project: {
+                thumbnail: {
+                    fileName: 'test__ok.png',
+                    alt: 'Weather'
+                },
+                title: 'WeatherApp',
+                projectUrl: '/projects/weather'
+            }
+        }
+    },
     components: {
-        Nav
+        Nav,
+        ProjectBox
     }
 }
 </script>
 
 <style lang="less">
-
+.Projects__grid {
+    padding: 10px;
+}
 </style>
