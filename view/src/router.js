@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-
+import Weather from '@/views/projects/Weather';
 Vue.use(Router);
 
 export default new Router({
@@ -11,22 +10,29 @@ export default new Router({
         {
             path: '/',
             name: 'intro',
-            component: () => import(/* webpackChunkName: "intro" */ './views/Intro.vue')
+            component: () => import(/* webpackChunkName: "intro" */ '@/views/Intro.vue')
         },
         {
             path: '/home',
             name: 'home',
-            component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
+            component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue')
         },
         {
             path: '/projects',
             name: 'projects',
-            component: () => import(/* webpackChunkName: "projects" */ './views/Projects.vue')
+            component: () => import(/* webpackChunkName: "projects" */ '@/views/projects/index.vue'),
+            children: [
+                {
+                    path: 'weather',
+                    component: Weather,
+                }
+            ]
+
         },
         {
             path: '/about',
             name: 'about',
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
         }
     ]
 });
