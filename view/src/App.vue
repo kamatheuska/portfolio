@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import '@/assets/styles.css'
+import '@/assets/styles/reset.less'
+import '@/assets/styles/global.less'
 export default {
     name: 'App'
 };
