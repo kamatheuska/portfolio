@@ -48,32 +48,54 @@ export default {
 .Nav {
     display: flex;
     font-size: 1.2rem;
+    align-items: stretch;
+    a {
+        height: 100%;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
     &__link {
-        height: 3.5rem;
         display: flex;
+        height: 100%;
+        border: 2px solid #2c3e50;
         justify-content: center;
         align-items: center;
         transition-delay: 50ms;
         transition-duration: 800ms;
         transition-property: background-color, color;
+        &:focus,
         &:hover {
             background-color: #2c3e50;
+            border: 2px solid #fff;
             color: #fff;
         }
 
     }
     &__horizontal {
-        height: 4rem;
-        padding: 10px 0;
+        height: 9rem;
         justify-content: space-evenly;
         width: 100%;
+
         flex-direction: row;
+        padding-right: 10rem; 
+        padding-left: 10rem;
+        border-bottom: 2px solid #2c3e50;
+
+
+        .Nav {
+            &__link {
+                border: none;
+                min-width: 20rem;
+            }
+        }
     }
     &__vertical {
-        padding: 10px 0;
         flex-direction: column;
         justify-content: space-evenly;
         height: 70%;
+        justify-content: stretch;
+        padding-right: 10rem; 
+        padding-left: 10rem;
     }
 }
 </style>
