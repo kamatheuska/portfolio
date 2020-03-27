@@ -40,7 +40,16 @@ export default {
 </script>
 
 <style lang="less">
-.Projects__grid {
-    padding: 10px;
+.Projects {
+    height: max-content;
+    &__grid {
+        padding: 10px;
+    }
+    &__detail {
+        height: max-content;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
 }
 </style>

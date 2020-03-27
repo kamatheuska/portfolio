@@ -1,9 +1,7 @@
 <template>
     <div class="WrittingMachine__wrapper">
         <div class="WrittingMachine">
-            <div class="WrittingMachine__text0">{{ wmachineText0 }}</div>
-            <div class="WrittingMachine__text1">{{ wmachineText1 }}</div>
-            <div class="WrittingMachine__text2">{{ wmachineText2 }}</div>
+            <div class="WrittingMachine__text WrittingMachine__text--0">{{ wmachineText0 }}</div>
         </div>
     </div>
 </template>
@@ -130,15 +128,12 @@ export default {
     created() {
         this.texts = [...this.textToType]
 
-        this.$store.dispatch('changeAnimationStatus', true)
-
         this.writeMachineText(this.texts)
             .catch((error) => {
                 console.error('Error in Machine', error)
             })
             .finally(() => {
-                this.$store.dispatch('changeAnimationStatus', false)
-                this.$router.push('/home')
+                console.info('Animation finished')
             })
     }
 };
@@ -147,32 +142,23 @@ export default {
 
 
 <style lang="less" scoped>
-.WrittingMachine__wrapper {
-    position: relative;
-    height: 10px;
-}
 .WrittingMachine {
-    top: 30vh;
-    left: 0;
-    position: absolute;
-    height: 10vh;
     padding: 10px;
-    width: 100vw;
     text-align: right;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    div {
-        padding: 5px 30px;
-        width: 80vw;
-        margin: 30px;
+    z-index: -1000;
+
+    &__text {
+        padding: 3rem;
         white-space: pre;
         min-width: 200px;
+        &--1 {
+            text-align: left;
+            color: @portfolio-blue;
+        }
     }
 }
-.WrittingMachine__text1 {
-    text-align: left
-}
-
 </style>

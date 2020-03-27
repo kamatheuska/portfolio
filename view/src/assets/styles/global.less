@@ -1,0 +1,29 @@
+.button {
+    color: @portfolio-dark-blue;
+    background-color: @portfolio-white;
+    min-width: 7rem;
+    max-width: 10rem;
+    min-height: 4rem;
+    max-height: 6rem;
+    border-radius: 5px;
+    border: solid 2px @portfolio-dark-blue;
+    cursor: pointer;
+    &--md {
+        height: 3rem;
+        border: none;
+    }
+    &:focus,
+    &:hover {
+        background-color: @portfolio-gray-blue;
+        color: @portfolio-white;
+    }
+
+    &:focus {
+        outline: 1px solid #fff;
+        outline-offset: -4px;
+    }
+
+    &:active {
+        transform: scale(0.99);
+    }
+}

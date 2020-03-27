@@ -6,19 +6,14 @@
                     <span>Home</span>
                 </div>
             </router-link>
-            <router-link to="/projects">
+            <router-link to="/projects/writtingMachine">
                 <div class="Nav__link">
-                    <span>Projects</span>
+                    <span>Writting Machine</span>
                 </div>
             </router-link>
             <router-link to="/about">
                 <div class="Nav__link">
                     <span>About</span>
-                </div>
-            </router-link>
-            <router-link to="/">
-                <div class="Nav__link">
-                    <span>Intro</span>
                 </div>
             </router-link>
         </div>
@@ -47,13 +42,11 @@ export default {
 
 <style lang="less">
 .Nav {
-    height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
     &__container {
         display: flex;
-        font-size: 2rem;
     }
     a {
         height: 100%;
@@ -64,6 +57,7 @@ export default {
         display: flex;
         height: 100%;
         border: 2px solid @portfolio-dark-blue;
+        background-color: #fff;
         justify-content: center;
         align-items: center;
         transition-delay: 50ms;
@@ -78,26 +72,29 @@ export default {
 
     }
     &__horizontal {
-        height: 9rem;
+        height: 3rem;
         justify-content: space-evenly;
         width: 100%;
-
+        background-color: @portfolio-dark-blue;
+        font-size: 1.4rem;
         flex-direction: row;
         padding-right: 10rem; 
         padding-left: 10rem;
         border-bottom: 2px solid @portfolio-dark-blue;
 
-
         .Nav {
             &__link {
+                color: #fff;
+                background-color: @portfolio-dark-blue;
                 border: none;
                 min-width: 20rem;
             }
         }
     }
     &__vertical {
+        font-size: 2rem;
+        height: 70vh;
         flex-direction: column;
-        height: 100%;
         min-width: 50rem;
         max-width: 80rem; 
     }

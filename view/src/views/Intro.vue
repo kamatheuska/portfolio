@@ -89,6 +89,7 @@ export default {
     transition-duration: 2100ms;
     transition-property: background-color, color;
     color: @portfolio-dark-blue;
+    position: relative;
     a {
         font-size: 1.2rem;
     }

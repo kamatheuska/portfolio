@@ -9,8 +9,9 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'intro',
-            component: () => import(/* webpackChunkName: "intro" */ '@/views/Intro.vue')
+            redirect: {
+                name: 'home'
+            }
         },
         {
             path: '/home',
@@ -25,6 +26,11 @@ export default new Router({
                 {
                     path: 'weather',
                     component: () => import(/* webpackChunkName: "weather" */ '@/views/projects/Weather.vue'),
+                },
+                {
+                    path: 'writtingMachine',
+                    component: () => import(/* webpackChunkName: "writtingMachine" */ '@/views/projects/Writting.vue'),
+
                 }
             ]
 

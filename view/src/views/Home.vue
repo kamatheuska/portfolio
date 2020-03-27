@@ -1,5 +1,5 @@
 <template>
-    <div class="Home">
+    <div class="home">
         <Nav direction="vertical"/>
     </div>
 </template>
@@ -15,11 +15,13 @@ export default {
 }
 </script>
 
-<style>
-.Home {
+<style lang="less" scoped>
+.home {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    background-color: @portfolio-dark-blue;
 }
 </style>
