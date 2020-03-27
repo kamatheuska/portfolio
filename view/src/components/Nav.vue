@@ -1,6 +1,6 @@
 <template>
-    <nav class="Nav"
-        :class="navDirection">
+    <nav class="Nav">
+        <div class="Nav__container" :class="navDirection">
             <router-link to="/home">
                 <div class="Nav__link">
                     <span>Home</span>
@@ -21,6 +21,7 @@
                     <span>Intro</span>
                 </div>
             </router-link>
+        </div>
     </nav>
 </template>
 
@@ -46,9 +47,14 @@ export default {
 
 <style lang="less">
 .Nav {
+    height: 70vh;
     display: flex;
-    font-size: 1.2rem;
-    align-items: stretch;
+    align-items: center;
+    justify-content: center;
+    &__container {
+        display: flex;
+        font-size: 2rem;
+    }
     a {
         height: 100%;
         display: inline-block;
@@ -57,7 +63,7 @@ export default {
     &__link {
         display: flex;
         height: 100%;
-        border: 2px solid #2c3e50;
+        border: 2px solid @portfolio-dark-blue;
         justify-content: center;
         align-items: center;
         transition-delay: 50ms;
@@ -65,7 +71,7 @@ export default {
         transition-property: background-color, color;
         &:focus,
         &:hover {
-            background-color: #2c3e50;
+            background-color: @portfolio-dark-blue;
             border: 2px solid #fff;
             color: #fff;
         }
@@ -79,7 +85,7 @@ export default {
         flex-direction: row;
         padding-right: 10rem; 
         padding-left: 10rem;
-        border-bottom: 2px solid #2c3e50;
+        border-bottom: 2px solid @portfolio-dark-blue;
 
 
         .Nav {
@@ -91,11 +97,9 @@ export default {
     }
     &__vertical {
         flex-direction: column;
-        justify-content: space-evenly;
-        height: 70%;
-        justify-content: stretch;
-        padding-right: 10rem; 
-        padding-left: 10rem;
+        height: 100%;
+        min-width: 50rem;
+        max-width: 80rem; 
     }
 }
 </style>
