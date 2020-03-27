@@ -1,29 +1,30 @@
 {
-    "name": "root",
-    "private": true,
-    "scripts": {
-        "view:serve": "cd view && npm run serve",
-        "view:build": "cd view && npm run build",
-        "lint": "eslint . ",
-        "lint:watch": "nodemon --exec \"eslint . \"",
-        "lint:all": "eslint . ; cd view && npm run lint",
-        "lintFix": "eslint --fix .",
-        "setup": "npm i && node_modules/.bin/lerna bootstrap",
-        "setup:production": "npm ci && node_modules/.bin/lerna bootstrap",
-        "deploy": "npm run setup:production && lerna run build && lerna run test && npm run deploy:heroku",
-        "deploy:heroku": "git subtree push --prefix server heroku master"
-    },
-    "devDependencies": {
-        "eslint": "^5.15.3",
-        "eslint-config-standard": "^12.0.0",
-        "eslint-plugin-import": "^2.20.1",
-        "eslint-plugin-node": "^8.0.1",
-        "eslint-plugin-promise": "^4.1.1",
-        "eslint-plugin-standard": "^4.0.0",
-        "lerna": "^3.20.2",
-        "style-resources-loader": "^1.3.3"
-    },
-    "dependencies": {
-        "style-loader": "^1.1.3"
-    }
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . ",
+    "deploy": "npm run setup:production && lerna run build && lerna run test && npm run deploy:heroku",
+    "deploy:heroku": "git subtree push --prefix server heroku master",
+    "lint:all": "eslint . ; cd view && npm run lint",
+    "lint:watch": "nodemon --exec \"eslint . \"",
+    "lintFix": "eslint --fix .",
+    "setup": "npm i && node_modules/.bin/lerna bootstrap",
+    "setup:production": "npm ci && node_modules/.bin/lerna bootstrap",
+    "view:build": "cd view && npm run build",
+    "view:serve": "cd view && npm run serve"
+  },
+  "dependencies": {
+    "style-loader": "^1.1.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "lerna": "^3.20.2",
+    "style-resources-loader": "^1.3.3",
+    "vue-cli-plugin-style-resources-loader": "~0.1.4"
+  }
 }
