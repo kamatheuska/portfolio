@@ -2,6 +2,7 @@
     <div class="Intro"
         :class="introColor">
         <router-link v-show="isIntroDone" to="/home">Skip intro</router-link>
+        <Nav direction="vertical"/>
         <WrittingMachine
             :v-if="isIntroDone"
             :textToType="textForIntro"
@@ -13,11 +14,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import WrittingMachine from '@/components/WrittingMachine'
+import Nav from '@/components/Nav'
 
 export default {
     name: 'Intro',
     components: {
         WrittingMachine,
+        Nav
     },
     data() {
         return {
@@ -85,24 +88,23 @@ export default {
     transition-delay: 100ms;
     transition-duration: 2100ms;
     transition-property: background-color, color;
-    color: #2c3e50;
+    color: @portfolio-dark-blue;
     a {
         font-size: 1.2rem;
     }
-}
-.Intro__dark {
-    background-color: #2c3e50;
-    color: #fff;
-    a {
+    &__dark {
+        background-color: @portfolio-dark-blue;
         color: #fff;
+        a {
+            color: #fff;
+        }
     }
-
-}
-.Intro__light {
-    background-color: #fff;
-    color: #2c3e50;
-    a {
-        color: #2c3e50;
+    &__light {
+        background-color: #fff;
+        color: @portfolio-dark-blue;
+        a {
+            color: @portfolio-dark-blue;
+        }
     }
 }
 
