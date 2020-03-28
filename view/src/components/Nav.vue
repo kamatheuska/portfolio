@@ -1,9 +1,11 @@
 <template>
-    <nav class="Nav">
+    <nav
+        class="Nav" 
+        @click="toggleNav()"
+    >
         <div
             class="Nav__icon--container"
-            @click="toggleNav()"
-        >
+        >   
             <svg
                 class="Nav__icon"
                 :class="{ 'Nav__icon--inverse': this.iconArrowInverse }"  
@@ -18,9 +20,8 @@
             </svg>
 
         </div>
-    
         <div class="Nav__container" :class="navigationClasses">
-            <router-link to="/home">
+            <router-link to="/home" class="Nav__a--first">
                 <div class="Nav__link">
                     <span>Home</span>
                 </div>
@@ -50,7 +51,6 @@ export default {
         navigationClasses () {
             return {
                 'Nav__horizontal': this.direction === 'horizontal',
-                'Nav__vertical': this.direction !== 'horizontal',
                 'Nav__horizontal--show': this.iconArrowInverse && this.direction === 'horizontal'
             }
         },
@@ -79,17 +79,18 @@ export default {
     background-color: @portfolio-dark-blue;
     position: relative;
     font-size: 1.2rem;
-    &__container {
-        display: none;
-    }
+
     &__small-title {
         height: 3rem;
         padding-top: 1rem;
         background-color: @portfolio-blue;
         color: @portfolio-white;
     }
+    &__a--first {
+        margin-top: 2rem;
+    }
+    
     a {
-        height: 100%;
         display: inline-block;
         margin-bottom: 5px;
     }
@@ -137,11 +138,7 @@ export default {
             flex-direction: column;
             height: max-content;
         }
-
-
-        
         .Nav {
-            background-color: @portfolio-dark-blue;
             &__link {
                 background-color: @portfolio-dark-blue;
                 color: #fff;
@@ -150,12 +147,6 @@ export default {
                 height: 6rem;
             }
         }
-    }
-    &__vertical {
-        height: 70vh;
-        flex-direction: column;
-        min-width: 50rem;
-        max-width: 80rem; 
     }
 }
 @media screen and (min-width : 850px) {

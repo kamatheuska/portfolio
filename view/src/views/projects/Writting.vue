@@ -1,6 +1,7 @@
 <template>
     <div class="writting">
         <div class="writting__form">
+            <h1 class="writting__heading">Writting Machine <i>(random speeds)</i></h1>
             <fieldset class="writting__fieldset">
                 <label for="textToType" class="writting__label">Write some text in here: </label>
                 <input
@@ -12,7 +13,7 @@
                 >
             </fieldset>
             <fieldset class="writting__fieldset">
-                <label for="speed" class="writting__label">How slow should I type? </label>
+                <label for="speed" class="writting__label">Give me a number from 1 to 10 </label>
                 <input
                     v-model="speed"
                     class="writting__input"
