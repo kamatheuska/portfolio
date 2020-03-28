@@ -160,16 +160,17 @@ export default {
 }
 @media screen and (min-width : 850px) {
     .Nav {
-
+        padding-left: 2rem; 
+        padding-right: 2rem;
+        display: flex;
+        justify-content: center;
         &__horizontal {
-            height: 3rem;
+            flex-basis: 50%;
+            height: max-content;
             font-size: 1.4rem;
         }
         &__icon {
-            display: none;
-        }
-        &__container {
-            display: block
+            display: block;
         }
     }
 }
