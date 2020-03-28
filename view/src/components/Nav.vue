@@ -96,7 +96,6 @@ export default {
     
     a {
         display: inline-block;
-        margin-bottom: 5px;
     }
     &__icon {
         height: 2rem;

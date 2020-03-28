@@ -4,7 +4,9 @@
         <div class="Projects__detail">
             <router-view />
         </div>
-        <Footer></Footer>
+        <div class="Projects__footer">
+            <Footer />
+        </div>
     </div>
 </template>
 
@@ -45,6 +47,12 @@ export default {
         display: flex;
         width: 100%;
         justify-content: center;
+    }
+
+    &__footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
     }
 }
 </style>

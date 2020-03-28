@@ -116,6 +116,7 @@ export default {
     &__container {
         display: flex;
         flex-wrap: wrap;
+        font-size: 2rem;
     }
 }
 

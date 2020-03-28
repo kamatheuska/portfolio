@@ -2,7 +2,13 @@
     <div class="home">
         <Nav direction="horizontal"/>
         <div class="home__greeting">
-            <p>Welcome to my website</p>
+            <h1>Welcome to my website</h1>
+            <p>I am a software developer and a musician</p>
+            <p>Click on the top bar to see my projects</p>
+
+        </div>
+        <div class="home__footer">
+            <Footer></Footer>
 
         </div>
     </div>
@@ -10,11 +16,14 @@
 
 <script>
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
+
 
 export default {
     name: 'Home',
     components: {
-        Nav
+        Nav,
+        Footer
     }
 }
 </script>
@@ -23,13 +32,20 @@ export default {
 .home {
     width: 100%;
     height: max-content;
-
+    position: relative;
+    height: 100%;
     &__greeting {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 90vh;
+        height: 60vh;
+    }
+
+    &__footer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
     }
 }
 </style>
