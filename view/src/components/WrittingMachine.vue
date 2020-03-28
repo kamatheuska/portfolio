@@ -143,16 +143,15 @@ export default {
 
 <style lang="less" scoped>
 .WrittingMachine {
-    padding: 10px;
+    padding-top: 1rem;
     text-align: right;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: -1000;
 
     &__text {
-        padding: 3rem;
+        padding: 1rem;
         white-space: pre;
         min-width: 200px;
         &--1 {

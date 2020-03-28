@@ -1,6 +1,10 @@
 <template>
     <div class="home">
-        <Nav direction="vertical"/>
+        <Nav direction="horizontal"/>
+        <div class="home__greeting">
+            <p>Welcome to my website</p>
+
+        </div>
     </div>
 </template>
 
@@ -17,11 +21,15 @@ export default {
 
 <style lang="less" scoped>
 .home {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: @portfolio-dark-blue;
+    width: 100%;
+    height: max-content;
+
+    &__greeting {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
 }
 </style>

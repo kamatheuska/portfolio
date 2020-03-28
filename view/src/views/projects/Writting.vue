@@ -1,30 +1,32 @@
 <template>
     <div class="writting">
-        <fieldset class="writting__fieldset">
-            <label for="textToType" class="writting__label">Write some text in here: </label>
-            <input
-                v-model="text"
-                class="writting__input"
-                type="text"
-                id="textToType"
-                placeholder="Type something..."
-            >
-        </fieldset>
-        <fieldset class="writting__fieldset">
-            <label for="speed" class="writting__label">How slow should I type? </label>
-            <input
-                v-model="speed"
-                class="writting__input"
-                type="number"
-                max="10"
-                min="1"
-                id="speed"
-                placeholder="Type something..."
-            >
-        </fieldset>
-        <button class="button writting__button" @click="startWrittingMachine()">
-            SEE THE MAGIC
-        </button>
+        <div class="writting__form">
+            <fieldset class="writting__fieldset">
+                <label for="textToType" class="writting__label">Write some text in here: </label>
+                <input
+                    v-model="text"
+                    class="writting__input"
+                    type="text"
+                    id="textToType"
+                    placeholder="Type something..."
+                >
+            </fieldset>
+            <fieldset class="writting__fieldset">
+                <label for="speed" class="writting__label">How slow should I type? </label>
+                <input
+                    v-model="speed"
+                    class="writting__input"
+                    type="number"
+                    max="10"
+                    min="1"
+                    id="speed"
+                    placeholder="Type something..."
+                >
+            </fieldset>
+            <button class="button writting__button" @click="startWrittingMachine()">
+                SEE THE MAGIC
+            </button>
+        </div>
         <div ref="wmachineContainer" class="writting__container"></div>
     </div>
 </template>
@@ -56,7 +58,8 @@ export default {
             this.textToType[0].text = this.text
             this.textToType[0].maxTime *= this.speed;
 
-            this.createWrittingMachine()    
+            this.createWrittingMachine()
+            this.resetSettings()
         },
         createWrittingMachine () {
             const ComponentContructor = Vue.extend(WrittingMachine)
@@ -67,27 +70,42 @@ export default {
             })
             instance.$mount()
             this.$refs.wmachineContainer.appendChild(instance.$el)
-        }       
+        },
+        resetSettings () {
+            this.textToType.pop();
+            this.textToType.push({
+                text: '',
+                delay: 400,
+                maxTime: 100,
+                minTime: 80
+            })
+        }
     },
 }
 </script>
 
 <style lang="less" scoped>
 .writting {
+    margin-top: 4rem;
     height: 40rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 70vh;
+    &__label {
+        margin-bottom: 1rem;
+    }
     &__input {
         height: 3rem;
-
+        width: 100%;
     }
     &__fieldset {
         border: none;
-        width: 30rem;
         padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &__button {
@@ -96,6 +114,8 @@ export default {
 
     &__container {
         display: flex;
+        flex-wrap: wrap;
     }
 }
+
 </style>

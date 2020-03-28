@@ -41,6 +41,7 @@ export default {
 
 <style lang="less">
 .Projects {
+    width: 100%;
     height: max-content;
     &__grid {
         padding: 10px;
