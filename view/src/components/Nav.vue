@@ -18,26 +18,27 @@
                         s-8.341,21.824,0,30.165l234.667,234.667c4.16,4.16,9.621,6.251,15.083,6.251c5.462,0,10.923-2.091,15.083-6.251l234.667-234.667
                         C514.096,145.416,514.096,131.933,505.755,123.592z"/>
             </svg>
-
         </div>
-        <div class="Nav__container" :class="navigationClasses">
-            <router-link to="/home" class="Nav__a--first">
-                <div class="Nav__link">
-                    <span>Home</span>
-                </div>
-            </router-link>
-            <span class="Nav__small-title">Projects</span>
-            <router-link to="/projects/writtingMachine">
-                <div class="Nav__link">
-                    <span>Writting Machine</span>
-                </div>
-            </router-link>
-            <router-link to="/about">
-                <div class="Nav__link">
-                    <span>About</span>
-                </div>
-            </router-link>
-        </div>
+        <transition name="fade">
+            <div v-if="showNav" class="Nav__container" :class="navigationClasses">
+                <router-link to="/home" class="Nav__a--first">
+                    <div class="Nav__link">
+                        <span>Home</span>
+                    </div>
+                </router-link>
+                <span class="Nav__small-title">Projects</span>
+                <router-link to="/projects/writtingMachine">
+                    <div class="Nav__link">
+                        <span>Writting Machine</span>
+                    </div>
+                </router-link>
+                <router-link to="/about">
+                    <div class="Nav__link">
+                        <span>About</span>
+                    </div>
+                </router-link>
+            </div>
+        </transition>
     </nav>
 </template>
 
@@ -54,6 +55,9 @@ export default {
                 'Nav__horizontal--show': this.iconArrowInverse && this.direction === 'horizontal'
             }
         },
+        showNav () {
+            return this.iconArrowInverse
+        }
     },
     data () {
         return {
@@ -116,12 +120,12 @@ export default {
         display: flex;
         height: 100%;
         border: 2px solid @portfolio-dark-blue;
-        background-color: #fff;
         justify-content: center;
         align-items: center;
-        transition-delay: 50ms;
-        transition-duration: 800ms;
-        transition-property: background-color, color;
+        background-color: @portfolio-dark-blue;
+        color: #fff;
+        border: none;
+        height: 5rem;
         &:focus,
         &:hover {
             background-color: @portfolio-dark-blue;
@@ -133,18 +137,12 @@ export default {
     &__horizontal {
         display: none;
         &--show {
-            display: block;
             display: flex;
             flex-direction: column;
             height: max-content;
         }
         .Nav {
             &__link {
-                background-color: @portfolio-dark-blue;
-                color: #fff;
-                border: none;
-                min-width: 20rem;
-                height: 6rem;
             }
         }
     }

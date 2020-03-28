@@ -1,22 +1,16 @@
 <template>
     <div class="Projects">
         <Nav direction="horizontal" />
-        <div class="Projects__grid"
-            v-if="$route.path == '/projects'">
-            <h1>Projects Here</h1>
-            <ProjectBox
-                v-bind="project"    
-                />
-        </div>
         <div class="Projects__detail">
             <router-view />
         </div>
+        <Footer></Footer>
     </div>
 </template>
 
 <script>
 import Nav from '@/components/Nav'
-import ProjectBox from '@/components/ProjectBox'
+import Footer from '@/components/Footer'
 
 export default {
     name: 'Projects',
@@ -34,7 +28,7 @@ export default {
     },
     components: {
         Nav,
-        ProjectBox
+        Footer
     }
 }
 </script>
