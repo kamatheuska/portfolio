@@ -25,7 +25,10 @@ export default new Router({
                 {
                     path: 'writtingMachine',
                     component: () => import(/* webpackChunkName: "writtingMachine" */ '@/views/projects/Writting.vue'),
-
+                },
+                {
+                    path: 'drumMachine',
+                    component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/Drums.vue'),
                 }
             ]
 
