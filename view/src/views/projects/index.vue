@@ -43,16 +43,11 @@ export default {
         padding: 10px;
     }
     &__detail {
+        padding-bottom: 5rem;   
         height: max-content;
         display: flex;
         width: 100%;
         justify-content: center;
-    }
-
-    &__footer {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
     }
 }
 </style>

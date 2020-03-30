@@ -8,8 +8,10 @@
                 :id="drumPad.id"
                 :ref="`pad${drumPad.keyTrigger}`"
                 @click="playAndFocus(drumPad.keyTrigger)"
-            >
-                {{ drumPad.keyTrigger }}
+            >   
+                <span >
+                    {{ drumPad.keyTrigger }}
+                </span>
                 <audio
                     :ref="`audio__${drumPad.keyTrigger}`"
                     :id="drumPad.keyTrigger"
@@ -92,7 +94,7 @@ export default {
 
             setTimeout(() => {
                 document.activeElement.blur()
-            }, 1000);
+            }, 100);
 
         }
     },
@@ -110,19 +112,27 @@ export default {
 </script>
 <style lang="less" scoped>
 .DrumMachine {
+    width: 100%;
     &__display {
         display: grid;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
         grid-template-columns: repeat(3, 5rem);
         grid-template-rows: repeat(3, 5rem);
-        width: 15rem;
         grid-gap: 1rem;
         color: @portfolio-white;
+        background-color: @portfolio-sand;
+        border-radius: 10px;
     }
 
     &__drumPad {
-        background-color: @portfolio-blue;
+        background-color: @portfolio-brown;
         border-radius: 10px;
         color: @portfolio-white;
+        border: none;
+        font-weight: 900;
         &:focus {
             background: red;
             border: none;
