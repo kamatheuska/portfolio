@@ -1,20 +1,24 @@
 <template>
     <div id="drum-machine" class="DrumMachine">
         <div id="display" class="DrumMachine__display">
-            <div
+            <button
                 v-for="(drumPad) in drumPads" 
                 :key="`drumPad#${drumPad.keyCode}`"
                 class="drum-pad DrumMachine__drumPad shadow"
+                :id="drumPad.id"
+                :ref="`pad${drumPad.keyTrigger}`"
+                @click="playAndFocus(drumPad.keyTrigger)"
             >
                 {{ drumPad.keyTrigger }}
                 <audio
-                    :ref="`pad${drumPad.keyTrigger}`"
+                    :ref="`audio__${drumPad.keyTrigger}`"
                     :id="drumPad.keyTrigger"
                     :src="drumPad.url"
                     class="clip"
-                ></audio>
+                >
+                </audio>
                 
-            </div>
+            </button>
         </div>
     </div>
 </template>
@@ -28,57 +32,68 @@ export default {
                     keyCode: 81,
                     keyTrigger: 'Q',
                     id: 'Heater-1',
-                    url: '../assets/sounds/drumpad1.mp3'
+                    url: '/sounds/drumpad1.mp3'
                 },
                 {
                     keyCode: 87,
                     keyTrigger: 'W',
                     id: 'Heater-2',
-                    url: '../assets/sounds/drumpad2.mp3'
+                    url: '/sounds/drumpad2.mp3'
                 },
                 {
                     keyCode: 69,
                     keyTrigger: 'E',
                     id: 'Heater-3',
-                    url: '../assets/sounds/drumpad3.mp3'
+                    url: '/sounds/drumpad3.mp3'
                 },
                 {
                     keyCode: 65,
                     keyTrigger: 'A',
                     id: 'Heater-4',
-                    url: '../assets/sounds/drumpad4_1.mp3'
+                    url: '/sounds/drumpad4.mp3'
                 },
                 {
                     keyCode: 83,
                     keyTrigger: 'S',
                     id: 'Clap',
-                    url: '../assets/sounds/drumpad5.mp3'
+                    url: '/sounds/drumpad5.mp3'
                 },
                 {
                     keyCode: 68,
                     keyTrigger: 'D',
                     id: 'Open-HH',
-                    url: '../assets/sounds/drumpad6.mp3'
+                    url: '/sounds/drumpad6.mp3'
                 },
                 {
                     keyCode: 90,
                     keyTrigger: 'Z',
                     id: 'Kick-n\'-Hat',
-                    url: '../assets/sounds/drumpad7.mp3'
+                    url: '/sounds/drumpad7.mp3'
                 },
                 {
                     keyCode: 88,
                     keyTrigger: 'X',
                     id: 'Kick',
-                    url: '../assets/sounds/drumpad8.mp3'
+                    url: '/sounds/drumpad8.mp3'
                 },
                 {
                     keyCode: 67,
                     keyTrigger: 'C',
                     id: 'Closed-HH',
-                    url: '../assets/sounds/drumpad9.mp3'
+                    url: '/sounds/drumpad9.mp3'
                 },
             ]
+        }
+    },
+    methods: {
+        playAndFocus (keyTrigger) {
+            this.$refs[`audio__${keyTrigger}`][0].play()
+            this.$refs[`pad${keyTrigger}`][0].focus()
+
+            setTimeout(() => {
+                document.activeElement.blur()
+            }, 1000);
+
         }
     },
     mounted () {
@@ -86,7 +101,7 @@ export default {
         this.drumPads.forEach((pad) => {
             document.addEventListener('keydown', (e) => {
                 if (e.keyCode === pad.keyCode) {
-                    self.$refs[`pad${pad.keyTrigger}`][0].play()
+                    this.playAndFocus(pad.keyTrigger)
                 }
             })
         })
@@ -105,9 +120,14 @@ export default {
     }
 
     &__drumPad {
-        background-color: @portfolio-sand;
+        background-color: @portfolio-blue;
         border-radius: 10px;
-
+        color: @portfolio-white;
+        &:focus {
+            background: red;
+            border: none;
+            outline: none;
+        }
     }
 }
 </style>
