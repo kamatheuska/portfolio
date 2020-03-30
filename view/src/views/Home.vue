@@ -24,6 +24,9 @@ export default {
     components: {
         Nav,
         Footer
+    },
+    created () {
+        this.$store.dispatch('setCurrentProject', '')
     }
 }
 </script>

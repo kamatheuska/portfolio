@@ -1,6 +1,7 @@
 <template>
     <nav
         class="Nav" 
+        :class="navClassBackground"
         @click="toggleNav()"
     >
         <h1 class="Nav__heading">...ka</h1>
@@ -64,6 +65,10 @@ export default {
         clickOutside: vClickOutside.directive
     },
     computed: {
+        ...mapGetters([
+            'currentProject'
+        ]),
+
         navigationClasses () {
             return {
                 'Nav__horizontal': this.direction === 'horizontal',
@@ -72,6 +77,11 @@ export default {
         },
         showNav () {
             return this.iconArrowInverse
+        },
+        navClassBackground () {
+            return {
+                'Nav__drums': this.currentProject === 'drumMachine'
+            }
         }
     },
     data () {
@@ -102,6 +112,14 @@ export default {
     background-color: @portfolio-dark-blue;
     position: relative;
     font-size: 1.2rem;
+    transition: background-color 1000ms linear;
+
+    &__drums {
+        background-color: darken(@portfolio-purple, 30%);;
+        .Nav__link {
+            background-color:  darken(@portfolio-purple, 30%);;
+        }
+    }
 
     &__heading {
         position: absolute;

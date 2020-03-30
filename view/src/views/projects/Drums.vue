@@ -19,6 +19,9 @@ export default {
     name: 'Drums',
     components: {
         DrumMachine
+    },
+    created () {
+        this.$store.dispatch('setCurrentProject', 'drumMachine')
     }
 }
 

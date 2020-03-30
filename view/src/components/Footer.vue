@@ -1,5 +1,7 @@
 <template>
-<footer class="footer">
+<footer class="footer"
+    :class="footerClassProject"
+>
     <div class="footer__social">
         <a target="_blank" href="https://www.instagram.com/kamatheuska">
             <div class="footer__icon--container">
@@ -32,6 +34,24 @@
 
 </footer>
 </template>
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+    name: 'Footer',
+    computed: {
+        ...mapGetters([
+            'currentProject'
+        ]),
+
+        footerClassProject () {
+            return {
+                'footer__drums': this.currentProject === 'drumMachine'
+            }
+        }
+    },
+}
+</script>
 
 <style lang="less" scoped>
 .footer {
@@ -43,6 +63,11 @@
     flex-direction: column;
     color: @portfolio-white;
     justify-content: center;
+    transition: background-color 1000ms linear;
+    &__drums {
+        background-color: darken(@portfolio-purple, 30%);
+    }
+
     &__icon {
         height: 100%;
         width: auto;
