@@ -20,7 +20,12 @@
             </svg>
         </div>
         <transition name="fade">
-            <div v-if="showNav" class="Nav__container" :class="navigationClasses">
+            <div
+                v-if="showNav"
+                class="Nav__container"
+                :class="navigationClasses"
+                v-click-outside="onClickOutside"
+            >
                 <router-link to="/home" class="Nav__a--first">
                     <div class="Nav__link">
                         <span>Home</span>
@@ -50,9 +55,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import WrittingMachine from '@/components/WrittingMachine'
+import vClickOutside from 'v-click-outside'
 
 export default {
     name: 'Nav',
+    directives: {
+        clickOutside: vClickOutside.directive
+    },
     computed: {
         navigationClasses () {
             return {
@@ -72,6 +81,10 @@ export default {
     methods: {
         toggleNav () {
             this.iconArrowInverse = !this.iconArrowInverse
+        },
+
+        onClickOutside (event) {
+            this.toggleNav()
         }
     },
     props: {
@@ -90,8 +103,8 @@ export default {
     font-size: 1.2rem;
 
     &__small-title {
-        height: 3rem;
-        padding-top: 1rem;
+        height: 2rem;
+        padding-top: .3rem;
         background-color: @portfolio-blue;
         color: @portfolio-white;
     }
