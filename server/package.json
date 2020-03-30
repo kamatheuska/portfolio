@@ -12,6 +12,7 @@
         "test:unit": "tape tests/unit/**.*.js | ./node_modules/.bin/tap-spec",
         "test": "tape tests/**/**.*.js | ./node_modules/.bin/tap-spec",
         "start": "node server.js",
+        "clean": "rm -rf node_modules",
         "dev": "nodemon server.js"
     },
     "dependencies": {

@@ -28,7 +28,7 @@ export default {
 .Drums {
     font-family: 'Roboto', sans-serif;
     color: @portfolio-white;
-    background-color: @portfolio-brown;
+    background-color: @portfolio-purple;
     margin-top: 2rem;
     text-align: center;
     width: 100%;

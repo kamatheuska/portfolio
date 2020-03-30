@@ -38,7 +38,7 @@
     height: max-content;
     padding-top: 1.8rem;
     padding-bottom: 1rem;
-    background-color: @portfolio-gray-blue;
+    background-color: @portfolio-dark-blue;
     display: flex;
     flex-direction: column;
     color: @portfolio-white;

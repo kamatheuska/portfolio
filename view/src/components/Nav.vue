@@ -3,6 +3,7 @@
         class="Nav" 
         @click="toggleNav()"
     >
+        <h1 class="Nav__heading">...ka</h1>
         <div
             class="Nav__icon--container"
         >   
@@ -96,11 +97,19 @@ export default {
 <style lang="less">
 .Nav {
     font-family: 'Roboto', sans-serif;
-    height: 3rem;
+    height: 3.6rem;
     width: 100vw;
     background-color: @portfolio-dark-blue;
     position: relative;
     font-size: 1.2rem;
+
+    &__heading {
+        position: absolute;
+        padding-top: .5rem; 
+        font-family: monospace;
+        color: @portfolio-white;
+        padding-right: 3rem;
+    }
 
     &__small-title {
         height: 2rem;
@@ -109,7 +118,7 @@ export default {
         color: @portfolio-white;
     }
     &__a--first {
-        margin-top: 2rem;
+        margin-top: 3.3rem;
     }
     
     a {

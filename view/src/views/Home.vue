@@ -41,11 +41,5 @@ export default {
         align-items: center;
         height: 60vh;
     }
-
-    &__footer {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-    }
 }
 </style>
