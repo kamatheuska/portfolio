@@ -80,7 +80,8 @@ export default {
         },
         navClassBackground () {
             return {
-                'Nav__drums': this.currentProject === 'drumMachine'
+                'Nav__drums': this.currentProject === 'drumMachine',
+                'Nav__writting': this.currentProject === 'writting'
             }
         }
     },
@@ -112,13 +113,33 @@ export default {
     background-color: @portfolio-dark-blue;
     position: relative;
     font-size: 1.2rem;
-    transition: background-color 1000ms linear;
+    transition: background-color 700ms linear;
 
     &__drums {
-        background-color: darken(@portfolio-purple, 30%);;
+        background-color: darken(@portfolio-purple, 30%);
         .Nav__link {
-            background-color:  darken(@portfolio-purple, 30%);;
+            background-color:  darken(@portfolio-purple, 30%);
+            &:hover {
+                background-color: @portfolio-purple;
+                border: none;
+                transition: background-color 400ms linear;
+            }
         }
+    }
+
+    &__writting {
+        background-color: @portfolio-brick;
+        .Nav__link {
+            background-color:  @portfolio-brick;
+
+            &:hover {
+                background-color: lighten(@portfolio-brick, 10%);
+                border: none;
+                transition: background-color 400ms linear;
+                
+            }
+        }
+
     }
 
     &__heading {

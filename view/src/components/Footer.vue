@@ -46,7 +46,8 @@ export default {
 
         footerClassProject () {
             return {
-                'footer__drums': this.currentProject === 'drumMachine'
+                'footer__drums': this.currentProject === 'drumMachine',
+                'footer__writting': this.currentProject === 'writting'
             }
         }
     },
@@ -63,9 +64,12 @@ export default {
     flex-direction: column;
     color: @portfolio-white;
     justify-content: center;
-    transition: background-color 1000ms linear;
+    transition: background-color 700ms linear;
     &__drums {
         background-color: darken(@portfolio-purple, 30%);
+    }
+    &__writting {
+        background-color: darken(@portfolio-brick, 15%);
     }
 
     &__icon {

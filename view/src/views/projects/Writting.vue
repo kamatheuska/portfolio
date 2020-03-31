@@ -82,6 +82,9 @@ export default {
             })
         }
     },
+    created () {
+        this.$store.dispatch('setCurrentProject', 'writting')
+    }
 }
 </script>
 
@@ -94,6 +97,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 70vh;
+    color: @portfolio-dark-gray;
     &__label {
         margin-bottom: 1rem;
     }
