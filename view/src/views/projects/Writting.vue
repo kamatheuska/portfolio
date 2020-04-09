@@ -10,6 +10,7 @@
                     type="text"
                     id="textToType"
                     placeholder="Type something..."
+                    @keyup.enter="startWrittingMachine"
                 >
             </fieldset>
             <fieldset class="writting__fieldset">
@@ -24,7 +25,7 @@
                     placeholder="Type something..."
                 >
             </fieldset>
-            <button class="button writting__button" @click="startWrittingMachine()">
+            <button class="button writting__button" @click="startWrittingMachine">
                 SEE THE MAGIC
             </button>
         </div>
@@ -98,6 +99,8 @@ export default {
     align-items: center;
     width: 70vh;
     color: @portfolio-dark-gray;
+    padding-left: 2rem;
+    padding-right: 2rem;
     &__label {
         margin-bottom: 1rem;
     }
