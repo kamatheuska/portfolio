@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
 const app = express()
-const publicPath = path.join(__dirname, 'public/')
 const config = require('./config')
 const {
     undefinedError,
@@ -16,17 +15,19 @@ if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
 }
 
-console.log(`Printing- - - - publicPath:`, publicPath)
-
-app.use(express.static(publicPath))
+app.use('/', express.static(path.join(__dirname, 'publicReact')))
+app.use('/publicVue', express.static(path.join(__dirname, 'publicVue')))
 app.use(bodyParser.json())
-app.use(require('./routes/weather'))
-app.use(require('./routes/quote'))
-app.use(require('./routes/twitch'))
 
 app.get('/', (req, res) => {
-    res.sendFile(publicPath + 'index.html')
+    res.sendFile(path.join(__dirname, 'publicVue/index.html'))
 })
+
+
+app.get('/react', (req, res) => {
+    res.sendFile(path.join(__dirname, 'publicReact/index.html'))
+})
+
 
 app.use(assertionError)
 app.use(validationError)
