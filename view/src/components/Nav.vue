@@ -44,11 +44,6 @@
                         <span>Drum Machine</span>
                     </div>
                 </router-link>
-                <router-link to="/projects/drumMachine">
-                    <div class="Nav__link">
-                        <span>Drum Machine</span>
-                    </div>
-                </router-link>
                 <router-link to="/about">
                     <div class="Nav__link">
                         <span>About</span>
