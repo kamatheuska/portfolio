@@ -15,19 +15,12 @@ if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
 }
 
-app.use('/', express.static(path.join(__dirname, 'publicReact')))
-app.use('/publicVue', express.static(path.join(__dirname, 'publicVue')))
+app.use(express.static(path.join(__dirname, 'publicReact')))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'publicVue/index.html'))
+    res.sendFile(path.join(__dirname, '/index.html'))
 })
-
-
-app.get('/react', (req, res) => {
-    res.sendFile(path.join(__dirname, 'publicReact/index.html'))
-})
-
 
 app.use(assertionError)
 app.use(validationError)
