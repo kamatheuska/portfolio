@@ -15,7 +15,7 @@ if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
 }
 
-app.use(express.static(path.join(__dirname, 'publicReact')))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
