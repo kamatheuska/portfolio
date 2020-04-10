@@ -44,6 +44,9 @@
                         <span>Drum Machine</span>
                     </div>
                 </router-link>
+                <div class="Nav__link" @click="goToExternalUrl('/projects/api/urlshortener')">
+                    <span>Url Shortener</span>
+                </div>
                 <router-link to="/about">
                     <div class="Nav__link">
                         <span>About</span>
@@ -58,6 +61,10 @@
 import { mapGetters } from 'vuex'
 import WrittingMachine from '@/components/WrittingMachine'
 import vClickOutside from 'v-click-outside'
+
+const outsideProjectUrls = {
+    urlShortener: 'https://url-shortener-nikameush.herokuapp.com/'
+}
 
 export default {
     name: 'Nav',
@@ -97,6 +104,17 @@ export default {
 
         onClickOutside (event) {
             this.toggleNav()
+        },
+
+        goToExternalUrl(url) {
+            let redirectUrl
+            if (url === '/projects/api/urlshortener') {
+                redirectUrl = process.env.NODE_ENV !== 'production'
+                    ? 'http://localhost:3001'
+                    : outsideProjectUrls.urlShortener
+            }
+
+            window.location.href = redirectUrl
         }
     },
     props: {
@@ -119,6 +137,10 @@ export default {
         background-color: darken(@portfolio-purple, 30%);
         .Nav__link {
             background-color:  darken(@portfolio-purple, 30%);
+            span {
+                font-weight: bold;
+
+            }
             &:hover {
                 background-color: @portfolio-purple;
                 border: none;
