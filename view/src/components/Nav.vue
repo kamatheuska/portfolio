@@ -33,7 +33,7 @@
                         <span>Home</span>
                     </div>
                 </router-link>
-                <span class="Nav__small-title">Projects</span>
+                <span class="Nav__small-title">frontend projects</span>
                 <router-link to="/projects/writtingMachine">
                     <div class="Nav__link">
                         <span>Writting Machine</span>
@@ -44,6 +44,7 @@
                         <span>Drum Machine</span>
                     </div>
                 </router-link>
+                <span class="Nav__small-title">backend projects</span>
                 <div class="Nav__link" @click="goToExternalUrl('/projects/api/urlshortener')">
                     <span>Url Shortener</span>
                 </div>
@@ -209,7 +210,7 @@ export default {
         border: 2px solid @portfolio-dark-blue;
         justify-content: center;
         align-items: center;
-        background-color: @portfolio-dark-blue;
+        background-color: fade(@portfolio-dark-blue, 95%);
         color: #fff;
         border: none;
         height: 5rem;
