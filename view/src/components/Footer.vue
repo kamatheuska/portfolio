@@ -65,12 +65,13 @@ export default {
     justify-content: center;
     border: 2px @portfolio-white solid;
     transition: background-color 700ms linear;
+    color: @portfolio-white;
     font-size: 1rem;
     &__drums {
-        background-color: darken(@portfolio-purple, 30%);
+        background-color: fade(darken(@portfolio-purple, 30%), 80%)
     }
     &__writting {
-        background-color: darken(@portfolio-brick, 15%);
+        background-color: fade(darken(@portfolio-brick, 15%), 40%)
     }
 
     &__icon {

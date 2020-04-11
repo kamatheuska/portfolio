@@ -30,8 +30,9 @@ export default {
 <style lang="less" scoped>
 .Drums {
     font-family: 'Roboto', sans-serif;
+    background-color: #00000044;
     color: @portfolio-white;
-    background-color: @portfolio-purple;
+    border-radius: 10px;
     margin-top: 2rem;
     text-align: center;
     width: 100%;

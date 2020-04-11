@@ -123,18 +123,18 @@ export default {
         grid-template-rows: repeat(3, 5rem);
         grid-gap: 1rem;
         color: @portfolio-white;
-        background-color: @portfolio-yellow;
+        background-color: #00000033;
         border-radius: 10px;
     }
 
     &__drumPad {
-        background-color: @portfolio-brick;
+        background-color: #00000099;
         border-radius: 10px;
         color: @portfolio-white;
         border: none;
         font-weight: 900;
         &:focus {
-            background: @portfolio-orange;
+            background-color: #00000099;
             border: none;
             outline: none;
         }

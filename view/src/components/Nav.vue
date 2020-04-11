@@ -136,18 +136,18 @@ export default {
     transition: background-color 700ms linear;
 
     &__image {
-        height: auto;
-        width: 100%;
+        height: 100%;
+        width: auto;
         &--container {
             position: absolute;
-            width: 100vw;
+            height: 100vh;
             z-index: -10000;
         }
     }
     &__drums {
-        background-color: darken(@portfolio-purple, 30%);
+        background-color: fade(darken(@portfolio-purple, 30%), 80%);
         .Nav__link {
-            background-color:  darken(@portfolio-purple, 30%);
+            background-color: fade(darken(@portfolio-purple, 30%), 80%);
             span {
                 font-weight: bold;
 
@@ -161,9 +161,9 @@ export default {
     }
 
     &__writting {
-        background-color: @portfolio-brick;
+        background-color: fade(@portfolio-brick, 60%);
         .Nav__link {
-            background-color:  @portfolio-brick;
+            background-color:  fade(@portfolio-brick, 90%);
 
             &:hover {
                 background-color: lighten(@portfolio-brick, 10%);
@@ -251,6 +251,14 @@ export default {
         padding-right: 2rem;
         display: flex;
         justify-content: center;
+        &__image {
+            height: auto;
+            width: 100%;
+            &--container {
+                height: auto;
+                width:100vw;
+            }
+        }
         &__horizontal {
             flex-basis: 50%;
             height: max-content;
