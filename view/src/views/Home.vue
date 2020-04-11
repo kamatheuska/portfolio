@@ -33,16 +33,25 @@ export default {
 
 <style lang="less" scoped>
 .home {
+    font-size: 1.5rem;
     width: 100%;
     height: max-content;
     position: relative;
     height: 100%;
+    color: @portfolio-white;
+    position: relative;
     &__greeting {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 60vh;
+    }
+    &__footer {
+        width: 100vw;
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 }
 </style>

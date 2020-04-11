@@ -59,12 +59,13 @@ export default {
     height: max-content;
     padding-top: 1.8rem;
     padding-bottom: 1rem;
-    background-color: @portfolio-dark-blue;
+    background-color: #00000033;
     display: flex;
     flex-direction: column;
-    color: @portfolio-white;
     justify-content: center;
+    border: 2px @portfolio-white solid;
     transition: background-color 700ms linear;
+    font-size: 1rem;
     &__drums {
         background-color: darken(@portfolio-purple, 30%);
     }

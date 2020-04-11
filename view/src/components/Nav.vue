@@ -3,7 +3,10 @@
         class="Nav" 
         :class="navClassBackground"
         @click="toggleNav()"
-    >
+    >   
+        <div class="Nav__image--container">
+            <img src="/images/img_portada.jpg" alt="" class="Nav__image">
+        </div>
         <h1 class="Nav__heading">...ka</h1>
         <div
             class="Nav__icon--container"
@@ -62,10 +65,6 @@ import { mapGetters } from 'vuex'
 import WrittingMachine from '@/components/WrittingMachine'
 import vClickOutside from 'v-click-outside'
 
-const outsideProjectUrls = {
-    urlShortener: 'https://url-shortener-nikameush.herokuapp.com/'
-}
-
 export default {
     name: 'Nav',
     directives: {
@@ -94,7 +93,10 @@ export default {
     },
     data () {
         return {
-            iconArrowInverse: false
+            iconArrowInverse: false,
+            outsideProjectUrls: {
+                urlShortener: 'https://url-shortener-nikameush.herokuapp.com/'
+            }
         }
     },
     methods: {
@@ -109,9 +111,9 @@ export default {
         goToExternalUrl(url) {
             let redirectUrl
             if (url === '/projects/api/urlshortener') {
-                redirectUrl = process.env.NODE_ENV !== 'production'
+                redirectUrl = document.location.hostname === 'localhost'
                     ? 'http://localhost:3001'
-                    : outsideProjectUrls.urlShortener
+                    : this.outsideProjectUrls.urlShortener
             }
 
             window.location.href = redirectUrl
@@ -128,11 +130,20 @@ export default {
     font-family: 'Roboto', sans-serif;
     height: 3.6rem;
     width: 100vw;
-    background-color: @portfolio-dark-blue;
+    background-color: #00000000;
     position: relative;
     font-size: 1.2rem;
     transition: background-color 700ms linear;
 
+    &__image {
+        height: auto;
+        width: 100%;
+        &--container {
+            position: absolute;
+            width: 100vw;
+            z-index: -10000;
+        }
+    }
     &__drums {
         background-color: darken(@portfolio-purple, 30%);
         .Nav__link {
@@ -168,7 +179,7 @@ export default {
         position: absolute;
         padding-top: .5rem; 
         font-family: monospace;
-        color: @portfolio-white;
+        color: @portfolio-dark-gray;
         padding-right: 3rem;
     }
 
