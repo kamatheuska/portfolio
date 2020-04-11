@@ -3,10 +3,7 @@
         class="Nav" 
         :class="navClassBackground"
         @click="toggleNav()"
-    >   
-        <div class="Nav__image--container">
-            <img src="/images/img_portada.jpg" alt="" class="Nav__image">
-        </div>
+    >
         <h1 class="Nav__heading">...ka</h1>
         <div
             class="Nav__icon--container"
@@ -134,16 +131,8 @@ export default {
     position: relative;
     font-size: 1.2rem;
     transition: background-color 700ms linear;
+    border: 2px @portfolio-white solid;
 
-    &__image {
-        height: 100%;
-        width: auto;
-        &--container {
-            position: absolute;
-            height: 100vh;
-            z-index: -10000;
-        }
-    }
     &__drums {
         background-color: fade(darken(@portfolio-purple, 30%), 80%);
         .Nav__link {

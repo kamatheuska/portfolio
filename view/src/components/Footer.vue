@@ -30,7 +30,7 @@
         </a>
     </div>
     <p>Copyright <strong>Nicolas Ramirez 2020</strong></p>
-    <p>Icons made by<a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+    <p class="footer__tribute">Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
 
 </footer>
 </template>
@@ -58,7 +58,6 @@ export default {
 .footer {
     height: max-content;
     padding-top: 1.8rem;
-    padding-bottom: 1rem;
     background-color: #00000033;
     display: flex;
     flex-direction: column;
@@ -87,6 +86,13 @@ export default {
         display: flex;
         justify-content: space-evenly;
 
+    }
+
+    &__tribute {
+        font-size: .8rem;
+        a {
+            display: inline;
+        }
     }
 
 }
