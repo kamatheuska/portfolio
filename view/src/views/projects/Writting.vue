@@ -104,6 +104,9 @@ export default {
     background-color: #00000044;
     color: @portfolio-white;
     border-radius: 10px;
+    &__heading {
+        font-size: 2rem;
+    }
     &__label {
         margin-bottom: 1rem;
     }
