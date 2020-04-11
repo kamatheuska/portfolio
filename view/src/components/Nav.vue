@@ -128,7 +128,7 @@ export default {
     font-family: 'Roboto', sans-serif;
     height: 3.6rem;
     width: 100vw;
-    background-color: #00000000;
+    background-color: fade(#000000, 20%);
     position: relative;
     font-size: 1.2rem;
     transition: background-color 700ms linear;
