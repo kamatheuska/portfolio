@@ -3,7 +3,7 @@
         <Nav direction="horizontal"/>
         <div class="home__greeting">
             <h1>Welcome to my website</h1>
-            <p>I am a software developer and a musician</p>
+            <p>I am a software developer</p>
             <p>Click on the top bar to see my projects</p>
 
         </div>
@@ -33,7 +33,7 @@ export default {
 
 <style lang="less" scoped>
 .home {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     width: 100%;
     height: max-content;
     position: relative;

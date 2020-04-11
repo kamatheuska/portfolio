@@ -94,13 +94,16 @@ export default {
     margin-top: 4rem;
     height: 40rem;
     display: flex;
+    font-size: 1.4rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 70vh;
-    color: @portfolio-dark-gray;
     padding-left: 2rem;
     padding-right: 2rem;
+    background-color: #00000044;
+    color: @portfolio-white;
+    border-radius: 10px;
     &__label {
         margin-bottom: 1rem;
     }
