@@ -29,6 +29,10 @@ export default new Router({
                 {
                     path: 'drumMachine',
                     component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/Drums.vue'),
+                },
+                {
+                    path: 'urlShortener',
+                    component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/UrlShortener.vue'),
                 }
             ]
 

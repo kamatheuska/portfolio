@@ -45,9 +45,11 @@
                     </div>
                 </router-link>
                 <span class="Nav__small-title">backend projects</span>
-                <div class="Nav__link" @click="goToExternalUrl('/projects/api/urlshortener')">
-                    <span>Url Shortener</span>
-                </div>
+                <router-link to="/projects/urlShortener">
+                    <div class="Nav__link">
+                        <span>URL Shortener</span>
+                    </div>
+                </router-link>
                 <router-link to="/about">
                     <div class="Nav__link">
                         <span>About</span>

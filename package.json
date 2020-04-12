@@ -14,5 +14,9 @@
     },
     "devDependencies": {
         "lerna": "^3.16.4"
+    },
+    "dependencies": {
+        "mongo": "^0.1.0",
+        "mongoose": "^5.9.7"
     }
 }
