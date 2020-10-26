@@ -38,6 +38,11 @@ export default new Router({
 
         },
         {
+            path: '/internal/drumMachine',
+            name: 'internal',
+            component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/freecodecamp/Drums.vue'),
+        },
+        {
             path: '/about',
             name: 'about',
             component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
