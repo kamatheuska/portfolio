@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["about~home~projects"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["about~projects"],{
 
 /***/ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js":
 /*!*******************************************************************!*\
