@@ -29,9 +29,18 @@ export default new Router({
                 {
                     path: 'drumMachine',
                     component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/Drums.vue'),
+                },
+                {
+                    path: 'urlShortener',
+                    component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/UrlShortener.vue'),
                 }
             ]
 
+        },
+        {
+            path: '/internal/drumMachine',
+            name: 'internal',
+            component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/freecodecamp/Drums.vue'),
         },
         {
             path: '/about',

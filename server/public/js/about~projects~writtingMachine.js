@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["about~home~projects~writtingMachine"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["about~projects~writtingMachine"],{
 
 /***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
 /*!*********************************************************************!*\

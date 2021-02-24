@@ -23,6 +23,7 @@ module.exports = {
     },
 
     undefinedError (error, req, res, next) { // eslint-disable-line
+    console.log(`Printing- - - - error:`, error)
         res.status(400).send(error)
     }
 }
