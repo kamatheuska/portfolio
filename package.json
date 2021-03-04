@@ -10,7 +10,7 @@
         "setup": "npm i && node_modules/.bin/lerna bootstrap",
         "setup:production": "npm ci && node_modules/.bin/lerna bootstrap",
         "deploy": "npm run clean:all && npm run setup:production && lerna run build && lerna run test && npm run deploy:heroku",
-        "deploy:heroku": "git subtree push --prefix server heroku master"
+        "deploy:heroku": "./pushToHeroku.sh"
     },
     "devDependencies": {
         "lerna": "^3.16.4"
