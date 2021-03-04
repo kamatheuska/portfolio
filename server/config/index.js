@@ -12,8 +12,8 @@ module.exports = {
     port: getEnvVar('PORT', 5000),
     nodeEnv: getEnvVar('NODE_ENV', 'development'),
     mongoDbUri: process.env.NODE_ENV === 'test'
-        ? getEnvVar('MONGODB_URI', 'mongodb://localhost:27017/backoffice-test')
+        ? getEnvVar('MONGODB_URI', 'mongodb://localhost:27017/portfolio-test')
         :  process.env.NODE_ENV === 'development'
-            ? getEnvVar('MONGODB_URI', 'mongodb://localhost:27017/backoffice')
+            ? getEnvVar('MONGODB_URI', 'mongodb://localhost:27017/portfolio')
             : getEnvVar('MONGODB_URI')
 }
