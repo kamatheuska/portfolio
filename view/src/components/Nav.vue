@@ -125,7 +125,9 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
+@import '~@/assets/styles/abstracts/color';
+
 .Nav {
     font-family: 'Roboto', sans-serif;
     height: 3.6rem;
@@ -134,18 +136,18 @@ export default {
     position: relative;
     font-size: 1.2rem;
     transition: background-color 700ms linear;
-    border: 2px @portfolio-white solid;
+    border: 2px $portfolio-white solid;
 
     &__drums {
-        background-color: fade(darken(@portfolio-purple, 30%), 80%);
+        background-color: fade(darken($portfolio-purple, 30%), 80%);
         .Nav__link {
-            background-color: fade(darken(@portfolio-purple, 30%), 80%);
+            background-color: fade(darken($portfolio-purple, 30%), 80%);
             span {
                 font-weight: bold;
 
             }
             &:hover {
-                background-color: @portfolio-purple;
+                background-color: $portfolio-purple;
                 border: none;
                 transition: background-color 400ms linear;
             }
@@ -153,12 +155,12 @@ export default {
     }
 
     &__writting {
-        background-color: fade(@portfolio-brick, 60%);
+        background-color: fade($portfolio-brick, 60%);
         .Nav__link {
-            background-color:  fade(@portfolio-brick, 90%);
+            background-color:  fade($portfolio-brick, 90%);
 
             &:hover {
-                background-color: lighten(@portfolio-brick, 10%);
+                background-color: lighten($portfolio-brick, 10%);
                 border: none;
                 transition: background-color 400ms linear;
                 
@@ -171,15 +173,15 @@ export default {
         position: absolute;
         padding-top: .5rem; 
         font-family: monospace;
-        color: @portfolio-dark-gray;
+        color: $portfolio-dark-gray;
         padding-right: 3rem;
     }
 
     &__small-title {
         height: 2rem;
         padding-top: .3rem;
-        background-color: @portfolio-blue;
-        color: @portfolio-white;
+        background-color: $portfolio-blue;
+        color: $portfolio-white;
     }
     &__a--first {
         margin-top: 3.3rem;
@@ -198,8 +200,8 @@ export default {
             position: absolute;
         }
         .icon__arrow-down {
-            fill: @portfolio-white;
-            stroke: @portfolio-white;
+            fill: $portfolio-white;
+            stroke: $portfolio-white;
         }
         &--inverse {
             transform: rotateX(180deg);
@@ -209,16 +211,16 @@ export default {
     &__link {
         display: flex;
         height: 100%;
-        border: 2px solid @portfolio-dark-blue;
+        border: 2px solid $portfolio-dark-blue;
         justify-content: center;
         align-items: center;
-        background-color: fade(@portfolio-dark-blue, 95%);
+        background-color: fade($portfolio-dark-blue, 95%);
         color: #fff;
         border: none;
         height: 5rem;
         &:focus,
         &:hover {
-            background-color: @portfolio-dark-blue;
+            background-color: $portfolio-dark-blue;
             border: 2px solid #fff;
             color: #fff;
         }

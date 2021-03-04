@@ -89,7 +89,10 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+
+@import '~@/assets/styles/abstracts/color';
+
 .writting {
     margin-top: 4rem;
     height: 40rem;
@@ -102,7 +105,7 @@ export default {
     padding-left: 2rem;
     padding-right: 2rem;
     background-color: #00000044;
-    color: @portfolio-white;
+    color: $portfolio-white;
     border-radius: 10px;
     &__heading {
         font-size: 2rem;

@@ -17,7 +17,9 @@
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '~@/assets/styles/abstracts/color';
+
 .url-shortener {
     height: 100%;
     padding-top: 5rem;
@@ -25,7 +27,7 @@
     padding-right: 5rem;
     padding-left: 5rem;
     background-color: #00000077;
-    color: @portfolio-white;
+    color: $portfolio-white;
     &__h3 {
         margin-top: 30px;
     }
@@ -38,6 +40,4 @@
         max-width: 600px;
     }
 }
-
-
 </style>

@@ -81,7 +81,9 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '~@/assets/styles/abstracts/color';
+
 .home {
     font-size: 1.4rem;
     width: 100%;
@@ -92,7 +94,7 @@ export default {
     align-items: center;
     justify-content: center;
     &__greeting {
-        color: @portfolio-dark-blue;
+        color: $portfolio-dark-blue;
         padding: 3rem 6rem;
     }
 }
@@ -117,12 +119,12 @@ export default {
     from {
         height: 0rem;
         width: 0rem;
-        background-color: @portfolio-dark-blue;
+        background-color: $portfolio-dark-blue;
     }
     to {
         height: 100%;
         width: 100%;
-        background-color: lighten(@portfolio-dark-blue, 40%);
+        background-color: lighten($portfolio-dark-blue, 40%);
     }
 }
 

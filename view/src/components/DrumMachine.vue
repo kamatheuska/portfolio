@@ -110,7 +110,10 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
+
+<style lang="scss" scoped>
+
+@import '~@/assets/styles/abstracts/color';
 .DrumMachine {
     width: 100%;
     &__display {
@@ -122,7 +125,7 @@ export default {
         grid-template-columns: repeat(3, 5rem);
         grid-template-rows: repeat(3, 5rem);
         grid-gap: 1rem;
-        color: @portfolio-white;
+        color: $portfolio-white;
         background-color: #00000033;
         border-radius: 10px;
     }
@@ -130,7 +133,7 @@ export default {
     &__drumPad {
         background-color: #00000099;
         border-radius: 10px;
-        color: @portfolio-white;
+        color: $portfolio-white;
         border: none;
         font-weight: 900;
         &:focus {

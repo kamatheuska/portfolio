@@ -141,7 +141,9 @@ export default {
 
 
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '~@/assets/styles/abstracts/color';
+
 .WrittingMachine {
     padding-top: 1rem;
     text-align: right;
@@ -156,7 +158,7 @@ export default {
         min-width: 200px;
         &--1 {
             text-align: left;
-            color: @portfolio-blue;
+            color: $portfolio-blue;
         }
     }
 }

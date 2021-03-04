@@ -1,12 +1,14 @@
+@import 'abstracts/color';
+
 .button {
-    color: @portfolio-dark-blue;
-    background-color: @portfolio-white;
+    color: $portfolio-dark-blue;
+    background-color: $portfolio-white;
     min-width: 7rem;
     max-width: 10rem;
     min-height: 4rem;
     max-height: 6rem;
     border-radius: 5px;
-    border: solid 2px @portfolio-dark-blue;
+    border: solid 2px $portfolio-dark-blue;
     cursor: pointer;
     &--md {
         height: 3rem;
@@ -14,8 +16,8 @@
     }
     &:focus,
     &:hover {
-        background-color: @portfolio-gray-blue;
-        color: @portfolio-white;
+        background-color: $portfolio-gray-blue;
+        color: $portfolio-white;
     }
 
     &:focus {

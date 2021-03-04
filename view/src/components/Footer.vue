@@ -54,7 +54,9 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '~@/assets/styles/abstracts/color';
+
 .footer {
     height: max-content;
     padding-top: 1.8rem;
@@ -62,21 +64,21 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 2px @portfolio-white solid;
+    border: 2px $portfolio-white solid;
     transition: background-color 700ms linear;
-    color: @portfolio-white;
+    color: $portfolio-white;
     font-size: 1rem;
     &__drums {
-        background-color: fade(darken(@portfolio-purple, 30%), 80%)
+        background-color: fade(darken($portfolio-purple, 30%), 80%)
     }
     &__writting {
-        background-color: fade(darken(@portfolio-brick, 15%), 40%)
+        background-color: fade(darken($portfolio-brick, 15%), 40%)
     }
 
     &__icon {
         height: 100%;
         width: auto;
-        fill: @portfolio-white;
+        fill: $portfolio-white;
         &--container {
             height: 2rem;
         }
