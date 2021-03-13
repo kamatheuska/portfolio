@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import Fallback from '@/views/Fallback.vue'
+
 Vue.use(Router);
 
 export default new Router({
@@ -11,6 +13,11 @@ export default new Router({
             redirect: {
                 name: 'home'
             }
+        },
+        {
+            path: '/fallback',
+            name: 'fallback',
+            component: Fallback
         },
         {
             path: '/home',

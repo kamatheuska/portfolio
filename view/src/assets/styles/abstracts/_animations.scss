@@ -1,0 +1,14 @@
+@import 'color';
+
+@keyframes burst {
+    from {
+        height: 0rem;
+        width: 0rem;
+        background-color: $portfolio-dark-blue;
+    }
+    to {
+        height: 100%;
+        width: 100%;
+        background-color: lighten($portfolio-dark-blue, 40%);
+    }
+}
