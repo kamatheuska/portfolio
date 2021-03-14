@@ -1,12 +1,13 @@
 <template>
-    <div id="app">
-        <router-view />
-    </div>
+    <v-app>
+        <v-main>
+                <router-view></router-view>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
-import '@/assets/styles/reset.scss'
-import '@/assets/styles/global.scss'
+import '@/assets/styles/global.scss';
 export default {
     name: 'App'
 };
