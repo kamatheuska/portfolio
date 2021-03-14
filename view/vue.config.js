@@ -2,14 +2,18 @@ const path = require('path')
 
 module.exports = {
     devServer: {
-        proxy: 'http://localhost:5000'
+        proxy: {
+            '^/api': {
+                target: 'http://localhost:5000'
+            }
+        }
     },
 
     pluginOptions: {
         'style-resources-loader': {
-            preProcessor: 'less',
+            preProcessor: 'scss',
             patterns: [
-                path.resolve(__dirname, './src/assets/styles/abstracts/*.less')
+                path.resolve(__dirname, './src/assets/styles/abstracts/*.scss')
             ]
         }
     },

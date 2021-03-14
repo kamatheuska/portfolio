@@ -1,27 +1,60 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-Vue.use(VueRouter)
+import Fallback from '@/views/Fallback.vue'
+
+Vue.use(Router);
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        redirect: {
+            name: 'home'
+        }
+    },
+    {
+        path: '/fallback',
+        name: 'fallback',
+        component: Fallback
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue')
+    },
+    {
+        path: '/projects',
+        name: 'projects',
+        component: () => import(/* webpackChunkName: "projects" */ '@/views/projects/index.vue'),
+        children: [
+            {
+                path: 'writtingMachine',
+                component: () => import(/* webpackChunkName: "writtingMachine" */ '@/views/projects/Writting.vue'),
+            },
+            {
+                path: 'drumMachine',
+                component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/Drums.vue'),
+            },
+            {
+                path: 'urlShortener',
+                component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/projects/UrlShortener.vue'),
+            }
+        ]
+
+    },
+    {
+        path: '/internal/drumMachine',
+        name: 'internal',
+        component: () => import(/* webpackChunkName: "drumMachine" */ '@/views/freecodecamp/Drums.vue'),
     },
     {
         path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+        name: 'about',
+        component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
     }
 ]
 
-const router = new VueRouter({
+export default new Router({
+    base: process.env.BASE_URL,
     routes
-})
-
-export default router
+});

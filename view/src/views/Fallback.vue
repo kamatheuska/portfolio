@@ -2,15 +2,11 @@
     <v-container class="fallback fill-height" fluid>
         <v-row>
             <v-col align="center">
-
-                <div class="fallback__greeting">
-                    <h1>Welcome to my website</h1>
-                    <p>I am a software developer</p>
-                    <!-- <p>Click on the top bar to see my projects</p> -->
-                    <br>
-                    <br>
-                    <p><strong>...in maintenance for now...</strong></p>
-                </div>
+                <Greetings>
+                    <p>
+                        <strong>...in maintenance for now...</strong>
+                    </p>
+                </Greetings>
 
             </v-col>
         </v-row>
@@ -19,12 +15,15 @@
 </template>
 
 <script>
-import Bubbles from '@/components/Bubbles.vue'
+import Greetings from '@/components/Greetings.vue';
+import Bubbles from '@/components/Bubbles.vue';
+
 
 export default {
     name: 'Fallback',
 
     components: {
+        Greetings,
         Bubbles
     },
     
@@ -35,7 +34,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/styles/abstracts/color';
 
 .fallback {
     font-size: 1.4rem;
