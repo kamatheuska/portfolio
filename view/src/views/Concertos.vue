@@ -73,6 +73,7 @@ const ODD_SQUARE_RANGES = {
         max: -100,
     },
 };
+const BULMA_TABLET_PIXELS_BREAKPOINT = 769;
 export default {
     name: 'Home',
     components: {
@@ -85,9 +86,14 @@ export default {
         squares: [],
         squareConcertos: {},
         fine: false,
+        deviceFactor: 1,
     }),
 
     async created() {
+        if (!this.isMobile) {
+            this.deviceFactor = 2;
+        }
+
         await sleep(2000);
         this.initSquareConcerto('primo');
         this.executeConcertoPrimo();
@@ -111,6 +117,13 @@ export default {
         // this.fine = true;
         // const topPixels = this.index * 20 + this.randomInRange(45, 25);
         // const leftPixels = this.isRight ? this.randomInRange(-35, -5) : this.randomInRange(35, 5);
+    },
+
+    computed: {
+        isMobile() {
+            const mql = window.matchMedia(`(max-width: ${BULMA_TABLET_PIXELS_BREAKPOINT}px)`);
+            return mql.matches;
+        },
     },
 
     methods: {
@@ -297,8 +310,16 @@ export default {
             this.changeAllPositions('cuarto');
         },
 
-        randomInRange({ min, max }) {
-            return Math.floor(Math.random() * (max - min) + min);
+        randomInRange({ min, max }, useFactor = false) {
+            let normalizer;
+            if (useFactor) {
+                normalizer =
+                    max * this.deviceFactor - min * this.deviceFactor + min * this.deviceFactor;
+            } else {
+                normalizer = max - min + min;
+            }
+
+            return Math.floor(Math.random() * normalizer);
         },
 
         randomHexColor() {
@@ -334,7 +355,7 @@ export default {
 
         generateSquareDetails(ranges) {
             return {
-                height: this.randomInRange(ranges.height),
+                height: this.randomInRange(ranges.height, true),
                 top: this.randomInRange(ranges.top),
                 left: this.randomInRange(ranges.left),
                 color: this.randomHexColor(),
@@ -359,15 +380,13 @@ export default {
 
         changeSquareTopPosition(concertoName, squareIndex) {
             const ranges = this.getSquareRanges(squareIndex);
-            this.squareConcertos[concertoName].squares[squareIndex].top = this.randomInRange(
-                ranges.top,
-            );
+            const { top } = ranges;
+            this.squareConcertos[concertoName].squares[squareIndex].top = this.randomInRange(top);
         },
         changeSquareLeftPosition(concertoName, squareIndex) {
             const ranges = this.getSquareRanges(squareIndex);
-            this.squareConcertos[concertoName].squares[squareIndex].left = this.randomInRange(
-                ranges.left,
-            );
+            const { left } = ranges;
+            this.squareConcertos[concertoName].squares[squareIndex].left = this.randomInRange(left);
         },
     },
 };
