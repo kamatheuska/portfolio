@@ -1,11 +1,5 @@
 <template>
     <div class="intro container">
-        <Navbar
-            color="info"
-            :showLinks="showNavbarLinks"
-            :logoFill="logo.fill"
-            v-if="body.show"
-        ></Navbar>
         <div
             class="intro__hero-container"
             :class="{
@@ -89,17 +83,11 @@
 <script>
 import { sleep } from '@/utils';
 
-import Navbar from '@/components/Navbar.vue';
-
 // const DARK_BLUE = '#186090';
 const WHITE = '#fff';
 
 export default {
     name: 'Intro',
-
-    components: {
-        Navbar,
-    },
 
     computed: {
         showNavbarLinks() {
@@ -169,7 +157,7 @@ export default {
             this.toggleHeroElements(['conclusion']);
 
             await sleep(3000);
-            this.body.show = true;
+            this.$router.push('/home');
         },
 
         async animatedAdjectiveFadeInOut(word, delay = 800) {

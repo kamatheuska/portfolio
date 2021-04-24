@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
 import Intro from '../views/Intro.vue';
 import Concertos from '../views/Concertos.vue';
 
@@ -9,6 +10,11 @@ const routes = [
     {
         path: '/',
         redirect: '/intro',
+    },
+    {
+        path: '/home',
+        component: Home,
+        name: 'Home',
     },
     {
         path: '/intro',

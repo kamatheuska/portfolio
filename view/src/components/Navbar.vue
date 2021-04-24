@@ -40,7 +40,7 @@
             }"
         >
             <div class="navbar-end" v-if="showLinks">
-                <router-link to="/" class="navbar-item"> Home </router-link>
+                <router-link to="/home" class="navbar-item"> Home </router-link>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link"> Projects </a>
