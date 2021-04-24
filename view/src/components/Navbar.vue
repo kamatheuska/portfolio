@@ -17,10 +17,14 @@
             <a
                 role="button"
                 class="navbar-burger"
+                :class="{
+                    'is-active': activeNavbar,
+                }"
                 aria-label="menu"
                 aria-expanded="false"
-                data-target="navbarBasicExample"
+                data-target="navbar"
                 v-if="showLinks"
+                @click="activeNavbar = !activeNavbar"
             >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -28,7 +32,13 @@
             </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div
+            id="navbar"
+            class="navbar-menu"
+            :class="{
+                'is-active': activeNavbar,
+            }"
+        >
             <div class="navbar-end" v-if="showLinks">
                 <router-link to="/" class="navbar-item"> Home </router-link>
 
@@ -36,13 +46,15 @@
                     <a class="navbar-link"> Projects </a>
 
                     <div class="navbar-dropdown is-right">
-                        <router-link to="/concertos" class="navbar-item">
+                        <router-link
+                            to="/concertos"
+                            class="navbar-item"
+                            :class="{
+                                'is-active': $route.name === 'Concertos',
+                            }"
+                        >
                             Geometric Concertos
                         </router-link>
-                        <a class="navbar-item"> Elements </a>
-                        <a class="navbar-item"> Components </a>
-                        <hr class="navbar-divider" />
-                        <div class="navbar-item">Version 0.9.2</div>
                     </div>
                 </div>
             </div>
@@ -72,6 +84,9 @@ export default {
     components: {
         Logo,
     },
+    data: () => ({
+        activeNavbar: false,
+    }),
 
     computed: {
         showLogo() {
