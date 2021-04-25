@@ -43,7 +43,7 @@
                 <router-link to="/home" class="navbar-item"> Home </router-link>
 
                 <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link"> Projects </a>
+                    <a class="navbar-link is-arrowless"> Stories </a>
 
                     <div class="navbar-dropdown is-right">
                         <router-link
