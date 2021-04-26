@@ -7,4 +7,17 @@
 $family-sans-serif: 'Lato', sans-serif;
 
 
-@import "~bulma";
+@import '~bulma/sass/base/_all.sass';
+@import '~bulma/sass/utilities/_all.sass';
+@import '~bulma/sass/helpers/_all.sass';
+@import '~bulma/sass/layout/_all.sass';
+@import '~bulma/sass/grid/columns.sass';
+@import '~bulma/sass/elements/button.sass';
+@import '~bulma/sass/elements/box.sass';
+@import '~bulma/sass/elements/container.sass';
+@import '~bulma/sass/elements/image.sass';
+@import '~bulma/sass/elements/icon.sass';
+@import '~bulma/sass/elements/title.sass';
+@import '~bulma/sass/elements/other.sass';
+@import '~bulma/sass/components/level.sass';
+@import '~bulma/sass/components/navbar.sass';
