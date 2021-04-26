@@ -1,6 +1,5 @@
 <template>
     <div class="home container">
-        <Navbar />
         <section class="hero is-medium is-white">
             <div class="hero-body">
                 <div class="columns">
@@ -33,13 +32,8 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
-
 export default {
     name: 'Home',
-    components: {
-        Navbar,
-    },
 };
 </script>
 

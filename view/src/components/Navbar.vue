@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="navbar"
+        class="navbar is-white"
         role="navigation"
         aria-label="main navigation"
         :class="{
@@ -41,6 +41,7 @@
         >
             <div class="navbar-end" v-if="showLinks">
                 <router-link to="/home" class="navbar-item"> Home </router-link>
+                <router-link to="/about" class="navbar-item"> About </router-link>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link is-arrowless"> Stories </a>
@@ -98,6 +99,9 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
+    top: 0;
+    position: sticky;
+    top: 0;
     &__logo {
         height: 1.5rem;
     }

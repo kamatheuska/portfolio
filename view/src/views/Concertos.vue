@@ -1,6 +1,5 @@
 <template>
     <div class="concertos container">
-        <Navbar />
         <div class="concertos__concertos">
             <header class="concertos__header">
                 <h1 class="title my-3 is-2">GEOMETRIC CONCERTOS</h1>
@@ -34,7 +33,6 @@
 <script>
 import SquareNavGroup from '@/components/SquareNavGroup.vue';
 import SquareNav from '@/components/SquareNav.vue';
-import Navbar from '@/components/Navbar.vue';
 import { sleep } from '@/utils';
 
 function Square({ height, top, left, color }) {
@@ -79,7 +77,6 @@ export default {
     components: {
         SquareNav,
         SquareNavGroup,
-        Navbar,
     },
 
     data: () => ({
