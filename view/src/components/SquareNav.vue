@@ -79,7 +79,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~bulma/sass/utilities/derived-variables';
 .square-nav {
     border: 1px dashed #ccc;
     &__link {

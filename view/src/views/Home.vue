@@ -38,7 +38,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/styles/abstracts/mixins';
 .image.is-square img {
     top: -2rem;
     @include tablet {

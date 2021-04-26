@@ -25,9 +25,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/assets/styles/abstracts/animations';
-@import '~@/assets/styles/abstracts/mixins';
-@import '~bulma/sass/utilities/derived-variables';
 .root {
     &__main {
         @include fade-slide-route-animation;

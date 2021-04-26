@@ -390,7 +390,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/styles/abstracts/mixins';
 .concertos {
     &__concertos {
         display: flex;

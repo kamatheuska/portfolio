@@ -190,9 +190,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/styles/abstracts/animations';
-@import '~@/assets/styles/abstracts/mixins';
-@import '~bulma/sass/utilities/derived-variables';
 .intro {
     @include fade-in-out-animation;
     @include fade-slide-animation;
