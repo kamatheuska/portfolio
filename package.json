@@ -5,6 +5,7 @@
         "lint": "eslint . ",
         "lint:watch": "nodemon --exec \"eslint . \"",
         "lint:all": "eslint . ; cd view && npm run lint",
+        "start": "node server.js",
         "clean:all": "lerna run clean",
         "lintFix": "eslint --fix .",
         "setup": "npm i && node_modules/.bin/lerna bootstrap",
