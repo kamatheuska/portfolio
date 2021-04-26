@@ -13,7 +13,8 @@
         "start": "node server.js",
         "clean": "rm -rf node_modules",
         "debug": "node --inspect server.js",
-        "dev": "nodemon server.js"
+        "dev": "nodemon server.js",
+        "deploy": "git push heroku master"
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",
