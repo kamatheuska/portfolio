@@ -7,14 +7,14 @@
         "test": "tests"
     },
     "scripts": {
+        "deploy": "git push heroku master",
+        "dev": "nodemon server.js",
+        "start": "node server.js",
+        "test": "tape tests/**/**.*.js | ./node_modules/.bin/tap-spec",
         "test:integration": "tape tests/integration/**.*.js | ./node_modules/.bin/tap-spec",
         "test:unit": "tape tests/unit/**.*.js | ./node_modules/.bin/tap-spec",
-        "test": "tape tests/**/**.*.js | ./node_modules/.bin/tap-spec",
-        "start": "node server.js",
         "clean": "rm -rf node_modules",
-        "debug": "node --inspect server.js",
-        "dev": "nodemon server.js",
-        "deploy": "git push heroku master"
+        "debug": "node --inspect server.js"
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",
