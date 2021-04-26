@@ -13,14 +13,14 @@ const {
     assertionError
 } = require('./middleware/errors')
 
-db.connectToMongoose()
+// db.connectToMongoose()
 
 if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
 }
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(urlShortener)
 
