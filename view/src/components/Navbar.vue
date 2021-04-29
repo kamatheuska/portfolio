@@ -58,6 +58,22 @@
                         </router-link>
                     </div>
                 </div>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link is-arrowless"> Mini Services </a>
+
+                    <div class="navbar-dropdown is-right">
+                        <router-link
+                            to="/miniservices/urlshortener"
+                            class="navbar-item"
+                            :class="{
+                                'is-active': $route.name === 'Concertos',
+                            }"
+                        >
+                            URL Shortener
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
