@@ -1,7 +1,7 @@
 <template>
-    <div class="concertos container">
-        <div class="concertos__concertos">
-            <header class="concertos__header">
+    <div class="geometric-concertos container">
+        <div class="geometric-concertos__concertos">
+            <header class="geometric-concertos__header">
                 <h1 class="title my-3 is-2">GEOMETRIC CONCERTOS</h1>
                 <h2 class="subtitle">(scroll down)</h2>
                 <button class="button is-black" @click="reloadPage()">Da Capo</button>
@@ -390,7 +390,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.concertos {
+.geometric-concertos {
     &__concertos {
         display: flex;
         justify-content: space-between;
