@@ -1,9 +1,7 @@
 const express = require('express')
 const path = require('path')
-const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const db = require('./db')
-const urlShortener = require('./routes/urlshortener')
 
 const app = express()
 const config = require('./config')
@@ -13,7 +11,7 @@ const {
     assertionError
 } = require('./middleware/errors')
 
-// db.connectToMongoose()
+db.connectToMongoose()
 
 if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
@@ -22,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use(urlShortener)
+app.use('/api/shorturl/', require('./controllers/urlShortener'))
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'))

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { addHttp } = require('../utils/url');
 
 const urlSchema = new mongoose.Schema({
   original: String,
@@ -6,15 +7,6 @@ const urlSchema = new mongoose.Schema({
 })
 
 urlSchema.pre('save', function () {
-
-  function addHttp(url) {
-      if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
-          url = 'http://' + url;
-      }
-      
-      return url;
-  }
-
   this.original = addHttp(this.original);
   return; 
 })
