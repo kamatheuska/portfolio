@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link is-arrowless"> Mini Services </a>
+                    <a class="navbar-link is-arrowless"> Services </a>
 
                     <div class="navbar-dropdown is-right">
                         <router-link
