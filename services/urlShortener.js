@@ -2,19 +2,29 @@ const dns = require('dns');
 const util = require('util');
 const dnsLookupPromisfied = util.promisify(dns.lookup);
 const Url = require('../model/url');
+const mongoose = require('mongoose')
 const { logRequestInfo, logInfo } = require('../services/logger')
-const { DocumentNotFoundException, TypeErrorException } = require('../services/exceptions');
+const { DocumentNotFoundException, RequestParamException, MongooseValidationException } = require('../services/exceptions');
 const { isTypeOrThrowException } = require('../utils');
+const { getFullUrlFromRequest } = require('../utils/url');
 
-async function checkAddressValidity(hostname) {
-  const address = await dnsLookupPromisfied(hostname)
+async function checkHostnameValidity(hostname) {
+  try {
+    if (!hostname) {
+      throw new RequestParamException('hostname is falsy or undefined')  
+    }
 
-  if (!address) {
-    new Error('URL not valid!');
+    await dnsLookupPromisfied(hostname)
+    logInfo('UrlShortenerService.checkHostnameValidity', `Hostname ${hostname} validated succesfully`);
+  } catch (error) {
+    if (error.code === 'ENOTFOUND') {
+      throw new RequestParamException(`${hostname} is an invalid url`)      
+    }
+    throw error;
   }
 }
 
-async function buildNewUrl(hostname) {
+async function buildNewShortUrl(hostname) {
   const count = await Url.estimatedDocumentCount().exec();
 
   if (count > 100) {
@@ -26,20 +36,39 @@ async function buildNewUrl(hostname) {
     short:  count + 1
   })
 
-  logRequestInfo(newUrl);
+  logInfo('UrlShortenerService.buildNewUrl', 'Saved Url in db', { hostname, newUrl });
 
   return newUrl;
 }
 
 async function saveUrl(url) {
-  const savedUrl = await url.save();
-  logRequestInfo('savedUrl: ', savedUrl);
+  try {
+    const doc = await url.save();
+
+    logInfo('UrlShortenerService.buildNewUrl', 'Saved doc:', doc);
+
+    return doc
+  } catch (error) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      throw new MongooseValidationException(error)
+    }
+
+    throw error
+  }
+}
+
+/**
+ * @param {Object} doc - saved url mongoose document
+ * 
+ * @param {Object} request - express request Object
+ */
+function createUrlObject(doc, request) {
+  const href = `/api/shorturl/${doc.short}`
 
   return {
-    href: `/api/shorturl/${savedUrl.short}`,
-    linkUrl: `/api/shorturl/${savedUrl.short}`,
-    originalUrl: savedUrl.original,
-    shortUrl: savedUrl.short
+    originalUrl: doc.original,
+    shortUrl: doc.short,
+    href
   }
 }
 
@@ -59,7 +88,8 @@ async function findUrlById(shortId) {
   return url
 }
 
-exports.checkAddressValidity = checkAddressValidity
-exports.buildNewUrl = buildNewUrl
+exports.checkHostnameValidity = checkHostnameValidity
+exports.buildNewShortUrl = buildNewShortUrl
 exports.saveUrl = saveUrl
 exports.getUrl = getUrl
+exports.createUrlObject = createUrlObject

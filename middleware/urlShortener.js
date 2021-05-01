@@ -1,21 +1,19 @@
-const { buildNewUrl, checkAddressValidity, saveUrl } = require('../services/urlShortener');
+const { buildNewShortUrl, checkHostnameValidity, saveUrl, createUrlObject } = require('../services/urlShortener');
 const { getHostNameFromUrl } = require('../utils/url');
 
-function createUrl (req, res, next) {
-  async (req, res, next) => {
-    const { url } = req.body;
-    const urlHostname = getHostNameFromUrl(url);
-    try {
-      await checkAddressValidity(urlHostname);
-      const urlModel = await buildNewUrl(url);
-      const urlData = await saveUrl(urlModel);
+async function createUrl (req, res, next) {
+  const { url } = req.body;
+  const hostname = getHostNameFromUrl(url);
+  try {
+    await checkHostnameValidity(hostname);
+    const model = await buildNewShortUrl(url);
+    const doc = await saveUrl(model);
 
-      res.locals.urlData = urlData;
-      
-      next();
-    } catch (error) {
-      next(error)
-    }
+    res.locals.urlData = createUrlObject(doc, req);
+    
+    next();
+  } catch (error) {
+    next(error)
   }
 }
 

@@ -13,7 +13,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/new', createUrl, () => {
+router.post('/new', createUrl, (req, res) => {
   const { urlData } = res.locals
 
   res.send(urlData)
