@@ -5,11 +5,7 @@ const db = require('./db')
 
 const app = express()
 const config = require('./config')
-const {
-    undefinedError,
-    validationError,
-    assertionError
-} = require('./middleware/errors')
+const { errorLogger, errorResponseHandler } = require('./middleware/errors')
 
 db.connectToMongoose()
 
@@ -23,11 +19,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/shorturl/', require('./controllers/urlShortener'))
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/index.html'))
+  res.sendFile(path.join(__dirname, '/index.html'))
 })
 
-app.use(assertionError)
-app.use(validationError)
-app.use(undefinedError)
+app.use(errorLogger)
+app.use(errorResponseHandler)
 
 module.exports = app

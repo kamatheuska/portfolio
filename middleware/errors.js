@@ -1,29 +1,14 @@
-const { AssertionError } = require('assert')
-const { CustomError } = require('../utils/errors')
-module.exports = {
-    throwNewError (message = '', type = 'NewError') {
-        throw new CustomError(message, type)
-    },
+const { logRequestError } = require('../services/logger')
 
-    validationError (error, req, res, next) {
-        if (error.type === 'ValidationError') {
-            return res.status(403).send(error)
-        }
-        next(error)
-    },
-
-    assertionError (error, req, res, next) {
-        if (error instanceof AssertionError) {
-            return res.status(400).json({
-                type: 'AssertionError',
-                message: error.message
-            })
-        }
-        next(error)
-    },
-
-    undefinedError (error, req, res, next) { // eslint-disable-line
-    console.log(`Printing- - - - error:`, error)
-        res.status(400).send(error)
-    }
+function errorLogger(error, req, res, next) {
+  logRequestError(req, error);
+  next();
 }
+
+
+function errorResponseHandler(error, req, res, next) {
+  res.status(400).send()
+}
+
+exports.errorLogger = errorLogger;
+exports.errorResponseHandler = errorResponseHandler

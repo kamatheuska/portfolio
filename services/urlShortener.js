@@ -2,10 +2,12 @@ const dns = require('dns');
 const util = require('util');
 const dnsLookupPromisfied = util.promisify(dns.lookup);
 const Url = require('../model/url');
-  
+const { logRequestInfo, logInfo } = require('../services/logger')
+const { DocumentNotFoundException, TypeErrorException } = require('../services/exceptions');
+const { isTypeOrThrowException } = require('../utils');
+
 async function checkAddressValidity(hostname) {
   const address = await dnsLookupPromisfied(hostname)
-  console.info(`Looking address of ${hostname}`);
 
   if (!address) {
     new Error('URL not valid!');
@@ -19,15 +21,19 @@ async function buildNewUrl(hostname) {
     next(new Error('Database capacity limit reached. Please Contact the administrator.'))
   }
 
-  return new Url({
+  const newUrl = new Url({
     original: hostname,
     short:  count + 1
   })
+
+  logRequestInfo(newUrl);
+
+  return newUrl;
 }
 
 async function saveUrl(url) {
   const savedUrl = await url.save();
-  console.info('savedUrl: ', savedUrl);
+  logRequestInfo('savedUrl: ', savedUrl);
 
   return {
     href: `/api/shorturl/${savedUrl.short}`,
@@ -37,8 +43,20 @@ async function saveUrl(url) {
   }
 }
 
-async function getUrl(id) {
-  return await Url.findOne({ short: id }).exec();
+async function getUrl(shortId) {
+  isTypeOrThrowException(shortId)
+  return await findUrlById(shortId)
+}
+
+async function findUrlById(shortId) {
+  const url = await Url.findOne({ short: shortId }).exec();
+
+  if(!url) {
+    throw new DocumentNotFoundException(`No url document found with ${shortId}`)
+  }
+
+  logInfo('getUrl', 'Url found', url)
+  return url
 }
 
 exports.checkAddressValidity = checkAddressValidity

@@ -2,8 +2,15 @@ const mongoose = require('mongoose');
 const { addHttp } = require('../utils/url');
 
 const urlSchema = new mongoose.Schema({
-  original: String,
-  short: String
+  original: {
+    type: String,
+    max: 500,
+    required: true,
+  },
+  short: {
+    type: String,
+    required: true,
+  }
 })
 
 urlSchema.pre('save', function () {

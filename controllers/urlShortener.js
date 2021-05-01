@@ -1,7 +1,7 @@
 const router = require('express').Router()
-const { getHostNameFromUrl } = require('../utils/url');
 
-const { buildNewUrl, checkAddressValidity, saveUrl, getUrl } = require('../services/urlShortener');
+const { getUrl } = require('../services/urlShortener');
+const { createUrl } = require('../middleware/urlShortener');
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params
@@ -13,18 +13,10 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/new', async (req, res, next) => {
-  const urlHostname = getHostNameFromUrl(req.body.url);
-  try {
-    await checkAddressValidity(urlHostname);
-    const url = await buildNewUrl(urlHostname);
-    const urlData = await saveUrl(url);
+router.post('/new', createUrl, () => {
+  const { urlData } = res.locals
 
-    res.status(200).send(urlData);
-
-  } catch (error) {
-    next(error)
-  }
+  res.send(urlData)
 });
 
 
