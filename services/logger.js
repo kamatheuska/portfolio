@@ -15,6 +15,11 @@ function logInfo(context, ...info) {
   console.info(contextString, ...info)
 }
 
+function logError(context, error) {
+  const contextString = buildLogContextString(context)
+  console.error(contextString, error)
+}
+
 function buildLogContextString(context) {
   if (typeof context === 'object' && hasProperty(context, 'method') && hasProperty(context, 'method')) {
     const { method, url } = context;
@@ -27,3 +32,4 @@ function buildLogContextString(context) {
 exports.logRequestInfo = logRequestInfo
 exports.logRequestError = logRequestError
 exports.logInfo = logInfo
+exports.logError = logError

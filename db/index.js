@@ -1,19 +1,26 @@
 const mongoose = require('mongoose');
-const config = require('../config')
+const { getConfig } = require('../config');
+const exceptions = require('../constants/exceptions');
+const { logInfo } = require('../services/logger');
+const { transformErrorToException } = require('../utils');
 const db = mongoose.connection;
 
-const connectToMongoose = async function () {
-
+async function connectToMongoose () {
+  const config = getConfig();
+  
   try {
     await mongoose.connect(config.mongoDbUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true 
     });
-    console.info('Connecting succesfully to %s', config.mongoDbUri)
+    logInfo('Db.connectToMongoose', 'Connecting succesfully to', config.mongoDbUri)
   } catch (error) {
-    console.error('Connection Error mongoose: ', error)
+    throw transformErrorToException(error, { code: exceptions.MONGOOSE_ERROR })
   }
 
-  db.on('error', console.error.bind(console, 'connection error:'));
+  db.on('error', (error) => {
+    throw transformErrorToException(error, { code: exceptions.MONGOOSE_ERROR })
+  });
 }
-module.exports = { connectToMongoose }
+
+exports.connectToMongoose = connectToMongoose

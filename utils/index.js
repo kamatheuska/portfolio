@@ -1,6 +1,6 @@
 const axios = require('axios')
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
-const { TypeErrorException } = require('../services/exceptions');
+const { TypeErrorException, Exception } = require('../services/exceptions');
 const {
     truthyArguments,
     isTruthy
@@ -9,7 +9,8 @@ const {
     darkskyUrl,
     geocodeApiKey,
     twitch
-} = require('../config')
+} = require('../config');
+const exceptions = require('../constants/exceptions');
 
 const _exclude = 'minutely,hourly,daily,alerts,flags'
 // const geocodingClient = mbxGeocoding({ accessToken: geocodeApiKey })
@@ -24,9 +25,19 @@ function isTypeOrThrowException(subject, type = 'string') {
   }
 }
 
+function transformErrorToException (error, { message = '', code = exceptions.GENERIC }) {
+  const exception = new Exception(`${message}\n${error.message}`)
+  exception.name = `${error.name}Exception`
+  exception.stack = error.stack
+  exception.code = code
+
+  return exception
+}
+
 module.exports = {
     hasProperty,
     isTypeOrThrowException,
+    transformErrorToException,
     // getApiPayload (type = 'weather') {
     //     switch (type) {
     //         case 'weather': {

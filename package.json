@@ -8,15 +8,15 @@
     },
     "scripts": {
         "deploy": "git push heroku master",
-        "dev": "nodemon _server.js",
-        "start": "node _server.js",
+        "dev": "nodemon app.js",
+        "start": "node app.js",
         "test": "tape tests/**/**.test.js | tap-spec",
         "test:watch": "nodemon --exec 'tape tests/**/**.test.js | tap-spec'",
         "test:integration": "tape tests/integration/**.*.js | tap-spec",
         "test:unit": "tape tests/unit/**.*.js | tap-spec",
         "clean": "rm -rf node_modules",
-        "debug": "node --inspect _server.js",
-        "debug:watch": "nodemon --inspect _server.js"
+        "debug": "node --inspect app.js",
+        "debug:watch": "nodemon --inspect app.js"
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",
