@@ -19,7 +19,8 @@
         "test:unit": "tape tests/unit/**.*.js | tap-spec",
         "clean": "rm -rf node_modules",
         "debug": "node --inspect app.js",
-        "debug:watch": "nodemon --inspect app.js"
+        "debug:watch": "nodemon --inspect app.js",
+        "lint": "echo \"No lint for now\""
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",
