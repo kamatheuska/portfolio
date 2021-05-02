@@ -12,7 +12,7 @@
         "heroku-postbuild": "npm run build",    
         "build": "npm run lint && npm test && npm run build:view",
         "build:view": "cd view && npm run build",
-        "install:view": "cd view && npm install",
+        "install:view": "./view/installDependencies.sh",
         "dev": "nodemon app.js",
         "start": "node app.js",
         "test": "tape tests/**/**.test.js | tap-spec",
