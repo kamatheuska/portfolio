@@ -26,7 +26,6 @@ async function checkHostnameValidity(hostname) {
 
 async function buildNewShortUrl(hostname) {
   const count = await Url.estimatedDocumentCount().exec();
-
   if (count > 100) {
     next(new Error('Database capacity limit reached. Please Contact the administrator.'))
   }
@@ -37,7 +36,6 @@ async function buildNewShortUrl(hostname) {
   })
 
   logInfo('UrlShortenerService.buildNewUrl', 'Saved Url in db', { hostname, newUrl });
-
   return newUrl;
 }
 
