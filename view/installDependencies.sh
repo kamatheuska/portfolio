@@ -8,4 +8,4 @@ cd view &&
   NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install &&
 
 echo "*** LISTING VIEW AFTER INSTALL***"
-ls -la ./view
+ls -la .
