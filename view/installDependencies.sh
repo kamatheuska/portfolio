@@ -9,3 +9,7 @@ cd view &&
 
 echo "*** LISTING VIEW AFTER INSTALL***"
 ls -la .
+echo "********************************"
+echo "*** LISTING VIEW node_modules AFTER INSTALL ***"
+echo "********************************"
+ls -la ./node_modules
