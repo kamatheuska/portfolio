@@ -19,6 +19,7 @@ class Exception extends Error {
     this.name = 'Exception';
     this.date = new Date();
     this.code = exceptions.GENERIC;
+    this.message = [...params].join(' - ');
   }
 }
 
