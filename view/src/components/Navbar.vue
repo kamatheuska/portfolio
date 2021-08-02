@@ -48,7 +48,7 @@
 
                     <div class="navbar-dropdown is-right">
                         <router-link
-                            to="/stories/geometric-concertos"
+                            to="/stories/concertos"
                             class="navbar-item"
                             :class="{
                                 'is-active': $route.name === 'Concertos',
@@ -118,6 +118,7 @@ export default {
     top: 0;
     position: sticky;
     top: 0;
+
     &__logo {
         height: 1.5rem;
     }
