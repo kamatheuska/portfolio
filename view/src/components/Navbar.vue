@@ -40,40 +40,38 @@
             }"
         >
             <div class="navbar-end" v-if="showLinks">
-                <router-link to="/home" class="navbar-item"> Home </router-link>
-                <router-link to="/about" class="navbar-item"> About </router-link>
+                <template v-for="(route, i) in routes">
+                    <router-link
+                        v-if="!route.children"
+                        class="navbar-item"
+                        :to="route.path"
+                        :key="`route-navbar-item${i}`"
+                    >
+                        {{ route.text }}
+                    </router-link>
 
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link is-arrowless"> Stories </a>
+                    <div
+                        class="navbar-item has-dropdown is-hoverable"
+                        :key="`route-navbar-item${i}`"
+                        v-else
+                    >
+                        <a class="navbar-link is-arrowless"> {{ route.text }} </a>
 
-                    <div class="navbar-dropdown is-right">
-                        <router-link
-                            to="/stories/concertos"
-                            class="navbar-item"
-                            :class="{
-                                'is-active': $route.name === 'Concertos',
-                            }"
-                        >
-                            Geometric Concertos
-                        </router-link>
+                        <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">
+                            <router-link
+                                v-for="(childRoute, j) in route.children"
+                                :key="`child-route-navbar-item${i}${j}`"
+                                :to="childRoute.path"
+                                :class="{
+                                    'is-active': $route.name === childRoute.name,
+                                }"
+                                class="navbar-item"
+                            >
+                                {{ childRoute.text }}
+                            </router-link>
+                        </div>
                     </div>
-                </div>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link is-arrowless"> Services </a>
-
-                    <div class="navbar-dropdown is-right">
-                        <router-link
-                            to="/miniservices/urlshortener"
-                            class="navbar-item"
-                            :class="{
-                                'is-active': $route.name === 'Concertos',
-                            }"
-                        >
-                            URL Shortener
-                        </router-link>
-                    </div>
-                </div>
+                </template>
             </div>
         </div>
     </nav>
@@ -103,11 +101,47 @@ export default {
     },
     data: () => ({
         activeNavbar: false,
+        routes: [
+            {
+                path: '/home',
+                text: 'Home',
+            },
+            {
+                path: '/about',
+                text: 'Home',
+            },
+            {
+                text: 'Stories',
+                children: [
+                    {
+                        path: '/stories/concertos',
+                        text: 'Geometric Concertos',
+                        name: 'Concertos',
+                    },
+                ],
+            },
+            {
+                text: 'Services',
+                children: [
+                    {
+                        path: '/miniservices/urlshortener',
+                        text: 'URL Shortener',
+                        name: 'UrlShortener',
+                    },
+                ],
+            },
+        ],
     }),
 
     computed: {
         showLogo() {
             return this.showLinks;
+        },
+    },
+
+    methods: {
+        unfocusNavbarDropdown(event) {
+            event.target.blur();
         },
     },
 };
