@@ -22,6 +22,7 @@ __LEGACY__*
 *.sln
 *.sw*
 *.vim*
+.env
 bin
 # Database
 *.sql
