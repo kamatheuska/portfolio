@@ -16,6 +16,14 @@ async function init() {
   startServer();
 }
 
+function forceSsl (req, res, next) {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    const redirectUrl = `'https://${req.get('Host')}${req.url}`;
+    return res.redirect(redirectUrl);
+  }
+  return next();
+};
+
 function initializeConfiguration() {
   initConfig();
 
@@ -31,7 +39,10 @@ function startServer() {
 function registerControllers () {
   if (config.nodeEnv === 'development') {
     app.use(morgan('dev'))
+  } else if (config.nodeEnv === 'production') {
+    app.use(forceSsl)
   }
+
 
   app.use(express.static(path.join(__dirname, 'public')))
   app.use(express.json())
