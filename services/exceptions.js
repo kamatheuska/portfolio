@@ -1,50 +1,50 @@
-const exceptions = require('../constants/exceptions')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const exceptions = require('../constants/exceptions');
 
 class Exception extends Error {
-  constructor(...params) {
-    super(...params)
+    constructor(...params) {
+        super(...params);
 
-    if (Error.hasOwnProperty('captureStackTrace')) {
-      Error.captureStackTrace(this, this.constructor);
-    } else {
-      Object.defineProperty(this, 'stack', {
-         value: (new Error()).stack
-     });
+        if (Error.hasOwnProperty('captureStackTrace')) {
+            Error.captureStackTrace(this, this.constructor);
+        } else {
+            Object.defineProperty(this, 'stack', {
+                value: new Error().stack,
+            });
+        }
+
+        Object.defineProperty(this, 'message', {
+            value: params[0].message,
+        });
+        this.name = 'Exception';
+        this.date = new Date();
+        this.code = exceptions.GENERIC;
+        this.message = [...params].join(' - ');
     }
-
-    Object.defineProperty(this, 'message', {
-      value: params[0].message
-    });
-    this.name = 'Exception';
-    this.date = new Date();
-    this.code = exceptions.GENERIC;
-    this.message = [...params].join(' - ');
-  }
 }
 
 class DocumentNotFoundException extends Exception {
-  constructor(...params) {
-      super(...params);
-      this.name = 'DocumentNotFoundException';
-      this.code = exceptions.DB_DOCUMENT_NOT_FOUND;
-  }
+    constructor(...params) {
+        super(...params);
+        this.name = 'DocumentNotFoundException';
+        this.code = exceptions.DB_DOCUMENT_NOT_FOUND;
+    }
 }
 
 class TypeErrorException extends Exception {
-  constructor(...params) {
-      super(...params);
-      this.name = 'TypeErrorException';
-      this.code = exceptions.TYPE_ERROR;
-  }
+    constructor(...params) {
+        super(...params);
+        this.name = 'TypeErrorException';
+        this.code = exceptions.TYPE_ERROR;
+    }
 }
 
 class RequestParamException extends Exception {
-  constructor(...params) {
-      super(...params);
-      this.name = 'RequestParamException';
-      this.code = exceptions.INVALID_REQUEST_PARAM;
-  }
+    constructor(...params) {
+        super(...params);
+        this.name = 'RequestParamException';
+        this.code = exceptions.INVALID_REQUEST_PARAM;
+    }
 }
 
 Exception.prototype = Object.create(Error.prototype);
@@ -53,7 +53,7 @@ TypeErrorException.prototype = Object.create(Exception.prototype);
 RequestParamException.prototype = Object.create(Exception.prototype);
 RequestParamException.prototype = Object.create(Exception.prototype);
 
-exports.Exception = Exception
-exports.DocumentNotFoundException = DocumentNotFoundException
-exports.TypeErrorException = TypeErrorException
-exports.RequestParamException = RequestParamException
+exports.Exception = Exception;
+exports.DocumentNotFoundException = DocumentNotFoundException;
+exports.TypeErrorException = TypeErrorException;
+exports.RequestParamException = RequestParamException;

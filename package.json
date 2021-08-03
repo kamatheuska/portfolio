@@ -22,7 +22,8 @@
         "clean": "rm -rf node_modules",
         "debug": "node --inspect app.js",
         "debug:watch": "nodemon --inspect app.js",
-        "lint": "eslint --fix ."
+        "lint": "eslint --ext .js \"**/*.js\"",
+        "lint:fix": "eslint --ext .js \"**/*.js\" --fix"
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",

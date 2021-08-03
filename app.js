@@ -1,60 +1,60 @@
-const express = require('express')
-const path = require('path')
-const morgan = require('morgan')
-const app = express()
-const { initConfig, getConfig } = require('./config')
-const { connectToMongoose} = require('./db')
-const { errorLogger, errorResponseHandler } = require('./middleware/errors')
-const { logError, logInfo } = require('./services/logger')
+const express = require('express');
+const path = require('path');
+const morgan = require('morgan');
+
+const app = express();
+const { initConfig, getConfig } = require('./config');
+const { connectToMongoose } = require('./db');
+const { errorLogger, errorResponseHandler } = require('./middleware/errors');
+const { logError, logInfo } = require('./services/logger');
 
 let config;
 
 async function init() {
-  initializeConfiguration();
-  await connectToMongoose();
-  registerControllers();
-  startServer();
+    initializeConfiguration();
+    await connectToMongoose();
+    registerControllers();
+    startServer();
 }
 
-function forceSsl (req, res, next) {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(301, ['https://', req.get('Host'), req.url].join(''))
-  }
-  return next();
-};
+function forceSsl(req, res, next) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
+    }
+    return next();
+}
 
 function initializeConfiguration() {
-  initConfig();
+    initConfig();
 
-  config = getConfig();
+    config = getConfig();
 }
 
 function startServer() {
-  app.listen(config.port, () => {
-    logInfo('init.startServer', `Server started on port ${config.port}`)
-  })
+    app.listen(config.port, () => {
+        logInfo('init.startServer', `Server started on port ${config.port}`);
+    });
 }
 
-function registerControllers () {
-  if (config.nodeEnv === 'development') {
-    app.use(morgan('dev'))
-  } else if (config.nodeEnv === 'production') {
-    app.use(forceSsl)
-  }
+function registerControllers() {
+    if (config.nodeEnv === 'development') {
+        app.use(morgan('dev'));
+    } else if (config.nodeEnv === 'production') {
+        app.use(forceSsl);
+    }
 
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
-  app.use(express.static(path.join(__dirname, 'public')))
-  app.use(express.json())
-  app.use(express.urlencoded({ extended: true }))
+    app.use('/api/shorturl/', require('./controllers/urlShortener'));
 
-  app.use('/api/shorturl/', require('./controllers/urlShortener'))
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname, '/index.html'));
+    });
 
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/index.html'))
-  })
-
-  app.use(errorLogger)
-  app.use(errorResponseHandler)
+    app.use(errorLogger);
+    app.use(errorResponseHandler);
 }
 
-init().catch(error => logError('init', error))
+init().catch((error) => logError('init', error));

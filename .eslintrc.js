@@ -1,13 +1,13 @@
 module.exports = {
     env: {
-        browser: true,
+        commonjs: true,
         es2021: true,
+        node: true,
     },
     extends: ['airbnb-base', 'prettier'],
-    parserOptions: {
-        ecmaVersion: 12,
-        sourceType: 'module',
-    },
+    // parserOptions: {
+    //     ecmaVersion: 12,
+    // },
     plugins: ['prettier'],
     rules: {
         'prettier/prettier': [
@@ -30,5 +30,4 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     },
-    ignorePatterns: ['/'],
 };

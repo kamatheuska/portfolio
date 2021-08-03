@@ -1,46 +1,48 @@
-const express = require('express')
-const router = express.Router()
-const {
-    twitch
-} = require('../config')
+const express = require('express');
 
-const {
-    getApiPayload,
-    sendApiRequest
-} = require('../utils')
+const router = express.Router();
+const { twitch } = require('../config');
+
+const { getApiPayload, sendApiRequest } = require('../utils');
 
 router.get('/api/twitch/users', (req, res, next) => {
-    let { url, config } = getApiPayload('twitch')()
+    const { url, config } = getApiPayload('twitch')();
 
     sendApiRequest('twitch')(url, config)
         .then((json) => {
-            res.status(200).send(json.data)
+            res.status(200).send(json.data);
         })
-        .catch(next)
-})
+        .catch(next);
+});
 
 router.get('/api/twitch/streams', (req, res, next) => {
-    let { url, config } = getApiPayload('twitch')({
-        first: 10
-    }, 'streams')
+    const { url, config } = getApiPayload('twitch')(
+        {
+            first: 10,
+        },
+        'streams',
+    );
 
     sendApiRequest('twitch')(url, config)
         .then((json) => {
-            res.status(200).send(json.data)
+            res.status(200).send(json.data);
         })
-        .catch(next)
-})
+        .catch(next);
+});
 
 router.get('/api/twitch/streams/recommended', (req, res, next) => {
-    let { url, config } = getApiPayload('twitch')({
-        'user_login': twitch.users
-    }, 'streams')
+    const { url, config } = getApiPayload('twitch')(
+        {
+            user_login: twitch.users,
+        },
+        'streams',
+    );
 
     sendApiRequest('twitch')(url, config)
         .then((json) => {
-            res.status(200).send(json.data)
+            res.status(200).send(json.data);
         })
-        .catch(next)
-})
+        .catch(next);
+});
 
-module.exports = router
+module.exports = router;
