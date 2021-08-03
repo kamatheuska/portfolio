@@ -18,8 +18,7 @@ async function init() {
 
 function forceSsl (req, res, next) {
   if (req.headers['x-forwarded-proto'] !== 'https') {
-    const redirectUrl = `'https://${req.get('Host')}${req.url}`;
-    return res.redirect(redirectUrl);
+    return res.redirect(301, ['https://', req.get('Host'), req.url].join(''))
   }
   return next();
 };
