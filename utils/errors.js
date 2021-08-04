@@ -1,4 +1,5 @@
 const { TypeErrorException, Exception } = require('../services/exceptions');
+const exceptions = require('../constants/exceptions');
 
 function isTypeOrThrowException(subject) {
     if (typeof subject !== 'string') {

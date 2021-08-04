@@ -59,8 +59,3 @@ exports.Exception = Exception;
 exports.DocumentNotFoundException = DocumentNotFoundException;
 exports.TypeErrorException = TypeErrorException;
 exports.RequestParamException = RequestParamException;
-
-module.exports = {
-    TypeErrorException,
-    Exception,
-};
