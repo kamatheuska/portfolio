@@ -16,11 +16,13 @@ module.exports = {
             throwNewError('Payload is not an Object', 'ValidationError');
         }
         const payload = req.body;
-        for (const key in payload) {
+        const payloadKeys = Object.keys(payload);
+        payloadKeys.forEach((key) => {
             if (!isString(payload[key])) {
                 throwNewError('Error on Payload', 'ValidationError');
             }
-        }
+        });
+
         next();
     },
 

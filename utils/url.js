@@ -1,15 +1,17 @@
 const { URL } = require('url');
+const { PROTOCOL_REGEX } = require('../constants');
 
 function getHostNameFromUrl(url = '') {
-    return /^(?:f|ht)tps?\:\/\//.test(url) ? new URL(url).hostname : url;
+    return PROTOCOL_REGEX.test(url) ? new URL(url).hostname : url;
 }
 
 function addHttp(url) {
-    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
-        url = `http://${url}`;
+    let newUrl;
+    if (!PROTOCOL_REGEX.test(url)) {
+        newUrl = `http://${url}`;
     }
 
-    return url;
+    return newUrl;
 }
 
 /**

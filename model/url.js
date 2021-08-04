@@ -13,7 +13,7 @@ const urlSchema = new mongoose.Schema({
     },
 });
 
-urlSchema.pre('save', function () {
+urlSchema.pre('save', function savePreSchemaHook() {
     this.original = addHttp(this.original);
 });
 

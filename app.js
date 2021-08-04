@@ -10,13 +10,6 @@ const { logError, logInfo } = require('./services/logger');
 
 let config;
 
-async function init() {
-    initializeConfiguration();
-    await connectToMongoose();
-    registerControllers();
-    startServer();
-}
-
 function forceSsl(req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
         return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
@@ -55,6 +48,13 @@ function registerControllers() {
 
     app.use(errorLogger);
     app.use(errorResponseHandler);
+}
+
+async function init() {
+    initializeConfiguration();
+    await connectToMongoose();
+    registerControllers();
+    startServer();
 }
 
 init().catch((error) => logError('init', error));

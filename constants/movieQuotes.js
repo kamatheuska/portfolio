@@ -1,4 +1,4 @@
-export default [
+module.exports = [
     "I don't have friends. I got family",
     'Ogres are like onions',
     "You're my boy, Blue!",

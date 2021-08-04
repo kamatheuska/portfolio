@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
+/* eslint-disable max-classes-per-file */
+
 const exceptions = require('../constants/exceptions');
+const { hasProperty } = require('../utils');
 
 class Exception extends Error {
     constructor(...params) {
         super(...params);
 
-        if (Error.hasOwnProperty('captureStackTrace')) {
+        if (hasProperty(Error, 'captureStackTrace')) {
             Error.captureStackTrace(this, this.constructor);
         } else {
             Object.defineProperty(this, 'stack', {
@@ -57,3 +59,8 @@ exports.Exception = Exception;
 exports.DocumentNotFoundException = DocumentNotFoundException;
 exports.TypeErrorException = TypeErrorException;
 exports.RequestParamException = RequestParamException;
+
+module.exports = {
+    TypeErrorException,
+    Exception,
+};

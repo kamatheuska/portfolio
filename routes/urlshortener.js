@@ -4,6 +4,7 @@ const router = express.Router();
 const dns = require('dns');
 const util = require('util');
 const { URL } = require('url');
+const { PROTOCOL_REGEX } = require('../constants');
 
 const dnsLookupPromisfied = util.promisify(dns.lookup);
 const Url = require('../model/url');
@@ -24,7 +25,7 @@ router.get('/api/shorturl/:id', (req, res, next) => {
 router.post('/api/shorturl/new', (req, res, next) => {
     const requestUrl = req.body.url;
     let urlHostname;
-    if (/^(?:f|ht)tps?\:\/\//.test(requestUrl)) {
+    if (PROTOCOL_REGEX.test(requestUrl)) {
         urlHostname = new URL(requestUrl).hostname;
     } else {
         urlHostname = requestUrl;

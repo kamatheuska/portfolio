@@ -5,7 +5,7 @@ function errorLogger(error, req, res, next) {
     next();
 }
 
-function errorResponseHandler(error, req, res, next) {
+function errorResponseHandler(error, req, res, next) { // eslint-disable-line
     res.status(400).send();
 }
 

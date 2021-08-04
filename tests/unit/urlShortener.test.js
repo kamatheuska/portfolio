@@ -2,15 +2,6 @@ const test = require('tape');
 const urlShortnerService = require('../../services/urlShortener');
 const { RequestParamException } = require('../../services/exceptions');
 
-test(':: 🏁 URL_SHORTENER_SERVICE', { skip: false }, (t) => {
-    t.test(':::: 🚩  checkHostnameValidity', async (assert) => {
-        await shouldBeTruthyIfValidHostname(assert);
-        await shouldFailWithExceptionOnInvalidHostname(assert);
-        await shouldFailWithExceptionOnFalsyHostname(assert);
-        assert.end();
-    });
-});
-
 async function shouldBeTruthyIfValidHostname(assert) {
     const validHostname = 'www.google.com';
     let isValid = false;
@@ -60,3 +51,11 @@ async function shouldFailWithExceptionOnFalsyHostname(assert) {
         );
     }
 }
+test(':: 🏁 URL_SHORTENER_SERVICE', { skip: false }, (t) => {
+    t.test(':::: 🚩  checkHostnameValidity', async (assert) => {
+        await shouldBeTruthyIfValidHostname(assert);
+        await shouldFailWithExceptionOnInvalidHostname(assert);
+        await shouldFailWithExceptionOnFalsyHostname(assert);
+        assert.end();
+    });
+});

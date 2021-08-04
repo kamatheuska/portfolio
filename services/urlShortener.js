@@ -1,17 +1,16 @@
 const dns = require('dns');
 const util = require('util');
-
-const dnsLookupPromisfied = util.promisify(dns.lookup);
 const mongoose = require('mongoose');
 const Url = require('../model/url');
-const { logRequestInfo, logInfo } = require('./logger');
+const { logInfo } = require('./logger');
 const {
     DocumentNotFoundException,
     RequestParamException,
     MongooseValidationException,
 } = require('./exceptions');
-const { isTypeOrThrowException } = require('../utils');
-const { getFullUrlFromRequest } = require('../utils/url');
+const { isTypeOrThrowException } = require('../utils/errors');
+
+const dnsLookupPromisfied = util.promisify(dns.lookup);
 
 async function checkHostnameValidity(hostname) {
     try {
@@ -35,7 +34,7 @@ async function checkHostnameValidity(hostname) {
 async function buildNewShortUrl(hostname) {
     const count = await Url.estimatedDocumentCount().exec();
     if (count > 100) {
-        next(new Error('Database capacity limit reached. Please Contact the administrator.'));
+        throw new Error('Database capacity limit reached. Please Contact the administrator.');
     }
 
     const newUrl = new Url({
@@ -65,10 +64,8 @@ async function saveUrl(url) {
 
 /**
  * @param {Object} doc - saved url mongoose document
- *
- * @param {Object} request - express request Object
  */
-function createUrlObject(doc, request) {
+function createUrlObject(doc) {
     const href = `/api/shorturl/${doc.short}`;
 
     return {
@@ -76,11 +73,6 @@ function createUrlObject(doc, request) {
         shortUrl: doc.short,
         href,
     };
-}
-
-async function getUrl(shortId) {
-    isTypeOrThrowException(shortId);
-    return await findUrlById(shortId);
 }
 
 async function findUrlById(shortId) {
@@ -92,6 +84,11 @@ async function findUrlById(shortId) {
 
     logInfo('getUrl', 'Url found', url);
     return url;
+}
+
+async function getUrl(shortId) {
+    isTypeOrThrowException(shortId);
+    return findUrlById(shortId);
 }
 
 exports.checkHostnameValidity = checkHostnameValidity;

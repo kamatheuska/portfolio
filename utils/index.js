@@ -1,36 +1,17 @@
-const axios = require('axios');
-const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-const { TypeErrorException, Exception } = require('../services/exceptions');
-const { truthyArguments, isTruthy } = require('../helpers');
-const { darkskyUrl, geocodeApiKey, twitch } = require('../config');
-const exceptions = require('../constants/exceptions');
+// const axios = require('axios');
+// const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 
-const _exclude = 'minutely,hourly,daily,alerts,flags';
+// const _exclude = 'minutely,hourly,daily,alerts,flags';
 // const geocodingClient = mbxGeocoding({ accessToken: geocodeApiKey })
 
 function hasProperty(parent, prop) {
     return Object.prototype.hasOwnProperty.call(parent, prop);
 }
 
-function isTypeOrThrowException(subject, type = 'string') {
-    if (typeof subject !== type) {
-        throw new TypeErrorException(`Subject ${subject} is not of type ${type}`);
-    }
-}
-
-function transformErrorToException(error, { message = '', code = exceptions.GENERIC }) {
-    const exception = new Exception(`${message}\n${error.message}`);
-    exception.name = `${error.name}Exception`;
-    exception.stack = error.stack;
-    exception.code = code;
-
-    return exception;
-}
+exports.hasProperty = hasProperty;
 
 module.exports = {
     hasProperty,
-    isTypeOrThrowException,
-    transformErrorToException,
     // getApiPayload (type = 'weather') {
     //     switch (type) {
     //         case 'weather': {
