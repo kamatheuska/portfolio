@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 /**
  * @function aboutContentFactory
  *
@@ -7,7 +5,7 @@
  * @param {Object.portfolioBucketUrl} opts.portfolioBucketUrl
  *
  */
-export const aboutContentFactory = ({ portfolioBucketUrl }) => ({
+const aboutContentFactory = ({ portfolioBucketUrl }) => ({
     carrer: {
         title: 'Carrer and aspirations',
         texts: [
@@ -57,3 +55,5 @@ export const aboutContentFactory = ({ portfolioBucketUrl }) => ({
         ],
     },
 });
+
+export default aboutContentFactory;

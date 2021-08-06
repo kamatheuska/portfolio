@@ -43,7 +43,7 @@
 <script>
 import HorizontalLevel from '@/components/layout/HorizontalLevel.vue';
 import LevelItem from '@/components/LevelItem.vue';
-import { aboutContentFactory } from '@/constants/about';
+import aboutContentFactory from '@/content/aboutFactory';
 
 export default {
     name: 'About',
