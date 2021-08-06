@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import vClickOutside from 'v-click-outside';
+
 import App from './App.vue';
 import router from './router';
 import { envMixin, darkThemeMixin, cookiesMixin } from './mixins/global';
@@ -9,6 +11,8 @@ Vue.config.productionTip = false;
 Vue.mixin(envMixin());
 Vue.mixin(darkThemeMixin());
 Vue.mixin(cookiesMixin());
+
+Vue.use(vClickOutside);
 
 new Vue({
     router,

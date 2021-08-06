@@ -3,6 +3,7 @@
         class="navbar is-white"
         role="navigation"
         aria-label="main navigation"
+        v-click-outside="onClickOutside"
         :class="{
             'is-primary': color === 'primary',
             'is-info': color === 'info',
@@ -78,6 +79,7 @@
 </template>
 
 <script>
+import vClickOutside from 'v-click-outside';
 import Logo from '@/components/Logo.vue';
 
 export default {
@@ -138,10 +140,17 @@ export default {
             return this.showLinks;
         },
     },
+    directives: {
+        clickOutside: vClickOutside.directive,
+    },
 
     methods: {
         unfocusNavbarDropdown(event) {
             event.target.blur();
+        },
+
+        onClickOutside() {
+            this.hideNavbarBurgerMenu();
         },
 
         hideNavbarBurgerMenu() {
