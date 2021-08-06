@@ -25,26 +25,108 @@
                 </div>
             </div>
         </section>
+        <section class="section home__links">
+            <h2 class="title is-3 has-text-centered mb-6">Quick Links</h2>
+            <HorizontalLevel :numberOfItems="3">
+                <LevelItem
+                    v-for="(link, i) in levelItemLinks.slice(0, 3)"
+                    :key="`level-item-link${i}`"
+                    :numberOfItems="4"
+                    v-bind="link"
+                />
+            </HorizontalLevel>
+            <HorizontalLevel :numberOfItems="3">
+                <LevelItem
+                    v-for="(link, i) in levelItemLinks.slice(3)"
+                    :key="`level-item-link${i}`"
+                    v-bind="link"
+                />
+            </HorizontalLevel>
+        </section>
     </div>
 </template>
 
 <script>
+import HorizontalLevel from '@/components/layout/HorizontalLevel.vue';
+import LevelItem from '@/components/LevelItem.vue';
+
 export default {
     name: 'Home',
+
+    components: {
+        HorizontalLevel,
+        LevelItem,
+    },
 
     computed: {
         profileImage() {
             return `${this.$env.PORTFOLIO_BUCKET}/images/profilePic.jpg`;
+        },
+        levelItemLinks() {
+            return [
+                {
+                    heading: 'Linkedin',
+                    link: 'https://www.linkedin.com/in/nikameush/',
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/linkedin__b&w.png`,
+                    hasSmallImage: true,
+                },
+                {
+                    heading: 'Github Profile',
+                    link: 'https://www.github.com/kamatheuska',
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/github__b&w.png`,
+                    hasSmallImage: true,
+                },
+                {
+                    heading: 'FreeCodeCamp Profile',
+                    link: 'https://www.freecodecamp.org/nikameush',
+                    imageSrc: `/fcc-logo__b&w.png`,
+                    hasSmallImage: true,
+                },
+                {
+                    heading: 'Codepen Profile',
+                    link: 'https://codepen.io/nikameush',
+                    imageSrc: `/codepen-logo.png`,
+                    hasSmallImage: true,
+                },
+                {
+                    heading: 'Mail',
+                    link: 'mailto:nicolas@nicolasramirezka.com',
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/mail-icon__b&w.png`,
+                    hasSmallImage: true,
+                },
+                {
+                    heading: 'Curriculum Vitae',
+                    link: '/docs/CV2021-Nicolas-Ramirez.pdf',
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/cv__b&w.png`,
+                    hasSmallImage: true,
+                    downloadName: 'CV2021-Nicolas-Ramirez.pdf',
+                },
+            ];
         },
     },
 };
 </script>
 
 <style lang="scss" scoped>
-.image.is-square img {
-    top: -2rem;
-    @include tablet {
-        top: 0;
+.home {
+    &__links {
+        @include desktop {
+            padding-right: 15rem;
+            padding-left: 15rem;
+        }
+    }
+
+    /*
+    * Bulma Overrides
+    */
+    .hero.is-medium .hero-body {
+        padding-bottom: 6rem;
+    }
+    .image.is-square img {
+        top: -2rem;
+        @include tablet {
+            top: 0;
+        }
     }
 }
 </style>

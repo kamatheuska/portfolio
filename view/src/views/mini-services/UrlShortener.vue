@@ -34,7 +34,7 @@
                 </p>
                 <div style="width: 14rem; margin: 0 auto">
                     <figure class="image is-square">
-                        <img class="" src="@/assets/images/cartman.gif" />
+                        <img :src="resultGifSrcImage" />
                     </figure>
                 </div>
             </div>
@@ -72,12 +72,14 @@ export default {
             }
             return '';
         },
+        resultGifSrcImage() {
+            return `${this.$env.PORTFOLIO_BUCKET}/images/cartman.gif`;
+        },
     },
 
     methods: {
         async onSubmit() {
             try {
-                debugger; // tslint:disable-line
                 const data = await apiServices.createShortUrl(this.form.url);
                 const { origin } = window.location;
                 this.response = data;
