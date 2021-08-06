@@ -11,7 +11,7 @@
                     class="intro__hero hero is-large"
                     :class="{
                         'intro__hero--dark': isHeroDark,
-                        'is-info': isHeroDark,
+                        'is-dark': isHeroDark,
                         'intro__hero--light': !isHeroDark,
                         'has-text-info': !isHeroDark,
                     }"
@@ -47,7 +47,7 @@
                             </transition>
                         </div>
                     </div>
-                    <button v-if="!body.show" class="button is-light">
+                    <button v-if="!body.show" class="button intro__button is-light">
                         <router-link to="/home"> skip </router-link>
                     </button>
                 </section>
@@ -114,6 +114,7 @@ export default {
 
     methods: {
         async startHeroAnimation() {
+            this.$toggleBodyTheme({ isDark: true });
             this.hero.show = true;
             await sleep(2000);
             this.toggleHeroElements('title');
@@ -126,6 +127,7 @@ export default {
             await sleep(1000);
             this.toggleHeroElements(['title', 'subtitle'], false);
             this.hero.background = 'light';
+            this.$toggleBodyTheme();
             this.hero.show = false;
             await sleep(2000);
             this.hero.show = true;
@@ -225,11 +227,10 @@ export default {
                 @include is-fullheight-with-navbar;
             }
         }
-        &--dark {
-            background: linear-gradient(90deg, darken($info, 40%), darken($info, 30%));
+        &--dark.hero {
+            background-color: rgba(0, 0, 0, 0);
         }
         &--light {
-            background: white;
             p,
             h1,
             h2 {
@@ -253,9 +254,7 @@ export default {
         }
     }
     &__button {
-        position: absolute;
-        bottom: 2rem;
-        z-index: 1;
+        align-self: center;
     }
 }
 </style>

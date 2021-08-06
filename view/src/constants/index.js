@@ -1,2 +1,3 @@
 export * from './envs';
-export * from './about';
+
+export const DARK_THEME_CSS_CLASS = 'is-dark';
