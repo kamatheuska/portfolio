@@ -18,10 +18,7 @@
                     <div class="column is-6">
                         <div class="p-5">
                             <figure class="image is-square">
-                                <img
-                                    class="home__image is-rounded"
-                                    src="@/assets/images/heroImageSquare.jpg"
-                                />
+                                <img class="home__image is-rounded" :src="profileImage" />
                             </figure>
                         </div>
                     </div>
@@ -32,8 +29,16 @@
 </template>
 
 <script>
+import { PORTFOLIO_BUCKET } from '@/constants';
+
 export default {
     name: 'Home',
+
+    computed: {
+        profileImage() {
+            return `${PORTFOLIO_BUCKET}/images/profilePic.jpg`;
+        },
+    },
 };
 </script>
 

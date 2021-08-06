@@ -108,7 +108,7 @@ export default {
             },
             {
                 path: '/about',
-                text: 'Home',
+                text: 'About',
             },
             {
                 text: 'Stories',
