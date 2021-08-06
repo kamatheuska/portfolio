@@ -1,5 +1,10 @@
 <template>
-    <div class="level-item has-text-centered">
+    <div
+        class="level-item has-text-centered"
+        :class="{
+            'level-item--is-animated-on-hover': animateOnHover,
+        }"
+    >
         <template v-if="link">
             <a :href="link" class="link" target="_blank" :download="downloadName || null">
                 <p class="heading">
@@ -41,12 +46,22 @@ export default {
             type: Boolean,
             default: false,
         },
+        animateOnHover: {
+            type: Boolean,
+            default: false,
+        },
     },
 };
 </script>
 
 <style lang="scss" scoped>
 .level-item {
+    &--is-animated-on-hover {
+        transition: transform ease-out 100ms;
+        &:hover {
+            transform: scale(1.5);
+        }
+    }
     &__image {
         height: 100px;
         &--is-small {
