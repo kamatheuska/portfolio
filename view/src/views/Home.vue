@@ -79,13 +79,13 @@ export default {
                 {
                     heading: 'FreeCodeCamp Profile',
                     link: 'https://www.freecodecamp.org/nikameush',
-                    imageSrc: `/fcc-logo__b&w.png`,
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/fcc-logo__b&w.png`,
                     hasSmallImage: true,
                 },
                 {
                     heading: 'Codepen Profile',
                     link: 'https://codepen.io/nikameush',
-                    imageSrc: `/codepen-logo.png`,
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/codepen-logo.png`,
                     hasSmallImage: true,
                 },
                 {
