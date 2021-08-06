@@ -29,14 +29,12 @@
 </template>
 
 <script>
-import { PORTFOLIO_BUCKET } from '@/constants';
-
 export default {
     name: 'Home',
 
     computed: {
         profileImage() {
-            return `${PORTFOLIO_BUCKET}/images/profilePic.jpg`;
+            return `${this.$env.PORTFOLIO_BUCKET}/images/profilePic.jpg`;
         },
     },
 };
