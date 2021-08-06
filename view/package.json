@@ -7,7 +7,8 @@
         "build": "vue-cli-service build --dest ../public",
         "report": "vue-cli-service build --report",
         "lint": "vue-cli-service lint",
-        "lint:fix": "vue-cli-service lint --fix"
+        "lint:fix": "vue-cli-service lint --fix",
+        "deploy": "git push heroku master"
     },
     "dependencies": {
         "bulma": "^0.9.2",
