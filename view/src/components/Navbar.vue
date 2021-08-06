@@ -143,6 +143,16 @@ export default {
         unfocusNavbarDropdown(event) {
             event.target.blur();
         },
+
+        hideNavbarBurgerMenu() {
+            this.$nextTick(() => {
+                this.activeNavbar = false;
+            });
+        },
+    },
+
+    watch: {
+        '$route.path': 'hideNavbarBurgerMenu',
     },
 };
 </script>
