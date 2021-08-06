@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 import { DARK_THEME_CSS_CLASS } from '@/constants';
 import * as envs from '@/constants/envs';
 
@@ -20,6 +22,17 @@ export const darkThemeMixin = () => ({
             }
 
             body.classList.remove(DARK_THEME_CSS_CLASS);
+        },
+    },
+});
+
+export const cookiesMixin = () => ({
+    methods: {
+        $setCookie(key, value) {
+            Cookies.set(key, value);
+        },
+        $getCookie(key) {
+            return Cookies.get(key);
         },
     },
 });

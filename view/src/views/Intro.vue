@@ -58,6 +58,7 @@
 
 <script>
 import { sleep } from '@/utils';
+import { SAW_INTRO_COOKIE_KEY } from '@/constants';
 
 // const DARK_BLUE = '#186090';
 const WHITE = '#fff';
@@ -70,7 +71,9 @@ export default {
             return this.body.show;
         },
         skipAnimation() {
-            return this.$route.query.skipAnimation === 'true';
+            return (
+                this.$route.query.skipAnimation === 'true' || this.$getCookie(SAW_INTRO_COOKIE_KEY)
+            );
         },
         isHeroDark() {
             return this.hero.background === 'dark';
@@ -109,6 +112,7 @@ export default {
             await this.initIntro();
             return;
         }
+        this.$setCookie(SAW_INTRO_COOKIE_KEY, true);
         await this.startHeroAnimation();
     },
 
@@ -135,6 +139,10 @@ export default {
             this.toggleHeroElements(['conclusion']);
 
             await sleep(3000);
+            this.goHome();
+        },
+
+        goHome() {
             this.$router.push('/home');
         },
 
@@ -186,6 +194,8 @@ export default {
             this.hero.show = true;
             this.hero.background = 'light';
             this.toggleHeroElements(['conclusion']);
+            await sleep(3000);
+            this.goHome();
         },
     },
 };
