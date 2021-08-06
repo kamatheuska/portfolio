@@ -43,6 +43,17 @@
                 />
             </HorizontalLevel>
         </section>
+        <section class="section home__links">
+            <h2 class="title is-3 has-text-centered mb-6">Blogs And Other Art Expressions</h2>
+            <HorizontalLevel :numberOfItems="3">
+                <LevelItem
+                    v-for="(blog, i) in levelItemBlogs.slice(0, 3)"
+                    :key="`level-item-blog${i}`"
+                    :numberOfItems="4"
+                    v-bind="blog"
+                />
+            </HorizontalLevel>
+        </section>
     </div>
 </template>
 
@@ -106,6 +117,31 @@ export default {
                     hasSmallImage: true,
                     animateOnHover: true,
                     downloadName: 'CV2021-Nicolas-Ramirez.pdf',
+                },
+            ];
+        },
+        levelItemBlogs() {
+            return [
+                {
+                    heading: 'Blog - Recopilacion',
+                    link: 'https://nico9017xxx.wordpress.com',
+                    imageSrc: `/wordpress-logo__b&w.png`,
+                    hasSmallImage: true,
+                    animateOnHover: true,
+                },
+                {
+                    heading: 'Blog - Primero',
+                    link: 'https://mionicoma.blogspot.com/',
+                    imageSrc: `/blogger-logo__b&w.png`,
+                    hasSmallImage: true,
+                    animateOnHover: true,
+                },
+                {
+                    heading: 'Some pieces and improvisations',
+                    link: 'https://soundcloud.com/nikameush',
+                    imageSrc: `/soundcloud-logo__b&w.png`,
+                    hasSmallImage: true,
+                    animateOnHover: true,
                 },
             ];
         },
