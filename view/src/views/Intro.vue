@@ -47,9 +47,7 @@
                             </transition>
                         </div>
                     </div>
-                    <button v-if="!body.show" class="button intro__button is-light">
-                        <router-link to="/home"> skip </router-link>
-                    </button>
+                    <a href="/" v-if="!body.show" class="button intro__button is-light"> skip </a>
                 </section>
             </transition>
         </div>
@@ -139,7 +137,9 @@ export default {
             this.toggleHeroElements(['conclusion']);
 
             await sleep(3000);
-            this.goHome();
+            if (!this.skipAnimation) {
+                this.goHome();
+            }
         },
 
         goHome() {
