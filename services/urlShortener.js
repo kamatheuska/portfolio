@@ -2,57 +2,46 @@ const dns = require('dns');
 const util = require('util');
 const mongoose = require('mongoose');
 const Url = require('../model/url');
-const { logInfo } = require('./logger');
 const {
     DocumentNotFoundException,
     RequestParamException,
     MongooseValidationException,
 } = require('./exceptions');
-const { isTypeOrThrowException } = require('../utils/errors');
+const {
+    isTypeOrThrow,
+    isTruthyOrThrow,
+    isEqualOrThrow,
+    isTruthyOrThrowMessage,
+} = require('../utils/errors');
+const { errorCode } = require('../constants');
 
 const dnsLookupPromisfied = util.promisify(dns.lookup);
 
 async function checkHostnameValidity(hostname) {
     try {
-        if (!hostname) {
-            throw new RequestParamException('hostname is falsy or undefined');
-        }
+        isTruthyOrThrow(hostname, RequestParamException);
 
         await dnsLookupPromisfied(hostname);
-        logInfo(
-            'UrlShortenerService.checkHostnameValidity',
-            `Hostname ${hostname} validated succesfully`,
-        );
+        return true;
     } catch (error) {
-        if (error.code === 'ENOTFOUND') {
-            throw new RequestParamException(`${hostname} is an invalid url`);
-        }
+        isEqualOrThrow(error.code, errorCode.ENOTFOUND, {
+            errorMessage: `${hostname} is an invalid url`,
+            GivenException: RequestParamException,
+        });
+
         throw error;
     }
 }
 
 async function buildNewShortUrl(hostname) {
-    const count = await Url.estimatedDocumentCount().exec();
-    if (count > 100) {
-        throw new Error('Database capacity limit reached. Please Contact the administrator.');
-    }
+    const count = await Url.countUrlDocuments();
 
-    const newUrl = new Url({
-        original: hostname,
-        short: count + 1,
-    });
-
-    logInfo('UrlShortenerService.buildNewUrl', 'Saved Url in db', { hostname, newUrl });
-    return newUrl;
+    return Url.createUrl({ hostname, count });
 }
 
 async function saveUrl(url) {
     try {
-        const doc = await url.save();
-
-        logInfo('UrlShortenerService.buildNewUrl', 'Saved doc:', doc);
-
-        return doc;
+        return await url.save();
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             throw new MongooseValidationException(error);
@@ -65,12 +54,12 @@ async function saveUrl(url) {
 /**
  * @param {Object} doc - saved url mongoose document
  */
-function createUrlObject(doc) {
-    const href = `/api/shorturl/${doc.short}`;
+function createUrlObject({ short, original }) {
+    const href = `/api/shorturl/${short}`;
 
     return {
-        originalUrl: doc.original,
-        shortUrl: doc.short,
+        originalUrl: original,
+        shortUrl: short,
         href,
     };
 }
@@ -78,21 +67,29 @@ function createUrlObject(doc) {
 async function findUrlById(shortId) {
     const url = await Url.findOne({ short: shortId }).exec();
 
-    if (!url) {
-        throw new DocumentNotFoundException(`No url document found with ${shortId}`);
-    }
+    isTruthyOrThrowMessage(url, {
+        errorMessage: `No url document found with ${shortId}`,
+        GivenException: DocumentNotFoundException,
+    });
 
-    logInfo('getUrl', 'Url found', url);
     return url;
 }
 
-async function getUrl(shortId) {
-    isTypeOrThrowException(shortId);
+async function getUrlById(shortId) {
+    isTypeOrThrow(shortId);
     return findUrlById(shortId);
 }
 
-exports.checkHostnameValidity = checkHostnameValidity;
 exports.buildNewShortUrl = buildNewShortUrl;
-exports.saveUrl = saveUrl;
-exports.getUrl = getUrl;
+exports.checkHostnameValidity = checkHostnameValidity;
 exports.createUrlObject = createUrlObject;
+exports.getUrlById = getUrlById;
+exports.saveUrl = saveUrl;
+
+module.exports = {
+    buildNewShortUrl,
+    checkHostnameValidity,
+    createUrlObject,
+    getUrlById,
+    saveUrl,
+};
