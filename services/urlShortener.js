@@ -1,12 +1,8 @@
 const dns = require('dns');
 const util = require('util');
-const mongoose = require('mongoose');
+const _ = require('lodash');
 const Url = require('../model/url');
-const {
-    DocumentNotFoundException,
-    RequestParamException,
-    MongooseValidationException,
-} = require('./exceptions');
+const { DocumentNotFoundException, RequestParamException } = require('./exceptions');
 const {
     isTypeOrThrow,
     isTruthyOrThrow,
@@ -24,37 +20,31 @@ async function checkHostnameValidity(hostname) {
         await dnsLookupPromisfied(hostname);
         return true;
     } catch (error) {
-        isEqualOrThrow(error.code, errorCode.ENOTFOUND, {
-            errorMessage: `${hostname} is an invalid url`,
-            GivenException: RequestParamException,
-        });
+        isEqualOrThrow(error.code, errorCode.ENOTFOUND);
 
-        throw error;
+        throw new RequestParamException(`${hostname} is an invalid url`);
     }
 }
 
 async function buildNewShortUrl(hostname) {
     const count = await Url.countUrlDocuments();
+    Url.checkDatabaseUrlCount();
 
-    return Url.createUrl({ hostname, count });
+    return Url.createUrlDoc({ hostname, count });
 }
 
 async function saveUrl(url) {
-    try {
-        return await url.save();
-    } catch (error) {
-        if (error instanceof mongoose.Error.ValidationError) {
-            throw new MongooseValidationException(error);
-        }
-
-        throw error;
-    }
+    return url.save();
 }
 
 /**
  * @param {Object} doc - saved url mongoose document
  */
 function createUrlObject({ short, original }) {
+    isTruthyOrThrowMessage(_.isString(short) && _.isString(original), {
+        errorMessage: 'createUrlObject: short and original must be strings',
+    });
+
     const href = `/api/shorturl/${short}`;
 
     return {
