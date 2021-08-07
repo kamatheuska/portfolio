@@ -23,9 +23,16 @@ function logRequestError(context, ...errors) {
     console.error(contextString, ...errors);
 }
 
-function logInfo(context, ...info) {
+function logInfo(context, ...logs) {
     const contextString = buildLogContextString(context);
-    console.info(contextString, ...info);
+    const config = require('../config').getConfig();
+    if (config.debugMode) {
+        console.trace();
+    }
+
+    return arguments.length === 1
+        ? (..._logs) => console.info(contextString, ..._logs)
+        : console.info(contextString, ...logs);
 }
 
 function logError(context, error) {
