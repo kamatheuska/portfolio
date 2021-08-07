@@ -6,12 +6,7 @@ function getHostNameFromUrl(url = '') {
 }
 
 function addHttp(url) {
-    let newUrl;
-    if (!PROTOCOL_REGEX.test(url)) {
-        newUrl = `http://${url}`;
-    }
-
-    return newUrl;
+    return !PROTOCOL_REGEX.test(url) ? `http://${url}` : url;
 }
 
 /**

@@ -8,7 +8,24 @@ function hasProperty(parent, prop) {
     return Object.prototype.hasOwnProperty.call(parent, prop);
 }
 
+function getNonConsecutiveInteger(minimum, maximum) {
+    let previousValue;
+
+    return function random() {
+        const number = Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
+
+        previousValue = number === previousValue && minimum !== maximum ? random() : number;
+
+        return previousValue;
+    };
+}
+function getRandomItemFromList(list) {
+    const random = getNonConsecutiveInteger(0, list.length - 1);
+    return () => list[random()];
+}
+
 exports.hasProperty = hasProperty;
+exports.getRandomItemFromList = getRandomItemFromList;
 
 module.exports = {
     hasProperty,

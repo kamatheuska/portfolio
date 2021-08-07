@@ -1,9 +1,34 @@
 const { TypeErrorException, Exception } = require('../services/exceptions');
 const exceptions = require('../constants/exceptions');
 
-function isTypeOrThrowException(subject) {
+function isTypeOrThrow(subject) {
     if (typeof subject !== 'string') {
         throw new TypeErrorException(`Subject ${subject} is not of type string`);
+    }
+}
+
+function isEqualOrThrow(
+    subject,
+    object,
+    { GivenException, errorMessage } = { GivenException: Exception, errorMessage: '' },
+) {
+    if (subject !== object) {
+        throw new GivenException(
+            `Subject ${subject} is not of equal to ${object} -> ${errorMessage}`,
+        );
+    }
+}
+function isTruthyOrThrow(subject, GivenException = Exception) {
+    if (!subject) {
+        throw new GivenException(`${subject} is falsy`);
+    }
+}
+function isTruthyOrThrowMessage(
+    subject,
+    { GivenException, errorMessage } = { GivenException: Exception, errorMessage: '' },
+) {
+    if (!subject) {
+        throw new GivenException(errorMessage);
     }
 }
 
@@ -16,5 +41,8 @@ function transformErrorToException(error, { message = '', code = exceptions.GENE
     return exception;
 }
 
-exports.isTypeOrThrowException = isTypeOrThrowException;
+exports.isTypeOrThrow = isTypeOrThrow;
+exports.isEqualOrThrow = isEqualOrThrow;
+exports.isTruthyOrThrow = isTruthyOrThrow;
+exports.isTruthyOrThrowMessage = isTruthyOrThrowMessage;
 exports.transformErrorToException = transformErrorToException;

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { getConfig } = require('../config');
 const exceptions = require('../constants/exceptions');
 const { logInfo } = require('../services/logger');
-const { transformErrorToException } = require('../utils');
+const { transformErrorToException } = require('../utils/errors');
 
 const db = mongoose.connection;
 
