@@ -7,7 +7,7 @@ const {
 } = require('../../../model/url/functions');
 const { addHttp } = require('../../../utils/url'); // eslint-disable-line
 const { getConfig } = require('../../../config'); // eslint-disable-line
-const { isEqualOrThrow } = require('../../../utils/errors'); // eslint-disable-line
+const { isLessThanOrThrow } = require('../../../utils/errors'); // eslint-disable-line
 
 jest.mock('../../../utils/url');
 jest.mock('../../../utils/errors');
@@ -55,14 +55,14 @@ describe('🌳  Url Model', () => {
 
         describe('🍉 checkDatabaseUrlCount', () => {
             it('🌱 should thow an error if the db limit is passed', async () => {
-                isEqualOrThrow.mockImplementation(() => {
+                isLessThanOrThrow.mockImplementation(() => {
                     throw new Error();
                 });
                 getConfig.mockImplementation(() => ({
                     db: { url: { documentLimit: URL_DOCS_COUNT } },
                 }));
 
-                expect(() => checkDatabaseUrlCount(URL_DOCS_COUNT)).toThrow();
+                expect(() => checkDatabaseUrlCount(URL_DOCS_COUNT + 10)).toThrow();
             });
         });
     });

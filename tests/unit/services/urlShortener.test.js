@@ -1,4 +1,5 @@
 jest.mock('../../../model/url');
+jest.mock('../../../utils/errors');
 
 const mongoose = require('mongoose');
 const {
@@ -15,6 +16,7 @@ const {
     urlDoc,
 } = require('../../constants');
 const { logJestError } = require('../../utils');
+const { isTruthyOrThrow } = require('../../../utils/errors');
 const { RequestParamException, Exception } = require('../../../services/exceptions');
 const Url = require('../../../model/url');
 
@@ -39,6 +41,9 @@ describe('🌳 UrlShortener Service', () => {
             }
         });
         it('🌱 should throw an error when hostname is invalid', async () => {
+            isTruthyOrThrow.mockImplementation(() => {
+                throw new Error();
+            });
             await expect(checkHostnameValidity(INVALID_HOSTNAME)).rejects.toThrowError(
                 RequestParamException,
             );
@@ -46,6 +51,9 @@ describe('🌳 UrlShortener Service', () => {
         it.each([[null], [false], ['']])(
             '🌱 should throw an error when hostname is "%s"',
             async (falsyValue) => {
+                isTruthyOrThrow.mockImplementation(() => {
+                    throw new Error();
+                });
                 await expect(checkHostnameValidity(falsyValue)).rejects.toThrowError(Exception);
             },
         );
@@ -75,10 +83,7 @@ describe('🌳 UrlShortener Service', () => {
             expect(Url.countUrlDocuments).toHaveBeenCalledWith();
             expect(Url.createUrlDoc).toHaveBeenCalledTimes(1);
             expect(Url.checkDatabaseUrlCount).toHaveBeenCalledTimes(1);
-            expect(Url.createUrlDoc).toHaveBeenCalledWith({
-                hostname: VALID_URL,
-                count: URL_DOCS_COUNT,
-            });
+            expect(Url.createUrlDoc).toHaveBeenCalledWith(VALID_URL, URL_DOCS_COUNT);
         });
     });
 
@@ -102,10 +107,11 @@ describe('🌳 UrlShortener Service', () => {
 
     describe('🌴 createUrlObject', () => {
         it('🌱 should return a valid url object when passed', () => {
-            result = createUrlObject({ short: '1', original: VALID_URL });
+            const anotherValidUrl = 'www.foo.com';
+            result = createUrlObject({ short: '1', original: VALID_URL }, anotherValidUrl);
             expect(result.href).toBeTruthy();
             expect(result.shortUrl).toBe('1');
-            expect(result.originalUrl).toBe(VALID_URL);
+            expect(result.originalUrl).toBe(anotherValidUrl);
         });
     });
 });

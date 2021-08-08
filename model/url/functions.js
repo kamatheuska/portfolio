@@ -1,7 +1,6 @@
 const { getConfig } = require('../../config');
 const { addHttp } = require('../../utils/url');
 const { isLessThanOrThrow } = require('../../utils/errors');
-const Url = require('./index');
 
 function savePreSchemaHook() {
     this.original = addHttp(this.original);
