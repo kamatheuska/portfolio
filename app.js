@@ -4,11 +4,12 @@ const morgan = require('morgan');
 
 const app = express();
 const { initConfig, getConfig } = require('./config');
-const { connectToMongoose } = require('./db');
-const { errorLogger, errorResponseHandler } = require('./middleware/errors');
-const { logError, logInfo } = require('./services/logger');
+const { connectToDatabase, disconnectFromDatabase } = require('./db');
+const { errorLogger, errorResponseMapper, defaultErrorResponse } = require('./middleware/errors');
+const { logInfo } = require('./services/logger');
 
 let config;
+let server;
 
 function forceSsl(req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
@@ -24,8 +25,14 @@ function initializeConfiguration() {
 }
 
 function startServer() {
-    app.listen(config.port, () => {
+    return app.listen(config.port, () => {
         logInfo('init.startServer', `Server started on port ${config.port}`);
+    });
+}
+
+async function stopServer() {
+    server.close(async () => {
+        await disconnectFromDatabase();
     });
 }
 
@@ -49,14 +56,21 @@ function registerControllers() {
     });
 
     app.use(errorLogger);
-    app.use(errorResponseHandler);
+    app.use(errorResponseMapper);
+    app.use(defaultErrorResponse);
 }
 
 async function init() {
     initializeConfiguration();
-    await connectToMongoose();
+    // if (!config.isTest) {
+    await connectToDatabase();
+    // }
     registerControllers();
-    startServer();
+    server = startServer();
 }
 
-init().catch((error) => logError('init', error));
+module.exports = {
+    app,
+    init,
+    stopServer,
+};
