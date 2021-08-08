@@ -4,7 +4,7 @@ const { Exception } = require('../services/exceptions');
  * In order to unit test this functions, it was neccesaty to make them a class
  * reference: https://stackoverflow.com/a/45288360/7868769
  */
-class ConfigHelpers {
+class ConfigHelper {
     static serializeEnv(env, type) {
         if (type === Boolean) return env === 'true'; // Coerce to boolean
         if (type === Number) return +env; // Coerce to number
@@ -13,14 +13,14 @@ class ConfigHelpers {
 
     static getEnvVar(key, defaultValue = null, type) {
         if (process.env[key]) {
-            return ConfigHelpers.serializeEnv(process.env[key], type);
+            return ConfigHelper.serializeEnv(process.env[key], type);
         }
         if (defaultValue && key) {
-            return ConfigHelpers.serializeEnv(defaultValue, type);
+            return ConfigHelper.serializeEnv(defaultValue, type);
         }
 
         throw new Exception('init.getEnvVar', `Required but not defined : Env Variable ${key}.`);
     }
 }
 
-module.exports = ConfigHelpers;
+module.exports = ConfigHelper;
