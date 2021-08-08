@@ -21,10 +21,7 @@ function buildConfigByEnvironment() {
     let mongoDbUri;
 
     if (isTest) {
-        mongoDbUri = ConfigHelper.getEnvVar(
-            'MONGODB_URI',
-            'mongodb://localhost:27017/portfolio-test',
-        );
+        mongoDbUri = 'mongodb://localhost:27017/portfolio-test';
     } else if (isDevelopment) {
         mongoDbUri = ConfigHelper.getEnvVar('MONGODB_URI', 'mongodb://localhost:27017/portfolio');
     } else {
@@ -33,6 +30,8 @@ function buildConfigByEnvironment() {
 
     return {
         ...getNodeEnvIndependentEnvs(),
+        isTest,
+        isDevelopment,
         mongoDbUri,
     };
 }

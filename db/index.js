@@ -4,17 +4,16 @@ const exceptions = require('../constants/exceptions');
 const { logInfo } = require('../services/logger');
 const { transformErrorToException } = require('../utils/errors');
 
-const db = mongoose.connection;
-
-async function connectToMongoose() {
-    const config = getConfig();
+async function connectToDatabase() {
+    const { mongoDbUri } = getConfig();
+    const db = mongoose.connection;
 
     try {
-        await mongoose.connect(config.mongoDbUri, {
+        await mongoose.connect(mongoDbUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        logInfo('Db.connectToMongoose', 'Connecting succesfully to', config.mongoDbUri);
+        logInfo('Db.connectToDatabase', 'Connecting succesfully to', mongoDbUri);
     } catch (error) {
         throw transformErrorToException(error, { code: exceptions.MONGOOSE_ERROR });
     }
@@ -22,6 +21,12 @@ async function connectToMongoose() {
     db.on('error', (error) => {
         throw transformErrorToException(error, { code: exceptions.MONGOOSE_ERROR });
     });
+
+    return db;
 }
 
-exports.connectToMongoose = connectToMongoose;
+async function disconnectFromDatabase() {
+    await mongoose.connection.close();
+}
+exports.connectToDatabase = connectToDatabase;
+exports.disconnectFromDatabase = disconnectFromDatabase;

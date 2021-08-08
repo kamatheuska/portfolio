@@ -1,6 +1,7 @@
 const { hasProperty } = require('../utils');
 
-const isDebug = !!process.env.DEBUG_MODE;
+const isDebug = process.env.DEBUG_MODE === 'true';
+const skipLogging = process.env.NODE_ENV !== 'test' ? false : !isDebug;
 
 function buildLogContextString(context) {
     if (
@@ -16,24 +17,33 @@ function buildLogContextString(context) {
 }
 
 function logRequestInfo(context, ...info) {
+    if (skipLogging) return;
     const contextString = buildLogContextString(context);
     console.info(contextString, ...info);
 }
 
 function logRequestError(context, ...errors) {
+    if (skipLogging) return;
     const contextString = buildLogContextString(context);
     console.error(contextString, ...errors);
 }
+function logInfo(contextString, ...logs) {
+    if (skipLogging) return;
+    if (isDebug) console.trace();
 
-function logInfo(context, ...logs) {
+    console.info(contextString, ...logs);
+}
+
+function $logInfo(context, ...logs) {
     const contextString = buildLogContextString(context);
-    if (isDebug) {
-        console.trace();
+
+    if (arguments.length === 1) {
+        return (..._logs) => {
+            logInfo(contextString, ..._logs);
+        };
     }
 
-    return arguments.length === 1
-        ? (..._logs) => console.info(contextString, ..._logs)
-        : console.info(contextString, ...logs);
+    logInfo(contextString, ...logs);
 }
 
 function logDebug(context, ...logs) {
@@ -45,12 +55,13 @@ function logDebug(context, ...logs) {
 }
 
 function logError(context, error) {
+    if (skipLogging) return;
     const contextString = buildLogContextString(context);
     console.error(contextString, error);
 }
 
 exports.logRequestInfo = logRequestInfo;
 exports.logRequestError = logRequestError;
-exports.logInfo = logInfo;
+exports.logInfo = $logInfo;
 exports.logDebug = logDebug;
 exports.logError = logError;
