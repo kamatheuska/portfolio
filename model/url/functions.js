@@ -1,15 +1,15 @@
 const { getConfig } = require('../../config');
 const { addHttp } = require('../../utils/url');
-const { isEqualOrThrow } = require('../../utils/errors');
-const Url = require('.');
+const { isLessThanOrThrow } = require('../../utils/errors');
+const Url = require('./index');
 
 function savePreSchemaHook() {
     this.original = addHttp(this.original);
 }
 
 function checkDatabaseUrlCount(count) {
-    isEqualOrThrow(count, getConfig().db.url.documentLimit, {
-        errorMessage: 'Database capacity limit reached. Please Contact the administrator.',
+    isLessThanOrThrow(count, getConfig().db.url.documentLimit, {
+        errorMessage: 'Database capacity limit reached. Please contact the administrator.',
     });
 }
 
@@ -20,7 +20,7 @@ async function countUrlDocuments() {
 }
 
 async function createUrlDoc(hostname, count) {
-    return new Url({
+    return new this({
         original: hostname,
         short: count + 1,
     });

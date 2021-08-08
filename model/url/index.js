@@ -18,11 +18,12 @@ const urlSchema = new mongoose.Schema({
     },
 });
 
-const Url = mongoose.model('Url', urlSchema);
-
 urlSchema.pre('save', savePreSchemaHook);
+
 urlSchema.statics.countUrlDocuments = countUrlDocuments;
 urlSchema.statics.createUrlDoc = createUrlDoc;
 urlSchema.statics.checkDatabaseUrlCount = checkDatabaseUrlCount;
+
+const Url = mongoose.model('Url', urlSchema);
 
 module.exports = Url;

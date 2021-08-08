@@ -28,9 +28,9 @@ async function checkHostnameValidity(hostname) {
 
 async function buildNewShortUrl(hostname) {
     const count = await Url.countUrlDocuments();
-    Url.checkDatabaseUrlCount();
+    Url.checkDatabaseUrlCount(count);
 
-    return Url.createUrlDoc({ hostname, count });
+    return Url.createUrlDoc(hostname, count);
 }
 
 async function saveUrl(url) {
@@ -40,7 +40,7 @@ async function saveUrl(url) {
 /**
  * @param {Object} doc - saved url mongoose document
  */
-function createUrlObject({ short, original }) {
+function createUrlObject({ short, original }, rawOriginalUrl) {
     isTruthyOrThrowMessage(_.isString(short) && _.isString(original), {
         errorMessage: 'createUrlObject: short and original must be strings',
     });
@@ -48,7 +48,7 @@ function createUrlObject({ short, original }) {
     const href = `/api/shorturl/${short}`;
 
     return {
-        originalUrl: original,
+        originalUrl: rawOriginalUrl,
         shortUrl: short,
         href,
     };

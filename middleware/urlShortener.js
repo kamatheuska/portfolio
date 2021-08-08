@@ -21,7 +21,7 @@ async function createUrl(req, res, next) {
         const doc = await saveUrl(model);
         logInfo('Saved doc:', doc);
 
-        res.locals.urlData = createUrlObject(doc, req);
+        res.locals.urlData = createUrlObject(doc, url);
 
         next();
     } catch (error) {

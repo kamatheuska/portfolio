@@ -7,14 +7,17 @@ function isTypeOrThrow(subject) {
     }
 }
 
-function isEqualOrThrow(
-    subject,
-    object,
-    { GivenException, errorMessage } = { GivenException: Exception, errorMessage: '' },
-) {
+function isEqualOrThrow(subject, object, { GivenException = Exception, errorMessage = '' }) {
     if (subject !== object) {
         throw new GivenException(
             `Subject ${subject} is not of equal to ${object} -> ${errorMessage}`,
+        );
+    }
+}
+function isLessThanOrThrow(subject, object, { GivenException = Exception, errorMessage = '' }) {
+    if (subject === object) {
+        throw new GivenException(
+            `Subject ${subject} should be less than ${object} -> ${errorMessage}`,
         );
     }
 }
@@ -43,6 +46,7 @@ function transformErrorToException(error, { message = '', code = exceptions.GENE
 
 exports.isTypeOrThrow = isTypeOrThrow;
 exports.isEqualOrThrow = isEqualOrThrow;
+exports.isLessThanOrThrow = isLessThanOrThrow;
 exports.isTruthyOrThrow = isTruthyOrThrow;
 exports.isTruthyOrThrowMessage = isTruthyOrThrowMessage;
 exports.transformErrorToException = transformErrorToException;

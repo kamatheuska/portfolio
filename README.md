@@ -22,3 +22,9 @@ This portfolio has a server in **Node JS**, and follows a losely MVC pattern.
 - **controllers** are not unit tested and should have no business logic.
 - **controllers** will be tested in integration test
 
+
+## To Do
+- Remove obsolete/deprecated packages
+    - Request: https://github.com/request/request
+- Move node to module (import/export)
+
