@@ -14,6 +14,7 @@
         "build:view": "./view/buildView.sh",
         "install:view": "./view/installDependencies.sh",
         "dev": "nodemon app.js",
+        "dev:debug-log-mode": "DEBUG_MODE=true nodemon app.js",
         "start": "node app.js",
         "test:jest": "jest",
         "test": "tape tests/**/**.test.js | tap-spec",

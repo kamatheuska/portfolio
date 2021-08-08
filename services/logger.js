@@ -1,5 +1,7 @@
 const { hasProperty } = require('../utils');
 
+const isDebug = !!process.env.DEBUG_MODE;
+
 function buildLogContextString(context) {
     if (
         typeof context === 'object' &&
@@ -25,14 +27,21 @@ function logRequestError(context, ...errors) {
 
 function logInfo(context, ...logs) {
     const contextString = buildLogContextString(context);
-    const config = require('../config').getConfig();
-    if (config.debugMode) {
+    if (isDebug) {
         console.trace();
     }
 
     return arguments.length === 1
         ? (..._logs) => console.info(contextString, ..._logs)
         : console.info(contextString, ...logs);
+}
+
+function logDebug(context, ...logs) {
+    const contextString = buildLogContextString(context);
+
+    if (isDebug) {
+        console.info(contextString, ...logs);
+    }
 }
 
 function logError(context, error) {
@@ -43,4 +52,5 @@ function logError(context, error) {
 exports.logRequestInfo = logRequestInfo;
 exports.logRequestError = logRequestError;
 exports.logInfo = logInfo;
+exports.logDebug = logDebug;
 exports.logError = logError;
