@@ -39,8 +39,10 @@ function registerControllers() {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+    app.use(require('./middleware/logger'));
 
     app.use('/api/shorturl/', require('./controllers/urlShortener'));
+    app.use('/api/quote/', require('./controllers/quote'));
 
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname, '/index.html'));
