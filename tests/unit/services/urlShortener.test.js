@@ -1,7 +1,6 @@
 jest.mock('../../../model/url');
 jest.mock('../../../utils/errors');
 
-const mongoose = require('mongoose');
 const {
     checkHostnameValidity,
     buildNewShortUrl,

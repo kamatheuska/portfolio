@@ -30,3 +30,5 @@ bin
 freecodecamp
 public
 !view/public
+
+globalConfig.json
