@@ -16,7 +16,7 @@
         "dev": "nodemon init.js",
         "dev:debug-log-mode": "DEBUG_MODE=true nodemon init.js",
         "start": "node init.js",
-        "test": "jest",
+        "test": "jest tests/unit",
         "clean": "rm -rf node_modules",
         "debug": "node --inspect init.js",
         "debug:watch": "nodemon --inspect init.js",
