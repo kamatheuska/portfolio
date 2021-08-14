@@ -10,7 +10,7 @@
         "deploy": "git push heroku master",
         "heroku-prebuild": "npm run install:view",
         "heroku-postbuild": "npm run build",
-        "build": "npm run lint && npm test && npm run build:view",
+        "build": "ls -la && npm run lint && npm test && npm run build:view",
         "build:view": "./view/buildView.sh",
         "install:view": "./view/installDependencies.sh",
         "dev": "nodemon init.js",
