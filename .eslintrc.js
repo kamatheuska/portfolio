@@ -27,7 +27,7 @@ module.exports = {
             },
         ],
         'global-require': 0,
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-console': ['error', { allow: ['warn', 'error'] }],
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'consistent-return': 0,

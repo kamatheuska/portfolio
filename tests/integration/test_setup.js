@@ -27,7 +27,7 @@ async function dropAllCollections() {
             // This error occurs when you use it.todo. You can
             // safely ignore this error too
             if (error.message.includes('a background operation is currently running')) return;
-            console.log(error.message);
+            console.error(error.message);
         }
     }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const { hasProperty } = require('../utils');
 
 const isDebug = process.env.DEBUG_MODE === 'true';
