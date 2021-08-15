@@ -1,15 +1,12 @@
-/* eslint-disable no-undef */
+import { jest } from '@jest/globals';
 
-function logJestError(error) {
+export function logJestError(error) {
     if (process.env.DEBUG_UNIT_TEST) {
         console.error(error);
     }
 }
 
-function setupProcessEnvMock(oldEnv) {
+export function setupProcessEnvMock(oldEnv) {
     jest.resetModules(); // Most important - it clears the cache
     process.env = { ...oldEnv }; // Make a copy
 }
-
-exports.logJestError = logJestError;
-exports.setupProcessEnvMock = setupProcessEnvMock;

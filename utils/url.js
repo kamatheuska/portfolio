@@ -1,11 +1,11 @@
-const { URL } = require('url');
-const { PROTOCOL_REGEX } = require('../constants');
+import { URL } from 'url';
+import { PROTOCOL_REGEX } from '../constants';
 
-function getHostNameFromUrl(url = '') {
+export function getHostNameFromUrl(url = '') {
     return PROTOCOL_REGEX.test(url) ? new URL(url).hostname : url;
 }
 
-function addHttp(url) {
+export const addHttp = (url) => {
     return !PROTOCOL_REGEX.test(url) ? `http://${url}` : url;
 }
 
@@ -14,11 +14,8 @@ function addHttp(url) {
  *
  * @return {string} full path of api
  */
-function getFullUrlFromRequest(request) {
+export function getFullUrlFromRequest(request) {
     const { protocol, hostname, path } = request;
     return `${protocol}://${hostname}${path}`;
 }
-
-exports.getHostNameFromUrl = getHostNameFromUrl;
-exports.getFullUrlFromRequest = getFullUrlFromRequest;
-exports.addHttp = addHttp;
+export default 'defaultExport';

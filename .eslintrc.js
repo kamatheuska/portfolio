@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     env: {
         commonjs: true,
         es2021: true,
@@ -8,7 +8,7 @@ module.exports = {
     // parserOptions: {
     //     ecmaVersion: 12,
     // },
-    plugins: ['prettier'],
+    plugins: ['prettier', 'import'],
     rules: {
         'prettier/prettier': [
             'error',
@@ -31,6 +31,9 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'consistent-return': 0,
+        'import/no-unresolved': 2,
+        'import/no-commonjs': 2,
+        'import/extensions': [2, { js: 'never', json: 'always' }],
     },
     overrides: [
         {

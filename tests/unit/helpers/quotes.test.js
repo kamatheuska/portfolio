@@ -1,5 +1,5 @@
-const { getAuthoredQuotes } = require('../../../helpers/quotes');
-const { quotes } = require('../../mocks');
+import { getAuthoredQuotes } from '../../../helpers/quotes';
+import { quotes } from '../../mocks';
 
 let result;
 const NO_AUTHOR_QUOTES = [

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 
-const { hasProperty } = require('../utils');
+import { hasProperty } from '../utils';
 
 const isDebug = process.env.DEBUG_MODE === 'true';
 const skipLogging = process.env.NODE_ENV !== 'test' ? false : !isDebug;
 
-function buildLogContextString(context) {
+export function buildLogContextString(context) {
     if (
         typeof context === 'object' &&
         hasProperty(context, 'method') &&
@@ -18,25 +18,26 @@ function buildLogContextString(context) {
     return typeof context === 'string' ? `[${context}]:` : '';
 }
 
-function logRequestInfo(context, ...info) {
+export function logRequestInfo(context, ...info) {
     if (skipLogging) return;
     const contextString = buildLogContextString(context);
     console.info(contextString, ...info);
 }
 
-function logRequestError(context, ...errors) {
+export function logRequestError(context, ...errors) {
     if (skipLogging) return;
     const contextString = buildLogContextString(context);
     console.error(contextString, ...errors);
 }
-function logInfo(contextString, ...logs) {
+
+export function logInfo(contextString, ...logs) {
     if (skipLogging) return;
     if (isDebug) console.trace();
 
     console.info(contextString, ...logs);
 }
 
-function $logInfo(context, ...logs) {
+export function $logInfo(context, ...logs) {
     const contextString = buildLogContextString(context);
 
     if (arguments.length === 1) {
@@ -48,7 +49,7 @@ function $logInfo(context, ...logs) {
     logInfo(contextString, ...logs);
 }
 
-function logDebug(context, ...logs) {
+export function logDebug(context, ...logs) {
     const contextString = buildLogContextString(context);
 
     if (isDebug) {
@@ -56,14 +57,8 @@ function logDebug(context, ...logs) {
     }
 }
 
-function logError(context, error) {
+export function logError(context, error) {
     if (skipLogging) return;
     const contextString = buildLogContextString(context);
     console.error(contextString, error);
 }
-
-exports.logRequestInfo = logRequestInfo;
-exports.logRequestError = logRequestError;
-exports.logInfo = $logInfo;
-exports.logDebug = logDebug;
-exports.logError = logError;

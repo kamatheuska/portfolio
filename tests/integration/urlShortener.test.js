@@ -1,12 +1,14 @@
 process.env.NODE_ENV = 'test';
 process.env.DEBUG_MODE = 'false';
 
-const request = require('supertest');
-const Url = require('../../model/url');
-const urlMocks = require('../mocks/url');
-const { app, init, stopServer } = require('../../app');
-const { setupDB } = require('./test_setup');
-const { VALID_HOSTNAME, INVALID_HOSTNAME } = require('../constants');
+import request from 'supertest';
+import { jest } from '@jest/globals';
+
+import Url from '../../model/Url';
+import urlMocks from '../mocks/url';
+import { app, init, stopServer } from '../../app';
+import { setupDB } from './test_setup';
+import { VALID_HOSTNAME, INVALID_HOSTNAME } from '../constants';
 
 const BASE_URL = '/api/shorturl';
 

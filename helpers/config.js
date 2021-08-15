@@ -1,4 +1,4 @@
-const { Exception } = require('../services/exceptions');
+import { Exception }from '../services/exceptions';
 
 /**
  * In order to unit test this functions, it was neccesaty to make them a class
@@ -23,4 +23,4 @@ class ConfigHelper {
     }
 }
 
-module.exports = ConfigHelper;
+export default ConfigHelper;

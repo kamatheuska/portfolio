@@ -1,6 +1,7 @@
-const router = require('express').Router();
+import { Router } from 'express';
+import { getRandomQuote } from '../middleware/quote';
 
-const { getRandomQuote } = require('../middleware/quote');
+const router = Router();
 
 router.get('/authored/random', getRandomQuote, (req, res) => {
     const { quote } = res.locals;
@@ -8,4 +9,4 @@ router.get('/authored/random', getRandomQuote, (req, res) => {
     res.status(200).json(quote);
 });
 
-module.exports = router;
+export default router;

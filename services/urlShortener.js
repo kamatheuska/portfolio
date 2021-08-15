@@ -1,19 +1,21 @@
-const dns = require('dns');
-const util = require('util');
-const _ = require('lodash');
-const Url = require('../model/url');
-const { DocumentNotFoundException, RequestParamException } = require('./exceptions');
-const {
+import dns from 'dns';
+import util from 'util';
+import _ from 'lodash';
+
+import Url from '../model/Url';
+import { DocumentNotFoundException, RequestParamException } from './exceptions';
+import {
     isTypeOrThrow,
     isTruthyOrThrow,
     isEqualOrThrow,
     isTruthyOrThrowMessage,
-} = require('../utils/errors');
-const { errorCode } = require('../constants');
+} from '../utils/errors';
+import { errorCode } from '../constants';
+
 
 const dnsLookupPromisfied = util.promisify(dns.lookup);
 
-async function checkHostnameValidity(hostname) {
+export async function checkHostnameValidity(hostname) {
     try {
         isTruthyOrThrow(hostname, RequestParamException);
 
@@ -26,21 +28,21 @@ async function checkHostnameValidity(hostname) {
     }
 }
 
-async function buildNewShortUrl(hostname) {
+export async function buildNewShortUrl(hostname) {
     const count = await Url.countUrlDocuments();
     Url.checkDatabaseUrlCount(count);
 
     return Url.createUrlDoc(hostname, count);
 }
 
-async function saveUrl(url) {
+export async function saveUrl(url) {
     return url.save();
 }
 
 /**
  * @param {Object} doc - saved url mongoose document
  */
-function createUrlObject({ short, original }, rawOriginalUrl) {
+export function createUrlObject({ short, original }, rawOriginalUrl) {
     isTruthyOrThrowMessage(_.isString(short) && _.isString(original), {
         errorMessage: 'createUrlObject: short and original must be strings',
     });
@@ -54,7 +56,7 @@ function createUrlObject({ short, original }, rawOriginalUrl) {
     };
 }
 
-async function findUrlById(shortId) {
+export async function findUrlById(shortId) {
     const url = await Url.findOne({ short: shortId }).exec();
 
     isTruthyOrThrowMessage(url, {
@@ -65,21 +67,7 @@ async function findUrlById(shortId) {
     return url;
 }
 
-async function getUrlById(shortId) {
+export async function getUrlById(shortId) {
     isTypeOrThrow(shortId);
     return findUrlById(shortId);
 }
-
-exports.buildNewShortUrl = buildNewShortUrl;
-exports.checkHostnameValidity = checkHostnameValidity;
-exports.createUrlObject = createUrlObject;
-exports.getUrlById = getUrlById;
-exports.saveUrl = saveUrl;
-
-module.exports = {
-    buildNewShortUrl,
-    checkHostnameValidity,
-    createUrlObject,
-    getUrlById,
-    saveUrl,
-};

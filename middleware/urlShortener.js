@@ -1,13 +1,13 @@
-const {
+import {
     buildNewShortUrl,
     checkHostnameValidity,
     saveUrl,
     createUrlObject,
     getUrlById,
-} = require('../services/urlShortener');
-const { getHostNameFromUrl } = require('../utils/url');
+} from '../services/urlShortener';
+import { getHostNameFromUrl } from '../utils/url';
 
-async function createUrl(req, res, next) {
+export async function createUrl(req, res, next) {
     const { url } = req.body;
     const { logInfo } = res.locals;
     const hostname = getHostNameFromUrl(url);
@@ -29,7 +29,7 @@ async function createUrl(req, res, next) {
     }
 }
 
-async function getUrl(req, res, next) {
+export async function getUrl(req, res, next) {
     const { id } = req.params;
     const { logInfo } = res.locals;
     try {
@@ -41,6 +41,3 @@ async function getUrl(req, res, next) {
         next(error);
     }
 }
-
-exports.createUrl = createUrl;
-exports.getUrl = getUrl;

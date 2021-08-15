@@ -1,6 +1,6 @@
-const dotenv = require('dotenv');
-const { logDebug } = require('../services/logger');
-const ConfigHelper = require('../helpers/config');
+import dotenv from 'dotenv';
+import { logDebug } from '../services/logger';
+import ConfigHelper from '../helpers/config';
 
 const isTest = process.env.NODE_ENV === 'test';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -17,7 +17,7 @@ const getNodeEnvIndependentEnvs = () => ({
     },
 });
 
-function buildConfigByEnvironment() {
+export function buildConfigByEnvironment() {
     let mongoDbUri;
 
     if (isTest) {
@@ -36,12 +36,11 @@ function buildConfigByEnvironment() {
     };
 }
 
-function initConfig() {
+export function initConfig() {
     dotenv.config();
     $config = buildConfigByEnvironment();
 
     logDebug('initConfig', 'INITIAL CONFIG', $config);
 }
 
-exports.getConfig = () => $config;
-exports.initConfig = initConfig;
+export const getConfig = () => $config;

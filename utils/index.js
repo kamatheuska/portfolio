@@ -4,11 +4,11 @@
 // const _exclude = 'minutely,hourly,daily,alerts,flags';
 // const geocodingClient = mbxGeocoding({ accessToken: geocodeApiKey })
 
-function hasProperty(parent, prop) {
+export function hasProperty(parent, prop) {
     return Object.prototype.hasOwnProperty.call(parent, prop);
 }
 
-function getNonConsecutiveInteger(minimum, maximum) {
+export function getNonConsecutiveInteger(minimum, maximum) {
     let previousValue;
 
     return function random() {
@@ -19,15 +19,13 @@ function getNonConsecutiveInteger(minimum, maximum) {
         return previousValue;
     };
 }
-function getRandomItemFromList(list) {
+
+export function getRandomItemFromList(list) {
     const random = getNonConsecutiveInteger(0, list.length - 1);
     return () => list[random()];
 }
 
-exports.hasProperty = hasProperty;
-exports.getRandomItemFromList = getRandomItemFromList;
-
-module.exports = {
+export default {
     hasProperty,
     // getApiPayload (type = 'weather') {
     //     switch (type) {

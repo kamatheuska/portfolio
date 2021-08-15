@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-await-in-loop */
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 mongoose.set('useCreateIndex', true);
 mongoose.promise = global.Promise;
@@ -32,31 +32,29 @@ async function dropAllCollections() {
     }
 }
 
-module.exports = {
-    setupDB(seedAsyncDatabaseCallback, init, stopServer) {
-        // Connect to Mongoose
-        beforeAll(async () => {
-            init().catch((error) => console.error(error));
-        });
+export function setupDB(seedAsyncDatabaseCallback, init, stopServer) {
+    // Connect to Mongoose
+    beforeAll(async () => {
+        init().catch((error) => console.error(error));
+    });
 
-        beforeEach(async () => {
-            await seedAsyncDatabaseCallback();
-        });
+    beforeEach(async () => {
+        await seedAsyncDatabaseCallback();
+    });
 
-        // Cleans up database between each test
-        afterEach(async () => {
-            await removeAllCollections();
-        });
+    // Cleans up database between each test
+    afterEach(async () => {
+        await removeAllCollections();
+    });
 
-        // Disconnect Mongoose
-        afterAll(async () => {
-            try {
-                await dropAllCollections();
-                await stopServer();
-            } catch (error) {
-                console.error(error);
-                process.exit(1);
-            }
-        });
-    },
+    // Disconnect Mongoose
+    afterAll(async () => {
+        try {
+            await dropAllCollections();
+            await stopServer();
+        } catch (error) {
+            console.error(error);
+            process.exit(1);
+        }
+    });
 };

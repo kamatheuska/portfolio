@@ -10,8 +10,6 @@
  * @param {string} quotes.quotes
  * @param {string} quotes
  */
-function getAuthoredQuotes(quotes) {
+export function getAuthoredQuotes(quotes) {
     return Array.isArray(quotes) ? quotes.filter((quote) => !!quote.author) : [];
 }
-
-exports.getAuthoredQuotes = getAuthoredQuotes;

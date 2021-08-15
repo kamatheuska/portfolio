@@ -1,29 +1,31 @@
-jest.mock('../../../model/url');
+import { jest } from '@jest/globals';
+
+jest.mock('../../../model/Url');
 jest.mock('../../../utils/errors');
 
-const {
+import {
     checkHostnameValidity,
     buildNewShortUrl,
     saveUrl,
     createUrlObject,
-} = require('../../../services/urlShortener');
-const {
+} from '../../../services/urlShortener';
+import {
     VALID_HOSTNAME,
     VALID_URL,
     INVALID_HOSTNAME,
     URL_DOCS_COUNT,
     urlDoc,
-} = require('../../constants');
-const { logJestError } = require('../../utils');
-const { isTruthyOrThrow } = require('../../../utils/errors');
-const { RequestParamException, Exception } = require('../../../services/exceptions');
-const Url = require('../../../model/url');
+} from '../../constants';
+import { logJestError } from '../../utils';
+import { isTruthyOrThrow } from '../../../utils/errors';
+import { RequestParamException, Exception } from '../../../services/exceptions';
+import Url from '../../../model/Url';
 
 let result;
 
 describe('🌳 UrlShortener Service', () => {
     beforeEach(() => {
-        Url.mockClear();
+        // Url.mockClear();
     });
 
     afterAll(() => {

@@ -4,6 +4,7 @@
 const config = {
     verbose: true,
     preset: '@shelf/jest-mongodb',
+    transform: {}
 };
 
-module.exports = config;
+export default  config;

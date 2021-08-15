@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
 
-const exceptions = require('../constants/exceptions');
-const { hasProperty } = require('../utils');
+import * as exceptions from '../constants/exceptions';
+import { hasProperty } from '../utils';
 
-class Exception extends Error {
+export class Exception extends Error {
     constructor(...params) {
         super(...params);
 
@@ -25,7 +25,7 @@ class Exception extends Error {
     }
 }
 
-class DocumentNotFoundException extends Exception {
+export class DocumentNotFoundException extends Exception {
     constructor(...params) {
         super(...params);
         this.name = 'DocumentNotFoundException';
@@ -33,7 +33,7 @@ class DocumentNotFoundException extends Exception {
     }
 }
 
-class TypeErrorException extends Exception {
+export class TypeErrorException extends Exception {
     constructor(...params) {
         super(...params);
         this.name = 'TypeErrorException';
@@ -41,7 +41,7 @@ class TypeErrorException extends Exception {
     }
 }
 
-class RequestParamException extends Exception {
+export class RequestParamException extends Exception {
     constructor(...params) {
         super(...params);
         this.name = 'RequestParamException';
@@ -49,13 +49,15 @@ class RequestParamException extends Exception {
     }
 }
 
-Exception.prototype = Object.create(Error.prototype);
-DocumentNotFoundException.prototype = Object.create(Exception.prototype);
-TypeErrorException.prototype = Object.create(Exception.prototype);
-RequestParamException.prototype = Object.create(Exception.prototype);
-RequestParamException.prototype = Object.create(Exception.prototype);
+// Exception.prototype = Object.create(Error.prototype);
+// DocumentNotFoundException.prototype = Object.create(Exception.prototype);
+// TypeErrorException.prototype = Object.create(Exception.prototype);
+// RequestParamException.prototype = Object.create(Exception.prototype);
+// RequestParamException.prototype = Object.create(Exception.prototype);
 
-exports.Exception = Exception;
-exports.DocumentNotFoundException = DocumentNotFoundException;
-exports.TypeErrorException = TypeErrorException;
-exports.RequestParamException = RequestParamException;
+export default {
+    Exception,
+    DocumentNotFoundException,
+    TypeErrorException,
+    RequestParamException,
+}

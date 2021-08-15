@@ -1,15 +1,19 @@
-const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
+import express from 'express';
+import path from 'path';
+import morgan from 'morgan';
+import { URL } from 'url';
 
-const app = express();
-const { initConfig, getConfig } = require('./config');
-const { connectToDatabase, disconnectFromDatabase } = require('./db');
-const { errorLogger, errorResponseMapper, defaultErrorResponse } = require('./middleware/errors');
-const { logInfo } = require('./services/logger');
+import { initConfig, getConfig } from './config';
+import { connectToDatabase, disconnectFromDatabase } from './db';
+import { errorLogger, errorResponseMapper, defaultErrorResponse } from './middleware/errors';
+import { logInfo } from './services/logger';
 
-let config;
-let server;
+
+let config, server;
+
+// https://stackoverflow.com/a/66651120/7868769
+const dirname = new URL('.', import.meta.url).pathname;
+export const app = express();
 
 function forceSsl(req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
@@ -24,7 +28,7 @@ function initializeConfiguration() {
     config = getConfig();
 }
 
-function startServer() {
+export function startServer() {
     return app.listen(config.port, () => {
         logInfo('init.startServer', `Server started on port ${config.port}`);
     });
@@ -43,16 +47,16 @@ function registerControllers() {
         app.use(forceSsl);
     }
 
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(dirname, 'public')));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(require('./middleware/logger'));
+    app.use(() => import('./middleware/logger'));
 
-    app.use('/api/shorturl/', require('./controllers/urlShortener'));
-    app.use('/api/quote/', require('./controllers/quote'));
+    app.use('/api/shorturl/', () => import('./controllers/urlShortener'));
+    app.use('/api/quote/', () => import('./controllers/quote'));
 
     app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '/index.html'));
+        res.sendFile(path.join(dirname, '/index.html'));
     });
 
     app.use(errorLogger);
@@ -60,17 +64,10 @@ function registerControllers() {
     app.use(defaultErrorResponse);
 }
 
-async function init() {
+export async function init() {
     initializeConfiguration();
-    // if (!config.isTest) {
     await connectToDatabase();
-    // }
     registerControllers();
     server = startServer();
 }
 
-module.exports = {
-    app,
-    init,
-    stopServer,
-};

@@ -1,7 +1,7 @@
-const movieQuotesList = require('../../constants/movieQuotes');
+import movieQuotesList from '../../constants/movieQuotes';
 
 const quotes = [...movieQuotesList];
 
-module.exports = {
+export default  {
     quotes,
 };

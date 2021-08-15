@@ -1,5 +1,8 @@
-const ConfigHelper = require('../../../helpers/config');
-const { setupProcessEnvMock } = require('../../utils');
+import { jest } from '@jest/globals';
+
+import ConfigHelper from '../../../helpers/config';
+import { setupProcessEnvMock } from '../../utils';
+
 
 let result;
 const VALID_ENV_KEY = 'foh';

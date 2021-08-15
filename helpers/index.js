@@ -4,7 +4,7 @@ const isTruthy = (el) => typeof el !== 'undefined' && el !== null && el !== fals
 
 const truthyArguments = (args) => args.reduce((acc, arg) => (!isTruthy(arg) ? false : acc), true);
 
-module.exports = {
+export default {
     isObject,
     isString,
     isTruthy,

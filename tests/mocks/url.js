@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     {
         original: 'http://www.google.com',
         short: '1',

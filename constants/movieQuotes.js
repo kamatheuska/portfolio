@@ -1,4 +1,4 @@
-module.exports = [
+export default [
     {
         text: "I don't have friends. I got family",
         author: null,

@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const { getConfig } = require('../config');
-const exceptions = require('../constants/exceptions');
-const { logInfo } = require('../services/logger');
-const { transformErrorToException } = require('../utils/errors');
+import mongoose from 'mongoose';
+import { getConfig } from '../config';
+import * as exceptions from '../constants/exceptions';
+import { logInfo } from '../services/logger';
+import { transformErrorToException } from '../utils/errors';
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
     const { mongoDbUri } = getConfig();
     const db = mongoose.connection;
 
@@ -25,8 +25,6 @@ async function connectToDatabase() {
     return db;
 }
 
-async function disconnectFromDatabase() {
+export async function disconnectFromDatabase() {
     await mongoose.connection.close();
 }
-exports.connectToDatabase = connectToDatabase;
-exports.disconnectFromDatabase = disconnectFromDatabase;

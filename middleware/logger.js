@@ -9,4 +9,4 @@ function registerLogger(req, res, next) {
     next();
 }
 
-module.exports = registerLogger;
+export default registerLogger;

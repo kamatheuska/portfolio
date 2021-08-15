@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     weatherOpts: {
         local: {
             lat: '41.3823',

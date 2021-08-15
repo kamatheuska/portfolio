@@ -1,6 +1,8 @@
-const router = require('express').Router();
+import { Router } from 'express';
+import { createUrl, getUrl } from '../middleware/urlShortener';
 
-const { createUrl, getUrl } = require('../middleware/urlShortener');
+
+const router = Router();
 
 router.get('/:id', getUrl, (req, res) => {
     const { url } = res.locals;
@@ -14,4 +16,4 @@ router.post('/new', createUrl, (req, res) => {
     res.send(urlData);
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,4 @@
-module.exports = {
-    PROTOCOL_REGEX: /^(?:f|ht)tps?:\/\//,
-    errorCode: {
-        ENOTFOUND: 'ENOTFOUND',
-    },
+export const PROTOCOL_REGEX = /^(?:f|ht)tps?:\/\//;
+export const errorCode = {
+    ENOTFOUND: 'ENOTFOUND',
 };

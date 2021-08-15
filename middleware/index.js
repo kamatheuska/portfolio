@@ -2,7 +2,7 @@ const { throwNewError } = require('./errors');
 const { isString, isObject } = require('../helpers');
 const { getApiPayload, sendApiRequest } = require('../utils');
 
-module.exports = {
+export default  {
     forceSsl(req, res, next) {
         if (req.header('x-forwarded-proto') !== 'https') {
             res.redirect(`https://${req.header('host')}${req.url}`);
