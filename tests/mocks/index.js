@@ -29,7 +29,6 @@ const NO_QUOTES = [
     },
 ];
 
-
 module.exports = {
     quotes,
     NO_AUTHOR_QUOTES,
