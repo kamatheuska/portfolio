@@ -9,6 +9,7 @@ const { getAuthoredRandomQuote } = require('../../../services/quote');
 const Randomize = require('../../../utils/randomize');
 const utils = require('../../../utils');
 const { quotes } = require('../../mocks');
+const { QUOTES_INDEX_KEY } = require('../../../constants');
 
 let result;
 let getRandomItemFromListMock;
@@ -51,6 +52,7 @@ describe('🌳  QuoteService', () => {
         it('🌱 should call filterListByTruthyField with the right values', () => {
             expect(utils.filterListByTruthyField).toHaveBeenCalled();
             expect(utils.filterListByTruthyField).toHaveBeenCalledTimes(1);
+            expect(utils.filterListByTruthyField.mock.calls[0][1]).toBe(QUOTES_INDEX_KEY);
         });
     });
 });

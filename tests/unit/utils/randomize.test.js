@@ -4,6 +4,10 @@ const { quotes } = require('../../mocks');
 let result;
 
 describe('🌳 Randomize', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     describe('🌴 getNonConsecutiveIntegerFunc', () => {
         let first;
         let second;
@@ -49,15 +53,12 @@ describe('🌳 Randomize', () => {
             result = randomize.getRandomItemFromList(quotes);
         });
 
-        afterAll(() => {
-            spy.mockRestore();
-        });
-
         it('🌱 should return a random item of a list', () => {
             expect(result).toBe(quotes[RANDOMIZED_INDEX]);
         });
         it('🌱 should call getNonConsecutiveInteger method with the right arguments', () => {
             expect(spy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalledTimes(1);
             expect(spy).toHaveBeenCalledWith(0, quotes.length - 1);
         });
     });

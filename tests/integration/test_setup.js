@@ -2,6 +2,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-await-in-loop */
 
+process.env.PORT = 9879;
+
 const mongoose = require('mongoose');
 
 mongoose.set('useCreateIndex', true);
@@ -33,14 +35,16 @@ async function dropAllCollections() {
 }
 
 module.exports = {
-    setupDB(seedAsyncDatabaseCallback, init, stopServer) {
+    setupDB({ seedAsyncDatabaseCallback = null, init, stopServer }) {
         // Connect to Mongoose
         beforeAll(async () => {
             init().catch((error) => console.error(error));
         });
 
         beforeEach(async () => {
-            await seedAsyncDatabaseCallback();
+            if (seedAsyncDatabaseCallback) {
+                await seedAsyncDatabaseCallback();
+            }
         });
 
         // Cleans up database between each test

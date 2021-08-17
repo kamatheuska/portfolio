@@ -45,7 +45,26 @@ describe('🌳  Quote Middleware', () => {
             });
         });
 
-        describe('🍉 random quotes', () => {
+        describe('🍉 No Random Quotes', () => {
+            beforeEach(() => {
+                const customRes = {
+                    ...res,
+                    query: {
+                        local: false,
+                    },
+                };
+                getAuthoredRandomQuote.mockReturnValue(quotes[0]);
+                toBoolean.mockReturnValue(false);
+
+                getQuote(req, customRes, nextMock);
+            });
+
+            it('🌱 should not set a quote object if random is not truthy', () => {
+                expect(res.locals.quote).toBeUndefined();
+            });
+        });
+
+        describe('🍉 Random Quotes', () => {
             it('🌱 should call the #getAuthoredRandomQuote if query.random = true', () => {
                 getAuthoredRandomQuote.mockReturnValue(quotes[0]);
                 toBoolean.mockReturnValue(true);
