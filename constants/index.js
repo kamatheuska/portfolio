@@ -3,4 +3,5 @@ module.exports = {
     errorCode: {
         ENOTFOUND: 'ENOTFOUND',
     },
+    QUOTES_INDEX_KEY: 'author',
 };

@@ -21,7 +21,7 @@ const seedUrls = async () => {
 jest.setTimeout(150000);
 
 describe('🌳  Integration: Url Shortener', () => {
-    setupDB(seedUrls, init, stopServer);
+    setupDB({ seedAsyncDatabaseCallback: seedUrls, init, stopServer });
 
     describe(`🌴 GET ${BASE_URL}/:id`, () => {
         it('🌱 should redirect to the saved short url', async () => {

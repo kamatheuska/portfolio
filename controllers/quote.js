@@ -1,11 +1,13 @@
 const router = require('express').Router();
 
-const { getRandomQuote } = require('../middleware/quote');
+const { getQuote } = require('../middleware/quote');
 
-router.get('/authored/random', getRandomQuote, (req, res) => {
+router.get('/', getQuote, (req, res, next) => {
     const { quote } = res.locals;
 
-    res.status(200).json(quote);
+    if (!quote) return next();
+
+    res.status(200).json({ quote });
 });
 
 module.exports = router;
