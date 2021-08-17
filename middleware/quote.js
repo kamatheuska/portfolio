@@ -1,11 +1,18 @@
-const movieQuotesList = require('../constants/movieQuotes');
-const { getRandomItemFromList } = require('../utils');
-const { getAuthoredQuotes } = require('../helpers/quotes');
+const { getAuthoredRandomQuote } = require('../services/quote');
+const { toBoolean } = require('../utils');
 
-function getRandomQuote(req, res, next) {
-    const authoredQuotes = getAuthoredQuotes(movieQuotesList);
-    res.locals.quote = getRandomItemFromList(authoredQuotes);
+function getQuote(req, res, next) {
+    const isRandom = toBoolean(req.query.random);
+    let quote;
+
+    if (isRandom) {
+        quote = getAuthoredRandomQuote();
+    } else {
+        quote = [];
+    }
+
+    res.locals.quote = quote;
     next();
 }
 
-exports.getRandomQuote = getRandomQuote;
+exports.getQuote = getQuote;
