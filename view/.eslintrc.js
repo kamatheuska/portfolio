@@ -38,7 +38,11 @@ module.exports = {
 
     overrides: [
         {
-            files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
+            files: [
+                '**/__tests__/*.{j,t}s?(x)',
+                '**/tests/mocks/*.{j,t}s?(x)',
+                '**/tests/unit/**/*.spec.{j,t}s?(x)',
+            ],
             extends: ['plugin:jest/recommended'],
             plugins: ['jest'],
             rules: {

@@ -45,7 +45,7 @@ describe('🌳  request module', () => {
                     method: 'POST',
                 };
                 fetch.mockReturnValue(FAKE_API_RESPONSE);
-                result = await request(customArgs)(FAKE_BASE_URL);
+                result = await request(FAKE_BASE_URL)(customArgs);
 
                 expect(fetch).toHaveBeenCalled();
                 expect(fetch).toHaveBeenCalledTimes(1);
@@ -64,7 +64,7 @@ describe('🌳  request module', () => {
                     },
                 };
                 fetch.mockReturnValue(FAKE_API_RESPONSE);
-                result = await request(customArgs)(FAKE_BASE_URL);
+                result = await request(FAKE_BASE_URL)(customArgs);
 
                 expect(fetch).toHaveBeenCalled();
                 expect(fetch).toHaveBeenCalledTimes(1);

@@ -20,9 +20,7 @@
                 </form>
             </div>
             <div v-else class="has-text-centered">
-                <p class="block">
-                    {{ youCanAccess }}
-                </p>
+                <p class="block">Now you can access</p>
                 <p class="block">
                     <strong>{{ shortendOriginalUrl }}</strong>
                 </p>
@@ -43,7 +41,8 @@
 </template>
 
 <script>
-import apiServices from '@/services/api';
+import { createShortUrl } from '@/services/urlShortener';
+import { MAX_LENGTH_URL } from '@/constants';
 
 export default {
     name: 'UrlShortener',
@@ -61,11 +60,7 @@ export default {
     }),
 
     computed: {
-        youCanAccess() {
-            return `Now you can access`;
-        },
         shortendOriginalUrl() {
-            const MAX_LENGTH_URL = 70;
             const url = this.response.originalUrl;
             if (url) {
                 return url.length > MAX_LENGTH_URL ? url.slice(0, MAX_LENGTH_URL) : url;
@@ -80,10 +75,9 @@ export default {
     methods: {
         async onSubmit() {
             try {
-                const data = await apiServices.createShortUrl(this.form.url);
                 const { origin } = window.location;
-                this.response = data;
-                this.resultUrl = `${origin}${data.href}`;
+                this.response = await createShortUrl(this.form.url);
+                this.resultUrl = `${origin}${this.response.href}`;
             } catch (error) {
                 console.error(error);
             }

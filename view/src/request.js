@@ -1,5 +1,5 @@
-export function request({ url, method = 'GET', headers, body }) {
-    return async (baseUrl) => {
+export function request(baseUrl) {
+    return async ({ url, method = 'GET', headers, body }) => {
         try {
             const fullUrl = `${baseUrl}${url}`;
             return await fetch(fullUrl, {
