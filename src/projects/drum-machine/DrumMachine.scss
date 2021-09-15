@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap");
+@import 'assets/styles/abstracts/variables';
+@import 'assets/styles/abstracts/animations';
+
+.drum-machine {
+  &__main {
+    padding: 0 2rem;
+    color: white;
+  }
+
+  &__container {
+    height: calc(100vh - #{$codepen-navbar-height});
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  header {
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      color: $clr-primary;
+      animation: changeTitleColor 3s 1s infinite;
+    }
+  }
+
+  &__box {
+    font-weight: 900;
+    background: $clr-info;
+    background: linear-gradient(64deg, $clr-info 0%, darken($clr-info, 18%) 86%);
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  &__drum-pads {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    flex: 1;
+    height: 100%;
+  }
+
+  &__display {
+    color: black;
+    flex: 1;
+    div {
+      background-color: $clr-warn;
+      margin: 0 auto;
+      min-width: 5.5em;
+      max-width: 7.5em;
+      border: #2e2e2e solid 0.3em;
+      border-top: #1e1e1e solid 0.7em;
+      font-size: 1.2em;
+      text-align: center;
+      -webkit-box-shadow: 3px 1px 5px 0px #1c1c1c;
+      box-shadow: 3px 1px 5px 0px #1c1c1c;
+      line-height: 1.5;
+    }
+  }
+}

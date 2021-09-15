@@ -1,0 +1,19 @@
+@import './variables';
+
+
+/* Animation Keyframes*/
+@keyframes changeTitleColor {
+  0%,
+  100% {
+    color: $clr-danger;
+  }
+  30% {
+    color: $clr-info;
+  }
+  60% {
+    color: $clr-warn;
+  }
+  60% {
+    color: $clr-primary;
+  }
+}

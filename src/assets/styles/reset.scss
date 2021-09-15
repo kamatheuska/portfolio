@@ -1,0 +1,22 @@
+@import './abstracts/variables';
+
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+  height: 100%;
+}
+
+body {
+  font-family: "ZCOOL KuaiLe", cursive;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  height: 100%;
+  background: lighten($clr-secondary, 10%);
+}
+
+figure {
+  margin: 0;
+}
