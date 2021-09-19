@@ -1,5 +1,4 @@
 import { useState, useImperativeHandle, useRef, forwardRef } from 'react';
-import './Drumpad.scss'
 
 async function playAudio(audioElement) {
   try {

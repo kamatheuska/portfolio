@@ -1,5 +1,3 @@
-@import 'assets/styles/abstracts/variables';
-
 .cuboid {
   width: $rect-x;
   height: $rect-y;
@@ -17,10 +15,10 @@
 
   &__side {
     position: absolute;
-    background-color: $clr-info;
+    background-color: $link;
 
     &--front {
-      background-color: $clr-danger;
+      background-color: $danger;
       transform: rotateY(0deg) translateZ($rect-z * 0.5);
     }
   
@@ -32,15 +30,15 @@
       background: rgb(16, 49, 68);
       background: linear-gradient(
         64deg,
-        $clr-danger 0%,
-        darken($clr-danger, 35%) 86%
+        $danger 0%,
+        darken($danger, 35%) 86%
       );
-      background-color: $clr-danger;
+      background-color: $danger;
     }
   
     &--top,
     &--back {
-      background-color: $clr-warn;
+      background-color: $warning;
     }
     &--front,
     &--back {

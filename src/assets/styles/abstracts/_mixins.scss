@@ -1,0 +1,20 @@
+@mixin centered-layout($top-padding, $position: inherit) {
+  height: calc(100vh - #{$top-padding});
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: $position;
+}
+
+@mixin transition($property: opacity, $duration: 100ms) {
+  transition-property: $property;
+  transition-timing-function: ease-in;
+  transition-duration: $duration;
+}
+
+@mixin blurry-text($color:rgba(0,0,0,0.5)) {
+  color: transparent;
+  text-shadow: 0 0 5px $color;
+}

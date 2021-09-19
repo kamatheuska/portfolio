@@ -1,4 +1,10 @@
-@import './abstracts/variables';
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;900&display=swap');
+
+$family-sans-serif: "ZCOOL KuaiLe", cursive;
+$family-primary: 'Quicksand', sans-serif;
+$family-secondary: $family-sans-serif;
+
 
 * {
   box-sizing: border-box;
@@ -9,14 +15,22 @@ html {
 }
 
 body {
-  font-family: "ZCOOL KuaiLe", cursive;
   margin: 0;
   padding: 0;
   font-size: 16px;
   height: 100%;
-  background: lighten($clr-secondary, 10%);
 }
 
 figure {
   margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.title,
+.subtitle {
+  font-family: $family-secondary;
 }

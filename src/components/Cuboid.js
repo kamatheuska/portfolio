@@ -1,5 +1,3 @@
-import './Cuboid.scss';
-
 export default function Cuboid({ children }) {
   return (
     <div className="cuboid">

@@ -1,0 +1,7 @@
+.navigation {
+  &-link {
+    &--is-active {
+      display: none;
+    }
+  }
+}

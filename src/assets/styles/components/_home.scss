@@ -1,0 +1,25 @@
+$padding-top: 2rem;
+
+.home {
+  background: linear-gradient(90deg, $danger 10%, $warning);
+  padding: $padding-top 4rem;
+  position: initial;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  overflow-y: auto;
+
+  &__project-grid {
+    flex: 1;
+    display: grid;
+    justify-content: center;
+    padding-left: 30rem;
+    height: calc(100vh - (#{$padding-top} * 2));
+    grid-template-columns: 20rem 20rem;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 5rem;
+    grid-row-gap: 7rem;
+    max-width: 100rem;
+    z-index: 3;
+  }
+}

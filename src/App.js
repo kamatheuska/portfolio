@@ -1,19 +1,21 @@
-import './App.scss';
-import 'assets/styles/reset.scss';
-import { Router, Link } from '@reach/router'
+import { Router } from '@reach/router'
+
 import DrumMachine from 'projects/drum-machine/DrumMachine';
+import Home from 'components/Home';
+import Navigation from 'components/Navigation';
+import { projectsRoutes as projects } from 'routes';
+
 
 function App() {
   return (
-    <div className="App">
-      <nav>
-        <Link to="/projects/drum-machine">
-          Drum Machine
-        </Link>
-      </nav>
-      <Router>
-        <DrumMachine path="/projects/drum-machine" />
-      </Router>
+    <div className="app">
+      <Navigation></Navigation>
+      <main>
+        <Router>
+          <Home path="/" />
+          <DrumMachine path={ projects.drumMachine.path } />
+        </Router>
+      </main>
     </div>
   );
 }
