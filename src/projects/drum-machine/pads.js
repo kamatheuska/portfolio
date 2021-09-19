@@ -1,4 +1,4 @@
-const drumpadConfig = [
+const pads = [
   {
     id: 'Heater-1',
     displayName: 'HEATER-1',
@@ -55,4 +55,4 @@ const drumpadConfig = [
   },
 ];
 
-export default drumpadConfig;
+export default pads;

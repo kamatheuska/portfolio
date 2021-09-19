@@ -4,13 +4,13 @@ import { useEventListener } from 'utils/events';
 import Cuboid from 'components/Cuboid';
 
 import Drumpad from './Drumpad';
-import config from './config';
+import allPads from './pads';
 
 
 export default function DrumMachine() {
   const [displayText, setDisplayText] = useState('...');
 
-  const pads = config.map(({ text, audioSrc, id, displayName }, i) => {
+  const pads = allPads.map(({ text, audioSrc, id, displayName }, i) => {
     const padRef = createRef();
     const triggerDrumpad = () => padRef.current.triggerDrumpad();
 
@@ -44,7 +44,7 @@ export default function DrumMachine() {
     <div className="drum-machine">
       <div className="centered-layout">
         <header>
-          <h1>Drum Machine</h1>
+          <h1 className="title is-1" >Drum Machine</h1>
         </header>
         <Cuboid>
           <div className="drum-machine__box" id="drum-machine">

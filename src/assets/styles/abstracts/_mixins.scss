@@ -1,4 +1,4 @@
-@mixin centered-layout($top-padding, $position: inherit) {
+@mixin centered-layout($top-padding: 1rem, $position: inherit) {
   height: calc(100vh - #{$top-padding});
   display: flex;
   flex-wrap: wrap;

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap");
 
 .drum-machine {
+  @include centered-layout(2rem);
   header {
     h1 {
       text-align: center;
@@ -13,7 +14,7 @@
   &__box {
     font-weight: 900;
     background: $link;
-    background: linear-gradient(64deg, $link 0%, darken($link, 18%) 86%);
+    background: $danger;
     padding: 2rem;
     height: 100%;
     display: flex;
