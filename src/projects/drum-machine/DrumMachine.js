@@ -1,4 +1,4 @@
-import { useState,createRef } from 'react';
+import { useState, createRef } from 'react';
 
 import { useEventListener } from 'utils/events';
 import Cuboid from 'components/Cuboid';
