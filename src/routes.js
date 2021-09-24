@@ -7,6 +7,9 @@ const routes = {
     children: {
       drumMachine: {
         path: '/projects/drum-machine'
+      },
+      markdownPreviewer: {
+        path: '/projects/markdown-previewer'
       }
     }
   }

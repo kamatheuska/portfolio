@@ -10,7 +10,7 @@ export default function ProjectCard({ title, id, thumbnailImage, description, pa
       </header>
       <div className="card-content">
         <div className="card-image">
-          <figure className="image is-4by3">
+          <figure className="image">
             <img src={thumbnailImage} alt="Placeholder" />
           </figure>
         </div>

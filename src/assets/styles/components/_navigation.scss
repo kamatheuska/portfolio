@@ -1,5 +1,9 @@
 .navigation {
+  position: fixed;
+  width: 100%;
+
   &-link {
+    font-weight: 900;
     &--is-active {
       display: none;
     }

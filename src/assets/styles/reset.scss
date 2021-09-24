@@ -5,11 +5,11 @@ $family-sans-serif: "ZCOOL KuaiLe", cursive;
 $family-primary: 'Quicksand', sans-serif;
 $family-secondary: $family-sans-serif;
 
-
 * {
   box-sizing: border-box;
 }
 html {
+  overflow-y: auto;
   font-size: 62.5%;
   height: 100%;
 }

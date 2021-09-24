@@ -11,7 +11,10 @@ $title-circle-height: 15rem;
 
   &--is-disabled {
     z-index: 1;
-    transform: scale(1.3) translateX(-300px);
+    transform: scale(1.3) translateX(-20%);
+    @include widescreen {
+      transform: scale(1.3) translateX(-50%);
+    }
   }
 
   &__circle {

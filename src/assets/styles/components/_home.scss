@@ -2,24 +2,57 @@ $padding-top: 2rem;
 
 .home {
   background: linear-gradient(90deg, $danger 10%, $warning);
-  padding: $padding-top 4rem;
+  padding-top: $padding-top;
   position: initial;
-  display: flex;
-  justify-content: center;
   min-height: 100vh;
   overflow-y: auto;
 
+  @include desktop {
+    display: flex;
+    justify-content: center;
+  }
+    
   &__project-grid {
     flex: 1;
-    display: grid;
-    justify-content: center;
-    padding-left: 30rem;
-    height: calc(100vh - (#{$padding-top} * 2));
-    grid-template-columns: 20rem 20rem;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-column-gap: 5rem;
-    grid-row-gap: 7rem;
-    max-width: 100rem;
     z-index: 3;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    & > * {
+      margin-bottom: 2rem;
+      width: 26rem;
+    }
+    @include tablet {
+      & > * {
+        margin-bottom: 2rem;
+        width: 26rem;
+        flex-basis: 56%;
+      }
+    }
+    @include desktop {
+      padding-left: 30rem;
+      justify-content: center;
+      flex-direction: row;
+      height: calc(100vh - (#{$padding-top} * 2));
+      max-width: 100rem;
+
+      & > * {
+        margin-bottom: 2rem;
+        margin-left: 2rem;
+        width: 26rem;
+        flex-basis: 50%;
+      }
+    }
+
+    @include fullhd {
+      & > * {
+        flex-basis: 30%;
+        margin-left: 9rem;
+        margin-bottom: 5rem;
+      }
+      
+    }
   }
 }

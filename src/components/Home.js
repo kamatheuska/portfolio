@@ -2,17 +2,25 @@ import ProjectCard from 'components/ProjectCard';
 import TitleModal from 'components/modal/TitleModal';
 import { useState } from "react";
 import projects from 'projects/config';
+import { isGreaterThanTablet } from 'utils';
 
 
 export default function Home() {
   const [showGrid, setShowGrid] = useState(false);
 
-  function showProjectGrid() {
+  const showProjectGrid = () => {
     setShowGrid(true);
   }
-
+  const showModal = () => showGrid ? isGreaterThanTablet() : true;
   return (
     <div className="home">
+      {
+        !showModal() && (
+          <header>
+            <h1 className="title is-1">React Projects</h1>
+          </header>
+        )
+      }
       {
         showGrid && (
           <div className="home__project-grid">
@@ -28,6 +36,7 @@ export default function Home() {
         )
       }
       <TitleModal
+        show={ showModal()}
         onShowProjects={showProjectGrid}
         showProjects={showGrid}
       ></TitleModal>

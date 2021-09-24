@@ -2,18 +2,32 @@
 @import 'abstracts/mixins';
 @import 'abstracts/animations';
 
+
 @import 'reset';
 
-
-@import 'bulma/sass/utilities/_all.sass';
-@import "bulma/sass/base/_all.sass";
-@import 'bulma/sass/utilities/initial-variables.sass';
-@import 'bulma/sass/helpers/_all.sass';
-@import 'bulma/sass/utilities/functions.sass';
-@import 'bulma/sass/elements/button.sass';
-@import 'bulma/sass/elements/title.sass';
+@import 'bulma/sass/base/_all.sass';
 @import 'bulma/sass/components/card.sass';
+@import 'bulma/sass/components/card.sass';
+@import 'bulma/sass/elements/box.sass';
+@import 'bulma/sass/elements/button.sass';
+@import 'bulma/sass/elements/container.sass';
+@import 'bulma/sass/elements/image.sass';
+@import 'bulma/sass/elements/title.sass';
+@import 'bulma/sass/helpers/_all.sass';
+@import 'bulma/sass/utilities/_all.sass';
+@import 'bulma/sass/utilities/functions.sass';
+@import 'bulma/sass/utilities/initial-variables.sass';
 
+/*
+* https://github.com/jgthms/bulma/issues/1689
+* In order to avoid the scrollbar set by bulma
+*/
+html {
+  overflow-y: auto;
+}
+.box {
+  background-color: white;
+}
 
 /*
 * Components
@@ -21,9 +35,14 @@
 
 @import 'components/app';
 @import 'components/cuboid';
-@import 'components/drum-machine';
-@import 'components/drum-pad';
 @import 'components/home';
 @import 'components/navigation';
 @import 'components/project-card';
 @import 'components/modals/title-modal';
+
+/*
+* Component/Projects
+*/
+
+@import 'components/projects/drum-machine';
+@import 'components/projects/markdown-previewer';

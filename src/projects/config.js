@@ -1,4 +1,5 @@
 import drumMachineThumbnail from 'assets/images/thumbnails/drum-machine.gif'
+import markdownPreviewerThumbnail from 'assets/images/thumbnails/markdown-previewer.gif'
 
 const projects = [
   {
@@ -10,6 +11,42 @@ const projects = [
       To really rock it, please turn on the volume of your speakers!
     `,
     path: 'projects/drum-machine'
+  },
+  {
+    id: 'markdown-previewer',
+    title: 'Markdown Previewer',
+    thumbnailImage: markdownPreviewerThumbnail,
+    description: `
+      A simple editor to preview your valuable and unreadable docs
+    `,
+    path: 'projects/markdown-previewer'
+  },
+  {
+    id: 'markdown-previewer',
+    title: 'Markdown Previewer',
+    thumbnailImage: markdownPreviewerThumbnail,
+    description: `
+      A simple editor to preview your valuable and unreadable docs
+    `,
+    path: 'projects/markdown-previewer'
+  },
+  {
+    id: 'markdown-previewer',
+    title: 'Markdown Previewer',
+    thumbnailImage: markdownPreviewerThumbnail,
+    description: `
+      A simple editor to preview your valuable and unreadable docs
+    `,
+    path: 'projects/markdown-previewer'
+  },
+  {
+    id: 'markdown-previewer',
+    title: 'Markdown Previewer',
+    thumbnailImage: markdownPreviewerThumbnail,
+    description: `
+      A simple editor to preview your valuable and unreadable docs
+    `,
+    path: 'projects/markdown-previewer'
   },
 ]
 

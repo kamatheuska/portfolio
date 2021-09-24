@@ -1,6 +1,8 @@
 import { createPortal } from "react-dom";
 
-const TitleModal = ({ onShowProjects, showProjects }) => {
+const TitleModal = ({ onShowProjects, showProjects, show }) => {
+  if (!show) return null;
+
   const element = (
     <div
       className={
@@ -8,7 +10,7 @@ const TitleModal = ({ onShowProjects, showProjects }) => {
         (showProjects && 'title-modal--is-disabled')
       }
     >
-      <div
+      <header
         className="title-modal__circle"
       >
         <h1 className="title  has-text-black is-1">React Projects</h1>
@@ -30,7 +32,7 @@ const TitleModal = ({ onShowProjects, showProjects }) => {
             </>
           )
         }
-      </div>
+      </header>
     </div>
   );
   return createPortal(element, document.getElementById('root'));

@@ -18,3 +18,15 @@
   color: transparent;
   text-shadow: 0 0 5px $color;
 }
+
+@mixin hide-on-mobile($display: inline) {
+  display: none;
+  
+  @include tablet { display: $display }
+}
+
+@mixin show-on-mobile-only($display: block) {
+  display: $display;
+  
+  @include tablet { display: none }
+}
