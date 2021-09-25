@@ -1,6 +1,5 @@
 $title-circle-height: 15rem;
 
-
 .title-modal {
   @include transition(transform, 200ms);
 
@@ -11,7 +10,7 @@ $title-circle-height: 15rem;
 
   &--is-disabled {
     z-index: 1;
-    transform: scale(1.3) translateX(-20%);
+    transform: scale(1.3) translateX(-24%);
     @include widescreen {
       transform: scale(1.3) translateX(-50%);
     }
@@ -29,7 +28,7 @@ $title-circle-height: 15rem;
     transform: translateX(-50%);
     width: 470px;
   }
-  
+
   &__action,
   &__header {
     @include transition();
@@ -42,5 +41,4 @@ $title-circle-height: 15rem;
       transform: scale(1.5);
     }
   }
-
 }

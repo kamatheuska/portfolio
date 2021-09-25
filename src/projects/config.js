@@ -1,5 +1,6 @@
 import drumMachineThumbnail from 'assets/images/thumbnails/drum-machine.gif';
 import markdownPreviewerThumbnail from 'assets/images/thumbnails/markdown-previewer.gif';
+import calculatorThumbnail from 'assets/images/thumbnails/calculator.gif';
 
 const projects = [
   {
@@ -24,7 +25,7 @@ const projects = [
   {
     id: 'calculator',
     title: 'JS Calculator',
-    thumbnailImage: markdownPreviewerThumbnail,
+    thumbnailImage: calculatorThumbnail,
     description: `
       Would you ever wonder if you needed yet another calculator? Wonder no more!
     `,
