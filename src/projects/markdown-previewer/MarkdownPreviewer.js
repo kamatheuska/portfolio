@@ -1,23 +1,22 @@
 import { useLayoutEffect, useState } from 'react';
 
-import initialMarkdown from './initialData'
+import initialMarkdown from './initialData';
 import MarkdownPreview from './MarkdownPreview';
 import MarkdownEditor from './MarkdownEditor';
 import { isMobile } from 'utils';
 
-
 export default function MarkdownPreviewer() {
-  const [ editorText, setEditorText ] = useState(initialMarkdown);
-  const [ showPreview, setShowPreview ] = useState(initialMarkdown);
+  const [editorText, setEditorText] = useState(initialMarkdown);
+  const [showPreview, setShowPreview] = useState(initialMarkdown);
 
   useLayoutEffect(() => {
     setShowPreview(isMobile());
-  }, [])
+  }, []);
 
   const toggleShowPreview = () => {
     setShowPreview(!showPreview);
-  }
-  
+  };
+
   return (
     <div className="markdown-previewer">
       <div className="container">
@@ -26,7 +25,7 @@ export default function MarkdownPreviewer() {
         </header>
         <div className="markdown-previewer__container">
           <MarkdownEditor
-            setEditorText={text => setEditorText(text)}
+            setEditorText={(text) => setEditorText(text)}
             show={!showPreview}
             text={editorText}
           >
@@ -37,10 +36,7 @@ export default function MarkdownPreviewer() {
               Preview
             </button>
           </MarkdownEditor>
-          <MarkdownPreview
-            text={editorText}
-            show={showPreview}
-          >
+          <MarkdownPreview text={editorText} show={showPreview}>
             <button
               className="markdown-previewer__button mb-3 button is-warning"
               onClick={toggleShowPreview}

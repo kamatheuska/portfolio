@@ -14,19 +14,34 @@
   transition-duration: $duration;
 }
 
-@mixin blurry-text($color:rgba(0,0,0,0.5)) {
+@mixin blurry-text($color: rgba(0, 0, 0, 0.5)) {
   color: transparent;
   text-shadow: 0 0 5px $color;
 }
 
 @mixin hide-on-mobile($display: inline) {
   display: none;
-  
-  @include tablet { display: $display }
+
+  @include tablet {
+    display: $display;
+  }
 }
 
 @mixin show-on-mobile-only($display: block) {
   display: $display;
-  
-  @include tablet { display: none }
+
+  @include tablet {
+    display: none;
+  }
+}
+
+@mixin project-header {
+  header {
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      color: $primary;
+      animation: changeTitleColor 3s 1s infinite;
+    }
+  }
 }

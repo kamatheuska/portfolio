@@ -1,19 +1,22 @@
 const routes = {
   home: {
-    path: '/'
+    path: '/',
   },
 
   projects: {
     children: {
       drumMachine: {
-        path: '/projects/drum-machine'
+        path: '/projects/drum-machine',
       },
       markdownPreviewer: {
-        path: '/projects/markdown-previewer'
-      }
-    }
-  }
-}
+        path: '/projects/markdown-previewer',
+      },
+      calculator: {
+        path: '/projects/calculator',
+      },
+    },
+  },
+};
 
 export const projectsRoutes = routes.projects.children;
 

@@ -1,5 +1,5 @@
-import drumMachineThumbnail from 'assets/images/thumbnails/drum-machine.gif'
-import markdownPreviewerThumbnail from 'assets/images/thumbnails/markdown-previewer.gif'
+import drumMachineThumbnail from 'assets/images/thumbnails/drum-machine.gif';
+import markdownPreviewerThumbnail from 'assets/images/thumbnails/markdown-previewer.gif';
 
 const projects = [
   {
@@ -10,7 +10,7 @@ const projects = [
       A digital drummer to play with your keyboard.
       To really rock it, please turn on the volume of your speakers!
     `,
-    path: 'projects/drum-machine'
+    path: 'projects/drum-machine',
   },
   {
     id: 'markdown-previewer',
@@ -19,35 +19,17 @@ const projects = [
     description: `
       A simple editor to preview your valuable and unreadable docs
     `,
-    path: 'projects/markdown-previewer'
+    path: 'projects/markdown-previewer',
   },
   {
-    id: 'markdown-previewer',
-    title: 'Markdown Previewer',
+    id: 'calculator',
+    title: 'JS Calculator',
     thumbnailImage: markdownPreviewerThumbnail,
     description: `
-      A simple editor to preview your valuable and unreadable docs
+      Would you ever wonder if you needed yet another calculator? Wonder no more!
     `,
-    path: 'projects/markdown-previewer'
+    path: 'projects/calculator',
   },
-  {
-    id: 'markdown-previewer',
-    title: 'Markdown Previewer',
-    thumbnailImage: markdownPreviewerThumbnail,
-    description: `
-      A simple editor to preview your valuable and unreadable docs
-    `,
-    path: 'projects/markdown-previewer'
-  },
-  {
-    id: 'markdown-previewer',
-    title: 'Markdown Previewer',
-    thumbnailImage: markdownPreviewerThumbnail,
-    description: `
-      A simple editor to preview your valuable and unreadable docs
-    `,
-    path: 'projects/markdown-previewer'
-  },
-]
+];
 
 export default projects;

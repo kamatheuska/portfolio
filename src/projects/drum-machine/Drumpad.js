@@ -12,7 +12,6 @@ async function playAudio(audioElement) {
   }
 }
 
-
 function Drumpad({ audioSrc, id, text, changeDisplay }, ref) {
   const [isActive, setIsActive] = useState(false);
   const padRef = useRef();
@@ -39,20 +38,13 @@ function Drumpad({ audioSrc, id, text, changeDisplay }, ref) {
     <figure
       className={`
         drum-pad
-        ${ isActive ? "drum-pad--is-active" : ""}
+        ${isActive ? 'drum-pad--is-active' : ''}
       `}
       id={id}
       onClick={triggerDrumpad}
     >
-      <audio
-        className="clip"
-        id={text}
-        ref={padRef}
-        src={audioSrc}
-      />
-      <span className="drum-pad__text">
-        {text}
-      </span>
+      <audio className="clip" id={text} ref={padRef} src={audioSrc} />
+      <span className="drum-pad__text">{text}</span>
     </figure>
   );
 }

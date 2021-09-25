@@ -6,7 +6,6 @@ import Cuboid from 'components/Cuboid';
 import Drumpad from './Drumpad';
 import allPads from './pads';
 
-
 export default function DrumMachine() {
   const [displayText, setDisplayText] = useState('...');
 
@@ -27,13 +26,13 @@ export default function DrumMachine() {
         />
       ),
       triggerDrumpad,
-    }
+    };
   });
 
-  const padElements = pads.map(pad => pad.element)
+  const padElements = pads.map((pad) => pad.element);
 
   useEventListener('keydown', ({ key }) => {
-    const matchPadByKey = pads.find(pad => pad.key === key);
+    const matchPadByKey = pads.find((pad) => pad.key === key);
 
     if (matchPadByKey) {
       matchPadByKey.triggerDrumpad();
@@ -44,16 +43,14 @@ export default function DrumMachine() {
     <div className="drum-machine">
       <div className="centered-layout">
         <header>
-          <h1 className="title is-1" >Drum Machine</h1>
+          <h1 className="title is-1">Drum Machine</h1>
         </header>
         <Cuboid>
           <div className="drum-machine__box" id="drum-machine">
-            <div className="drum-machine__drum-pads">
-              { padElements }
-            </div>
+            <div className="drum-machine__drum-pads">{padElements}</div>
             <div className="drum-machine__display" id="display">
               <div>
-                <span>{ displayText }</span>
+                <span>{displayText}</span>
               </div>
             </div>
           </div>
