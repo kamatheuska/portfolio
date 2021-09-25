@@ -3,17 +3,9 @@
 
   transition-property: z-index;
   z-index: 2;
-  .content {
-    height: 100px;
-  }
-
   .card-image {
     display: flex;
     position: relative;
     align-items: center;
-
-    @include desktop {
-      height: 200px;
-    }
   }
 }
