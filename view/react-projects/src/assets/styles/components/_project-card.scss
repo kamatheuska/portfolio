@@ -1,0 +1,11 @@
+.project-card {
+  @include transition;
+
+  transition-property: z-index;
+  z-index: 2;
+  .card-image {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+}
