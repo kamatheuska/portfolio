@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const history = require('connect-history-api-fallback');
 
 const app = express();
 const { initConfig, getConfig } = require('./config');
@@ -42,15 +43,16 @@ function registerControllers() {
     } else if (config.nodeEnv === 'production') {
         app.use(forceSsl);
     }
+    const portfolioStatic = express.static(path.join(__dirname, 'public'));
 
-    app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(require('./middleware/logger'));
 
     app.use('/api/shorturl', require('./controllers/urlShortener'));
     app.use('/api/quote', require('./controllers/quote'));
-
+    app.use(history({ verbose: true }));
+    app.use(portfolioStatic);
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname, '/index.html'));
     });
