@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
     devServer: {
         proxy: {
@@ -17,4 +19,6 @@ module.exports = {
             },
         },
     },
+    publicPath: '/landing',
+    outputDir: path.resolve(__dirname, '..', '..', 'public/landing'),
 };
