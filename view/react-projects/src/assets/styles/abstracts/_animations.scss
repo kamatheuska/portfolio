@@ -1,0 +1,17 @@
+
+/* Animation Keyframes*/
+@keyframes changeTitleColor {
+  0%,
+  100% {
+    color: $danger;
+  }
+  30% {
+    color: $link;
+  }
+  60% {
+    color: $warning;
+  }
+  60% {
+    color: $primary;
+  }
+}

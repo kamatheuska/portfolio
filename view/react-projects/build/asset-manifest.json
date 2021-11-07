@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.20014ad5.chunk.css",
+    "main.js": "/static/js/main.f5adfc3e.chunk.js",
+    "main.js.map": "/static/js/main.f5adfc3e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.50643f41.js",
+    "runtime-main.js.map": "/static/js/runtime-main.50643f41.js.map",
+    "static/js/2.60cebb27.chunk.js": "/static/js/2.60cebb27.chunk.js",
+    "static/js/2.60cebb27.chunk.js.map": "/static/js/2.60cebb27.chunk.js.map",
+    "static/js/3.846a0af0.chunk.js": "/static/js/3.846a0af0.chunk.js",
+    "static/js/3.846a0af0.chunk.js.map": "/static/js/3.846a0af0.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.20014ad5.chunk.css.map": "/static/css/main.20014ad5.chunk.css.map",
+    "static/js/2.60cebb27.chunk.js.LICENSE.txt": "/static/js/2.60cebb27.chunk.js.LICENSE.txt",
+    "static/media/calculator.0b551735.gif": "/static/media/calculator.0b551735.gif",
+    "static/media/drum-machine.49d75291.gif": "/static/media/drum-machine.49d75291.gif",
+    "static/media/markdown-previewer.af62f98b.gif": "/static/media/markdown-previewer.af62f98b.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.50643f41.js",
+    "static/js/2.60cebb27.chunk.js",
+    "static/css/main.20014ad5.chunk.css",
+    "static/js/main.f5adfc3e.chunk.js"
+  ]
+}

@@ -1,0 +1,52 @@
+.cuboid {
+  width: $rect-x;
+  height: $rect-y;
+  perspective: 1400px;
+  perspective-origin: 180% 230%;
+  margin-bottom: 1rem;
+
+  &__rect {
+    width: $rect-x;
+    height: $rect-y;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: translateZ(-$rect-z / 2);
+  }
+
+  &__side {
+    position: absolute;
+    background-color: $link;
+
+    &--front {
+      background-color: $danger;
+      transform: rotateY(0deg) translateZ($rect-z * 0.5);
+    }
+  
+    &--back   { transform: rotateY(180deg) translateZ($rect-z * 0.5) }
+    &--top    { transform: rotateX(90deg) translateZ($rect-y * 0.5) }
+
+    &--bottom {
+      transform: rotateX(-90deg) translateZ($rect-y * 0.5);
+      background: rgb(16, 49, 68);
+      background-color: darken($primary, 40%);
+    }
+  
+    &--top,
+    &--back {
+      background-color: $info;
+    }
+    &--front,
+    &--back {
+      width: $rect-x;
+      height: $rect-y;
+    }
+  
+    &--top,
+    &--bottom {
+      width: $rect-x;
+      height: $rect-z;
+      top: $rect-z * 0.5;
+    }
+  }
+
+}
