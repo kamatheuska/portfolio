@@ -59,17 +59,30 @@
                         <a class="navbar-link is-arrowless"> {{ route.text }} </a>
 
                         <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">
-                            <router-link
-                                v-for="(childRoute, j) in route.children"
-                                :key="`child-route-navbar-item${i}${j}`"
-                                :to="childRoute.path"
-                                :class="{
-                                    'is-active': $route.name === childRoute.name,
-                                }"
-                                class="navbar-item"
-                            >
-                                {{ childRoute.text }}
-                            </router-link>
+                            <template v-for="(childRoute, j) in route.children">
+                                <a
+                                    :key="`child-route-navbar-item${i}${j}`"
+                                    :class="{
+                                        'is-active': $route.name === childRoute.name,
+                                    }"
+                                    class="navbar-item"
+                                    :href="childRoute.path"
+                                    v-if="childRoute.isExternalLink"
+                                >
+                                    {{ childRoute.text }}
+                                </a>
+                                <router-link
+                                    :key="`child-route-navbar-item${i}${j}`"
+                                    :to="childRoute.path"
+                                    :class="{
+                                        'is-active': $route.name === childRoute.name,
+                                    }"
+                                    class="navbar-item"
+                                    v-else
+                                >
+                                    {{ childRoute.text }}
+                                </router-link>
+                            </template>
                         </div>
                     </div>
                 </template>
@@ -129,6 +142,16 @@ export default {
                         path: '/miniservices/urlshortener',
                         text: 'URL Shortener',
                         name: 'UrlShortener',
+                    },
+                ],
+            },
+            {
+                text: 'Projects',
+                children: [
+                    {
+                        path: '/projects/react',
+                        text: 'React Based Projects',
+                        isExternalLink: true,
                     },
                 ],
             },
