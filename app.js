@@ -43,7 +43,6 @@ function registerControllers() {
     } else if (config.nodeEnv === 'production') {
         app.use(forceSsl);
     }
-    const portfolioStatic = express.static(path.join(__dirname, 'public'));
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -51,10 +50,18 @@ function registerControllers() {
 
     app.use('/api/shorturl', require('./controllers/urlShortener'));
     app.use('/api/quote', require('./controllers/quote'));
+
+    /**
+     * View controllers
+     */
+    app.get(/projects\/react/, (req, res) => {
+        res.sendFile(path.join(config.staticsFolder, '/react-projects/index.html'));
+    });
+
     app.use(history({ verbose: true }));
-    app.use(portfolioStatic);
-    app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '/index.html'));
+    app.use(express.static(config.staticsFolder));
+    app.get('/index.html', (req, res) => {
+        res.sendFile(path.join(config.staticsFolder, '/landing/index.html'));
     });
 
     app.use(errorLogger);

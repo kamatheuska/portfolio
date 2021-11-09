@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const path = require('path');
 const { logDebug } = require('../services/logger');
 const ConfigHelper = require('../helpers/config');
 
@@ -10,6 +11,7 @@ const getNodeEnvIndependentEnvs = () => ({
     port: ConfigHelper.getEnvVar('PORT', 5000, Number),
     nodeEnv: ConfigHelper.getEnvVar('NODE_ENV', 'development'),
     debugMode: ConfigHelper.getEnvVar('DEBUG_MODE', 'false', Boolean),
+    staticsFolder: path.join(__dirname, '..', 'public'),
     db: {
         url: {
             documentLimit: ConfigHelper.getEnvVar('DB_URL_DOCUMENT_LIMIT', 100, Number),
