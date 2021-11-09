@@ -41,7 +41,7 @@ export default function DrumMachine() {
 
   return (
     <div className="drum-machine">
-      <div className="centered-layout">
+      <div className="drum-machine__centered">
         <header>
           <h1 className="title is-1">Drum Machine</h1>
         </header>

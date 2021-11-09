@@ -13,8 +13,12 @@ $link-dark: darken($link, 25%);
 /*
 * Drum Machine 3D Base
 */
-$rect-x: 700px;
-$rect-y: 200px;
-$rect-z: 100px;
+$rect-tablet-x: 700px;
+$rect-tablet-y: 200px;
+$rect-tablet-z: 100px;
+
+$rect-x: 300px;
+$rect-y: 390px;
+$rect-z: 30px;
 
 $navigation-padding-top: 3rem;

@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap');
 
 .drum-machine {
-  @include centered-layout(2rem);
+  &__centered {
+    @include centered-layout(2rem);
+    justify-content: space-evenly;
+  }
   @include project-header;
 
   &__box {
@@ -10,21 +13,44 @@
     background: $danger;
     padding: 2rem;
     height: 100%;
-    display: flex;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr;
+    display: grid;
     justify-content: space-evenly;
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 1fr;
+    }
   }
 
   &__drum-pads {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
-    flex: 1;
+    grid-row: 2;
     height: 100%;
+
+    @include tablet {
+      grid-row: 1;
+      grid-column: 1;
+    }
   }
 
   &__display {
     color: black;
-    flex: 1;
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include tablet {
+      grid-row: 1;
+      grid-column: 2;
+    }
+
     div {
       background-color: $warning;
       margin: 0 auto;
