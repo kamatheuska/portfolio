@@ -12,7 +12,9 @@
                                 Let's tell together a great story. The story of your project and how
                                 we made it a reality.
                             </p>
-                            <button class="button is-dark">Tell me more</button>
+                            <router-link class="button is-dark" to="/about">
+                                Tell me more
+                            </router-link>
                         </div>
                     </div>
                     <div class="column is-6">
@@ -27,17 +29,19 @@
         </section>
         <section class="section home__links">
             <h2 class="title is-3 has-text-centered mb-6">Quick Links</h2>
+            <HorizontalLevel>
+                <LevelItem v-bind="levelItemLinks[0]" />
+            </HorizontalLevel>
             <HorizontalLevel :numberOfItems="3">
                 <LevelItem
-                    v-for="(link, i) in levelItemLinks.slice(0, 3)"
+                    v-for="(link, i) in levelItemLinks.slice(1, 4)"
                     :key="`level-item-link${i}`"
-                    :numberOfItems="4"
                     v-bind="link"
                 />
             </HorizontalLevel>
             <HorizontalLevel :numberOfItems="3">
                 <LevelItem
-                    v-for="(link, i) in levelItemLinks.slice(3)"
+                    v-for="(link, i) in levelItemLinks.slice(4)"
                     :key="`level-item-link${i}`"
                     v-bind="link"
                 />
@@ -49,7 +53,6 @@
                 <LevelItem
                     v-for="(blog, i) in levelItemBlogs.slice(0, 3)"
                     :key="`level-item-blog${i}`"
-                    :numberOfItems="4"
                     v-bind="blog"
                 />
             </HorizontalLevel>
@@ -75,6 +78,14 @@ export default {
         },
         levelItemLinks() {
             return [
+                {
+                    heading: 'React Projects',
+                    link: '/projects/react',
+                    imageSrc: `${this.$env.PORTFOLIO_BUCKET}/images/react__b&w.png`,
+                    isInternalLink: true,
+                    hasSmallImage: true,
+                    animateOnHover: true,
+                },
                 {
                     heading: 'Linkedin',
                     link: 'https://www.linkedin.com/in/nikameush/',

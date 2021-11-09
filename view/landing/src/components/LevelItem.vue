@@ -6,7 +6,12 @@
         }"
     >
         <template v-if="link">
-            <a :href="link" class="link" target="_blank" :download="downloadName || null">
+            <a
+                :href="link"
+                class="link"
+                :target="isInternalLink ? '' : '_blank'"
+                :download="downloadName || null"
+            >
                 <p class="heading">
                     {{ heading }}
                 </p>
@@ -41,6 +46,10 @@ export default {
         imageSrc: String,
         heading: String,
         link: String,
+        isInternalLink: {
+            type: Boolean,
+            default: false,
+        },
         downloadName: String,
         hasSmallImage: {
             type: Boolean,
