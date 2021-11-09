@@ -9,7 +9,7 @@
     "scripts": {
         "build:view": "npm run build:landing && npm run build:react-projects",
         "build:landing": "cd \"$MAIN/view/landing\" && npm run build",
-        "build:react-projects": "cd \"$MAIN/view/react-projects\" && npm run build",
+        "build:react-projects": "ls -la && cd \"$MAIN/view/react-projects\" && ls -la  && ls -la public && npm run build",
         "build": ". ./setMainFolder.sh && . ./buildEnvs.sh && npm run build:view",
         "clean": "rm -rf node_modules",
         "debug:watch": "nodemon --inspect init.js",
