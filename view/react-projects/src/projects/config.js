@@ -11,7 +11,7 @@ const projects = [
       A digital drummer to play with your keyboard.
       To really rock it, please turn on the volume of your speakers!
     `,
-    path: 'projects/drum-machine',
+    path: 'drum-machine',
   },
   {
     id: 'markdown-previewer',
@@ -20,7 +20,7 @@ const projects = [
     description: `
       A simple editor to preview your valuable and unreadable docs
     `,
-    path: 'projects/markdown-previewer',
+    path: 'markdown-previewer',
   },
   {
     id: 'calculator',
@@ -29,7 +29,7 @@ const projects = [
     description: `
       Would you ever wonder if you needed yet another calculator? Wonder no more!
     `,
-    path: 'projects/calculator',
+    path: 'calculator',
   },
 ];
 

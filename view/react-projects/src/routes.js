@@ -1,18 +1,20 @@
+export const BASE_URL = '/projects/react';
+
 const routes = {
   home: {
-    path: '/',
+    path: '/projects/react',
   },
 
   projects: {
     children: {
       drumMachine: {
-        path: '/projects/drum-machine',
+        path: 'drum-machine',
       },
       markdownPreviewer: {
-        path: '/projects/markdown-previewer',
+        path: 'markdown-previewer',
       },
       calculator: {
-        path: '/projects/calculator',
+        path: 'calculator',
       },
     },
   },
