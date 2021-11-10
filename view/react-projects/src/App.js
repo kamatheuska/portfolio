@@ -1,4 +1,4 @@
-import { Router } from '@reach/router';
+import { Router, Location } from '@reach/router';
 
 import DrumMachine from 'projects/drum-machine/DrumMachine';
 import MarkdownPreviewer from 'projects/markdown-previewer/MarkdownPreviewer';
@@ -9,17 +9,21 @@ import Calculator from 'projects/calculator/Calculator';
 
 function App() {
   return (
-    <div className="app">
-      <Navigation></Navigation>
-      <main>
-        <Router basepath={BASE_URL}>
-          <Home path="/" />
-          <DrumMachine path={projects.drumMachine.path} />
-          <MarkdownPreviewer path={projects.markdownPreviewer.path} />
-          <Calculator path={projects.calculator.path} />
-        </Router>
-      </main>
-    </div>
+    <Location>
+      {({ location }) => (
+        <div className="app">
+          <Navigation location={location}></Navigation>
+          <main>
+            <Router basepath={BASE_URL}>
+              <Home path="/" />
+              <DrumMachine path={projects.drumMachine.path} />
+              <MarkdownPreviewer path={projects.markdownPreviewer.path} />
+              <Calculator path={projects.calculator.path} />
+            </Router>
+          </main>
+        </div>
+      )}
+    </Location>
   );
 }
 

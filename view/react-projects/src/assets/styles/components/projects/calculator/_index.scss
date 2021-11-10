@@ -9,11 +9,7 @@ $top-header-padding: 1.5rem;
   @include project-header;
 
   background: rgb(95, 255, 167);
-  background: linear-gradient(
-    14deg,
-    lighten($link, 30%) 0%,
-    lighten($warning, 10%) 70%
-  );
+  background: linear-gradient(14deg, lighten($link, 30%) 0%, lighten($warning, 10%) 70%);
   padding-top: $top-header-padding;
   height: calc(100vh - #{$top-header-padding});
   width: 100%;
@@ -22,6 +18,11 @@ $top-header-padding: 1.5rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  &__centered {
+    @include centered-layout(2rem);
+    justify-content: space-evenly;
+  }
 
   &__container {
     display: flex;
