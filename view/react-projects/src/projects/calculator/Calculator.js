@@ -68,11 +68,7 @@ class Calculator extends Component {
       if (isOperator(lastTerm)) {
         board =
           operator === '-'
-            ? generateBoard(
-                `${lastTerm}${operator}`,
-                sliceLastTerm(board),
-                true
-              )
+            ? generateBoard(`${lastTerm}${operator}`, sliceLastTerm(board), true)
             : generateBoard(operator, sliceLastTerm(board));
       } else {
         board = generateBoard(operator, board);
@@ -101,26 +97,28 @@ class Calculator extends Component {
     const { result, showResult, board } = this.state;
     return (
       <div className="calculator">
-        <header>
-          <h1 className="title is-1 is-size-5-mobile">Calculator</h1>
-        </header>
-        <div className="calculator__container">
-          <Board expression={showResult ? result : board} />
-          <div className="calculator__grid">
-            <Operators
-              setOperator={this.setOperator}
-              getResult={this.getResult}
-              clearBoard={this.clearBoard}
-              buttons={buttonsConfig.operators}
-            />
-            <Numpad
-              setBoardValue={this.setBoardValue}
-              setDecimalValue={this.setDecimalValue}
-              setZero={this.setZero}
-              digits={buttonsConfig.numbers}
-              zero={buttonsConfig.others.zero}
-              decimal={buttonsConfig.others.decimal}
-            />
+        <div className="calculator__centered">
+          <header>
+            <h1 className="title is-1">Calculator</h1>
+          </header>
+          <div className="calculator__container">
+            <Board expression={showResult ? result : board} />
+            <div className="calculator__grid">
+              <Operators
+                setOperator={this.setOperator}
+                getResult={this.getResult}
+                clearBoard={this.clearBoard}
+                buttons={buttonsConfig.operators}
+              />
+              <Numpad
+                setBoardValue={this.setBoardValue}
+                setDecimalValue={this.setDecimalValue}
+                setZero={this.setZero}
+                digits={buttonsConfig.numbers}
+                zero={buttonsConfig.others.zero}
+                decimal={buttonsConfig.others.decimal}
+              />
+            </div>
           </div>
         </div>
       </div>

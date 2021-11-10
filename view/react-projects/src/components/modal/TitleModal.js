@@ -4,21 +4,14 @@ const TitleModal = ({ onShowProjects, showProjects, show }) => {
   if (!show) return null;
 
   const element = (
-    <div
-      className={'title-modal ' + (showProjects && 'title-modal--is-disabled')}
-    >
+    <div className={'title-modal ' + (showProjects && 'title-modal--is-disabled')}>
       <header className="title-modal__circle">
         <h1 className="title  has-text-black is-1">React Projects</h1>
         {!showProjects && (
           <>
             <h2 className="subtitle is-5 mb-3">
               for{' '}
-              <a
-                href={process.env.REACT_APP_PORTFOLIO_URL}
-                className="has-text-white"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={process.env.REACT_APP_PORTFOLIO_URL} className="has-text-white" target="_blank" rel="noreferrer">
                 Nicolas Ramirez Portfolio
               </a>
             </h2>

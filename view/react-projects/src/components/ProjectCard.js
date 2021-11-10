@@ -1,12 +1,6 @@
 import { Link } from '@reach/router';
 
-export default function ProjectCard({
-  title,
-  id,
-  thumbnailImage,
-  description,
-  path,
-}) {
+export default function ProjectCard({ title, id, thumbnailImage, description, path }) {
   return (
     <div className="project-card card" id={`project-${id}`}>
       <header className="card-header">

@@ -24,23 +24,13 @@ export default function MarkdownPreviewer() {
           <h1 className="title is-1 is-size-5-mobile">Markdown Previewer</h1>
         </header>
         <div className="markdown-previewer__container">
-          <MarkdownEditor
-            setEditorText={(text) => setEditorText(text)}
-            show={!showPreview}
-            text={editorText}
-          >
-            <button
-              className="markdown-previewer__button mb-3 button is-link"
-              onClick={toggleShowPreview}
-            >
+          <MarkdownEditor setEditorText={(text) => setEditorText(text)} show={!showPreview} text={editorText}>
+            <button className="markdown-previewer__button mb-3 button is-link" onClick={toggleShowPreview}>
               Preview
             </button>
           </MarkdownEditor>
           <MarkdownPreview text={editorText} show={showPreview}>
-            <button
-              className="markdown-previewer__button mb-3 button is-warning"
-              onClick={toggleShowPreview}
-            >
+            <button className="markdown-previewer__button mb-3 button is-warning" onClick={toggleShowPreview}>
               Edit
             </button>
           </MarkdownPreview>

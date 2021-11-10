@@ -25,11 +25,7 @@ export default function Home() {
           ))}
         </div>
       )}
-      <TitleModal
-        show={showModal()}
-        onShowProjects={showProjectGrid}
-        showProjects={showGrid}
-      ></TitleModal>
+      <TitleModal show={showModal()} onShowProjects={showProjectGrid} showProjects={showGrid}></TitleModal>
     </div>
   );
 }

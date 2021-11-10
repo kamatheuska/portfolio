@@ -8,11 +8,7 @@ export default function MarkdownPreview({ show, text, children }) {
   }
 
   return (
-    <div
-      className={
-        'markdown-preview box ' + (show ? '' : 'markdown-preview--hide')
-      }
-    >
+    <div className={'markdown-preview box ' + (show ? '' : 'markdown-preview--hide')}>
       <div className="markdown-preview__container">
         {children}
         <h2 className="markdown-preview__label has-text-right is-italic has-text-weight-bold has-text-grey mb-2">

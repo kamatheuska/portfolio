@@ -1,13 +1,6 @@
 import ButtonPad from './ButtonPad';
 
-const Numpad = ({
-  digits,
-  zero,
-  decimal,
-  setBoardValue,
-  setDecimalValue,
-  setZero,
-}) => {
+const Numpad = ({ digits, zero, decimal, setBoardValue, setDecimalValue, setZero }) => {
   let numButtons = digits.map((button, i) => (
     <ButtonPad
       onClick={() => setBoardValue(button.value)}
@@ -20,18 +13,8 @@ const Numpad = ({
   return (
     <div className="numpad">
       {numButtons}
-      <ButtonPad
-        onClick={() => setZero()}
-        size={zero.size}
-        value={zero.value}
-        id={zero.id}
-      />
-      <ButtonPad
-        onClick={() => setDecimalValue()}
-        size={decimal.size}
-        value={decimal.value}
-        id={decimal.id}
-      />
+      <ButtonPad onClick={() => setZero()} size={zero.size} value={zero.value} id={zero.id} />
+      <ButtonPad onClick={() => setDecimalValue()} size={decimal.size} value={decimal.value} id={decimal.id} />
     </div>
   );
 };
