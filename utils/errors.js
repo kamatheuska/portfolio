@@ -7,32 +7,30 @@ function isTypeOrThrow(subject) {
     }
 }
 
-function isEqualOrThrow(subject, object, { GivenException = Exception, errorMessage = '' }) {
-    if (subject !== object) {
-        throw new GivenException(
-            `Subject ${subject} is not of equal to ${object} -> ${errorMessage}`,
-        );
-    }
+function isEqualOrThrow(subject, target, { GivenException = Exception, errorMessage = '' }) {
+    if (subject === target) return;
+
+    throw new GivenException(`Subject ${subject} is not of equal to ${target} -> ${errorMessage}`);
 }
-function isLessThanOrThrow(subject, object, { GivenException = Exception, errorMessage = '' }) {
-    if (subject === object) {
-        throw new GivenException(
-            `Subject ${subject} should be less than ${object} -> ${errorMessage}`,
-        );
-    }
+
+function isLessThanOrThrow(subject, target, { GivenException = Exception, errorMessage = '' }) {
+    if (subject >= target) return;
+
+    throw new GivenException(`Subject ${subject} should be less than ${target} -> ${errorMessage}`);
 }
+
 function isTruthyOrThrow(subject, GivenException = Exception) {
-    if (!subject) {
-        throw new GivenException(`${subject} is falsy`);
-    }
+    if (subject) return;
+
+    throw new GivenException(`${subject} is falsy`);
 }
 function isTruthyOrThrowMessage(
     subject,
     { GivenException, errorMessage } = { GivenException: Exception, errorMessage: '' },
 ) {
-    if (!subject) {
-        throw new GivenException(errorMessage);
-    }
+    if (subject) return;
+
+    throw new GivenException(errorMessage);
 }
 
 function transformErrorToException(error, { message = '', code = exceptions.GENERIC }) {

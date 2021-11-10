@@ -27,4 +27,6 @@ This portfolio has a server in **Node JS**, and follows a losely MVC pattern.
 - Remove obsolete/deprecated packages
     - Request: https://github.com/request/request
 - Move node to module (import/export)
+- Unit test for helpers/errors
+- merge helpers and utils
 

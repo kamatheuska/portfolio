@@ -4,4 +4,5 @@ module.exports = {
         ENOTFOUND: 'ENOTFOUND',
     },
     QUOTES_INDEX_KEY: 'author',
+    INVALID_DATE: 'Invalid Date',
 };

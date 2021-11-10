@@ -4,6 +4,8 @@
 // const _exclude = 'minutely,hourly,daily,alerts,flags';
 // const geocodingClient = mbxGeocoding({ accessToken: geocodeApiKey })
 
+const _ = require('lodash');
+
 function isString(el) {
     return typeof el === 'string' && !!el.trim();
 }
@@ -30,11 +32,41 @@ function filterListByTruthyField(list, field, { hasPropertyFn = hasProperty } = 
         : [];
 }
 
-exports.isString = isString;
-exports.hasProperty = hasProperty;
-exports.toBoolean = toBoolean;
-exports.getRandomInteger = getRandomInteger;
+/**
+ * @param {String} date
+ *
+ */
+function createTimestampFromDate(date = null) {
+    const newDate = date ? new Date(date) : new Date();
+    const unix = newDate.getTime();
+
+    return {
+        unix,
+        utc: newDate.toUTCString(),
+        isValid: !!unix,
+    };
+}
+
+/**
+ * Convert date string to number if needed, else return same date string
+ *
+ * @param {String} dateString
+ *
+ */
+function parseDateString(dateString = null) {
+    const date = _.toNumber(dateString);
+
+    if (Number.isNaN(date)) return decodeURI(dateString);
+    return date;
+}
+
 exports.filterListByTruthyField = filterListByTruthyField;
+exports.getRandomInteger = getRandomInteger;
+exports.createTimestampFromDate = createTimestampFromDate;
+exports.parseDateString = parseDateString;
+exports.hasProperty = hasProperty;
+exports.isString = isString;
+exports.toBoolean = toBoolean;
 
 // getApiPayload (type = 'weather') {
 //     switch (type) {

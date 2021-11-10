@@ -1,4 +1,11 @@
-const { hasProperty, isString, toBoolean, filterListByTruthyField } = require('../../../utils');
+const {
+    hasProperty,
+    isString,
+    toBoolean,
+    filterListByTruthyField,
+    createTimestampFromDate,
+    parseDateString,
+} = require('../../../utils');
 const { quotes } = require('../../mocks');
 
 let subject;
@@ -114,6 +121,49 @@ describe('🌳  Utils', () => {
             );
             expect(Array.isArray(result)).toBeTruthy();
             expect(result).toHaveLength(0);
+        });
+    });
+
+    describe('🌴 createTimestampFromDate', () => {
+        it.each([
+            ['December 17, 1995 13:24:00'],
+            ['1995-12-17T13:24:00'],
+            [undefined],
+            [null],
+            [''],
+        ])('🌱 should return a valid timestamp when date passed "%s" is valid', (date) => {
+            result = createTimestampFromDate(date);
+
+            expect(typeof result.unix).toBe('number');
+            expect(typeof result.utc).toBe('string');
+            expect(typeof result.isValid).toBeTruthy();
+        });
+        it('🌱 should return Invalid date if passed date is an invalid date string', () => {
+            result = createTimestampFromDate('some invalid string date');
+
+            expect(result.isValid).toBeFalsy();
+        });
+    });
+
+    describe('🌴 parseDateString', () => {
+        it.each([
+            ['number', 1223455000],
+            ['number', 23],
+            ['string', '1995-12-17T13:24:00'],
+            ['string', 'December%2017,%201995%2013:24:00'],
+        ])('🌱 should return a type %s when date is %s', (expected, date) => {
+            result = parseDateString(date);
+
+            expect(typeof result).toBe(expected);
+        });
+
+        it.each([
+            ['1995-12-17T13:24:00', '1995-12-17T13:24:00'],
+            ['December 17, 1995 13:24:00', 'December%2017,%201995%2013:24:00'],
+        ])('🌱 should return decoded string %s when date is %s', (expected, date) => {
+            result = parseDateString(date);
+
+            expect(result).toBe(expected);
         });
     });
 });

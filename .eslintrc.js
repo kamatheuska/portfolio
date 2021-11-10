@@ -31,6 +31,7 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'consistent-return': 0,
+        'radix': ['error', 'as-needed'],
     },
     overrides: [
         {

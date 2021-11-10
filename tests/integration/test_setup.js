@@ -5,6 +5,7 @@
 process.env.PORT = 9879;
 
 const mongoose = require('mongoose');
+const { init: _init, stopServer: _stopServer } = require('../../app');
 
 mongoose.set('useCreateIndex', true);
 mongoose.promise = global.Promise;
@@ -35,10 +36,14 @@ async function dropAllCollections() {
 }
 
 module.exports = {
-    setupDB({ seedAsyncDatabaseCallback = null, init, stopServer }) {
+    setupDB({ seedAsyncDatabaseCallback = null, init = _init, stopServer = _stopServer } = {}) {
         // Connect to Mongoose
         beforeAll(async () => {
-            init().catch((error) => console.error(error));
+            try {
+                await init();
+            } catch (error) {
+                console.error(error);
+            }
         });
 
         beforeEach(async () => {
