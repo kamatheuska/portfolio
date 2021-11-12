@@ -29,7 +29,8 @@
         "start": "node init.js",
         "test:integration": "PORT=5999 npx jest tests/integration",
         "test:unit": "npx jest tests/unit",
-        "test": "npm run test:unit"
+        "test": "npm run test:unit",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",
@@ -61,7 +62,8 @@
         "eslint-plugin-security": "^1.4.0",
         "nodemon": "^2.0.7",
         "semver": "^5.3.0",
-        "url-loader": "^1.0.1"
+        "url-loader": "^1.0.1",
+        "husky": "^7.0.0"
     },
     "engines": {
         "node": "14.17.0",
