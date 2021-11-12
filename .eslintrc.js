@@ -4,11 +4,11 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: ['airbnb-base', 'prettier'],
+    extends: ['airbnb-base', 'prettier', 'plugin:security/recommended'],
     // parserOptions: {
     //     ecmaVersion: 12,
     // },
-    plugins: ['prettier'],
+    plugins: ['prettier', 'security'],
     rules: {
         'prettier/prettier': [
             'error',
@@ -32,6 +32,7 @@ module.exports = {
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'consistent-return': 0,
         'radix': ['error', 'as-needed'],
+        'security/detect-object-injection': 0,
     },
     overrides: [
         {
