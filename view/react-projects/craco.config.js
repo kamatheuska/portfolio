@@ -11,14 +11,12 @@ module.exports = {
   },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
-      paths.appBuild = webpackConfig.output.path = path.resolve(
-        __dirname,
-        '..',
-        '..',
-        'public/react-projects'
-      );
+      paths.appBuild = webpackConfig.output.path = path.resolve(__dirname, '..', '..', 'public/react-projects');
 
       return webpackConfig;
+    },
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
   },
 };
