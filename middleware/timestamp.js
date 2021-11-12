@@ -11,13 +11,17 @@ function generateTimestamp(req, res) {
 function getTimestampByDate(req, res) {
     const parsedDate = parseDateString(req.params.date);
 
-    if (!parsedDate) return INVALID_DATE_RESPONSE;
+    if (!parsedDate) {
+        res.send(INVALID_DATE_RESPONSE);
+    }
 
     const date = new Date(parsedDate);
 
     const { unix, utc, isValid } = createTimestampFromDate(date);
 
-    if (!isValid) return INVALID_DATE_RESPONSE;
+    if (!isValid) {
+        res.send(INVALID_DATE_RESPONSE);
+    }
 
     res.send({ unix, utc });
 }
