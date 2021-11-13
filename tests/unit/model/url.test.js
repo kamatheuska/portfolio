@@ -54,15 +54,28 @@ describe('🌳  Url Model', () => {
         });
 
         describe('🍉 checkDatabaseUrlCount', () => {
-            it('🌱 should thow an error if the db limit is passed', async () => {
+            const count = URL_DOCS_COUNT + 10;
+            const errorMessage =
+                'Database capacity limit reached. Please contact the administrator.';
+            beforeEach(() => {
                 isLessThanOrThrow.mockImplementation(() => {
                     throw new Error();
                 });
                 getConfig.mockImplementation(() => ({
                     db: { url: { documentLimit: URL_DOCS_COUNT } },
                 }));
+            });
 
-                expect(() => checkDatabaseUrlCount(URL_DOCS_COUNT + 10)).toThrow();
+            it('🌱 should thow an error if the db limit is passed', async () => {
+                expect(() => checkDatabaseUrlCount(count)).toThrow();
+            });
+
+            it('🌱 calls isLessThanOrThrow', () => {
+                expect(() => checkDatabaseUrlCount(count)).toThrow();
+                expect(isLessThanOrThrow).toHaveBeenCalled();
+                expect(isLessThanOrThrow).toHaveBeenCalledWith(URL_DOCS_COUNT, count, {
+                    errorMessage,
+                });
             });
         });
     });

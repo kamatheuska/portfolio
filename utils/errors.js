@@ -7,16 +7,24 @@ function isTypeOrThrow(subject) {
     }
 }
 
-function isEqualOrThrow(subject, target, { GivenException = Exception, errorMessage = '' }) {
+function isEqualOrThrow(subject, target, { GivenException = Exception, errorMessage = '' } = {}) {
     if (subject === target) return;
 
-    throw new GivenException(`Subject ${subject} is not of equal to ${target} -> ${errorMessage}`);
+    throw new GivenException(
+        `Subject "${subject}" is not of equal to "${target}" -> ${errorMessage}`,
+    );
 }
 
-function isLessThanOrThrow(subject, target, { GivenException = Exception, errorMessage = '' }) {
-    if (subject >= target) return;
+function isLessThanOrThrow(
+    subject,
+    target,
+    { GivenException = Exception, errorMessage = '' } = {},
+) {
+    if (subject < target) return;
 
-    throw new GivenException(`Subject ${subject} should be less than ${target} -> ${errorMessage}`);
+    throw new GivenException(
+        `Subject "${subject}" should be less than "${target}" -> ${errorMessage}`,
+    );
 }
 
 function isTruthyOrThrow(subject, GivenException = Exception) {

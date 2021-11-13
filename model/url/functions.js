@@ -7,7 +7,7 @@ function savePreSchemaHook() {
 }
 
 function checkDatabaseUrlCount(count) {
-    isLessThanOrThrow(count, getConfig().db.url.documentLimit, {
+    isLessThanOrThrow(getConfig().db.url.documentLimit, count, {
         errorMessage: 'Database capacity limit reached. Please contact the administrator.',
     });
 }
