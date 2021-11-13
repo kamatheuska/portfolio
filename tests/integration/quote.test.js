@@ -1,8 +1,9 @@
 process.env.NODE_ENV = 'test';
 
 const request = require('supertest');
+
 const Url = require('../../model/url');
-const urlMocks = require('../mocks/url');
+const { urlStubs } = require('../../constants/stubs');
 const { app, init, stopServer } = require('../../app');
 const { setupDB } = require('./test_setup');
 
@@ -12,7 +13,7 @@ let url;
 
 const seedUrls = async () => {
     try {
-        await Url.insertMany(urlMocks);
+        await Url.insertMany(urlStubs);
     } catch (error) {
         console.error(error);
     }

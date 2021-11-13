@@ -28,7 +28,7 @@
         "prebuild": "npm run lint && npm test",
         "start": "node init.js",
         "test:integration": "PORT=5999 npx jest tests/integration",
-        "test:unit": "npx jest tests/unit",
+        "test:unit": "npx jest --testPathIgnorePatterns=/tests/integration/",
         "test": "npm run test:unit",
         "prepare": "husky install"
     },

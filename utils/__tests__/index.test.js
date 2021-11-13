@@ -5,8 +5,8 @@ const {
     filterListByTruthyField,
     createTimestampFromDate,
     parseDateString,
-} = require('../../../utils');
-const { quotes } = require('../../mocks');
+} = require('..');
+const { quotes } = require('../../constants/stubs');
 
 let subject;
 let result;

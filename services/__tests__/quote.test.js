@@ -1,15 +1,15 @@
-jest.mock('../../../utils');
-jest.mock('../../../utils/randomize', () =>
+jest.mock('../../utils');
+jest.mock('../../utils/randomize', () =>
     jest.fn().mockImplementation(() => ({
         getRandomItemFromList: jest.fn(),
     })),
 );
 
-const { getAuthoredRandomQuote } = require('../../../services/quote');
-const Randomize = require('../../../utils/randomize');
-const utils = require('../../../utils');
-const { quotes } = require('../../mocks');
-const { QUOTES_INDEX_KEY } = require('../../../constants');
+const { getAuthoredRandomQuote } = require('../quote');
+const Randomize = require('../../utils/randomize');
+const utils = require('../../utils');
+const { quotes } = require('../../constants/stubs');
+const { QUOTES_INDEX_KEY } = require('../../constants');
 
 let result;
 let getRandomItemFromListMock;

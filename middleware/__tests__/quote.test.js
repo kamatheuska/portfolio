@@ -4,7 +4,7 @@ jest.mock('../../services/quote');
 const { getAuthoredRandomQuote } = require('../../services/quote');
 const { getQuote } = require('../quote');
 const { toBoolean } = require('../../utils');
-const { quotes } = require('../../tests/mocks');
+const { quotes } = require('../../constants/stubs');
 
 let res;
 let req;

@@ -1,4 +1,4 @@
-const { generateTimestamp, getTimestampByDate } = require('../../../middleware/timestamp');
+const { generateTimestamp, getTimestampByDate } = require('../timestamp');
 
 let res;
 let req;

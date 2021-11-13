@@ -3,16 +3,16 @@ process.env.DEBUG_MODE = 'false';
 
 const request = require('supertest');
 const Url = require('../../model/url');
-const urlMocks = require('../mocks/url');
+const { urlStubs } = require('../../constants/stubs');
 const { app, init, stopServer } = require('../../app');
 const { setupDB } = require('./test_setup');
-const { VALID_HOSTNAME, INVALID_HOSTNAME } = require('../constants');
+const { VALID_HOSTNAME, INVALID_HOSTNAME } = require('../../constants/stubs');
 
 const BASE_URL = '/api/shorturl';
 
 const seedUrls = async () => {
     try {
-        await Url.insertMany(urlMocks);
+        await Url.insertMany(urlStubs);
     } catch (error) {
         console.error(error);
     }

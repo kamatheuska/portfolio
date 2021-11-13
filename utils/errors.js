@@ -20,7 +20,7 @@ function isLessThanOrThrow(
     target,
     { GivenException = Exception, errorMessage = '' } = {},
 ) {
-    if (subject < target) return;
+    if (subject >= target) return;
 
     throw new GivenException(
         `Subject "${subject}" should be less than "${target}" -> ${errorMessage}`,

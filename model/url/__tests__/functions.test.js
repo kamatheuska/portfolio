@@ -1,10 +1,6 @@
-const { VALID_HOSTNAME, VALID_URL, URL_DOCS_COUNT } = require('../../constants');
+const { VALID_HOSTNAME, VALID_URL, URL_DOCS_COUNT } = require('../../../constants/stubs');
 
-const {
-    savePreSchemaHook,
-    countUrlDocuments,
-    checkDatabaseUrlCount,
-} = require('../../../model/url/functions');
+const { savePreSchemaHook, countUrlDocuments, checkDatabaseUrlCount } = require('../functions');
 const { addHttp } = require('../../../utils/url'); // eslint-disable-line
 const { getConfig } = require('../../../config'); // eslint-disable-line
 const { isLessThanOrThrow } = require('../../../utils/errors'); // eslint-disable-line

@@ -11,7 +11,7 @@ const {
 } = require('../../services/urlShortener');
 
 const { getHostNameFromUrl } = require('../../utils/url');
-const { VALID_HOSTNAME } = require('../../tests/constants');
+const { VALID_HOSTNAME } = require('../../constants/stubs');
 
 let res;
 let req;

@@ -45,18 +45,18 @@ describe('🌳  Errors Utils', () => {
 
     describe('🌴 isLessThanOrThrow', () => {
         it.each([
-            [1, 100],
-            [2, 4],
-            ['some string', 'some stringsss'],
+            [1000, 100],
+            [7, 4],
+            ['some stringsss', 'some string'],
         ])('🌱 returns undefined when subject=%s is less than target=%s', (subject, target) => {
             expect(() => {
                 isLessThanOrThrow(subject, target);
             }).not.toThrow();
         });
         it.each([
-            [1000, 100],
-            [7, 4],
-            ['some stringsss', 'some string'],
+            [1, 100],
+            [2, 4],
+            ['some string', 'some stringsss'],
         ])('🌱 throws error when subject=%s is bigger than target=%s a', (subject, target) => {
             expect(() => {
                 isLessThanOrThrow(subject, target);
@@ -65,7 +65,7 @@ describe('🌳  Errors Utils', () => {
 
         it('🌱 throws with given error Exception', () => {
             expect(() => {
-                isLessThanOrThrow(12, 3, {
+                isLessThanOrThrow(3, 12, {
                     GivenException: DocumentNotFoundException,
                 });
             }).toThrowError(DocumentNotFoundException);
@@ -74,11 +74,11 @@ describe('🌳  Errors Utils', () => {
         it('🌱 throws with given error message', () => {
             const errorMessage = 'Result is not correct';
             expect(() => {
-                isLessThanOrThrow(12, 3, {
+                isLessThanOrThrow(3, 12, {
                     GivenException: DocumentNotFoundException,
                     errorMessage,
                 });
-            }).toThrowError(`Subject "12" should be less than "3" -> ${errorMessage}`);
+            }).toThrowError(`Subject "3" should be less than "12" -> ${errorMessage}`);
         });
     });
 });

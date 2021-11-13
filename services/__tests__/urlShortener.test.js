@@ -1,23 +1,24 @@
-jest.mock('../../../model/url');
-jest.mock('../../../utils/errors');
+jest.mock('../../model/url');
+jest.mock('../../utils/errors');
 
 const {
     checkHostnameValidity,
     buildNewShortUrl,
     saveUrl,
     createUrlObject,
-} = require('../../../services/urlShortener');
+} = require('../urlShortener');
+
 const {
     VALID_HOSTNAME,
     VALID_URL,
     INVALID_HOSTNAME,
     URL_DOCS_COUNT,
     urlDoc,
-} = require('../../constants');
-const { logJestError } = require('../../utils');
-const { isTruthyOrThrow } = require('../../../utils/errors');
-const { RequestParamException, Exception } = require('../../../services/exceptions');
-const Url = require('../../../model/url');
+} = require('../../constants/stubs');
+const { logJestError } = require('../../tests/utils');
+const { isTruthyOrThrow } = require('../../utils/errors');
+const { RequestParamException, Exception } = require('../exceptions');
+const Url = require('../../model/url');
 
 let result;
 
@@ -62,6 +63,7 @@ describe('🌳 UrlShortener Service', () => {
             },
         );
     });
+
     describe('🌴 buildNewShortUrl', () => {
         let mockCountUrlDocuments;
         let mockCreateUrlDoc;

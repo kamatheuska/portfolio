@@ -1,12 +1,12 @@
-const ConfigHelper = require('../../../helpers/config');
-const { setupProcessEnvMock } = require('../../utils');
+const ConfigUtils = require('../config');
+const { setupProcessEnvMock } = require('../../tests/utils');
 
 let result;
 const VALID_ENV_KEY = 'foh';
 const DEFAULT_ENV_KEY = 'Default foh';
 const VALID_ENV_VALUE = 'fah';
 
-describe('🌳  ConfigHelper', () => {
+describe('🌳  ConfigUtils', () => {
     describe('🌴 serializeEnv', () => {
         it.each([
             [true, 'true', Boolean], // expected, subject, type
@@ -16,7 +16,7 @@ describe('🌳  ConfigHelper', () => {
         ])(
             '🌱 should return the right type "%s" for the string "%s"',
             (expected, subject, type) => {
-                result = ConfigHelper.serializeEnv(subject, type);
+                result = ConfigUtils.serializeEnv(subject, type);
                 expect(result).toBe(expected);
             },
         );
@@ -32,7 +32,7 @@ describe('🌳  ConfigHelper', () => {
         beforeEach(() => {
             // static class method mock
             mockSerizalizeEnv = jest.fn();
-            ConfigHelper.serializeEnv = mockSerizalizeEnv;
+            ConfigUtils.serializeEnv = mockSerizalizeEnv;
 
             setupProcessEnvMock(OLD_ENV);
         });
@@ -43,20 +43,20 @@ describe('🌳  ConfigHelper', () => {
 
             mockSerizalizeEnv.mockReturnValue(VALID_ENV_VALUE);
 
-            result = ConfigHelper.getEnvVar(VALID_ENV_KEY);
+            result = ConfigUtils.getEnvVar(VALID_ENV_KEY);
             expect(result).toBe(VALID_ENV_VALUE);
         });
         it('🌱 should return the serialized default value if default is passed', () => {
             mockSerizalizeEnv.mockReturnValue(VALID_ENV_KEY);
 
-            result = ConfigHelper.getEnvVar(VALID_ENV_KEY, DEFAULT_ENV_KEY);
+            result = ConfigUtils.getEnvVar(VALID_ENV_KEY, DEFAULT_ENV_KEY);
             expect(result).toBe(VALID_ENV_KEY);
         });
         it('🌱 should throw an error if no value founded in process.env and no default is passed', () => {
             mockSerizalizeEnv.mockReturnValue(VALID_ENV_KEY);
 
-            expect(() => ConfigHelper.getEnvVar('asd')).toThrow();
-            expect(() => ConfigHelper.getEnvVar('iamnotexistent')).toThrow();
+            expect(() => ConfigUtils.getEnvVar('asd')).toThrow();
+            expect(() => ConfigUtils.getEnvVar('iamnotexistent')).toThrow();
         });
     });
 });

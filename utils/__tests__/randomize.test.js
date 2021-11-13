@@ -1,5 +1,5 @@
-const Randomize = require('../../../utils/randomize');
-const { quotes } = require('../../mocks');
+const Randomize = require('../randomize');
+const { quotes } = require('../../constants/stubs');
 
 let result;
 
