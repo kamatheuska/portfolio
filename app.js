@@ -7,6 +7,7 @@ const app = express();
 const { initConfig, getConfig } = require('./config');
 const { connectToDatabase, disconnectFromDatabase } = require('./db');
 const { errorLogger, errorResponseMapper, defaultErrorResponse } = require('./middleware/errors');
+const limiter = require('./middleware/rate-limiter');
 const { logInfo } = require('./services/logger');
 
 let config;
@@ -37,14 +38,22 @@ async function stopServer() {
     });
 }
 
+function setProductionMiddleware() {
+    app.use(forceSsl);
+
+    // see https://expressjs.com/en/guide/behind-proxies.html
+    app.set('trust proxy', 1);
+    app.use(limiter);
+}
+
 function registerControllers() {
     if (config.nodeEnv === 'development') {
         app.use(morgan('dev'));
     } else if (config.nodeEnv === 'production') {
-        app.use(forceSsl);
+        setProductionMiddleware();
     }
 
-    app.use(express.json());
+    app.use(express.json({ limit: '10kb' }));
     app.use(express.urlencoded({ extended: true }));
     app.use(require('./middleware/logger'));
 
