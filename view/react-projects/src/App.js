@@ -1,11 +1,10 @@
 import { Router, Location } from '@reach/router';
-
-import DrumMachine from 'projects/drum-machine/DrumMachine';
-import MarkdownPreviewer from 'projects/markdown-previewer/MarkdownPreviewer';
-import Home from 'components/Home';
-import Navigation from 'components/Navigation';
-import { projectsRoutes as projects, BASE_URL } from 'routes';
-import Calculator from 'projects/calculator/Calculator';
+import DrumMachine from '~projects/drum-machine/DrumMachine';
+import MarkdownPreviewer from '~projects/markdown-previewer/MarkdownPreviewer';
+import Home from '~components/Home';
+import Navigation from '~components/Navigation';
+import { projectsRoutes as projects, BASE_URL } from '~/routes';
+import Calculator from '~projects/calculator/Calculator';
 
 function App() {
   return (

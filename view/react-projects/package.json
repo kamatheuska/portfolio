@@ -18,6 +18,8 @@
   },
   "scripts": {
     "build": "craco build",
+    "build:local": "craco build",
+    "prebuild": "npm run lint && CI=true npm test",
     "deploy": "npm run build && surge build",
     "eject": "react-scripts eject",
     "start": "craco start",
@@ -43,5 +45,17 @@
     "node-sass": "^6.0.1",
     "prettier": "^2.4.1",
     "surge": "^0.23.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^~constants/(.*)": "<rootDir>/src/constants/$1",
+      "^~utils/(.*)$": "<rootDir>/src/utils/$1",
+      "^~assets/(.*)": "<rootDir>/src/assets/$1",
+      "^~projects/(.*)": "<rootDir>/src/projects/$1",
+      "^~components/(.*)": "<rootDir>/src/components/$1"
+    },
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   }
 }

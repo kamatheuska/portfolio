@@ -1,8 +1,8 @@
-import ProjectCard from 'components/ProjectCard';
-import TitleModal from 'components/modal/TitleModal';
+import ProjectCard from '~components/ProjectCard';
+import TitleModal from '~components/modal/TitleModal';
 import { useState } from 'react';
-import projects from 'projects/config';
-import { isGreaterThanTablet } from 'utils';
+import projects from '~projects/config';
+import { isGreaterThanTablet } from '~utils';
 
 export default function Home() {
   const [showGrid, setShowGrid] = useState(false);

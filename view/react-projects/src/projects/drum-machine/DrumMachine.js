@@ -1,7 +1,7 @@
 import { useState, createRef } from 'react';
 
-import { useEventListener } from 'utils/events';
-import Cuboid from 'components/Cuboid';
+import { useEventListener } from '~utils/events';
+import Cuboid from '~components/Cuboid';
 
 import Drumpad from './Drumpad';
 import allPads from './pads';

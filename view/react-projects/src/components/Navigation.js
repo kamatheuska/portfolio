@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 
-import routes from 'routes';
+import routes from '~/routes';
 
 const getIsCurrentClasses = (isCurrent) => (isCurrent ? 'navigation-link--is-active' : '');
 
