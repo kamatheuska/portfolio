@@ -43,7 +43,7 @@ function setProductionMiddleware() {
 
     // see https://expressjs.com/en/guide/behind-proxies.html
     app.set('trust proxy', 1);
-    app.use(limiter);
+    app.use('/api', limiter);
 }
 
 function registerControllers() {
