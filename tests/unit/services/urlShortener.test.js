@@ -31,9 +31,14 @@ describe('🌳 UrlShortener Service', () => {
     });
 
     describe('🌴 checkHostnameValidity', () => {
-        it('🌱 should return true when hostname is valid', async () => {
+        it.each([
+            [VALID_HOSTNAME],
+            ['https://itnext.io/make-security-on-your-nodejs-api-the-priority-50da8dc71d68'],
+            ['https://www.nicolasramirezka.com/miniservices/urlshortener'],
+            ['https://jestjs.io/docs/expect#tothrowerror'],
+        ])('🌱 should return true when hostname=%s is valid', async (hostname) => {
             try {
-                result = await checkHostnameValidity(VALID_HOSTNAME);
+                result = await checkHostnameValidity(hostname);
                 expect(result).toBeTruthy();
             } catch (error) {
                 logJestError(error);

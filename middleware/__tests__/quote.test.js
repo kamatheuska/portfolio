@@ -1,10 +1,10 @@
-jest.mock('../../../utils');
-jest.mock('../../../services/quote');
+jest.mock('../../utils');
+jest.mock('../../services/quote');
 
-const { getAuthoredRandomQuote } = require('../../../services/quote');
-const { getQuote } = require('../../../middleware/quote');
-const { toBoolean } = require('../../../utils');
-const { quotes } = require('../../mocks');
+const { getAuthoredRandomQuote } = require('../../services/quote');
+const { getQuote } = require('../quote');
+const { toBoolean } = require('../../utils');
+const { quotes } = require('../../tests/mocks');
 
 let res;
 let req;

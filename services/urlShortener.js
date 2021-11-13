@@ -26,6 +26,14 @@ async function checkHostnameValidity(hostname) {
     }
 }
 
+/**
+ * builds a new short url and returns a new Url object
+ *
+ * @param {String} hostname
+ * @param {Number} count
+ *
+ * @returns {UrlModel} Url
+ */
 async function buildNewShortUrl(hostname) {
     const count = await Url.countUrlDocuments();
     Url.checkDatabaseUrlCount(count);

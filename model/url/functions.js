@@ -18,6 +18,14 @@ async function countUrlDocuments() {
     return count;
 }
 
+/**
+ * return a new Url object
+ *
+ * @param {String} hostname
+ * @param {Number} count
+ *
+ * @returns {UrlModel}
+ */
 async function createUrlDoc(hostname, count) {
     return new this({
         original: hostname,
