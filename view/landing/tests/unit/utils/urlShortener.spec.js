@@ -1,14 +1,14 @@
+import { BASE_URL_STUB } from '@/constants/stubs';
 import { buildShortUrlBody } from '@/utils/urlShortener';
-import { FAKE_BASE_URL } from '../../constants';
 
 let result;
 
 describe('🌳  Utils UrlShortener', () => {
     describe('🌴 #buildShortUrlBody', () => {
         it('🌱 should return a JSON string with an url object', () => {
-            result = buildShortUrlBody(FAKE_BASE_URL);
+            result = buildShortUrlBody(BASE_URL_STUB);
             const expectParsedObject = {
-                url: FAKE_BASE_URL,
+                url: BASE_URL_STUB,
             };
             expect(result).toBeDefined();
             expect(JSON.parse(result)).toStrictEqual(expectParsedObject);

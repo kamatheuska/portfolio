@@ -21,9 +21,13 @@
             </div>
             <div v-else class="has-text-centered">
                 <p class="block">Now you can access</p>
-                <p class="url-shortener__original block p-3">
-                    <strong>{{ shortendOriginalUrl }}</strong>
-                </p>
+                <div class="url-shortener__original block p-3">
+                    <div class="field">
+                        <div class="control">
+                            <input :value="shortendOriginalUrl" class="input" disabled />
+                        </div>
+                    </div>
+                </div>
                 <p class="block">going to</p>
                 <a :href="response.href" target="_blank">
                     <div class="url-shortener__short box has-background-primary has-text-white m-4">
