@@ -1,14 +1,15 @@
-import createRequest from '@/request';
+import request from '@/request';
 import { buildShortUrlBody } from '@/utils/urlShortener';
 
 const baseUrl = '/api/shorturl/';
-const request = createRequest(baseUrl);
 
-export const createShortUrl = async (url, { requestFn = request } = {}) => {
+export const createShortUrl = async (url) => {
     const body = buildShortUrlBody(url);
-    return requestFn({
-        url: 'new',
-        method: 'POST',
+    return request({
+        baseUrl,
         body,
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        url: 'new',
     });
 };
