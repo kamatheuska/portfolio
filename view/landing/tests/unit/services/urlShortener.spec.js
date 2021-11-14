@@ -1,10 +1,21 @@
 import { createShortUrl } from '@/services/urlShortener';
 import { buildShortUrlBody } from '@/utils/urlShortener';
-import { URL_TO_BE_SHORTENED } from '../../constants';
+import { VALID_HOSTNAME, SHORT_URL, VALID_HREF, URL_TO_BE_SHORTENED } from '@/constants/stubs';
+import request from '@/request';
 
 jest.mock('@/utils/urlShortener');
+jest.mock('@/request');
 
 let result;
+const baseUrl = '/api/shorturl/';
+const bodyMock = {
+    url: URL_TO_BE_SHORTENED,
+};
+const responseMock = {
+    ...bodyMock,
+    shorUrl: SHORT_URL,
+    href: VALID_HREF,
+};
 
 describe('urlShortener Service', () => {
     beforeEach(() => {
@@ -12,27 +23,31 @@ describe('urlShortener Service', () => {
     });
 
     describe('🌴 #createShortUrl', () => {
-        const requestMock = jest.fn();
-        const mocks = { requestFn: requestMock };
+        beforeEach(async () => {
+            buildShortUrlBody.mockImplementation(() => bodyMock);
+            request.mockImplementation(() => Promise.resolve(responseMock));
 
-        it('🌱 should return a promise', () => {
-            result = createShortUrl(URL_TO_BE_SHORTENED, mocks);
-            expect(typeof result.then).toBe('function');
+            result = await createShortUrl(VALID_HOSTNAME);
         });
-        it('🌱 should call requestMock', async () => {
-            buildShortUrlBody.mockReturnValue({
-                url: URL_TO_BE_SHORTENED,
+
+        it('🌱 returns a correct response object', () => {
+            expect(result).toStrictEqual(responseMock);
+        });
+
+        it('🌱 call buildShortUrlBody', async () => {
+            expect(buildShortUrlBody).toHaveBeenCalled();
+            expect(buildShortUrlBody).toHaveBeenCalledWith(VALID_HOSTNAME);
+        });
+
+        it('🌱 call request', async () => {
+            expect(request).toHaveBeenCalled();
+            expect(request).toHaveBeenCalledWith({
+                baseUrl,
+                body: bodyMock,
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                url: 'new',
             });
-            await createShortUrl(URL_TO_BE_SHORTENED, mocks);
-            expect(requestMock).toHaveBeenCalled();
-            expect(requestMock).toHaveBeenCalledTimes(1);
-        });
-
-        it('🌱 should call requestMock with the right arguments', async () => {
-            await createShortUrl(URL_TO_BE_SHORTENED, mocks);
-            const mockCalls = requestMock.mock.calls[0][0];
-            expect(mockCalls.method).toBe('POST');
-            expect(mockCalls.url).toBe('new');
         });
     });
 });

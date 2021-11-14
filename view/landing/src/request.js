@@ -1,22 +1,25 @@
-export function request(baseUrl) {
-    return async ({ url, method = 'GET', headers, body }) => {
-        try {
-            const fullUrl = `${baseUrl}${url}`;
-            return await fetch(fullUrl, {
-                method,
-                headers: {
-                    ...headers,
-                },
-                body,
-            });
-        } catch (error) {
-            console.error(`[request]: Error on ${method} ${url}`);
+// prettier-ignore
+const request = async ({
+    baseUrl = '',
+    body, // empty body is ignored by fetch
+    url = '/api',
+    method = 'GET',
+    headers = {},
+} = {}) => {
+    try {
+        const fullUrl = `${baseUrl}${url}`;
+        const response = await fetch(fullUrl, {
+            method,
+            headers,
+            body,
+        });
 
-            throw error;
-        }
-    };
-}
+        return await response.json();
+    } catch (error) {
+        console.error(`[request]: Error on ${method} ${url}`);
 
-export default function createRequest(baseUrl, { requestFn = request } = {}) {
-    return requestFn(baseUrl);
-}
+        throw error;
+    }
+};
+
+export default request;

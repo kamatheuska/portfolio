@@ -1,107 +1,64 @@
-import createRequest, { request } from '@/request';
-import { FAKE_BASE_URL, FAKE_API_URL, FAKE_API_RESPONSE } from '../constants';
-import fetchMock from '../mocks/fetch';
+import request from '@/request';
+import { BASE_URL_STUB, API_URL_STUB, apiResponseBodyStub } from '@/constants/stubs';
 
 let result;
 
-const args = {
-    url: FAKE_API_URL,
+const requestArgs = {
+    url: API_URL_STUB,
+    baseUrl: BASE_URL_STUB,
+    body: apiResponseBodyStub,
+    method: 'POST',
 };
 
-describe('🌳  request module', () => {
-    global.fetch = fetchMock();
+const jsonMock = jest.fn();
+const fetchMock = jest.fn().mockImplementation(() =>
+    Promise.resolve({
+        json: jsonMock,
+    }),
+);
 
+describe('🌳  request module', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+
+        global.fetch = fetchMock;
+        jsonMock.mockImplementation(() => Promise.resolve(apiResponseBodyStub));
     });
 
     describe('🌴 #request', () => {
-        it('🌱 should return a function', () => {
-            result = request(args);
-            expect(typeof result).toBe('function');
-        });
-
-        describe('🍉 calling the function', () => {
+        describe('🍉 with default arguments', () => {
             beforeEach(async () => {
-                fetch.mockReturnValue(FAKE_API_RESPONSE);
-                result = await request(args)(FAKE_BASE_URL);
+                result = await request();
             });
-            it('🌱 should return a function that returns an api response', () => {
-                expect(result).toStrictEqual(FAKE_API_RESPONSE);
-            });
-            it('🌱 should call fetch', () => {
-                expect(result).toBe(FAKE_API_RESPONSE);
-            });
-        });
 
-        describe('🍉 parameters', () => {
-            let customArgs;
-            it('🌱 should call fetch with the parameters passed', async () => {
-                customArgs = {
-                    ...args,
-                    body: {
-                        foo: 'bar',
-                    },
-                    method: 'POST',
-                };
-                fetch.mockReturnValue(FAKE_API_RESPONSE);
-                result = await request(FAKE_BASE_URL)(customArgs);
+            it('🌱 should return an api response', () => {
+                expect(result).toEqual(apiResponseBodyStub);
+            });
 
-                expect(fetch).toHaveBeenCalled();
-                expect(fetch).toHaveBeenCalledTimes(1);
-                expect(fetch).toHaveBeenCalledWith(`${FAKE_BASE_URL}${FAKE_API_URL}`, {
-                    method: customArgs.method,
-                    body: customArgs.body,
+            it('🌱 calls fetch with default values', () => {
+                expect(fetchMock).toHaveBeenCalledWith('/api', {
                     headers: {},
-                });
-            });
-
-            it('🌱 should call a GET method when no method has been passed', async () => {
-                customArgs = {
-                    ...args,
-                    body: {
-                        foo: 'bar',
-                    },
-                };
-                fetch.mockReturnValue(FAKE_API_RESPONSE);
-                result = await request(FAKE_BASE_URL)(customArgs);
-
-                expect(fetch).toHaveBeenCalled();
-                expect(fetch).toHaveBeenCalledTimes(1);
-                expect(fetch).toHaveBeenCalledWith(`${FAKE_BASE_URL}${FAKE_API_URL}`, {
                     method: 'GET',
-                    body: customArgs.body,
-                    headers: {},
                 });
+            });
+
+            it('🌱 calls json()', () => {
+                expect(fetchMock).toHaveBeenCalled();
             });
         });
     });
 
-    describe('🌴 #createRequest', () => {
-        const requestMock = jest.fn();
-        const fectchResponse = 'foo';
+    describe('🍉 with optional arguments', () => {
+        it('🌱 calls fetch with optional values', async () => {
+            const fullUrl = `${BASE_URL_STUB}${API_URL_STUB}`;
 
-        it('🌱 should return a function', () => {
-            requestMock.mockReturnValue(() => {});
-            result = createRequest(FAKE_BASE_URL, { requestFn: requestMock });
-            expect(typeof result).toBe('function');
-            expect(requestMock).toHaveBeenCalled();
-        });
+            result = await request(requestArgs);
 
-        it('🌱 returns a curried function that returns a resolved promise value', async () => {
-            requestMock.mockReturnValue(() => Promise.resolve(fectchResponse));
-            const curried = createRequest(FAKE_BASE_URL, { requestFn: requestMock });
-            expect(requestMock).toHaveBeenCalled();
-
-            result = await curried(args);
-            expect(result).toBe(fectchResponse);
-        });
-
-        it('🌱 returned curried function is called with passed argument', async () => {
-            requestMock.mockReturnValue(() => Promise.resolve(fectchResponse));
-            createRequest(FAKE_BASE_URL, { requestFn: requestMock });
-            expect(requestMock).toHaveBeenCalled();
-            expect(requestMock).toHaveBeenCalledWith(FAKE_BASE_URL);
+            expect(fetchMock).toHaveBeenCalledWith(fullUrl, {
+                body: requestArgs.body,
+                method: requestArgs.method,
+                headers: {},
+            });
         });
     });
 });
