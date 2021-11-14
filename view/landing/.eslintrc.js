@@ -17,18 +17,17 @@ module.exports = {
             {
                 tabWidth: 4,
                 useTabs: false,
-                printWidth: 100,
+                printWidth: 120,
                 semi: true,
                 singleQuote: true,
                 quoteProps: 'consistent',
                 trailingComma: 'all',
                 bracketSpacing: true,
-                jsxBracketSameLine: true,
                 arrowParens: 'always',
                 endOfLine: 'auto',
             },
         ],
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-console': ['error', { allow: ['error', 'warn'] }],
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'import/export': 0,
@@ -38,11 +37,7 @@ module.exports = {
 
     overrides: [
         {
-            files: [
-                '**/__tests__/*.{j,t}s?(x)',
-                '**/tests/mocks/*.{j,t}s?(x)',
-                '**/tests/unit/**/*.spec.{j,t}s?(x)',
-            ],
+            files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/mocks/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
             extends: ['plugin:jest/recommended'],
             plugins: ['jest'],
             rules: {

@@ -1,12 +1,7 @@
 <template>
     <div class="url-shortener container">
         <PageHeader :title="title" />
-        <BoxForm
-            v-if="!resultUrl"
-            :description="explanation"
-            submitButtonText="Do it"
-            @submit="onSubmit"
-        >
+        <BoxForm v-if="!resultUrl" :description="explanation" submitButtonText="Do it" @submit="onSubmit">
             <div class="field">
                 <label class="label">URL</label>
                 <div class="control">

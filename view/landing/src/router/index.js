@@ -24,8 +24,7 @@ const routes = [
     {
         path: '/stories/concertos',
         name: 'Concertos',
-        component: () =>
-            import(/* webpackChunkName: "concertos" */ '../views/stories/GeometricConcertos.vue'),
+        component: () => import(/* webpackChunkName: "concertos" */ '../views/stories/GeometricConcertos.vue'),
     },
     {
         path: '/about',
@@ -40,17 +39,12 @@ const routes = [
                 path: 'urlshortener',
                 name: 'UrlShortener',
                 component: () =>
-                    import(
-                        /* webpackChunkName: "urlShortener" */ '../views/mini-services/UrlShortener.vue'
-                    ),
+                    import(/* webpackChunkName: "urlShortener" */ '../views/mini-services/UrlShortener.vue'),
             },
             {
                 path: 'timestamp',
                 name: 'Timestamp',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "timestamp" */ '../views/mini-services/Timestamp.vue'
-                    ),
+                component: () => import(/* webpackChunkName: "timestamp" */ '../views/mini-services/Timestamp.vue'),
             },
         ],
     },

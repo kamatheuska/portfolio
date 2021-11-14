@@ -310,8 +310,7 @@ export default {
         randomInRange({ min, max }, useFactor = false) {
             let normalizer;
             if (useFactor) {
-                normalizer =
-                    max * this.deviceFactor - min * this.deviceFactor + min * this.deviceFactor;
+                normalizer = max * this.deviceFactor - min * this.deviceFactor + min * this.deviceFactor;
             } else {
                 normalizer = max - min + min;
             }

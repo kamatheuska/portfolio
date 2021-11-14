@@ -51,11 +51,7 @@
                         {{ route.text }}
                     </router-link>
 
-                    <div
-                        class="navbar-item has-dropdown is-hoverable"
-                        :key="`route-navbar-item${i}`"
-                        v-else
-                    >
+                    <div class="navbar-item has-dropdown is-hoverable" :key="`route-navbar-item${i}`" v-else>
                         <a class="navbar-link is-arrowless"> {{ route.text }} </a>
 
                         <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">

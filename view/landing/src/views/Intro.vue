@@ -41,9 +41,7 @@
                                 </p>
                             </transition>
                             <transition name="fade-slide">
-                                <h2 class="title is-4" v-if="hero.conclusion.show">
-                                    Let me tell your story
-                                </h2>
+                                <h2 class="title is-4" v-if="hero.conclusion.show">Let me tell your story</h2>
                             </transition>
                         </div>
                     </div>
@@ -69,9 +67,7 @@ export default {
             return this.body.show;
         },
         skipAnimation() {
-            return (
-                this.$route.query.skipAnimation === 'true' || this.$getCookie(SAW_INTRO_COOKIE_KEY)
-            );
+            return this.$route.query.skipAnimation === 'true' || this.$getCookie(SAW_INTRO_COOKIE_KEY);
         },
         isHeroDark() {
             return this.hero.background === 'dark';

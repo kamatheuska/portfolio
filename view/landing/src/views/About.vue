@@ -21,11 +21,7 @@
         <section class="section is-medium">
             <h2 class="title is-3 has-text-centered mb-6">{{ about.tech.title }}</h2>
             <HorizontalLevel>
-                <LevelItem
-                    v-for="(tech, i) in about.tech.stack"
-                    :key="`tech-stack-${i}`"
-                    v-bind="tech"
-                />
+                <LevelItem v-for="(tech, i) in about.tech.stack" :key="`tech-stack-${i}`" v-bind="tech" />
             </HorizontalLevel>
         </section>
         <div class="columns">
@@ -71,11 +67,7 @@ export default {
         padding: 1rem;
         background: rgb(255, 255, 255);
         border-radius: 50%;
-        background: radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.5) 20%,
-            rgba(255, 255, 255, 0) 80%
-        );
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 20%, rgba(255, 255, 255, 0) 80%);
         @include tablet {
             font-size: $size-1;
         }

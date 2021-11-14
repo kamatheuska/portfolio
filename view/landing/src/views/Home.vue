@@ -3,18 +3,14 @@
         <section class="hero is-medium is-white">
             <div class="hero-body">
                 <div class="columns">
-                    <div
-                        class="column is-6 h-100 is-flex is-flex-direction-column is-justify-content-center"
-                    >
+                    <div class="column is-6 h-100 is-flex is-flex-direction-column is-justify-content-center">
                         <div>
                             <h1 class="title is-1">Nicolas Ramirez</h1>
                             <p class="subtitle">
-                                Let's tell together a great story. The story of your project and how
-                                we made it a reality.
+                                Let's tell together a great story. The story of your project and how we made it a
+                                reality.
                             </p>
-                            <router-link class="button is-dark" to="/about">
-                                Tell me more
-                            </router-link>
+                            <router-link class="button is-dark" to="/about"> Tell me more </router-link>
                         </div>
                     </div>
                     <div class="column is-6">
@@ -33,28 +29,16 @@
                 <LevelItem v-bind="levelItemLinks[0]" />
             </HorizontalLevel>
             <HorizontalLevel :numberOfItems="3">
-                <LevelItem
-                    v-for="(link, i) in levelItemLinks.slice(1, 4)"
-                    :key="`level-item-link${i}`"
-                    v-bind="link"
-                />
+                <LevelItem v-for="(link, i) in levelItemLinks.slice(1, 4)" :key="`level-item-link${i}`" v-bind="link" />
             </HorizontalLevel>
             <HorizontalLevel :numberOfItems="3">
-                <LevelItem
-                    v-for="(link, i) in levelItemLinks.slice(4)"
-                    :key="`level-item-link${i}`"
-                    v-bind="link"
-                />
+                <LevelItem v-for="(link, i) in levelItemLinks.slice(4)" :key="`level-item-link${i}`" v-bind="link" />
             </HorizontalLevel>
         </section>
         <section class="section home__links">
             <h2 class="title is-3 has-text-centered mb-6">Blogs And Other Art Expressions</h2>
             <HorizontalLevel :numberOfItems="3">
-                <LevelItem
-                    v-for="(blog, i) in levelItemBlogs.slice(0, 3)"
-                    :key="`level-item-blog${i}`"
-                    v-bind="blog"
-                />
+                <LevelItem v-for="(blog, i) in levelItemBlogs.slice(0, 3)" :key="`level-item-blog${i}`" v-bind="blog" />
             </HorizontalLevel>
         </section>
     </div>
