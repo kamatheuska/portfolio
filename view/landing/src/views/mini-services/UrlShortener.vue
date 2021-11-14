@@ -1,25 +1,21 @@
 <template>
     <div class="url-shortener container">
-        <header>
-            <h1 class="title is-3">Give me a shorter one</h1>
-        </header>
-        <section>
-            <div class="url-shortener__form-box box" v-if="!resultUrl">
-                <p class="block">
-                    {{ explanation }}
-                </p>
-                <form @submit.prevent="onSubmit">
-                    <div class="field">
-                        <label class="label">URL</label>
-                        <div class="control">
-                            <input class="input" type="url" v-model="form.url" required />
-                        </div>
-                    </div>
-
-                    <button class="button is-primary" type="submit">Do it</button>
-                </form>
+        <PageHeader :title="title" />
+        <BoxForm
+            v-if="!resultUrl"
+            :description="explanation"
+            submitButtonText="Do it"
+            @submit="onSubmit"
+        >
+            <div class="field">
+                <label class="label">URL</label>
+                <div class="control">
+                    <input class="input" type="url" v-model="form.url" required />
+                </div>
             </div>
-            <div v-else class="has-text-centered">
+        </BoxForm>
+        <section v-else>
+            <div class="has-text-centered">
                 <p class="block">Now you can access</p>
                 <div class="url-shortener__original block p-3">
                     <div class="field">
@@ -50,8 +46,16 @@
 import { createShortUrl } from '@/services/urlShortener';
 import { MAX_LENGTH_URL } from '@/constants';
 
+import BoxForm from '@/components/BoxForm.vue';
+import PageHeader from '@/components/PageHeader.vue';
+
 export default {
     name: 'UrlShortener',
+    components: {
+        BoxForm,
+        PageHeader,
+    },
+
     data: () => ({
         form: {
             url: '',
@@ -63,6 +67,7 @@ export default {
         `,
         resultUrl: '',
         response: {},
+        title: 'Give me a shorter one',
     }),
 
     computed: {
@@ -98,24 +103,12 @@ export default {
     @include tablet {
         padding-left: 0;
     }
-    header {
-        padding-left: 1rem;
-        @include tablet {
-            padding-left: 0;
-        }
-    }
     section {
-        padding-top: 10rem;
-        padding-bottom: 10rem;
+        padding-top: 3rem;
         @include tablet {
             display: flex;
             justify-content: center;
         }
-    }
-
-    &__form-box.box {
-        flex-basis: 40rem;
-        padding: 4rem 6rem;
     }
 
     &__original {

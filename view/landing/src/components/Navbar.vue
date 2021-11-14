@@ -143,6 +143,11 @@ export default {
                         text: 'URL Shortener',
                         name: 'UrlShortener',
                     },
+                    {
+                        path: '/miniservices/timestamp',
+                        text: 'Timestamp Generator',
+                        name: 'Timestamp',
+                    },
                 ],
             },
             {

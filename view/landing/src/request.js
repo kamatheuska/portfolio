@@ -1,8 +1,8 @@
 // prettier-ignore
 const request = async ({
-    baseUrl = '',
+    baseUrl = '/api',
     body, // empty body is ignored by fetch
-    url = '/api',
+    url = '',
     method = 'GET',
     headers = {},
 } = {}) => {

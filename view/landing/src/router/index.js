@@ -44,6 +44,14 @@ const routes = [
                         /* webpackChunkName: "urlShortener" */ '../views/mini-services/UrlShortener.vue'
                     ),
             },
+            {
+                path: 'timestamp',
+                name: 'Timestamp',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "timestamp" */ '../views/mini-services/Timestamp.vue'
+                    ),
+            },
         ],
     },
 ];

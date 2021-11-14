@@ -2,7 +2,7 @@
     <div id="app" class="root">
         <main class="container root__main">
             <Navbar />
-            <transition :name="transitionName">
+            <transition name="fade-slide-route">
                 <router-view></router-view>
             </transition>
         </main>
@@ -17,10 +17,6 @@ export default {
     components: {
         Navbar,
     },
-
-    data: () => ({
-        transitionName: 'fade-slide-route',
-    }),
 };
 </script>
 
