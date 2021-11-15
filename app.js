@@ -1,7 +1,8 @@
+const cors = require('cors');
 const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
 const history = require('connect-history-api-fallback');
+const morgan = require('morgan');
+const path = require('path');
 
 const app = express();
 const { initConfig, getConfig } = require('./config');
@@ -12,6 +13,9 @@ const { logInfo } = require('./services/logger');
 
 let config;
 let server;
+const fccCorsOptions = {
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 function forceSsl(req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
@@ -58,7 +62,7 @@ function registerControllers() {
     app.use(require('./middleware/logger'));
 
     app.use('/api/timestamp', require('./controllers/timestamp'));
-    app.use('/api/whoami', require('./controllers/whoami'));
+    app.use('/api/whoami', cors(fccCorsOptions), require('./controllers/whoami'));
     app.use('/api/shorturl', require('./controllers/urlShortener'));
     app.use('/api/quote', require('./controllers/quote'));
 
