@@ -64,7 +64,7 @@ function registerControllers() {
 
     app.use('/api/timestamp', require('./controllers/timestamp'));
     app.use('/api/whoami', cors(fccCorsOptions), require('./controllers/whoami'));
-    app.use('/api/shorturl', require('./controllers/urlShortener'));
+    app.use('/api/shorturl', cors(fccCorsOptions), require('./controllers/urlShortener'));
     app.use('/api/quote', require('./controllers/quote'));
 
     /**
