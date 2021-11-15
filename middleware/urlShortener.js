@@ -21,9 +21,9 @@ async function createUrl(req, res, next) {
         const doc = await saveUrl(model);
         logInfo('Saved doc:', doc);
 
-        res.locals.urlData = createUrlObject(doc, url);
+        const urlData = createUrlObject(doc, url);
 
-        next();
+        res.send(urlData);
     } catch (error) {
         next(error);
     }
@@ -33,10 +33,10 @@ async function getUrl(req, res, next) {
     const { id } = req.params;
     const { logInfo } = res.locals;
     try {
-        res.locals.url = await getUrlById(id);
-        logInfo('Url found', res.locals.url);
+        const url = await getUrlById(id);
+        logInfo('Url found', url);
 
-        next();
+        res.redirect(302, url.original);
     } catch (error) {
         next(error);
     }
