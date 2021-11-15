@@ -54,15 +54,20 @@ const urlStubs = [
         short: '2',
     },
 ];
+const ACCEPT_LANGUAGE_HEADER_STUB = 'en-US,en;q=0.9';
+const USER_AGENT_HEADER_STUB =
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36';
 
 module.exports = {
+    ACCEPT_LANGUAGE_HEADER_STUB,
     INVALID_HOSTNAME,
     NO_AUTHOR_QUOTES,
     NO_QUOTES,
     quotes,
     URL_DOCS_COUNT,
     urlDoc,
+    urlStubs,
+    USER_AGENT_HEADER_STUB,
     VALID_HOSTNAME,
     VALID_URL,
-    urlStubs,
 };
