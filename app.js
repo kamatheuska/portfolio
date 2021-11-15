@@ -58,6 +58,7 @@ function registerControllers() {
     app.use(require('./middleware/logger'));
 
     app.use('/api/timestamp', require('./controllers/timestamp'));
+    app.use('/api/whoami', require('./controllers/whoami'));
     app.use('/api/shorturl', require('./controllers/urlShortener'));
     app.use('/api/quote', require('./controllers/quote'));
 
