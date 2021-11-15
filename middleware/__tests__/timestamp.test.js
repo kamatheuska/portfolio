@@ -21,6 +21,7 @@ describe('🌳  Timestamp Middleware', () => {
             expect(res.send).toHaveBeenCalled();
             expect(res.send).toHaveBeenCalledTimes(1);
         });
+
         it('🌱 calls res.send with an object that represents a timestamp', () => {
             [[result]] = res.send.mock.calls;
 

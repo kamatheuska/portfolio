@@ -4,12 +4,13 @@ const history = require('connect-history-api-fallback');
 const morgan = require('morgan');
 const path = require('path');
 
-const app = express();
-const { initConfig, getConfig } = require('./config');
 const { connectToDatabase, disconnectFromDatabase } = require('./db');
+const { initConfig, getConfig } = require('./config');
+const { logInfo } = require('./services/logger');
 const { errorLogger, errorResponseMapper, defaultErrorResponse } = require('./middleware/errors');
 const limiter = require('./middleware/rate-limiter');
-const { logInfo } = require('./services/logger');
+
+const app = express();
 
 let config;
 let server;

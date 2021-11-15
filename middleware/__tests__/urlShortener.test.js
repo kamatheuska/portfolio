@@ -16,6 +16,8 @@ const { VALID_HOSTNAME } = require('../../constants/stubs');
 let res;
 let req;
 let nextMock;
+let sendMock;
+let redirectMock;
 const logInfoMock = jest.fn();
 const url = {
     original: VALID_HOSTNAME,
@@ -30,7 +32,8 @@ describe('🌳  UrlShortener Middleware', () => {
     describe('🌴 createUrl', () => {
         describe('🍉 when no error happens', () => {
             beforeEach(() => {
-                res = { locals: { logInfo: logInfoMock } };
+                sendMock = jest.fn();
+                res = { send: sendMock, locals: { logInfo: logInfoMock } };
                 req = { body: { url: VALID_HOSTNAME } };
                 nextMock = jest.fn();
 
@@ -68,13 +71,9 @@ describe('🌳  UrlShortener Middleware', () => {
                 expect(createUrlObject).toHaveBeenCalledWith(url, VALID_HOSTNAME);
             });
 
-            it('🌱 should set res.locals.urlData', () => {
-                expect(res.locals.urlData).toEqual(url);
-            });
-
-            it('🌱 calls next', () => {
-                expect(nextMock).toHaveBeenCalled();
-                expect(nextMock).toHaveBeenCalledTimes(1);
+            it('🌱 should call res.send', () => {
+                expect(sendMock).toHaveBeenCalled();
+                expect(sendMock).toHaveBeenCalledTimes(1);
             });
         });
 
@@ -102,11 +101,16 @@ describe('🌳  UrlShortener Middleware', () => {
     describe('🌴 getUrl', () => {
         describe('🍉 when no error happens', () => {
             beforeEach(() => {
-                res = { locals: { logInfo: logInfoMock } };
+                redirectMock = jest.fn();
+                res = { redirect: redirectMock, locals: { logInfo: logInfoMock } };
                 req = { params: { id: 'some id' } };
                 nextMock = jest.fn();
 
-                getUrlById.mockImplementation(() => Promise.resolve(VALID_HOSTNAME));
+                getUrlById.mockImplementation(() =>
+                    Promise.resolve({
+                        original: VALID_HOSTNAME,
+                    }),
+                );
 
                 getUrl(req, res, nextMock);
             });
@@ -116,13 +120,10 @@ describe('🌳  UrlShortener Middleware', () => {
                 expect(getUrlById).toHaveBeenCalledWith(req.params.id);
             });
 
-            it('🌱 should set res.locals.url', () => {
-                expect(res.locals.url).toBe(VALID_HOSTNAME);
-            });
-
-            it('🌱 calls next', () => {
-                expect(nextMock).toHaveBeenCalled();
-                expect(nextMock).toHaveBeenCalledTimes(1);
+            it('🌱 should call res.redirect', () => {
+                expect(redirectMock).toHaveBeenCalled();
+                expect(redirectMock).toHaveBeenCalledTimes(1);
+                expect(redirectMock).toHaveBeenCalledWith(302, VALID_HOSTNAME);
             });
         });
 
