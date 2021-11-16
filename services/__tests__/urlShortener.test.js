@@ -116,7 +116,7 @@ describe('🌳 UrlShortener Service', () => {
             const anotherValidUrl = 'www.foo.com';
             result = createUrlObject({ short: '1', original: VALID_URL }, anotherValidUrl);
             expect(result.href).toBeTruthy();
-            expect(result.short_url).toBe('1');
+            expect(result.short_url).toBe(1);
             expect(result.original_url).toBe(anotherValidUrl);
         });
     });

@@ -59,7 +59,7 @@ function createUrlObject({ short, original }, rawOriginalUrl) {
     // https://www.freecodecamp.org/learn/back-end-development-and-apis/back-end-development-and-apis-projects/url-shortener-microservice
     const fccChallengeProps = {
         original_url: rawOriginalUrl,
-        short_url: short,
+        short_url: parseInt(short),
     };
 
     return {
