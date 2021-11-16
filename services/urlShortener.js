@@ -64,8 +64,6 @@ function createUrlObject({ short, original }, rawOriginalUrl) {
 
     return {
         ...fccChallengeProps,
-        originalUrl: rawOriginalUrl,
-        shortUrl: short,
         href,
     };
 }
