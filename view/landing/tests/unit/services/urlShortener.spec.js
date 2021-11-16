@@ -1,4 +1,4 @@
-import { createShortUrl } from '@/services/urlShortener';
+import { createShortUrl, urlMapper } from '@/services/urlShortener';
 import { buildShortUrlBody } from '@/utils/urlShortener';
 import { VALID_HOSTNAME, SHORT_URL, VALID_HREF, URL_TO_BE_SHORTENED } from '@/constants/stubs';
 import request from '@/request';
@@ -7,7 +7,7 @@ jest.mock('@/utils/urlShortener');
 jest.mock('@/request');
 
 let result;
-const baseUrl = '/api/shorturl/';
+const baseUrl = '/api/shorturl';
 const bodyMock = {
     url: URL_TO_BE_SHORTENED,
 };
@@ -46,7 +46,8 @@ describe('urlShortener Service', () => {
                 body: bodyMock,
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
-                url: 'new',
+                endpoint: '/new',
+                mapper: urlMapper,
             });
         });
     });

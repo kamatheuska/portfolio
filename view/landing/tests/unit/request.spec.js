@@ -4,7 +4,7 @@ import { BASE_URL_STUB, API_URL_STUB, apiResponseBodyStub } from '@/constants/st
 let result;
 
 const requestArgs = {
-    url: API_URL_STUB,
+    endpoint: API_URL_STUB,
     baseUrl: BASE_URL_STUB,
     body: apiResponseBodyStub,
     method: 'POST',
