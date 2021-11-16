@@ -38,26 +38,24 @@ describe('🌳  Integration: Url Shortener', () => {
         });
     });
 
-    describe(`🌴 POST ${BASE_URL}/new`, () => {
+    describe(`🌴 POST ${BASE_URL}`, () => {
         it('🌱 should return a short url object', async () => {
-            const url = `${BASE_URL}/new`;
-            const response = await request(app).post(url).send({ url: VALID_HOSTNAME });
+            const response = await request(app).post(BASE_URL).send({ url: VALID_HOSTNAME });
 
             expect(response.status).toBe(200);
             expect(response.body.href).toMatch(/\/api\/shorturl/);
-            expect(response.body.originalUrl).toBe(VALID_HOSTNAME);
+            expect(response.body.original_url).toBe(VALID_HOSTNAME);
+            expect(typeof response.body.short_url).toBe('number');
         });
 
         it('🌱 should return a 400 if the url is invalid', async () => {
-            const url = `${BASE_URL}/new`;
-            const response = await request(app).post(url).send({ url: INVALID_HOSTNAME });
+            const response = await request(app).post(BASE_URL).send({ url: INVALID_HOSTNAME });
 
             expect(response.status).toBe(400);
         });
 
         it('🌱 should return a 400 if no url is provided', async () => {
-            const url = `${BASE_URL}/new`;
-            const response = await request(app).post(url).send();
+            const response = await request(app).post(BASE_URL).send();
 
             expect(response.status).toBe(400);
         });
