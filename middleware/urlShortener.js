@@ -5,12 +5,15 @@ const {
     createUrlObject,
     getUrlById,
 } = require('../services/urlShortener');
+const { isInvalidRequestException } = require('../utils/errors');
 const { getHostNameFromUrl } = require('../utils/url');
 
 async function createUrl(req, res, next) {
     const { url } = req.body;
     const { logInfo } = res.locals;
+
     const hostname = getHostNameFromUrl(url);
+
     try {
         await checkHostnameValidity(hostname);
         logInfo(`Hostname ${hostname} validated succesfully`);
@@ -25,7 +28,11 @@ async function createUrl(req, res, next) {
 
         res.send(urlData);
     } catch (error) {
-        next(error);
+        if (isInvalidRequestException(error)) {
+            res.status(400).send({ error: 'invalid url' });
+        } else {
+            next(error);
+        }
     }
 }
 

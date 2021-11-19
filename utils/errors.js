@@ -50,9 +50,14 @@ function transformErrorToException(error, { message = '', code = exceptions.GENE
     return exception;
 }
 
-exports.isTypeOrThrow = isTypeOrThrow;
+function isInvalidRequestException({ code = null } = {}) {
+    return code === exceptions.INVALID_REQUEST_PARAM;
+}
+
 exports.isEqualOrThrow = isEqualOrThrow;
+exports.isInvalidRequestException = isInvalidRequestException;
 exports.isLessThanOrThrow = isLessThanOrThrow;
 exports.isTruthyOrThrow = isTruthyOrThrow;
 exports.isTruthyOrThrowMessage = isTruthyOrThrowMessage;
+exports.isTypeOrThrow = isTypeOrThrow;
 exports.transformErrorToException = transformErrorToException;

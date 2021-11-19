@@ -6,7 +6,7 @@ const Url = require('../../model/url');
 const { urlStubs } = require('../../constants/stubs');
 const { app, init, stopServer } = require('../../app');
 const { setupDB } = require('./test_setup');
-const { VALID_HOSTNAME, INVALID_HOSTNAME } = require('../../constants/stubs');
+const { VALID_HOSTNAME, INVALID_HOSTNAME, INVALID_URL_ERROR } = require('../../constants/stubs');
 
 const BASE_URL = '/api/shorturl';
 
@@ -52,6 +52,7 @@ describe('🌳  Integration: Url Shortener', () => {
             const response = await request(app).post(BASE_URL).send({ url: INVALID_HOSTNAME });
 
             expect(response.status).toBe(400);
+            expect(response.body).toEqual(INVALID_URL_ERROR);
         });
 
         it('🌱 should return a 400 if no url is provided', async () => {

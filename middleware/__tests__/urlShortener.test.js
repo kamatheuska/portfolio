@@ -1,3 +1,4 @@
+jest.mock('../../utils/errors');
 jest.mock('../../utils/url');
 jest.mock('../../services/urlShortener');
 
@@ -11,14 +12,18 @@ const {
 } = require('../../services/urlShortener');
 
 const { getHostNameFromUrl } = require('../../utils/url');
-const { VALID_HOSTNAME } = require('../../constants/stubs');
+const { VALID_HOSTNAME, INVALID_URL_ERROR } = require('../../constants/stubs');
+const { isInvalidRequestException } = require('../../utils/errors');
+const { RequestParamException } = require('../../services/exceptions');
 
 let res;
 let req;
 let nextMock;
 let sendMock;
 let redirectMock;
-const logInfoMock = jest.fn();
+let logInfoMock;
+let statusMock;
+
 const url = {
     original: VALID_HOSTNAME,
     short: '/short/url',
@@ -26,16 +31,24 @@ const url = {
 
 describe('🌳  UrlShortener Middleware', () => {
     beforeEach(() => {
+        logInfoMock = jest.fn();
+        statusMock = jest.fn();
+        sendMock = jest.fn();
+        nextMock = jest.fn();
+        redirectMock = jest.fn();
+
         jest.clearAllMocks();
     });
 
     describe('🌴 createUrl', () => {
         describe('🍉 when no error happens', () => {
             beforeEach(() => {
-                sendMock = jest.fn();
-                res = { send: sendMock, locals: { logInfo: logInfoMock } };
+                res = {
+                    status: statusMock,
+                    send: sendMock,
+                    locals: { logInfo: logInfoMock },
+                };
                 req = { body: { url: VALID_HOSTNAME } };
-                nextMock = jest.fn();
 
                 getHostNameFromUrl.mockImplementation(() => VALID_HOSTNAME);
                 checkHostnameValidity.mockImplementation(() => Promise.resolve());
@@ -75,25 +88,58 @@ describe('🌳  UrlShortener Middleware', () => {
                 expect(sendMock).toHaveBeenCalled();
                 expect(sendMock).toHaveBeenCalledTimes(1);
             });
+
+            it('🌱 should not call next', () => {
+                expect(nextMock).not.toHaveBeenCalled();
+            });
         });
 
         describe('🍉 when an error happens', () => {
-            const error = new Error('Mocked Error');
+            const errorMessage = 'Mocked Error';
+            let error = new RequestParamException(errorMessage);
 
             beforeEach(() => {
-                res = { locals: { logInfo: logInfoMock } };
+                res = {
+                    send: sendMock,
+                    status: statusMock,
+                    locals: { logInfo: logInfoMock },
+                };
                 req = { body: { url: VALID_HOSTNAME } };
-                nextMock = jest.fn();
 
+                statusMock.mockImplementation(() => res);
                 getHostNameFromUrl.mockImplementation(() => VALID_HOSTNAME);
-                checkHostnameValidity.mockImplementation(() => Promise.reject(error));
-
-                createUrl(req, res, nextMock);
             });
-            it('🌱 calls next when an error is thrown', () => {
+
+            it('🌱 calls next when an error is thrown and is not a RequestParamException', async () => {
+                error = new Error('Some Error');
+                checkHostnameValidity.mockImplementation(() => Promise.reject(error));
+                isInvalidRequestException.mockImplementation(() => false);
+
+                await createUrl(req, res, nextMock);
+
                 expect(nextMock).toHaveBeenCalled();
                 expect(nextMock).toHaveBeenCalledTimes(1);
                 expect(nextMock).toHaveBeenCalledWith(error);
+            });
+
+            it('🌱 calls res.send when an error is thrown', async () => {
+                checkHostnameValidity.mockImplementation(() => Promise.reject(error));
+                isInvalidRequestException.mockImplementation(() => true);
+
+                await createUrl(req, res, nextMock);
+
+                expect(sendMock).toHaveBeenCalled();
+                expect(sendMock).toHaveBeenCalledTimes(1);
+                expect(sendMock).toHaveBeenCalledWith(INVALID_URL_ERROR);
+            });
+
+            it('🌱 calls res.status when an error is thrown', async () => {
+                checkHostnameValidity.mockImplementation(() => Promise.reject(error));
+                isInvalidRequestException.mockImplementation(() => true);
+
+                await createUrl(req, res, nextMock);
+                expect(statusMock).toHaveBeenCalled();
+                expect(statusMock).toHaveBeenCalledWith(400);
             });
         });
     });
@@ -101,10 +147,8 @@ describe('🌳  UrlShortener Middleware', () => {
     describe('🌴 getUrl', () => {
         describe('🍉 when no error happens', () => {
             beforeEach(() => {
-                redirectMock = jest.fn();
                 res = { redirect: redirectMock, locals: { logInfo: logInfoMock } };
                 req = { params: { id: 'some id' } };
-                nextMock = jest.fn();
 
                 getUrlById.mockImplementation(() =>
                     Promise.resolve({
@@ -125,20 +169,27 @@ describe('🌳  UrlShortener Middleware', () => {
                 expect(redirectMock).toHaveBeenCalledTimes(1);
                 expect(redirectMock).toHaveBeenCalledWith(302, VALID_HOSTNAME);
             });
+
+            it('🌱 should not call next', () => {
+                expect(nextMock).not.toHaveBeenCalled();
+            });
         });
 
         describe('🍉 when an error happens', () => {
             const error = new Error('Mocked Error');
 
             beforeEach(() => {
-                res = { locals: { logInfo: logInfoMock } };
-                req = { body: { url: VALID_HOSTNAME } };
-                nextMock = jest.fn();
+                res = {
+                    locals: { logInfo: logInfoMock },
+                };
+                req = {
+                    params: { id: 1123 },
+                    body: { url: VALID_HOSTNAME },
+                };
 
-                getHostNameFromUrl.mockImplementation(() => VALID_HOSTNAME);
-                checkHostnameValidity.mockImplementation(() => Promise.reject(error));
+                getUrlById.mockImplementation(() => Promise.reject(error));
 
-                createUrl(req, res, nextMock);
+                getUrl(req, res, nextMock);
             });
             it('🌱 calls next when an error is thrown', () => {
                 expect(nextMock).toHaveBeenCalled();
