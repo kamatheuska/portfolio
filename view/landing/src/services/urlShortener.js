@@ -17,7 +17,7 @@ export const createShortUrl = async (url) => {
         body,
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
-        endpoint: '/new',
+        endpoint: '/',
         mapper: urlMapper,
     });
 };
