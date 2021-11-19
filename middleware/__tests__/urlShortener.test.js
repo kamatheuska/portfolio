@@ -1,4 +1,6 @@
 jest.mock('../../utils/errors');
+jest.mock('../../utils');
+jest.mock('../../utils/errors');
 jest.mock('../../utils/url');
 jest.mock('../../services/urlShortener');
 
@@ -10,6 +12,7 @@ const {
     createUrlObject,
     getUrlById,
 } = require('../../services/urlShortener');
+const { toBoolean } = require('../../utils');
 
 const { getHostNameFromUrl } = require('../../utils/url');
 const { VALID_HOSTNAME, INVALID_URL_ERROR } = require('../../constants/stubs');
@@ -42,7 +45,7 @@ describe('🌳  UrlShortener Middleware', () => {
 
     describe('🌴 createUrl', () => {
         describe('🍉 when no error happens', () => {
-            beforeEach(() => {
+            beforeEach(async () => {
                 res = {
                     status: statusMock,
                     send: sendMock,
@@ -56,7 +59,7 @@ describe('🌳  UrlShortener Middleware', () => {
                 saveUrl.mockImplementation(() => Promise.resolve(url));
                 createUrlObject.mockImplementation(() => url);
 
-                createUrl(req, res, nextMock);
+                await createUrl(req, res, nextMock);
             });
 
             it('🌱 calls getHostNameFromUrl', () => {
@@ -145,56 +148,120 @@ describe('🌳  UrlShortener Middleware', () => {
     });
 
     describe('🌴 getUrl', () => {
-        describe('🍉 when no error happens', () => {
+        describe('🍉 when a json query parameter is not present', () => {
             beforeEach(() => {
                 res = { redirect: redirectMock, locals: { logInfo: logInfoMock } };
-                req = { params: { id: 'some id' } };
+                req = { params: { id: 10 }, query: {} };
 
-                getUrlById.mockImplementation(() =>
-                    Promise.resolve({
-                        original: VALID_HOSTNAME,
-                    }),
-                );
-
-                getUrl(req, res, nextMock);
+                toBoolean.mockImplementation(() => false);
             });
 
-            it('🌱 calls getUrlById', () => {
-                expect(getUrlById).toHaveBeenCalled();
-                expect(getUrlById).toHaveBeenCalledWith(req.params.id);
+            describe('🌴 and no error happens', () => {
+                beforeEach(async () => {
+                    getUrlById.mockImplementation(() =>
+                        Promise.resolve({
+                            original: VALID_HOSTNAME,
+                        }),
+                    );
+
+                    await getUrl(req, res, nextMock);
+                });
+
+                it('🌱 calls getUrlById', () => {
+                    expect(getUrlById).toHaveBeenCalled();
+                    expect(getUrlById).toHaveBeenCalledWith(req.params.id);
+                });
+
+                it('🌱 should call res.redirect', () => {
+                    expect(redirectMock).toHaveBeenCalled();
+                    expect(redirectMock).toHaveBeenCalledTimes(1);
+                    expect(redirectMock).toHaveBeenCalledWith(302, VALID_HOSTNAME);
+                });
+
+                it('🌱 should not call next', () => {
+                    expect(nextMock).not.toHaveBeenCalled();
+                });
             });
 
-            it('🌱 should call res.redirect', () => {
-                expect(redirectMock).toHaveBeenCalled();
-                expect(redirectMock).toHaveBeenCalledTimes(1);
-                expect(redirectMock).toHaveBeenCalledWith(302, VALID_HOSTNAME);
-            });
+            describe('🌴 and an error happens', () => {
+                const error = new Error('Mocked Error');
 
-            it('🌱 should not call next', () => {
-                expect(nextMock).not.toHaveBeenCalled();
+                beforeEach(async () => {
+                    getUrlById.mockImplementation(() => Promise.reject(error));
+
+                    await getUrl(req, res, nextMock);
+                });
+
+                it('🌱 calls next when an error is thrown', () => {
+                    expect(nextMock).toHaveBeenCalled();
+                    expect(nextMock).toHaveBeenCalledTimes(1);
+                    expect(nextMock).toHaveBeenCalledWith(error);
+                });
             });
         });
-
-        describe('🍉 when an error happens', () => {
-            const error = new Error('Mocked Error');
-
+        describe('🍉 when a json query parameter is equal to true', () => {
             beforeEach(() => {
                 res = {
+                    send: sendMock,
+                    redirect: redirectMock,
                     locals: { logInfo: logInfoMock },
                 };
-                req = {
-                    params: { id: 1123 },
-                    body: { url: VALID_HOSTNAME },
-                };
+                req = { params: { id: 10 }, query: { json: 'true' } };
 
-                getUrlById.mockImplementation(() => Promise.reject(error));
-
-                getUrl(req, res, nextMock);
+                toBoolean.mockImplementation(() => true);
             });
-            it('🌱 calls next when an error is thrown', () => {
-                expect(nextMock).toHaveBeenCalled();
-                expect(nextMock).toHaveBeenCalledTimes(1);
-                expect(nextMock).toHaveBeenCalledWith(error);
+
+            describe('🌴 and no error happens', () => {
+                beforeEach(async () => {
+                    getUrlById.mockImplementation(() =>
+                        Promise.resolve({
+                            original: VALID_HOSTNAME,
+                            short: '2',
+                        }),
+                    );
+
+                    await getUrl(req, res, nextMock);
+                });
+
+                it('🌱 calls getUrlById', () => {
+                    expect(getUrlById).toHaveBeenCalled();
+                    expect(getUrlById).toHaveBeenCalledWith(req.params.id);
+                });
+
+                it('🌱 calls toBoolean with req.query.json', async () => {
+                    expect(toBoolean).toHaveBeenCalled();
+                    expect(toBoolean).toHaveBeenCalledTimes(1);
+                    expect(toBoolean).toHaveBeenCalledWith(req.query.json);
+                });
+
+                it('🌱 calls res.send with right payload', async () => {
+                    expect(sendMock).toHaveBeenCalled();
+                    expect(sendMock).toHaveBeenCalledTimes(1);
+                    expect(sendMock).toHaveBeenCalledWith({
+                        original: VALID_HOSTNAME,
+                        short: '2',
+                    });
+                });
+
+                it('🌱 should not call next', () => {
+                    expect(nextMock).not.toHaveBeenCalled();
+                });
+            });
+
+            describe('🌴 and an error happens', () => {
+                const error = new Error('Mocked Error');
+
+                beforeEach(async () => {
+                    getUrlById.mockImplementation(() => Promise.reject(error));
+
+                    await getUrl(req, res, nextMock);
+                });
+
+                it('🌱 calls next when an error is thrown', () => {
+                    expect(nextMock).toHaveBeenCalled();
+                    expect(nextMock).toHaveBeenCalledTimes(1);
+                    expect(nextMock).toHaveBeenCalledWith(error);
+                });
             });
         });
     });

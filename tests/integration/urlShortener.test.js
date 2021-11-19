@@ -18,7 +18,7 @@ const seedUrls = async () => {
     }
 };
 
-jest.setTimeout(150000);
+jest.setTimeout(15000);
 
 describe('🌳  Integration: Url Shortener', () => {
     setupDB({ seedAsyncDatabaseCallback: seedUrls, init, stopServer });
@@ -29,6 +29,25 @@ describe('🌳  Integration: Url Shortener', () => {
             const response = await request(app).get(url);
 
             expect(response.status).toBe(302);
+        });
+        it('🌱 should send a 400 if no url was found', async () => {
+            const url = `${BASE_URL}/2123`;
+            const response = await request(app).get(url);
+
+            expect(response.status).toBe(404);
+        });
+    });
+
+    describe(`🌴 GET ${BASE_URL}/:id?json=true`, () => {
+        it('🌱 returns a saved short url', async () => {
+            const url = `${BASE_URL}/${urlStubs[0].short}?json=true`;
+            const response = await request(app).get(url);
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual({
+                orginal: urlStubs[0].original,
+                short: urlStubs[0].short,
+            });
         });
         it('🌱 should send a 400 if no url was found', async () => {
             const url = `${BASE_URL}/2123`;

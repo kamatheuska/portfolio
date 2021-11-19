@@ -5,6 +5,7 @@ const {
     createUrlObject,
     getUrlById,
 } = require('../services/urlShortener');
+const { toBoolean } = require('../utils');
 const { isInvalidRequestException } = require('../utils/errors');
 const { getHostNameFromUrl } = require('../utils/url');
 
@@ -38,11 +39,23 @@ async function createUrl(req, res, next) {
 
 async function getUrl(req, res, next) {
     const { id } = req.params;
+    const { json } = req.query;
     const { logInfo } = res.locals;
+    const JSONResponse = toBoolean(json);
+
     try {
         const url = await getUrlById(id);
         logInfo('Url found', url);
 
+        if (JSONResponse) {
+            logInfo('Sending JSON response', url);
+            return res.send({
+                original: url.original,
+                short: url.short,
+            });
+        }
+
+        logInfo('Redirecting to: ', url.original);
         res.redirect(302, url.original);
     } catch (error) {
         next(error);
