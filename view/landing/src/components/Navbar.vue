@@ -10,9 +10,9 @@
         }"
     >
         <div class="navbar-brand">
-            <router-link class="navbar-item" to="/" v-if="showLogo">
+            <router-link class="navbar-item" :style="`background-color: ${logoBgColor}`" to="/" v-if="showLogo">
                 <div class="navbar__logo">
-                    <Logo :fill="logoFill" />
+                    <Logo />
                 </div>
             </router-link>
             <a
@@ -90,13 +90,16 @@
 <script>
 import vClickOutside from 'v-click-outside';
 import Logo from '@/components/Logo.vue';
+import { isStage } from '@/utils';
+
+const logoBgColor = {
+    STAGE: '#b9f6ff',
+    PROD: '#fff',
+};
 
 export default {
     name: 'Navbar',
     props: {
-        logoFill: {
-            type: String,
-        },
         showLinks: {
             type: Boolean,
             default: true,
@@ -162,6 +165,9 @@ export default {
     computed: {
         showLogo() {
             return this.showLinks;
+        },
+        logoBgColor() {
+            return isStage() ? logoBgColor.STAGE : logoBgColor.PROD;
         },
     },
     directives: {
