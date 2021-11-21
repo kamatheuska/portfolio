@@ -15,7 +15,7 @@
         "debug:watch": "nodemon --inspect init.js",
         "debug": "node --inspect init.js",
         "predeploy:prod": "npm run prebuild",
-        "deploy:stage": "git push stage master",
+        "deploy:stage": "git push stage develop:master",
         "deploy:prod": "git push prod master",
         "dev:debug-log-mode": "DEBUG_MODE=true nodemon init.js",
         "dev": "nodemon init.js",
