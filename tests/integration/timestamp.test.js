@@ -1,21 +1,31 @@
-process.env.NODE_ENV = 'test';
-
 const request = require('supertest');
-const { app } = require('../../app');
-const { setupDB } = require('./test_setup');
+const { teardown, setupTests } = require('../setup');
 
 const BASE_URL = '/api/timestamp';
 let response;
 let url;
+let createdApp;
+let createdServer;
 
 describe('🌳  Integration: Quotes', () => {
-    setupDB();
+    beforeAll(async () => {
+        try {
+            const { app, server } = await setupTests();
+
+            createdApp = app;
+            createdServer = server;
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    afterAll(async () => teardown(createdServer));
 
     describe(`🌴 GET ${BASE_URL}`, () => {
         it('🌱 should return a generated timestamp', async () => {
             url = `${BASE_URL}`;
 
-            response = await request(app).get(url);
+            response = await request(createdApp).get(url);
             expect(response.status).toBe(200);
             expect(typeof response.body.unix).toBe('number');
             expect(typeof response.body.utc).toBe('string');
@@ -33,7 +43,7 @@ describe('🌳  Integration: Quotes', () => {
             async (expectedUnix, expectedUtc, date) => {
                 url = `${BASE_URL}/${date}`;
 
-                response = await request(app).get(url);
+                response = await request(createdApp).get(url);
                 expect(response.status).toBe(200);
                 expect(response.body.unix).toBe(expectedUnix);
                 expect(response.body.utc).toBe(expectedUtc);

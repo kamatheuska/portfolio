@@ -18,7 +18,7 @@ function hasProperty(parent, prop) {
  * @param {BooleanValues} str
  * @param {Function} isStringFn
  */
-function toBoolean(str, isStringFn = isString) {
+function toBoolean(str = '', isStringFn = isString) {
     return isStringFn(str) && str === 'true';
 }
 

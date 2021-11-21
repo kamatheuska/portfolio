@@ -27,13 +27,16 @@
         "lint": "eslint --ext .js \"**/*.js\"",
         "prebuild": "npm run lint && npm test",
         "start": "node init.js",
-        "test:integration": "PORT=5999 npx jest tests/integration",
+        "test:all": "npm run test:unit && npm run test:integration",
+        "test:integration": "npx jest tests/integration",
         "test:unit": "npx jest --testPathIgnorePatterns=/tests/integration/",
         "test": "npm run test:unit",
         "prepare": "husky install"
     },
     "dependencies": {
         "@mapbox/mapbox-sdk": "^0.4.1",
+        "@types/express": "^4.17.13",
+        "@types/node": "^16.11.9",
         "axios": "^0.21.1",
         "bluebird": "^3.7.2",
         "body-parser": "^1.18.3",

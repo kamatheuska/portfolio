@@ -1,34 +1,31 @@
-process.env.NODE_ENV = 'test';
-
 const request = require('supertest');
-
-const Url = require('../../model/url');
-const { urlStubs } = require('../../constants/stubs');
-const { app, init, stopServer } = require('../../app');
-const { setupDB } = require('./test_setup');
+const { teardown, setupTests } = require('../setup');
 
 const BASE_URL = '/api/quote';
 let response;
 let url;
-
-const seedUrls = async () => {
-    try {
-        await Url.insertMany(urlStubs);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-jest.setTimeout(150000);
+let createdApp;
+let createdServer;
 
 describe('🌳  Integration: Quotes', () => {
-    setupDB({ seedAsyncDatabaseCallback: seedUrls, init, stopServer });
+    beforeAll(async () => {
+        try {
+            const { app, server } = await setupTests();
+
+            createdApp = app;
+            createdServer = server;
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    afterAll(async () => teardown(createdServer));
 
     describe(`🌴 GET ${BASE_URL}?random=true`, () => {
         it('🌱 should return a random quote', async () => {
             url = `${BASE_URL}?random=true`;
 
-            response = await request(app).get(url);
+            response = await request(createdApp).get(url);
             expect(response.status).toBe(200);
             expect(response.body.quote).toBeDefined();
             expect(response.body.quote.author).toBeDefined();
@@ -36,7 +33,7 @@ describe('🌳  Integration: Quotes', () => {
         });
         it('🌱 should send a 404 if no random flag is passed', async () => {
             url = `${BASE_URL}`;
-            response = await request(app).get(url);
+            response = await request(createdApp).get(url);
 
             expect(response.status).toBe(404);
         });
