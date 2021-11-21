@@ -5,6 +5,8 @@ const ConfigUtils = require('../utils/config');
 
 const isTest = process.env.NODE_ENV === 'test';
 const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV === 'production';
+
 let $config;
 
 const getNodeEnvIndependentEnvs = () => ({
@@ -15,6 +17,11 @@ const getNodeEnvIndependentEnvs = () => ({
     db: {
         url: {
             documentLimit: ConfigUtils.getEnvVar('DB_URL_DOCUMENT_LIMIT', 100, Number),
+        },
+    },
+    cors: {
+        fccOptions: {
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         },
     },
 });
@@ -34,6 +41,7 @@ function buildConfigByEnvironment() {
         ...getNodeEnvIndependentEnvs(),
         isTest,
         isDevelopment,
+        isProduction,
         mongoDbUri,
     };
 }
