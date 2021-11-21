@@ -5,3 +5,8 @@ export const SAW_INTRO_COOKIE_KEY = 'SAW_INTRO';
 
 // Url Shortener
 export const MAX_LENGTH_URL = 70;
+export const PROD_HOSTNAME = 'www.nicolasramirezka.com';
+export const environments = {
+    PROD: 'prod',
+    STAGE: 'stage',
+};

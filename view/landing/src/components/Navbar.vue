@@ -90,7 +90,7 @@
 <script>
 import vClickOutside from 'v-click-outside';
 import Logo from '@/components/Logo.vue';
-import { isStage } from '@/utils';
+import { isProd } from '@/utils';
 
 const logoBgColor = {
     STAGE: '#b9f6ff',
@@ -167,7 +167,7 @@ export default {
             return this.showLinks;
         },
         logoBgColor() {
-            return isStage() ? logoBgColor.STAGE : logoBgColor.PROD;
+            return isProd() ? logoBgColor.PROD : logoBgColor.STAGE;
         },
     },
     directives: {
