@@ -2,3 +2,6 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm test
+. ./setMainFolder
+cd $MAIN/view/landing && npm test
+cd $MAIN/view/react-projects && npm test
