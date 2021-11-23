@@ -36,6 +36,11 @@ const routes = [
         component: MiniServices,
         children: [
             {
+                path: '',
+                name: 'Miniservices',
+                component: () => import(/* webpackChunkName: "urlShortener" */ '../views/mini-services/Services.vue'),
+            },
+            {
                 path: 'urlshortener',
                 name: 'UrlShortener',
                 component: () =>

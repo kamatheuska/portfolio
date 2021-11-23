@@ -52,7 +52,10 @@
                     </router-link>
 
                     <div class="navbar-item has-dropdown is-hoverable" :key="`route-navbar-item${i}`" v-else>
-                        <a class="navbar-link is-arrowless"> {{ route.text }} </a>
+                        <router-link v-if="route.path" class="navbar-link is-arrowless" :to="route.path">
+                            {{ route.text }}
+                        </router-link>
+                        <a class="navbar-link is-arrowless" v-else> {{ route.text }} </a>
 
                         <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">
                             <template v-for="(childRoute, j) in route.children">
@@ -92,6 +95,54 @@ import vClickOutside from 'v-click-outside';
 import Logo from '@/components/Logo.vue';
 import { isProd } from '@/utils';
 
+const routes = [
+    {
+        path: '/home',
+        text: 'Home',
+    },
+    {
+        path: '/about',
+        text: 'About',
+    },
+    {
+        text: 'Stories',
+        children: [
+            {
+                path: '/stories/concertos',
+                text: 'Geometric Concertos',
+                name: 'Concertos',
+            },
+        ],
+    },
+    {
+        text: 'Services',
+        path: '/miniservices',
+        name: 'UrlShortener',
+        children: [
+            {
+                path: '/miniservices/urlshortener',
+                text: 'URL Shortener',
+                name: 'UrlShortener',
+            },
+            {
+                path: '/miniservices/timestamp',
+                text: 'Timestamp Generator',
+                name: 'Timestamp',
+            },
+        ],
+    },
+    {
+        text: 'Projects',
+        children: [
+            {
+                path: '/projects/react',
+                text: 'React Based Projects',
+                isExternalLink: true,
+            },
+        ],
+    },
+];
+
 const logoBgColor = {
     STAGE: '#b9f6ff',
     PROD: '#fff',
@@ -115,51 +166,7 @@ export default {
     },
     data: () => ({
         activeNavbar: false,
-        routes: [
-            {
-                path: '/home',
-                text: 'Home',
-            },
-            {
-                path: '/about',
-                text: 'About',
-            },
-            {
-                text: 'Stories',
-                children: [
-                    {
-                        path: '/stories/concertos',
-                        text: 'Geometric Concertos',
-                        name: 'Concertos',
-                    },
-                ],
-            },
-            {
-                text: 'Services',
-                children: [
-                    {
-                        path: '/miniservices/urlshortener',
-                        text: 'URL Shortener',
-                        name: 'UrlShortener',
-                    },
-                    {
-                        path: '/miniservices/timestamp',
-                        text: 'Timestamp Generator',
-                        name: 'Timestamp',
-                    },
-                ],
-            },
-            {
-                text: 'Projects',
-                children: [
-                    {
-                        path: '/projects/react',
-                        text: 'React Based Projects',
-                        isExternalLink: true,
-                    },
-                ],
-            },
-        ],
+        routes,
     }),
 
     computed: {
