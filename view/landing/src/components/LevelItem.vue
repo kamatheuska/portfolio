@@ -6,16 +6,17 @@
         }"
     >
         <template v-if="link">
-            <a :href="link" class="link" :target="isInternalLink ? '' : '_blank'" :download="downloadName || null">
+            <router-link :to="route" class="link" :target="isInternalLink ? '' : '_blank'" :download="downloadName">
                 <p class="heading">
                     {{ heading }}
                 </p>
                 <img
+                    v-if="imageSrc"
                     class="level-item__image"
                     :class="{ 'level-item__image--is-small': hasSmallImage }"
                     :src="imageSrc"
                 />
-            </a>
+            </router-link>
         </template>
         <div v-else>
             <template>
@@ -24,6 +25,7 @@
                 </p>
 
                 <img
+                    v-if="imageSrc"
                     class="level-item__image"
                     :class="{ 'level-item__image--is-small': hasSmallImage }"
                     :src="imageSrc"
@@ -39,13 +41,19 @@ export default {
 
     props: {
         imageSrc: String,
-        heading: String,
+        heading: {
+            type: String,
+            required: true,
+        },
         link: String,
         isInternalLink: {
             type: Boolean,
             default: false,
         },
-        downloadName: String,
+        downloadName: {
+            type: String,
+            default: null,
+        },
         hasSmallImage: {
             type: Boolean,
             default: false,
@@ -53,6 +61,24 @@ export default {
         animateOnHover: {
             type: Boolean,
             default: false,
+        },
+    },
+
+    computed: {
+        route() {
+            const route = { path: this.link };
+
+            if (!this.isInternalLink) {
+                route.beforeEnter = this.navigateBeforeEnter;
+            }
+
+            return route;
+        },
+    },
+
+    methods: {
+        navigateBeforeEnter() {
+            window.location.href = this.link;
         },
     },
 };
