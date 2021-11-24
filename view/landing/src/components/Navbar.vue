@@ -144,7 +144,7 @@ const routes = [
 ];
 
 const logoBgColor = {
-    STAGE: '#b9f6ff',
+    TEST: '#b9f6ff',
     PROD: '#fff',
 };
 
@@ -174,7 +174,7 @@ export default {
             return this.showLinks;
         },
         logoBgColor() {
-            return isProd() ? logoBgColor.PROD : logoBgColor.STAGE;
+            return isProd() ? logoBgColor.PROD : logoBgColor.TEST;
         },
     },
     directives: {

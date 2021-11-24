@@ -54,7 +54,7 @@
 
 <script>
 import { sleep } from '@/utils';
-import { SAW_INTRO_COOKIE_KEY } from '@/constants';
+import * as cookies from '@/constants/cookies';
 
 // const DARK_BLUE = '#186090';
 const WHITE = '#fff';
@@ -67,7 +67,7 @@ export default {
             return this.body.show;
         },
         skipAnimation() {
-            return this.$route.query.skipAnimation === 'true' || this.$getCookie(SAW_INTRO_COOKIE_KEY);
+            return this.$route.query.skipAnimation === 'true' || this.$getCookie(cookies.SAW_INTRO);
         },
         isHeroDark() {
             return this.hero.background === 'dark';
@@ -106,7 +106,7 @@ export default {
             await this.initIntro();
             return;
         }
-        this.$setCookie(SAW_INTRO_COOKIE_KEY, true);
+        this.$setCookie(cookies.SAW_INTRO, true);
         await this.startHeroAnimation();
     },
 

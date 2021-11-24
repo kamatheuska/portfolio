@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
 const history = require('connect-history-api-fallback');
@@ -8,6 +9,7 @@ const limiter = require('./middleware/rate-limiter');
 const { errorLogger, errorResponseMapper, defaultErrorResponse } = require('./middleware/errors');
 const { forceSsl } = require('./middleware');
 const { getConfig } = require('./config');
+const { STAGE } = require('./constants/cookies');
 
 function setMiddleware(app, { isProduction, isDevelopment }) {
     if (isProduction) {
@@ -20,6 +22,8 @@ function setMiddleware(app, { isProduction, isDevelopment }) {
     if (isDevelopment) {
         app.use(morgan('dev'));
     }
+
+    app.use(cookieParser());
     app.use(express.json({ limit: '10kb' }));
     app.use(express.urlencoded({ extended: true }));
     app.use(require('./middleware/logger'));
@@ -32,14 +36,14 @@ function setApi(app, { fccOptions }) {
     app.use('/api/quote', require('./controllers/quote'));
 }
 
-function setView(app, { staticsFolder }) {
+function setView(app, { staticsFolder, stage }) {
     app.get(/projects\/react/, (req, res) => {
-        res.sendFile(path.join(staticsFolder, '/react-projects/index.html'));
+        res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/react-projects/index.html'));
     });
     app.use(history({ verbose: true }));
     app.use(express.static(staticsFolder));
     app.get('/index.html', (req, res) => {
-        res.sendFile(path.join(staticsFolder, '/landing/index.html'));
+        res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/landing/index.html'));
     });
 }
 

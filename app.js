@@ -11,6 +11,7 @@ async function init() {
     initConfig();
     await connectToDatabase();
     setupApp(app);
+
     const server = startServer(app);
 
     return { app, server };

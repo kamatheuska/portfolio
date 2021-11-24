@@ -14,6 +14,7 @@ const getNodeEnvIndependentEnvs = () => ({
     nodeEnv: ConfigUtils.getEnvVar('NODE_ENV', 'development'),
     debugMode: ConfigUtils.getEnvVar('DEBUG_MODE', 'false', Boolean),
     staticsFolder: path.join(__dirname, '..', 'public'),
+    stage: ConfigUtils.getEnvVar('STAGE', 'local'),
     db: {
         url: {
             documentLimit: ConfigUtils.getEnvVar('DB_URL_DOCUMENT_LIMIT', 100, Number),

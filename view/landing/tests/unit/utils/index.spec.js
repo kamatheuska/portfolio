@@ -1,20 +1,19 @@
-import { environments, PROD_HOSTNAME } from '@/constants/index';
+import Cookies from 'js-cookie';
+import { environments } from '@/constants/index';
 import { isProd } from '@/utils/index';
+
+jest.mock('js-cookie');
 
 let result;
 describe('🌳  Utils', () => {
     describe('🌴 isProd', () => {
         it.each([
-            [true, PROD_HOSTNAME, environments.PROD],
-            [true, 'www.not-prod.com', environments.PROD],
-            [false, 'www.not-prod.com', environments.STAGE],
-        ])('🌱 returns %s if hostname=%s and env=%s', (expected, hostname, env) => {
-            const windowMock = {
-                location: {
-                    hostname,
-                },
-            };
-            result = isProd({ globalWindow: windowMock, hostname, env });
+            [true, environments.PROD],
+            [false, environments.TEST],
+            [false, 'foobar'],
+        ])('🌱 returns %s if stage cookie=%s', (expected, stageCookie) => {
+            Cookies.get.mockImplementation(() => stageCookie);
+            result = isProd();
             expect(result).toBe(expected);
         });
     });
