@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm test
+npm run lint && npm test
 . ./setMainFolder.sh
-cd $MAIN/view/landing && npm test
-cd $MAIN/view/react-projects && CI=true npm test
+cd $MAIN/view/landing && npm run lint && npm test
+cd $MAIN/view/react-projects && npm run lint && CI=true npm test

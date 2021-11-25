@@ -1,8 +1,9 @@
 jest.mock('../../model/blogPost');
+jest.mock('sanitize-html');
 
-const { getBlogPosts, getBlogPostById, createBlogPost } = require('../blog');
-
+const sanitizeHtml = require('sanitize-html');
 const BlogPost = require('../../model/blogPost');
+const { getBlogPosts, getBlogPostById, createBlogPost } = require('../blog');
 const { generatePostStubs } = require('../../constants/stubs');
 
 let req;
@@ -121,6 +122,7 @@ describe('🌳  BlogPost Middleware', () => {
             });
         });
     });
+
     describe('🌴 createBlogPost', () => {
         const saveMock = jest.fn();
         describe('🍉 no error', () => {
@@ -133,8 +135,14 @@ describe('🌳  BlogPost Middleware', () => {
                 }));
 
                 saveMock.mockImplementation(() => Promise.resolve(posts[0]));
+                sanitizeHtml.mockImplementation(() => posts[0].content);
 
                 await createBlogPost(req, res, nextMock);
+            });
+
+            it('🌱 calls sanitizeHtml', () => {
+                expect(sanitizeHtml).toHaveBeenCalled();
+                expect(sanitizeHtml).toHaveBeenCalledWith(posts[0].content);
             });
 
             it('🌱 calls new BlogPost', () => {
@@ -166,6 +174,8 @@ describe('🌳  BlogPost Middleware', () => {
                 posts = generatePostStubs(1, true);
                 req = { body: posts[0] };
                 res = { send: sendMock };
+                sanitizeHtml.mockImplementation(() => posts[0]);
+
                 BlogPost.mockImplementation(() => ({
                     save: saveMock,
                 }));

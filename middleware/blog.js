@@ -1,4 +1,6 @@
 const _ = require('lodash');
+const sanitizeHtml = require('sanitize-html');
+
 const BlogPost = require('../model/blogPost');
 
 async function getBlogPosts(req, res, next) {
@@ -23,7 +25,11 @@ async function getBlogPostById(req, res, next) {
 async function createBlogPost(req, res, next) {
     try {
         const { content, title } = _.pick(req.body, ['content', 'title']);
-        const post = new BlogPost({ content, title });
+        const sanitizedHtmlContent = sanitizeHtml(content);
+        const post = new BlogPost({
+            content: sanitizedHtmlContent,
+            title,
+        });
         const savedPost = await post.save();
         res.send(savedPost);
     } catch (error) {

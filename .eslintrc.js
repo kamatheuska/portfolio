@@ -33,6 +33,12 @@ module.exports = {
         'consistent-return': 0,
         'radix': ['error', 'as-needed'],
         'security/detect-object-injection': 0,
+        'no-underscore-dangle': [
+            'error',
+            {
+                allow: ['_id'],
+            },
+        ],
     },
     overrides: [
         {

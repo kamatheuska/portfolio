@@ -1,7 +1,10 @@
+/* eslint-disable security/detect-non-literal-regexp */
+
 const request = require('supertest');
 const { seedBlogs } = require('../seed/blog.seed');
 const { generatePostStubs } = require('../../constants/stubs');
 const { cleanDb, teardown, setupTests } = require('../setup');
+const BlogPost = require('../../model/blogPost');
 
 let createdApp;
 let createdServer;
@@ -93,6 +96,45 @@ describe(`🌳  Integration: BlogPost`, () => {
                 expect(response.body.createdAt).toBeDefined();
                 expect(response.body.updatedAt).toBeDefined();
                 expect(response.body._id).toBeDefined();
+            });
+
+            it('🌱 fails to save html content if is all dirty', async () => {
+                const { title } = blogStubs[0];
+                const dirtyHtml = '<script>alert("Some alert") var dirty = "dirty"; </script>';
+
+                response = await request(createdApp).post(`${BASE_URL}/posts`).send({
+                    content: dirtyHtml,
+                    title,
+                });
+
+                expect(response.status).toBe(400);
+
+                const savedBlogPost = await BlogPost.findById(response.body._id);
+                expect(savedBlogPost).toBeNull();
+            });
+
+            it('🌱 saves valid html but removes dirty html from it', async () => {
+                const { title } = blogStubs[0];
+                const dirtyHtml = '<script>alert("Some alert") var dirty = "dirty"; </script>';
+                const cleanHtml = '<p>this is clean</p>';
+
+                response = await request(createdApp)
+                    .post(`${BASE_URL}/posts`)
+                    .send({
+                        content: `${dirtyHtml} ${cleanHtml} ${dirtyHtml}`,
+                        title,
+                    });
+
+                expect(response.status).toBe(200);
+                expect(response.body.content).toMatch(cleanHtml);
+                expect(response.body.title).toBe(title);
+                expect(response.body.createdAt).toBeDefined();
+                expect(response.body.updatedAt).toBeDefined();
+                expect(response.body._id).toBeDefined();
+
+                const savedBlogPost = await BlogPost.findById(response.body._id);
+                expect(savedBlogPost.content).not.toMatch(new RegExp(dirtyHtml));
+                expect(savedBlogPost.content).toMatch(new RegExp(cleanHtml));
             });
 
             it(`🌱 fails and throws 400 if no body is sended`, async () => {
