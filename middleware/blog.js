@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const sanitizeHtml = require('sanitize-html');
 
 const BlogPost = require('../model/blogPost');
 
@@ -25,9 +24,8 @@ async function getBlogPostById(req, res, next) {
 async function createBlogPost(req, res, next) {
     try {
         const { content, title } = _.pick(req.body, ['content', 'title']);
-        const sanitizedHtmlContent = sanitizeHtml(content);
-        const post = new BlogPost({
-            content: sanitizedHtmlContent,
+        const post = await new BlogPost({
+            content,
             title,
         });
         const savedPost = await post.save();
@@ -37,6 +35,25 @@ async function createBlogPost(req, res, next) {
     }
 }
 
-exports.getBlogPosts = getBlogPosts;
-exports.getBlogPostById = getBlogPostById;
-exports.createBlogPost = createBlogPost;
+async function updateBlogPost(req, res, next) {
+    try {
+        const { id } = _.pick(req.params, ['id']);
+        const { content, title } = _.pick(req.body, ['content', 'title']);
+
+        const blogPost = await BlogPost.findById(id);
+        blogPost.content = content;
+        blogPost.title = title;
+
+        const savedBlogPost = await blogPost.save();
+        res.send(savedBlogPost);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {
+    getBlogPosts,
+    getBlogPostById,
+    createBlogPost,
+    updateBlogPost,
+};

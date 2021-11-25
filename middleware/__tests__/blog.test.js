@@ -1,9 +1,7 @@
 jest.mock('../../model/blogPost');
-jest.mock('sanitize-html');
 
-const sanitizeHtml = require('sanitize-html');
 const BlogPost = require('../../model/blogPost');
-const { getBlogPosts, getBlogPostById, createBlogPost } = require('../blog');
+const { getBlogPosts, getBlogPostById, createBlogPost, updateBlogPost } = require('../blog');
 const { generatePostStubs } = require('../../constants/stubs');
 
 let req;
@@ -135,14 +133,8 @@ describe('🌳  BlogPost Middleware', () => {
                 }));
 
                 saveMock.mockImplementation(() => Promise.resolve(posts[0]));
-                sanitizeHtml.mockImplementation(() => posts[0].content);
 
                 await createBlogPost(req, res, nextMock);
-            });
-
-            it('🌱 calls sanitizeHtml', () => {
-                expect(sanitizeHtml).toHaveBeenCalled();
-                expect(sanitizeHtml).toHaveBeenCalledWith(posts[0].content);
             });
 
             it('🌱 calls new BlogPost', () => {
@@ -174,8 +166,6 @@ describe('🌳  BlogPost Middleware', () => {
                 posts = generatePostStubs(1, true);
                 req = { body: posts[0] };
                 res = { send: sendMock };
-                sanitizeHtml.mockImplementation(() => posts[0]);
-
                 BlogPost.mockImplementation(() => ({
                     save: saveMock,
                 }));
@@ -185,6 +175,69 @@ describe('🌳  BlogPost Middleware', () => {
                 });
 
                 await createBlogPost(req, res, nextMock);
+            });
+
+            it('🌱 calls next', () => {
+                expect(nextMock).toHaveBeenCalled();
+                expect(nextMock).toHaveBeenCalledWith(error);
+            });
+        });
+    });
+
+    describe('🌴 updateBlogPost', () => {
+        const saveMock = jest.fn();
+        let id;
+
+        describe('🍉 no error', () => {
+            beforeEach(async () => {
+                posts = generatePostStubs(2, true);
+                id = posts[0]._id;
+
+                req = { body: posts[1], params: { id } };
+                res = { send: sendMock };
+
+                BlogPost.findById.mockImplementation(() =>
+                    Promise.resolve({
+                        ...posts[0],
+                        save: saveMock,
+                    }),
+                );
+                saveMock.mockImplementation(() => Promise.resolve(posts[1]));
+
+                await updateBlogPost(req, res, nextMock);
+            });
+
+            it('🌱 calls BlogPost.findById', () => {
+                expect(BlogPost.findById).toHaveBeenCalled();
+                expect(BlogPost.findById).toHaveBeenCalledWith(id);
+            });
+
+            it('🌱 calls send', () => {
+                expect(sendMock).toHaveBeenCalled();
+                expect(sendMock).toHaveBeenCalledWith(posts[1]);
+            });
+
+            it('🌱 does not call next', () => {
+                expect(nextMock).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('🍉 when an error', () => {
+            const error = new Error('BlogPost api error');
+
+            beforeEach(async () => {
+                posts = generatePostStubs(2, true);
+                req = { body: posts[0] };
+                res = { send: sendMock };
+
+                BlogPost.findById.mockImplementation(() => {
+                    throw error;
+                });
+                saveMock.mockImplementation(() => {
+                    throw error;
+                });
+
+                await updateBlogPost(req, res, nextMock);
             });
 
             it('🌱 calls next', () => {

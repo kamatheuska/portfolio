@@ -62,7 +62,7 @@ const urlStubs = [
  * @param {Number} amount
  * @param {Boolean} hasId - defines if stubs have a mongoose Object id or not
  */
-const generatePostStubs = (amount, hasId) =>
+const generatePostStubs = (amount = 5, hasId = false) =>
     [...Array(amount)].map(() => ({
         content: faker.lorem.paragraphs(3),
         title: faker.lorem.sentence(6),
