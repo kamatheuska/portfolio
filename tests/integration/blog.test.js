@@ -142,6 +142,7 @@ describe(`🌳  Integration: BlogPost`, () => {
             expect(response.body).toEqual({});
         });
     });
+
     describe(`🍉  PUT ${BASE_URL}/posts/:id`, () => {
         beforeEach(async () => {
             blogStubs = generatePostStubs(12, true);
@@ -212,6 +213,30 @@ describe(`🌳  Integration: BlogPost`, () => {
         it(`🌱 fails and throws 400 if no body is sended`, async () => {
             const savedBlogPostId = blogStubs[10]._id;
             response = await request(createdApp).put(`${BASE_URL}/posts/${savedBlogPostId}`);
+            expect(response.status).toBe(400);
+            expect(response.body).toEqual({});
+        });
+    });
+
+    describe(`🍉  DELETE ${BASE_URL}/posts/:id`, () => {
+        beforeEach(async () => {
+            blogStubs = generatePostStubs(12, true);
+            await seedBlogs(blogStubs);
+        });
+
+        it('🌱 deletes a blogPost with the given id', async () => {
+            const savedBlogPostId = blogStubs[3]._id;
+
+            response = await request(createdApp).delete(`${BASE_URL}/posts/${savedBlogPostId}`);
+            expect(response.status).toBe(200);
+            expect(response.body.deletedCount).toBe(1);
+
+            const savedBlogPost = await BlogPost.findById(savedBlogPostId);
+            expect(savedBlogPost).toBeNull();
+        });
+
+        it(`🌱 fails and throws 400 if id does not exist`, async () => {
+            response = await request(createdApp).put(`${BASE_URL}/posts/123123`);
             expect(response.status).toBe(400);
             expect(response.body).toEqual({});
         });

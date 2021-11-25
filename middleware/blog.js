@@ -51,9 +51,21 @@ async function updateBlogPost(req, res, next) {
     }
 }
 
+async function deleteBlogPost(req, res, next) {
+    try {
+        const { id } = _.pick(req.params, ['id']);
+
+        const query = await BlogPost.deleteOne({ _id: id });
+        res.send(query);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getBlogPosts,
     getBlogPostById,
     createBlogPost,
     updateBlogPost,
+    deleteBlogPost,
 };

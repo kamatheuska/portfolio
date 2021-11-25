@@ -1,7 +1,13 @@
 jest.mock('../../model/blogPost');
 
 const BlogPost = require('../../model/blogPost');
-const { getBlogPosts, getBlogPostById, createBlogPost, updateBlogPost } = require('../blog');
+const {
+    getBlogPosts,
+    getBlogPostById,
+    createBlogPost,
+    updateBlogPost,
+    deleteBlogPost,
+} = require('../blog');
 const { generatePostStubs } = require('../../constants/stubs');
 
 let req;
@@ -238,6 +244,59 @@ describe('🌳  BlogPost Middleware', () => {
                 });
 
                 await updateBlogPost(req, res, nextMock);
+            });
+
+            it('🌱 calls next', () => {
+                expect(nextMock).toHaveBeenCalled();
+                expect(nextMock).toHaveBeenCalledWith(error);
+            });
+        });
+    });
+
+    describe('🌴 deleteBlogPost', () => {
+        let id;
+
+        describe('🍉 no error', () => {
+            beforeEach(async () => {
+                posts = generatePostStubs(2, true);
+                id = posts[0]._id;
+
+                req = { body: posts[1], params: { id } };
+                res = { send: sendMock };
+
+                BlogPost.deleteOne.mockImplementation(() => Promise.resolve({ deletedCount: 1 }));
+
+                await deleteBlogPost(req, res, nextMock);
+            });
+
+            it('🌱 calls BlogPost.deleteOne', () => {
+                expect(BlogPost.deleteOne).toHaveBeenCalled();
+                expect(BlogPost.deleteOne).toHaveBeenCalledWith({ _id: id });
+            });
+
+            it('🌱 calls send', () => {
+                expect(sendMock).toHaveBeenCalled();
+                expect(sendMock).toHaveBeenCalledWith({ deletedCount: 1 });
+            });
+
+            it('🌱 does not call next', () => {
+                expect(nextMock).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('🍉 when an error', () => {
+            const error = new Error('BlogPost api error');
+
+            beforeEach(async () => {
+                posts = generatePostStubs(2, true);
+                req = { body: posts[0] };
+                res = { send: sendMock };
+
+                BlogPost.deleteOne.mockImplementation(() => {
+                    throw error;
+                });
+
+                await deleteBlogPost(req, res, nextMock);
             });
 
             it('🌱 calls next', () => {
