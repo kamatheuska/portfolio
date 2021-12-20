@@ -7,19 +7,21 @@
                 </div>
             </div>
         </section>
-        <section class="section" v-for="(section, i) in sections" :key="`hero-page-section-${i}`">
-            <div class="columns">
-                <div class="column">
-                    <p
-                        class="block is-size-5 has-text-justified"
-                        v-for="(paragraph, j) in section"
-                        :key="`hero-page-paragraph-${i}-${j}`"
-                    >
-                        {{ paragraph }}
-                    </p>
+        <slot name="content" v-if="sections">
+            <section class="section" v-for="(section, i) in sections" :key="`hero-page-section-${i}`">
+                <div class="columns">
+                    <div class="column">
+                        <p
+                            class="block is-size-5 has-text-justified"
+                            v-for="(paragraph, j) in section"
+                            :key="`hero-page-paragraph-${i}-${j}`"
+                        >
+                            {{ paragraph }}
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </slot>
         <slot name="after-sections"></slot>
     </div>
 </template>
