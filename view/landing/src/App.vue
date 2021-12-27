@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="root">
-        <main class="container root__main">
+        <main class="container">
             <Navbar />
             <transition name="fade-slide-route">
                 <router-view></router-view>
@@ -19,11 +19,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-.root {
-    &__main {
-        @include fade-slide-route-animation;
-    }
-}
-</style>

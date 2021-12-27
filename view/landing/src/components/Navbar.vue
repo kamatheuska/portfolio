@@ -10,11 +10,6 @@
         }"
     >
         <div class="navbar-brand">
-            <router-link class="navbar-item" :style="`background-color: ${logoBgColor}`" to="/" v-if="showLogo">
-                <div class="navbar__logo">
-                    <Logo />
-                </div>
-            </router-link>
             <a
                 role="button"
                 class="navbar-burger"
@@ -92,7 +87,6 @@
 
 <script>
 import vClickOutside from 'v-click-outside';
-import Logo from '@/components/Logo.vue';
 import { isProd } from '@/utils';
 
 const routes = [
@@ -161,9 +155,6 @@ export default {
         },
     },
 
-    components: {
-        Logo,
-    },
     data: () => ({
         activeNavbar: false,
         routes,
