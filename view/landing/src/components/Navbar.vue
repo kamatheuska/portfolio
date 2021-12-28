@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="navbar is-white"
+        class="navbar is-fixed-top is-transparent is-spaced is-white"
         role="navigation"
         aria-label="main navigation"
         v-click-outside="onClickOutside"
@@ -195,13 +195,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.navbar {
-    top: 0;
-    position: sticky;
-    top: 0;
+$xs-breakpoint: 450px;
 
+.navbar {
+    width: 100vw;
     &__logo {
         height: 1.5rem;
     }
+    // .navbar-burger {
+    //     position: static;
+    //     span {
+    //         left: calc(82% - 8px);
+    //         @include from($xs-breakpoint) {
+    //             left: calc(83%);
+    //         }
+    //     }
+    // }
 }
 </style>

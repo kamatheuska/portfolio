@@ -35,12 +35,21 @@ export default {
         this.$refs.animation.animateText();
         await sleep(400);
         this.$emit('done');
-        // await sleep(1200);
-        // this.$refs.animation.hideText();
-        // await sleep(1200);
-        // this.scriptText = 'frontend developer';
-        // await sleep(100);
-        // this.$refs.animation.showText();
+
+        await this.changeAnimationText('frontend developer');
+        await this.changeAnimationText('fullstack developer');
+        await this.changeAnimationText('composer');
+    },
+
+    methods: {
+        async changeAnimationText(text) {
+            await sleep(1200);
+            this.$refs.animation.hideText();
+            await sleep(1200);
+            this.scriptText = text;
+            await sleep(100);
+            this.$refs.animation.showText();
+        },
     },
 };
 </script>
