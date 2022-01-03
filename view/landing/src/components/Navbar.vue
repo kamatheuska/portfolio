@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="navbar is-fixed-top is-transparent is-spaced is-white"
+        class="navbar is-fixed-top is-spaced is-transparent"
         role="navigation"
         aria-label="main navigation"
         v-click-outside="onClickOutside"
@@ -27,67 +27,68 @@
                 <span aria-hidden="true"></span>
             </a>
         </div>
-
-        <div
-            id="navbar"
-            class="navbar-menu"
-            :class="{
-                'is-active': activeNavbar,
-            }"
-        >
-            <div class="navbar-end" v-if="showLinks">
-                <template v-for="(route, i) in routes">
-                    <router-link
-                        v-if="!route.children"
-                        class="navbar-item"
-                        :to="route.path"
-                        :key="`route-navbar-item${i}`"
-                    >
-                        {{ route.text }}
-                    </router-link>
-
-                    <div class="navbar-item has-dropdown is-hoverable" :key="`route-navbar-item${i}`" v-else>
-                        <router-link v-if="route.path" class="navbar-link is-arrowless" :to="route.path">
+        <transition name="fade-in-fast">
+            <div
+                class="navbar-menu"
+                :class="{
+                    'is-active': activeNavbar,
+                }"
+                v-if="activeNavbar"
+            >
+                <div class="navbar-end" v-if="showLinks">
+                    <template v-for="(route, i) in routes">
+                        <router-link
+                            v-if="!route.children"
+                            class="navbar-item"
+                            :to="route.path"
+                            :key="`route-navbar-item${i}`"
+                        >
                             {{ route.text }}
                         </router-link>
-                        <a class="navbar-link is-arrowless" v-else> {{ route.text }} </a>
 
-                        <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">
-                            <template v-for="(childRoute, j) in route.children">
-                                <a
-                                    :key="`child-route-navbar-item${i}${j}`"
-                                    :class="{
-                                        'is-active': $route.name === childRoute.name,
-                                    }"
-                                    class="navbar-item"
-                                    :href="childRoute.path"
-                                    v-if="childRoute.isExternalLink"
-                                >
-                                    {{ childRoute.text }}
-                                </a>
-                                <router-link
-                                    :key="`child-route-navbar-item${i}${j}`"
-                                    :to="childRoute.path"
-                                    :class="{
-                                        'is-active': $route.name === childRoute.name,
-                                    }"
-                                    class="navbar-item"
-                                    v-else
-                                >
-                                    {{ childRoute.text }}
-                                </router-link>
-                            </template>
+                        <div class="navbar-item has-dropdown is-hoverable" :key="`route-navbar-item${i}`" v-else>
+                            <router-link v-if="route.path" class="navbar-link is-arrowless" :to="route.path">
+                                {{ route.text }}
+                            </router-link>
+                            <a class="navbar-link is-arrowless" v-else> {{ route.text }} </a>
+
+                            <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">
+                                <template v-for="(childRoute, j) in route.children">
+                                    <a
+                                        :key="`child-route-navbar-item${i}${j}`"
+                                        :class="{
+                                            'is-active': $route.name === childRoute.name,
+                                        }"
+                                        class="navbar-item"
+                                        :href="childRoute.path"
+                                        v-if="childRoute.isExternalLink"
+                                    >
+                                        {{ childRoute.text }}
+                                    </a>
+                                    <router-link
+                                        :key="`child-route-navbar-item${i}${j}`"
+                                        :to="childRoute.path"
+                                        :class="{
+                                            'is-active': $route.name === childRoute.name,
+                                        }"
+                                        class="navbar-item"
+                                        v-else
+                                    >
+                                        {{ childRoute.text }}
+                                    </router-link>
+                                </template>
+                            </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
-        </div>
+        </transition>
     </nav>
 </template>
 
 <script>
 import vClickOutside from 'v-click-outside';
-import { isProd } from '@/utils';
+import { isProd, isMobile } from '@/utils';
 
 const routes = [
     {
@@ -155,6 +156,12 @@ export default {
         },
     },
 
+    created() {
+        if (!isMobile()) {
+            this.activeNavbar = true;
+        }
+    },
+
     data: () => ({
         activeNavbar: false,
         routes,
@@ -195,21 +202,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$xs-breakpoint: 450px;
-
 .navbar {
     width: 100vw;
-    &__logo {
-        height: 1.5rem;
+    &-menu {
+        // text-align: center;
+        height: 100vh;
+
+        @include tablet {
+            height: auto;
+        }
     }
-    // .navbar-burger {
-    //     position: static;
-    //     span {
-    //         left: calc(82% - 8px);
-    //         @include from($xs-breakpoint) {
-    //             left: calc(83%);
-    //         }
-    //     }
-    // }
+    &-end {
+        // height: 100%;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: space-evenly;
+
+        // @include tablet {
+        //     display: initial;
+        //     height: auto;
+        // }
+    }
+
+    &-item {
+        @include has-family-condensed;
+        // text-transform: uppercase;
+        font-size: 1.2rem;
+    }
+
+    &-link {
+        line-height: 2.5;
+    }
 }
 </style>

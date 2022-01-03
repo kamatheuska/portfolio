@@ -8,3 +8,7 @@ export const environments = {
     PROD: 'prod',
     TEST: 'test',
 };
+
+export const breakpoints = {
+    MOBILE: '768px',
+};
