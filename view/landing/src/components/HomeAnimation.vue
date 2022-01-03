@@ -19,6 +19,13 @@ export default {
         EightNote,
     },
 
+    props: {
+        'animate:text': {
+            type: Boolean,
+            default: true,
+        },
+    },
+
     data() {
         return {
             scriptText: '',
@@ -26,19 +33,30 @@ export default {
         };
     },
 
+    computed: {
+        initialSleep() {
+            return this.animateText ? 1000 : 300;
+        },
+        animateText() {
+            return !!this['animate:text'];
+        },
+    },
     async mounted() {
         this.scriptText = 'nicolas ramirez';
-        await sleep(1000);
+        await sleep(this.initialSleep);
         this.$refs.animation.showText();
-        await sleep(1500);
+        await sleep(this.initialSleep + 200);
         this.isNoteGray = true;
         this.$refs.animation.animateText();
         await sleep(400);
 
-        await this.changeAnimationText('software engineer', { sleepInterval: 400 });
-        await this.changeAnimationText('frontend developer', { sleepInterval: 400 });
-        await this.changeAnimationText('composer', { sleepInterval: 400 });
-        await this.changeAnimationText('nicolas ramirez', { sleepInterval: 700 });
+        if (this['animate:text']) {
+            await this.changeAnimationText('software engineer', { sleepInterval: 400 });
+            await this.changeAnimationText('frontend developer', { sleepInterval: 400 });
+            await this.changeAnimationText('composer', { sleepInterval: 400 });
+            await this.changeAnimationText('nicolas ramirez', { sleepInterval: 700 });
+        }
+
         this.$emit('done:final', true);
     },
 

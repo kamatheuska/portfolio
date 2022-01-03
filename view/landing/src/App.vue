@@ -28,7 +28,7 @@ export default {
     },
     created() {
         if (this.$route.name !== 'Home') {
-            this.toggleNavigation();
+            this.toggleNavigation(true);
         }
     },
 };

@@ -93,7 +93,7 @@ import { isProd, isMobile } from '@/utils';
 
 const routes = [
     {
-        path: '/home',
+        path: '/home?new=false',
         text: 'Home',
     },
     {
@@ -157,8 +157,8 @@ export default {
         },
     },
 
-    created() {
-        if (!isMobile()) {
+    mounted() {
+        if (!this.isMobile) {
             this.activeNavbar = true;
         }
     },
@@ -172,6 +172,7 @@ export default {
         showLogo() {
             return this.showLinks;
         },
+        isMobile,
         logoBgColor() {
             return isProd() ? logoBgColor.PROD : logoBgColor.TEST;
         },
@@ -191,7 +192,9 @@ export default {
 
         hideNavbarBurgerMenu() {
             this.$nextTick(() => {
-                this.activeNavbar = false;
+                if (this.isMobile) {
+                    this.activeNavbar = false;
+                }
             });
         },
     },
@@ -210,7 +213,7 @@ export default {
         z-index: 10000;
 
         @include tablet {
-            z-index: inherit;
+            z-index: 20;
         }
     }
     &-menu {
@@ -223,13 +226,18 @@ export default {
     }
 
     &-item {
-        @include has-family-condensed;
-        // text-transform: uppercase;
+        @include has-title-font;
         font-size: 1.2rem;
     }
 
     &-link {
         line-height: 2.5;
+    }
+    &-dropdown.is-right {
+        @include tablet {
+            height: auto;
+        }
+        top: -1rem;
     }
 }
 </style>

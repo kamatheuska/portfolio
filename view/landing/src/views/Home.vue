@@ -3,7 +3,7 @@
         <section class="hero is-fullheight-with-navbar">
             <div class="hero-body">
                 <div class="home__animation is-flex is-justify-content-center">
-                    <HomeAnimation @done:final="toggleHiddenElements" />
+                    <HomeAnimation @done:final="toggleHiddenElements" :animate:text="animateText" />
                     <div class="home__subtitle mt-5">
                         <transition name="fade-in">
                             <p v-show="showSubtitle" class="has-text-centered">
@@ -69,21 +69,27 @@ export default {
     data: () => ({
         showSubtitle: false,
         showUpperPolygon: false,
+        animateText: false,
     }),
 
     methods: {
         ...mapMutations(['toggleNavigation']),
 
-        toggleHiddenElements(show) {
-            if (show) {
-                this.showSubtitle = show;
-                this.showUpperPolygon = show;
-            } else {
-                this.showSubtitle = !this.showSubtitle;
-                this.showUpperPolygon = !this.showUpperPolygon;
-            }
-            this.toggleNavigation();
+        toggleHiddenElements(show = null) {
+            this.showSubtitle = show === null ? !this.showSubtitle : show;
+            this.showUpperPolygon = show === null ? !this.showUpperPolygon : show;
+
+            this.toggleNavigation(show);
         },
+
+        checkAnimationQuery() {
+            if (this.$route.query.new === 'false') return;
+            this.animateText = true;
+        },
+    },
+
+    mounted() {
+        this.checkAnimationQuery();
     },
 };
 </script>

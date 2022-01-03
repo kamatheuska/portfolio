@@ -13,8 +13,8 @@ export default new Vuex.Store({
         showNavigation: (state) => state.navigation.show,
     },
     mutations: {
-        toggleNavigation(state) {
-            state.navigation.show = !state.navigation.show;
+        toggleNavigation(state, show) {
+            state.navigation.show = show === null ? !state.navigation.show : show;
         },
     },
 });
