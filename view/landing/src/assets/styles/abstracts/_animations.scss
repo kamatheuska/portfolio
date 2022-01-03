@@ -13,6 +13,20 @@
     }
 }
 
+@mixin fade-in-fast-animation {
+    .fade-in-fast {
+        &-enter-active,
+        &-leave-active {
+            transition: opacity 0.2s ease-in;
+        }
+        
+        &-enter,
+        &-leave-to {
+            opacity: 0;
+        }
+    }
+}
+
 @mixin fade-slide-animation {
     .fade-slide {
         &-enter-active,

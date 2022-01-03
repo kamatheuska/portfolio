@@ -11,10 +11,10 @@ module.exports = {
     css: {
         loaderOptions: {
             sass: {
-                prependData: `
+                additionalData: `
+                    @import './src/assets/styles/abstracts/variables';
                     @import './src/assets/styles/abstracts/animations';
                     @import './src/assets/styles/abstracts/mixins';
-                    @import './src/assets/styles/abstracts/variables';
                 `,
             },
         },

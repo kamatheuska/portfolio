@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
     root: true,
 
@@ -27,8 +29,8 @@ module.exports = {
                 endOfLine: 'auto',
             },
         ],
-        'no-console': ['error', { allow: ['error', 'warn'] }],
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-console': [isProd ? 'error' : 'warn', { allow: ['error', 'warn'] }],
+        'no-debugger': isProd ? 'warn' : 'off',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'import/export': 0,
         'import/prefer-default-export': 0,

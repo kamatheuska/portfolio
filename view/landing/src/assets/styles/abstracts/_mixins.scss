@@ -7,3 +7,8 @@
     background: linear-gradient(90deg, darken($info, 40%), darken($info, 30%));
     transition: background-color ease-in 1s;
 }
+
+@mixin has-family-condensed {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 300;
+}

@@ -1,2 +1,18 @@
+$p-blue: #95BCCC;
+$p-pink: #FCDCDC;
+$p-dark-blue: #2B4C59;
+$p-brown: #988080;
+$p-gray: #BECEDA;
 
+$link: $p-gray;
+$info: $p-pink;
+$success: $p-gray;
+$warning: $p-brown;
+$dark: darken($p-dark-blue, 10%);
+$text: $p-dark-blue;
+$primary: $p-dark-blue;
+
+// Typography
 @import '~bulma/sass/utilities/derived-variables';
+
+$danger: $red;
