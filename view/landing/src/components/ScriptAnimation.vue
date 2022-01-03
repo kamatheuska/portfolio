@@ -89,7 +89,7 @@ $script-initial-width: 200px;
 
 .slide {
     transition: transform;
-    transition-delay: 0.5s;
+    // transition-delay: 0.5s;
     transition-timing-function: ease-in-out;
     transition-duration: 0.5s;
 
@@ -108,12 +108,16 @@ $script-initial-width: 200px;
     position: relative;
     display: inline-block;
     font-size: 30px;
+    fill: $text;
+    stroke: $text;
+    z-index: 2;
     &--animated-gray {
-        fill: #ddd;
-        stroke: #ddd;
+        fill: $p-gray;
+        stroke: $p-gray;
         transform: scale(0.8, 1) rotate(3deg);
-        color: #ddd;
+        color: $p-gray;
     }
+
     &__vectors {
         position: absolute;
         width: 100%;
@@ -126,10 +130,9 @@ $script-initial-width: 200px;
     &__rect {
         padding-top: 0.5em;
         background-color: white;
-        // border: solid 1px black;
         display: flex;
         position: absolute;
-        height: 1.3em;
+        height: 1.5em;
         width: 50%;
     }
     &__slide {

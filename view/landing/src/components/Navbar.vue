@@ -7,6 +7,7 @@
         :class="{
             'is-primary': color === 'primary',
             'is-info': color === 'info',
+            'navbar--is-active': activeNavbar,
         }"
     >
         <div class="navbar-brand">
@@ -204,6 +205,14 @@ export default {
 <style lang="scss" scoped>
 .navbar {
     width: 100vw;
+
+    &.navbar--is-active {
+        z-index: 10000;
+
+        @include tablet {
+            z-index: inherit;
+        }
+    }
     &-menu {
         // text-align: center;
         height: 100vh;
@@ -211,17 +220,6 @@ export default {
         @include tablet {
             height: auto;
         }
-    }
-    &-end {
-        // height: 100%;
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: space-evenly;
-
-        // @include tablet {
-        //     display: initial;
-        //     height: auto;
-        // }
     }
 
     &-item {

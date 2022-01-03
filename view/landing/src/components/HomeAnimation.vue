@@ -27,28 +27,39 @@ export default {
     },
 
     async mounted() {
-        this.scriptText = 'nicolasramirez';
+        this.scriptText = 'nicolas ramirez';
         await sleep(1000);
         this.$refs.animation.showText();
         await sleep(1500);
         this.isNoteGray = true;
         this.$refs.animation.animateText();
         await sleep(400);
-        this.$emit('done');
 
-        await this.changeAnimationText('frontend developer');
-        await this.changeAnimationText('fullstack developer');
-        await this.changeAnimationText('composer');
+        await this.changeAnimationText('software engineer', { sleepInterval: 400 });
+        await this.changeAnimationText('frontend developer', { sleepInterval: 400 });
+        await this.changeAnimationText('composer', { sleepInterval: 400 });
+        await this.changeAnimationText('nicolas ramirez', { sleepInterval: 700 });
+        this.$emit('done:final', true);
     },
 
     methods: {
-        async changeAnimationText(text) {
-            await sleep(1200);
+        async changeAnimationText(text, { sleepInterval = 1200, delay = 500 } = {}) {
+            // console.log('[app.log] :::: 1. sleepInterval:', sleepInterval);
+            await sleep(sleepInterval);
+            // console.log('[app.log] :::: hideText:');
             this.$refs.animation.hideText();
-            await sleep(1200);
+            // console.log('[app.log] :::: 2. sleepInterval:', sleepInterval);
+            await sleep(sleepInterval);
+
+            // console.log('[app.log] :::: text:');
             this.scriptText = text;
+
+            // console.log('[app.log] :::: 3. sleep:', 100);
             await sleep(100);
             this.$refs.animation.showText();
+
+            // console.log('[app.log] :::: 4. delay:', delay);
+            await sleep(delay);
         },
     },
 };
@@ -64,12 +75,13 @@ export default {
         height: 6em;
         position: relative;
         left: 1em;
-        fill: #000;
-        stroke: #000;
+        fill: $text;
+        stroke: $text;
+        z-index: 3;
         &--gray {
-            fill: #ddd;
-            stroke: #ddd;
-            transform: scale(0.8, 0.7) translateY(30px) translateX(10px);
+            fill: $p-gray;
+            stroke: $p-gray;
+            transform: scale(0.8, 0.7) translateY(25px) translateX(-10px);
         }
     }
 }
