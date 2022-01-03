@@ -29,7 +29,10 @@ body {
     .is-dark {
         @include has-dark-background;
     }
+}
 
+.title {
+    @include has-title-font(900);
 }
 
 .responsive-svg {

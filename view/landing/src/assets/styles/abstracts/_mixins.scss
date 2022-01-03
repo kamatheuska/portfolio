@@ -8,7 +8,7 @@
     transition: background-color ease-in 1s;
 }
 
-@mixin has-family-condensed {
+@mixin has-title-font($weight: 300) {
     font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: 300;
+    font-weight: $weight;
 }
