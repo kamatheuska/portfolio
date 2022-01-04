@@ -89,7 +89,7 @@
 
 <script>
 import vClickOutside from 'v-click-outside';
-import { isProd, isMobile } from '@/utils';
+import { isProd } from '@/utils';
 
 const routes = [
     {
@@ -155,6 +155,7 @@ export default {
             type: String,
             default: '',
         },
+        isMobile: Boolean,
     },
 
     mounted() {
@@ -172,7 +173,6 @@ export default {
         showLogo() {
             return this.showLinks;
         },
-        isMobile,
         logoBgColor() {
             return isProd() ? logoBgColor.PROD : logoBgColor.TEST;
         },

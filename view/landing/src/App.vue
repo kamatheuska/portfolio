@@ -2,7 +2,7 @@
     <div id="app" class="root">
         <header>
             <transition name="fade-in">
-                <Navbar v-if="showNavigation" />
+                <Navbar v-if="showNavigation" :isMobile="isMobile" />
             </transition>
         </header>
         <main class="container">
@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { isMobile } from '@/utils';
 import Navbar from '@/components/Navbar.vue';
 
 export default {
@@ -36,12 +37,17 @@ export default {
         Navbar,
     },
     computed: {
-        ...mapGetters(['showNavigation']),
+        ...mapGetters(['showNavigation', 'isMobile']),
     },
     methods: {
         ...mapMutations(['toggleNavigation']),
+        ...mapActions(['initApp']),
     },
     created() {
+        this.initApp({
+            isMobile: isMobile(),
+        });
+
         if (this.$route.name !== 'Home') {
             this.toggleNavigation(true);
         }

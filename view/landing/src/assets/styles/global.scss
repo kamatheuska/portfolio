@@ -38,6 +38,13 @@ body {
     z-index: 1;
 }
 
+#background {
+    position: absolute;
+    z-index: -10;
+    top: 0;
+    height: auto
+}
+
 .title {
     @include has-title-font(900);
 }

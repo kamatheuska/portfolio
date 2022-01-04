@@ -15,74 +15,156 @@
             </div>
         </section>
         <section class="home__projects section block">
-            <h1 class="title is-1 has-text-centered">Projects</h1>
-            <ProjectCard v-for="(project, i) in projects" :key="`project-card-${i}`" v-bind="project"> </ProjectCard>
+            <h1 class="title is-1 has-text-centered is-uppercase">Projects</h1>
+            <ProjectCard v-for="(project, i) in projects" class="mb-3" :key="`project-card-${i}`" v-bind="project" />
         </section>
         <PolygonRayAnimation :show="showUpperPolygon" />
-        <Portal>
-            <transition name="fade-in">
-                <div v-if="showSubtitle" class="home__bg-polygon"></div>
-            </transition>
-        </Portal>
+        <PolygonBackground portal-selector="background" :show="showSubtitle" v-bind="polygonSpecs[0]" />
+        <PolygonBackground portal-selector="background" :show="showSubtitle" v-bind="polygonSpecs[2]" />
     </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import { Portal } from '@linusborg/vue-simple-portal';
+import { mapMutations, mapGetters } from 'vuex';
 import * as cookies from '@/constants/cookies';
 
 import HomeAnimation from '@/components/animations/HomeAnimation.vue';
 import PolygonRayAnimation from '@/components/animations/PolygonRayAnimation.vue';
+import PolygonBackground from '@/components/layout/PolygonBackground.vue';
 import ProjectCard from '@/components/ProjectCard.vue';
 
 const projects = ({ portfolioBucketUrl }) => [
     {
-        description:
+        highlights: [
             'Development of a DEMO environment for the recommendations vertical that would allow E2E processes and Data Scientist Analitics test to be done within the product.',
+        ],
         imageSrc: `${portfolioBucketUrl}/images/projects/lidl-reco-square.jpg`,
         imageAlt: 'Lidl Reco Slider',
-        title: 'Lidl Recommendations Team',
+        title: 'Recommendations Team',
+        company: 'LIDL Digital',
         tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot'],
         links: [
             {
                 text: 'Project URL',
                 url: 'https://www.lidl.de',
             },
+            {
+                text: 'Team Feedback',
+                url: 'https://www.linkedin.com/in/nicolasramirezdev',
+            },
         ],
+        loading: 'lazy',
     },
     {
-        description:
+        highlights: [
             'Development and maintenance of a CMS, home page and content pages, with high performance and internationalization, scalable for different countries.',
+        ],
         imageSrc: `${portfolioBucketUrl}/images/projects/lidl-content-square.jpg`,
         imageAlt: 'Lidl Reco Slider',
-        title: 'Lidl Content Team',
+        title: 'Content Team',
+        company: 'LIDL Digital',
         tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot', 'Docker', 'Kubernetes', 'GoogleCloud'],
         links: [
             {
                 text: 'Project URL',
                 url: 'https://www.lidl.de',
             },
+            {
+                text: 'Team Feedback',
+                url: 'https://www.linkedin.com/in/nicolasramirezdev',
+            },
         ],
+        loading: 'lazy',
+    },
+    {
+        highlights: [
+            'Development and maintenance of a CMS, home page and content pages, with high performance and internationalization, scalable for different countries.',
+        ],
+        imageSrc: `${portfolioBucketUrl}/images/projects/lidl-content-square.jpg`,
+        imageAlt: 'Lidl Reco Slider',
+        title: 'Content Team',
+        company: 'LIDL Digital',
+        tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot', 'Docker', 'Kubernetes', 'GoogleCloud'],
+        links: [
+            {
+                text: 'Project URL',
+                url: 'https://www.lidl.de',
+            },
+            {
+                text: 'Team Feedback',
+                url: 'https://www.linkedin.com/in/nicolasramirezdev',
+            },
+        ],
+        loading: 'lazy',
+        isTransparent: true,
     },
 ];
 
+const polygonSpecs = () => [
+    {
+        gradientSpecs: {
+            colors: ['#95BCCC', '#DDD4D4'],
+        },
+        polygon: {
+            points: [
+                ['0', '10%'],
+                ['100%', '0'],
+                ['100%', '90%'],
+                ['0', '100%'],
+            ],
+        },
+    },
+    {
+        gradientSpecs: {
+            colors: ['#FCDCDC', '#988080'],
+            angle: 'to right top',
+        },
+        polygon: {
+            points: [
+                ['0', '10%'],
+                ['100%', '30%'],
+                ['100%', '80%'],
+                ['0', '100%'],
+            ],
+        },
+        marginTop: '15rem',
+    },
+    {
+        gradientSpecs: {
+            colors: ['#95BCCC', '#DDD4D4'],
+            angle: 'to left top',
+        },
+        polygon: {
+            points: [
+                ['0', '10%'],
+                ['100%', '15%'],
+                ['100%', '80%'],
+                ['0', '100%'],
+            ],
+        },
+        height: '130vh',
+        marginTop: '15rem',
+    },
+];
 export default {
     name: 'Home',
     components: {
         HomeAnimation,
-        Portal,
         PolygonRayAnimation,
+        PolygonBackground,
         ProjectCard,
     },
 
     computed: {
+        ...mapGetters(['isMobile']),
+
         isNewVisitor() {
             return this.$route.query.new === 'false' || this.$getCookie(cookies.SAW_INTRO);
         },
         projects() {
             return projects({ portfolioBucketUrl: this.$env.PORTFOLIO_BUCKET });
         },
+        polygonSpecs,
     },
 
     data: () => ({
@@ -116,7 +198,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$total-portal-background-height: 250vh;
 .home {
+    min-height: $total-portal-background-height + 100vh;
     /*
     * Bulma Overrides
     */
@@ -135,8 +219,8 @@ export default {
             flex-basis: 100%;
         }
     }
-
     &__projects {
+        min-height: 200vh;
         h1 {
             grid-column: 1 / span 2;
             margin-bottom: 5rem;
@@ -147,30 +231,16 @@ export default {
         @include tablet {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-gap: 15rem;
+            grid-template-rows: 14rem;
+            grid-auto-rows: $project-card-height-fully-opened;
+            grid-column-gap: 15rem;
+            grid-row-gap: 1rem;
         }
     }
 
     &__subtitle {
         height: 1em;
         max-width: 40ch;
-    }
-    &__bg-polygon {
-        --path__first-point: 10%;
-        --path: 0% var(--path__first-point), 100% 0, 100% 90%, 0% 100%;
-
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        top: 80vh;
-        z-index: -10;
-        -webkit-clip-path: polygon(var(--path));
-        clip-path: polygon(var(--path));
-        background: linear-gradient($p-blue, lighten($p-brown, 30%));
-
-        @include tablet {
-            --path__first-point: 20%;
-        }
     }
 }
 </style>
