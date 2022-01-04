@@ -16,9 +16,12 @@ $family-primary: $family-sans-serif;
 @import '~bulma/sass/elements/image.sass';
 @import '~bulma/sass/elements/icon.sass';
 @import '~bulma/sass/elements/title.sass';
+@import '~bulma/sass/elements/tag.sass';
 @import '~bulma/sass/elements/other.sass';
+@import '~bulma/sass/elements/table.sass';
 @import '~bulma/sass/components/level.sass';
 @import '~bulma/sass/components/navbar.sass';
+@import '~bulma/sass/components/card.sass';
 
 @include fade-slide-route-animation;
 @include fade-slide-animation;
@@ -29,6 +32,10 @@ body {
     .is-dark {
         @include has-dark-background;
     }
+}
+
+#app {
+    z-index: 1;
 }
 
 .title {

@@ -11,4 +11,5 @@
 @mixin has-title-font($weight: 300) {
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: $weight;
+    color: $text;
 }
