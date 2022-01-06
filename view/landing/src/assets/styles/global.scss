@@ -42,7 +42,8 @@ body {
     position: absolute;
     z-index: -10;
     top: 0;
-    height: auto
+    height: auto;
+    overflow-x: hidden;
 }
 
 .title {
