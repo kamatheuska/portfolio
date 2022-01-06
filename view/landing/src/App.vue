@@ -4,7 +4,7 @@
             <Navbar v-if="showNav" :isMobile="isMobile" />
         </transition>
         <main>
-            <transition name="fade-slide-route">
+            <transition name="fade-in">
                 <router-view @toggle-navigation="showNav = !showNav"></router-view>
             </transition>
         </main>
