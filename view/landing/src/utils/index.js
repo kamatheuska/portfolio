@@ -9,4 +9,5 @@ export function sleep(delay) {
 
 export const isProd = () => Cookies.get(cookies.STAGE) === environments.PROD;
 
-export const isMobile = () => window.matchMedia(`(max-width: ${breakpoints.MOBILE})`).matches;
+export const isMobile = () => window.matchMedia(`(max-width: ${breakpoints.SM})`).matches;
+export const isMobileXs = () => window.matchMedia(`(max-width: ${breakpoints.XS})`).matches;

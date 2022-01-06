@@ -53,6 +53,11 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/projects/:title/:id',
+        name: 'ProjectDetail',
+        component: () => import(/* webpackChunkName: "about" */ '../views/ProjectDetail.vue'),
+    },
 ];
 
 const router = new VueRouter({

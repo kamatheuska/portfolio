@@ -10,5 +10,6 @@ export const environments = {
 };
 
 export const breakpoints = {
-    MOBILE: '768px',
+    SM: '768px',
+    XS: '425px',
 };

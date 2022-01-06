@@ -6,7 +6,7 @@
                 'card--is-transparent': isTransparent,
             }"
         >
-            <div class="card-image p-4">
+            <div class="card-image py-4 px-2">
                 <figure class="image is-square">
                     <img :src="imageSrc" :alt="imageAlt" :loading="loading" />
                 </figure>
@@ -58,7 +58,7 @@
                         </ul>
                     </div>
                 </transition>
-                <div class="content block" v-if="tags">
+                <div class="content block" v-if="showAll && tags">
                     <h3 class="title is-4 is-size-6-mobile">Tech Stack</h3>
                     <ul class="is-flex is-flex-wrap-wrap">
                         <template v-if="showAll">
@@ -82,7 +82,8 @@
                 </div>
             </div>
             <footer class="card-footer">
-                <button href="#" class="button is-ghost card-footer-item" @click="showAll = !showAll">
+                <router-link v-if="isMobileXs" class="card-footer-item" :to="detailsPage"> Details </router-link>
+                <button v-else class="button is-ghost card-footer-item" @click="showAll = !showAll">
                     <span class="has-text-link" v-if="showAll">Less</span>
                     <span class="has-text-link" v-else>More</span>
                 </button>
@@ -92,8 +93,11 @@
 </template>
 
 <script>
+import { isMobileXs } from '@/utils';
+
 export default {
     props: {
+        id: String,
         imageSrc: String,
         imageAlt: String,
         description: String,
@@ -104,13 +108,19 @@ export default {
         tags: Array,
         links: Array,
         isTransparent: Boolean,
+        type: String,
+        meta: Object,
     },
     data: () => ({
         showAll: false,
     }),
     computed: {
+        isMobileXs,
         firstTags() {
             return this.tags.slice(0, 3);
+        },
+        detailsPage() {
+            return `/projects/${this.meta.title}/${this.id}`;
         },
     },
 };
@@ -137,11 +147,18 @@ $card-content-padding: 3rem;
         }
     }
     .card-image {
-        flex-basis: 40%;
+        flex-basis: 35%;
     }
     .card-content {
-        flex-basis: 60%;
-        min-height: 17rem;
+        flex-basis: 65%;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+
+        @include tablet {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            min-height: 17rem;
+        }
         &--is-opened {
             min-height: calc($project-card-height-fully-opened - $image-height - $card-content-padding);
         }
