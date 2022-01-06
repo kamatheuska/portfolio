@@ -7,11 +7,19 @@
         }"
     >
         <div class="script__vectors">
-            <div class="script__rect script__slide--right slide" :class="slideAnimationClasses('slashMoreThan')">
+            <div
+                class="script__rect script__slide--right slide"
+                :style="transitionOverrides"
+                :class="slideAnimationClasses('slashMoreThan')"
+            >
                 <Slash class="script__slash" />
                 <MoreThan class="script__more-than" />
             </div>
-            <div class="script__rect script__slide--left slide" :class="slideAnimationClasses('lessThan')">
+            <div
+                class="script__rect script__slide--left slide"
+                :style="transitionOverrides"
+                :class="slideAnimationClasses('lessThan')"
+            >
                 <LessThan class="script__less-than" />
             </div>
         </div>
@@ -25,6 +33,12 @@ import MoreThan from '@/components/svg/MoreThan.vue';
 import LessThan from '@/components/svg/LessThan.vue';
 import Slash from '@/components/svg/Slash.vue';
 
+/**
+ * @typedef {Object} TransitionRule
+ * @property {string} name
+ * @property {string} value
+ */
+
 export default {
     name: 'ScriptAnimation',
 
@@ -37,6 +51,14 @@ export default {
     props: {
         text: String,
         fill: String,
+        /**
+         * @type {TransitionRule[]}
+         *
+         */
+        transition: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data: () => ({
@@ -52,6 +74,14 @@ export default {
         },
     }),
 
+    computed: {
+        transitionOverrides() {
+            if (this.transition.length === 0) return '';
+
+            return this.transition.reduce((acc, rule) => `${acc} ${rule.name}: ${rule.value}; `, '').trim();
+        },
+    },
+
     methods: {
         slideAnimationClasses(svgName) {
             return {
@@ -65,16 +95,19 @@ export default {
             this.slashMoreThan.initial = false;
             this.lessThan.moveLeft = true;
             this.slashMoreThan.moveRight = true;
+            this.$emit('text:showed');
         },
         hideText() {
             this.lessThan.initial = true;
             this.slashMoreThan.initial = true;
             this.lessThan.moveLeft = false;
             this.slashMoreThan.moveRight = false;
+            this.$emit('text:hidden');
         },
         animateText() {
             this.isGray = true;
             this.isAnimated = true;
+            this.$emit('text:animated');
         },
     },
 };

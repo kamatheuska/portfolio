@@ -12,7 +12,12 @@
     >
         <div class="navbar-brand">
             <router-link v-if="showLogo" to="/" class="navbar-item">
-                <ScriptAnimation ref="logo" text="nicolas ramirez portfolio" :isDark="true" />
+                <ScriptAnimation
+                    ref="logo"
+                    text="nicolas ramirez portfolio"
+                    :isDark="true"
+                    :transition="[{ name: 'transition-duration', value: '0.3s' }]"
+                />
             </router-link>
             <a
                 role="button"
@@ -92,9 +97,9 @@
 
 <script>
 import vClickOutside from 'v-click-outside';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import ScriptAnimation from '@/components/ScriptAnimation.vue';
-import { isProd } from '@/utils';
+import { isProd, sleep } from '@/utils';
 
 const routes = [
     {
@@ -166,8 +171,10 @@ export default {
         isMobile: Boolean,
     },
 
-    mounted() {
+    async mounted() {
         this.showNavbarMenuOnMdDevices();
+        await sleep(500);
+        this.toggleLogoOnHome();
         this.animateLogo();
     },
 
@@ -188,6 +195,8 @@ export default {
     },
 
     methods: {
+        ...mapMutations('navigation', ['toggleNav', 'toggleLogo']),
+
         unfocusNavbarDropdown(event) {
             event.target.blur();
         },
@@ -197,8 +206,17 @@ export default {
             this.activeNavbar = true;
         },
 
-        animateLogo() {
+        toggleLogoOnHome() {
+            if (this.$route.name === 'Home') return;
+            this.toggleLogo(true);
+        },
+
+        async animateLogo() {
             if (!this.showLogo) return;
+            await this.$nextTick();
+
+            await sleep(300);
+
             this.$refs.logo.showText();
         },
 
@@ -241,8 +259,8 @@ export default {
                 background-color: inherit;
             }
             .script {
-                right: 2rem;
-                transform: scale(0.6);
+                transform: scale(0.7);
+                right: 0.7rem;
             }
         }
     }
