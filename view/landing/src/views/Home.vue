@@ -27,106 +27,14 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import * as cookies from '@/constants/cookies';
+import getProjects from '@/config/projects';
+import getPolygonSpecs from '@/config/polygons';
 
 import HomeAnimation from '@/components/animations/HomeAnimation.vue';
 import PolygonRayAnimation from '@/components/animations/PolygonRayAnimation.vue';
 import PolygonBackground from '@/components/layout/PolygonBackground.vue';
 import ProjectCard from '@/components/ProjectCard.vue';
-import store from '@/store';
 
-const projects = ({ portfolioBucketUrl }) => [
-    {
-        highlights: [
-            'Development of a DEMO environment for the recommendations vertical that would allow E2E processes and Data Scientist Analitics test to be done within the product.',
-        ],
-        imageSrc: `${portfolioBucketUrl}/images/projects/lidl-reco-square.jpg`,
-        imageAlt: 'Lidl Reco Slider',
-        title: 'Recommendations Team',
-        company: 'LIDL Digital',
-        tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot'],
-        links: [
-            {
-                text: 'Project URL',
-                url: 'https://www.lidl.de',
-            },
-            {
-                text: 'Team Feedback',
-                url: 'https://www.linkedin.com/in/nicolasramirezdev',
-            },
-        ],
-        isTransparent: true,
-        loading: 'lazy',
-    },
-    {
-        highlights: [
-            'Development and maintenance of a CMS, home page and content pages, with high performance and internationalization, scalable for different countries.',
-        ],
-        imageSrc: `${portfolioBucketUrl}/images/projects/lidl-content-square.jpg`,
-        imageAlt: 'Lidl Reco Slider',
-        title: 'Content Team',
-        company: 'LIDL Digital',
-        tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot', 'Docker', 'Kubernetes', 'GoogleCloud'],
-        links: [
-            {
-                text: 'Project URL',
-                url: 'https://www.lidl.de',
-            },
-            {
-                text: 'Team Feedback',
-                url: 'https://www.linkedin.com/in/nicolasramirezdev',
-            },
-        ],
-        isTransparent: true,
-        loading: 'lazy',
-    },
-];
-
-const polygonSpecs = () => [
-    {
-        gradientSpecs: {
-            colors: ['#95BCCC', '#DDD4D4'],
-        },
-        polygon: {
-            points: [
-                ['0', '10%'],
-                ['100%', '0'],
-                ['100%', '90%'],
-                ['0', '100%'],
-            ],
-        },
-    },
-    {
-        gradientSpecs: {
-            colors: ['#FCDCDC', '#988080'],
-            angle: 'to right top',
-        },
-        polygon: {
-            points: [
-                ['0', '10%'],
-                ['100%', '30%'],
-                ['100%', '80%'],
-                ['0', '100%'],
-            ],
-        },
-        marginTop: '15rem',
-    },
-    {
-        gradientSpecs: {
-            colors: ['#95BCCC', '#DDD4D4'],
-            angle: 'to left top',
-        },
-        polygon: {
-            points: [
-                ['0', '10%'],
-                ['100%', '15%'],
-                ['100%', '80%'],
-                ['0', '100%'],
-            ],
-        },
-        height: '130vh',
-        marginTop: '15rem',
-    },
-];
 export default {
     name: 'Home',
     components: {
@@ -143,9 +51,9 @@ export default {
             return this.$route.query.new === 'false' || this.$getCookie(cookies.SAW_INTRO);
         },
         projects() {
-            return projects({ portfolioBucketUrl: this.$env.PORTFOLIO_BUCKET });
+            return getProjects({ portfolioBucketUrl: this.$env.PORTFOLIO_BUCKET });
         },
-        polygonSpecs,
+        polygonSpecs: getPolygonSpecs,
     },
 
     data: () => ({
@@ -168,16 +76,6 @@ export default {
             if (this.isNewVisitor) return;
             this.animateText = true;
         },
-    },
-
-    beforeRouteLeave(to, from, next) {
-        store.commit('navigation/toggleLogo', true);
-        next();
-    },
-
-    beforeRouteEnter(to, from, next) {
-        store.commit('navigation/toggleLogo', false);
-        next();
     },
 
     mounted() {
@@ -213,7 +111,7 @@ $total-portal-background-height: 250vh;
     &__projects {
         min-height: 200vh;
         h1 {
-            grid-column: 1 / span 2;
+            grid-column: 1 / span 3;
             margin-bottom: 5rem;
             @include tablet {
                 margin-bottom: 0;
@@ -221,11 +119,14 @@ $total-portal-background-height: 250vh;
         }
         @include tablet {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             grid-template-rows: 14rem;
             grid-auto-rows: $project-card-height-fully-opened;
-            grid-column-gap: 15rem;
+            grid-column-gap: 1rem;
             grid-row-gap: 1rem;
+        }
+        @include widescreen {
+            grid-column-gap: 5rem;
         }
     }
 
