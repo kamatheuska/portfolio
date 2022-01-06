@@ -11,6 +11,9 @@
         }"
     >
         <div class="navbar-brand">
+            <router-link v-if="showLogo" to="/" class="navbar-item">
+                <ScriptAnimation ref="logo" text="nicolas ramirez portfolio" :isDark="true" />
+            </router-link>
             <a
                 role="button"
                 class="navbar-burger"
@@ -89,6 +92,8 @@
 
 <script>
 import vClickOutside from 'v-click-outside';
+import { mapGetters } from 'vuex';
+import ScriptAnimation from '@/components/ScriptAnimation.vue';
 import { isProd } from '@/utils';
 
 const routes = [
@@ -146,6 +151,9 @@ const logoBgColor = {
 
 export default {
     name: 'Navbar',
+    components: {
+        ScriptAnimation,
+    },
     props: {
         showLinks: {
             type: Boolean,
@@ -159,9 +167,8 @@ export default {
     },
 
     mounted() {
-        if (!this.isMobile) {
-            this.activeNavbar = true;
-        }
+        this.showNavbarMenuOnMdDevices();
+        this.animateLogo();
     },
 
     data: () => ({
@@ -170,13 +177,12 @@ export default {
     }),
 
     computed: {
-        showLogo() {
-            return this.showLinks;
-        },
+        ...mapGetters('navigation', ['showLogo']),
         logoBgColor() {
             return isProd() ? logoBgColor.PROD : logoBgColor.TEST;
         },
     },
+
     directives: {
         clickOutside: vClickOutside.directive,
     },
@@ -184,6 +190,16 @@ export default {
     methods: {
         unfocusNavbarDropdown(event) {
             event.target.blur();
+        },
+
+        showNavbarMenuOnMdDevices() {
+            if (this.isMobile) return;
+            this.activeNavbar = true;
+        },
+
+        animateLogo() {
+            if (!this.showLogo) return;
+            this.$refs.logo.showText();
         },
 
         onClickOutside() {
@@ -214,6 +230,20 @@ export default {
 
         @include tablet {
             z-index: 20;
+        }
+    }
+
+    &-brand {
+        fill: $p-gray;
+        stroke: $p-gray;
+        .navbar-item {
+            &.is-active {
+                background-color: inherit;
+            }
+            .script {
+                right: 2rem;
+                transform: scale(0.6);
+            }
         }
     }
     &-menu {

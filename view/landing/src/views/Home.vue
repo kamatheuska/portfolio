@@ -15,7 +15,7 @@
             </div>
         </section>
         <section class="home__projects section block">
-            <h1 class="title is-1 has-text-centered is-uppercase">Projects</h1>
+            <h1 class="title is-1 has-text-centered">Projects</h1>
             <ProjectCard v-for="(project, i) in projects" class="mb-3" :key="`project-card-${i}`" v-bind="project" />
         </section>
         <PolygonRayAnimation :show="showUpperPolygon" />
@@ -32,6 +32,7 @@ import HomeAnimation from '@/components/animations/HomeAnimation.vue';
 import PolygonRayAnimation from '@/components/animations/PolygonRayAnimation.vue';
 import PolygonBackground from '@/components/layout/PolygonBackground.vue';
 import ProjectCard from '@/components/ProjectCard.vue';
+import store from '@/store';
 
 const projects = ({ portfolioBucketUrl }) => [
     {
@@ -53,50 +54,30 @@ const projects = ({ portfolioBucketUrl }) => [
                 url: 'https://www.linkedin.com/in/nicolasramirezdev',
             },
         ],
-        loading: 'lazy',
-    },
-    {
-        highlights: [
-            'Development and maintenance of a CMS, home page and content pages, with high performance and internationalization, scalable for different countries.',
-        ],
-        imageSrc: `${portfolioBucketUrl}/images/projects/lidl-content-square.jpg`,
-        imageAlt: 'Lidl Reco Slider',
-        title: 'Content Team',
-        company: 'LIDL Digital',
-        tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot', 'Docker', 'Kubernetes', 'GoogleCloud'],
-        links: [
-            {
-                text: 'Project URL',
-                url: 'https://www.lidl.de',
-            },
-            {
-                text: 'Team Feedback',
-                url: 'https://www.linkedin.com/in/nicolasramirezdev',
-            },
-        ],
-        loading: 'lazy',
-    },
-    {
-        highlights: [
-            'Development and maintenance of a CMS, home page and content pages, with high performance and internationalization, scalable for different countries.',
-        ],
-        imageSrc: `${portfolioBucketUrl}/images/projects/lidl-content-square.jpg`,
-        imageAlt: 'Lidl Reco Slider',
-        title: 'Content Team',
-        company: 'LIDL Digital',
-        tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot', 'Docker', 'Kubernetes', 'GoogleCloud'],
-        links: [
-            {
-                text: 'Project URL',
-                url: 'https://www.lidl.de',
-            },
-            {
-                text: 'Team Feedback',
-                url: 'https://www.linkedin.com/in/nicolasramirezdev',
-            },
-        ],
-        loading: 'lazy',
         isTransparent: true,
+        loading: 'lazy',
+    },
+    {
+        highlights: [
+            'Development and maintenance of a CMS, home page and content pages, with high performance and internationalization, scalable for different countries.',
+        ],
+        imageSrc: `${portfolioBucketUrl}/images/projects/lidl-content-square.jpg`,
+        imageAlt: 'Lidl Reco Slider',
+        title: 'Content Team',
+        company: 'LIDL Digital',
+        tags: ['VueJS', 'TypeScript', 'Express', 'Nuxt', 'SpringBoot', 'Docker', 'Kubernetes', 'GoogleCloud'],
+        links: [
+            {
+                text: 'Project URL',
+                url: 'https://www.lidl.de',
+            },
+            {
+                text: 'Team Feedback',
+                url: 'https://www.linkedin.com/in/nicolasramirezdev',
+            },
+        ],
+        isTransparent: true,
+        loading: 'lazy',
     },
 ];
 
@@ -174,19 +155,29 @@ export default {
     }),
 
     methods: {
-        ...mapMutations(['toggleNavigation']),
+        ...mapMutations('navigation', ['toggleNav', 'toggleLogo']),
 
         toggleHiddenElements(show = null) {
             this.showSubtitle = show === null ? !this.showSubtitle : show;
             this.showUpperPolygon = show === null ? !this.showUpperPolygon : show;
 
-            this.toggleNavigation(show);
+            this.toggleNav(show);
         },
 
         checkAnimationQuery() {
             if (this.isNewVisitor) return;
             this.animateText = true;
         },
+    },
+
+    beforeRouteLeave(to, from, next) {
+        store.commit('navigation/toggleLogo', true);
+        next();
+    },
+
+    beforeRouteEnter(to, from, next) {
+        store.commit('navigation/toggleLogo', false);
+        next();
     },
 
     mounted() {

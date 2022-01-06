@@ -1,5 +1,11 @@
 <template>
-    <div class="script gray-scale-transition" :class="{ 'script--animated-gray': isScriptAnimatedGray }">
+    <div
+        class="script gray-scale-transition"
+        :class="{
+            'script--is-gray': isGray,
+            'script--is-animated': isAnimated,
+        }"
+    >
         <div class="script__vectors">
             <div class="script__rect script__slide--right slide" :class="slideAnimationClasses('slashMoreThan')">
                 <Slash class="script__slash" />
@@ -30,33 +36,22 @@ export default {
 
     props: {
         text: String,
+        fill: String,
     },
 
-    data() {
-        return {
-            isScriptAnimatedGray: false,
-            lessThan: {
-                moveLeft: false,
-                initial: false,
-            },
-            slashMoreThan: {
-                moveRight: false,
-                initial: false,
-            },
-            logo: {
-                textBlocks: {
-                    name: {
-                        text: 'nicolas ramirez',
-                        show: true,
-                    },
-                    profesion: {
-                        text: 'software developer',
-                        show: false,
-                    },
-                },
-            },
-        };
-    },
+    data: () => ({
+        isAnimated: false,
+        isGray: false,
+        lessThan: {
+            moveLeft: false,
+            initial: false,
+        },
+        slashMoreThan: {
+            moveRight: false,
+            initial: false,
+        },
+    }),
+
     methods: {
         slideAnimationClasses(svgName) {
             return {
@@ -78,7 +73,8 @@ export default {
             this.slashMoreThan.moveRight = false;
         },
         animateText() {
-            this.isScriptAnimatedGray = true;
+            this.isGray = true;
+            this.isAnimated = true;
         },
     },
 };
@@ -109,12 +105,15 @@ $script-initial-width: 200px;
     display: inline-block;
     font-size: 30px;
     fill: $text;
+    color: $text;
     stroke: $text;
     z-index: 2;
-    &--animated-gray {
+    &--is-animated {
+        transform: scale(0.8, 1) rotate(3deg);
+    }
+    &--is-gray {
         fill: $p-gray;
         stroke: $p-gray;
-        transform: scale(0.8, 1) rotate(3deg);
         color: $p-gray;
     }
 

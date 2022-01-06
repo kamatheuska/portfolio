@@ -1,13 +1,11 @@
 <template>
     <div id="app" class="root">
-        <header>
-            <transition name="fade-in">
-                <Navbar v-if="showNavigation" :isMobile="isMobile" />
-            </transition>
-        </header>
-        <main class="container">
+        <transition name="fade-in">
+            <Navbar v-if="showNav" :isMobile="isMobile" />
+        </transition>
+        <main>
             <transition name="fade-slide-route">
-                <router-view @toggle-navigation="showNavigation = !showNavigation"></router-view>
+                <router-view @toggle-navigation="showNav = !showNav"></router-view>
             </transition>
         </main>
         <footer class="footer">
@@ -37,10 +35,11 @@ export default {
         Navbar,
     },
     computed: {
-        ...mapGetters(['showNavigation', 'isMobile']),
+        ...mapGetters('navigation', ['showNav']),
+        ...mapGetters(['isMobile']),
     },
     methods: {
-        ...mapMutations(['toggleNavigation']),
+        ...mapMutations('navigation', ['toggleNav']),
         ...mapActions(['initApp']),
     },
     created() {
@@ -49,7 +48,7 @@ export default {
         });
 
         if (this.$route.name !== 'Home') {
-            this.toggleNavigation(true);
+            this.toggleNav(true);
         }
     },
 };

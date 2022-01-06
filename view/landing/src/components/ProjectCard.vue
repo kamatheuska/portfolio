@@ -6,7 +6,7 @@
                 'card--is-transparent': isTransparent,
             }"
         >
-            <div class="card-image pl-4">
+            <div class="card-image p-4">
                 <figure class="image is-square">
                     <img :src="imageSrc" :alt="imageAlt" :loading="loading" />
                 </figure>
