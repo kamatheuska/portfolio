@@ -1,7 +1,7 @@
 const moduleState = () => ({
     show: false,
     logo: {
-        show: true,
+        show: false,
     },
 });
 
