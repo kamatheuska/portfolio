@@ -1,5 +1,6 @@
 <template>
-    <div class="about container">
+    <div v-if="isLoading" class="about container"></div>
+    <div v-else class="about container">
         <section class="hero is-medium">
             <div class="hero-body">
                 <div class="container has-text-centered">
@@ -7,7 +8,7 @@
                 </div>
             </div>
         </section>
-        <!-- <section class="section">
+        <section class="section">
             <div class="columns mb-5">
                 <div class="column is-offset-1 is-4">
                     <h2 class="title is-3">{{ about.carrer.title }}</h2>
@@ -20,52 +21,80 @@
                 </div>
             </div>
         </section>
-        <section class="section is-medium">
+        <section class="section">
+            <div class="columns">
+                <div class="column is-offset-6 is-4">
+                    <h2 class="title is-3">{{ about.passions.title }}</h2>
+                    <p class="block is-size-5 about__paragraph has-text-justified">
+                        {{ about.passions.texts[0] }}
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section v-if="isNewLandingPageDone" class="section is-medium">
             <h2 class="title is-3 has-text-centered mb-6">{{ about.tech.title }}</h2>
             <HorizontalLevel>
                 <LevelItem v-for="(tech, i) in about.tech.stack" :key="`tech-stack-${i}`" v-bind="tech" />
             </HorizontalLevel>
         </section>
-        <div class="columns">
-            <div class="column is-offset-6 is-4">
-                <h2 class="title is-3">{{ about.passions.title }}</h2>
-                <p class="block is-size-5 about__paragraph has-text-justified">
-                    {{ about.passions.texts[0] }}
-                </p>
-            </div>
-        </div>
-        -->
-        <Waves portal-selector="background" />
+        <section v-else class="section is-medium">
+            <p class="title is-5 has-text-centered mb-6">...in construction...</p>
+        </section>
+
+        <Waves portal-selector="background" :colors="waveColors" />
+        <Waves portal-selector="background" :colors="waveColors" />
     </div>
 </template>
 
 <script>
-// import HorizontalLevel from '@/components/layout/HorizontalLevel.vue';
-// import LevelItem from '@/components/LevelItem.vue';
+import HorizontalLevel from '@/components/layout/HorizontalLevel.vue';
+import LevelItem from '@/components/LevelItem.vue';
 import Waves from '@/components/svg/Waves.vue';
 import aboutContentFactory from '@/content/aboutFactory';
+import { sleep } from '@/utils';
+
+const waveColors = {
+    '$p-blue': '#95BCCC',
+    '$p-pink': '#FCDCDC',
+    '$p-brown': '#988080',
+    '$p-gray': '#BECEDA',
+    '$p-light-brown': '#DDD4D4',
+};
 
 export default {
     name: 'About',
 
     components: {
-        // HorizontalLevel,
-        // LevelItem,
+        HorizontalLevel,
+        LevelItem,
         Waves,
     },
 
-    created() {
+    async created() {
         this.about = aboutContentFactory({
             portfolioBucketUrl: this.$env.PORTFOLIO_BUCKET,
         });
+
+        await sleep(600);
+        this.isLoading = false;
     },
 
     data: () => ({
         about: {},
+        waveColors,
+        isNewLandingPageDone: false,
+        isLoading: true,
     }),
 };
 </script>
-
+<style lang="scss">
+#background {
+    top: 10rem;
+    & > * {
+        margin-bottom: 30rem;
+    }
+}
+</style>
 <style lang="scss" scoped>
 .about {
     min-height: 300vh;
@@ -82,24 +111,6 @@ export default {
     &__paragraph {
         @include tablet {
             font-size: $size-1;
-        }
-    }
-    &__background {
-        top: 65%;
-        left: -10%;
-        background-image: url('~@/assets/svg/gray-waves.svg');
-        background-size: 70vh auto;
-        background-repeat: no-repeat;
-        height: 100vh;
-        width: 100vh;
-        position: absolute;
-        z-index: -10;
-
-        @include tablet {
-            left: -60%;
-            top: 20%;
-            background-size: 130vw auto;
-            width: 130vw;
         }
     }
 }
