@@ -58,7 +58,7 @@
                         </ul>
                     </div>
                 </transition>
-                <div class="content block" v-if="showAll && tags">
+                <div class="content block" v-if="(tags && !isMobileXs) || showAll">
                     <h3 class="title is-4 is-size-6-mobile">Tech Stack</h3>
                     <ul class="is-flex is-flex-wrap-wrap">
                         <template v-if="showAll">
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { isMobileXs } from '@/utils';
+import { mapGetters } from 'vuex';
 
 export default {
     props: {
@@ -115,7 +115,7 @@ export default {
         showAll: false,
     }),
     computed: {
-        isMobileXs,
+        ...mapGetters(['isMobile', 'isMobileXs']),
         firstTags() {
             return this.tags.slice(0, 3);
         },
@@ -129,6 +129,7 @@ export default {
 <style lang="scss" scoped>
 $image-height: 520px;
 $card-content-padding: 3rem;
+
 .project-card {
     height: max-content;
 

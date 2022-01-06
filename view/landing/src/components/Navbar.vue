@@ -14,7 +14,7 @@
             <router-link v-if="showLogo" to="/" class="navbar-item">
                 <ScriptAnimation
                     ref="logo"
-                    text="nicolas ramirez portfolio"
+                    text="PORTFOLIO"
                     :isDark="true"
                     :transition="[{ name: 'transition-duration', value: '0.3s' }]"
                 />
@@ -112,6 +112,8 @@ const routes = [
     },
     {
         text: 'Stories',
+        path: '/stories',
+        name: 'Stories',
         children: [
             {
                 path: '/stories/concertos',
@@ -123,7 +125,7 @@ const routes = [
     {
         text: 'Services',
         path: '/miniservices',
-        name: 'UrlShortener',
+        name: 'Miniservices',
         children: [
             {
                 path: '/miniservices/urlshortener',
@@ -207,8 +209,8 @@ export default {
         },
 
         toggleLogoOnHome() {
-            if (this.$route.name === 'Home') return;
-            this.toggleLogo(true);
+            if (this.$route.name === 'Home') this.toggleLogo(false);
+            else this.toggleLogo(true);
         },
 
         async animateLogo() {
@@ -235,6 +237,10 @@ export default {
 
     watch: {
         '$route.path': 'hideNavbarBurgerMenu',
+        '$route.name': function onRouteNameChange() {
+            this.toggleLogoOnHome();
+            this.animateLogo();
+        },
     },
 };
 </script>
@@ -260,7 +266,6 @@ export default {
             }
             .script {
                 transform: scale(0.7);
-                right: 0.7rem;
             }
         }
     }

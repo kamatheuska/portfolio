@@ -25,7 +25,7 @@ const aboutContentFactory = ({ portfolioBucketUrl }) => ({
         ],
     },
     tech: {
-        title: 'Core Web Technologies',
+        title: 'Frontend Tech Stack',
         stack: [
             {
                 imageSrc: `${portfolioBucketUrl}/images/js-logo.png`,

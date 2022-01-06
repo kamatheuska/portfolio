@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Intro from '../views/Intro.vue';
 import MiniServices from '../views/mini-services/index.vue';
+import Stories from '../views/stories/index.vue';
 
 Vue.use(VueRouter);
 
@@ -22,9 +23,20 @@ const routes = [
         component: Intro,
     },
     {
-        path: '/stories/concertos',
-        name: 'Concertos',
-        component: () => import(/* webpackChunkName: "concertos" */ '../views/stories/GeometricConcertos.vue'),
+        path: '/stories',
+        component: Stories,
+        children: [
+            {
+                path: '',
+                name: 'Stories',
+                component: () => import(/* webpackChunkName: "stories" */ '../views/stories/Stories.vue'),
+            },
+            {
+                path: '/stories/concertos',
+                name: 'Concertos',
+                component: () => import(/* webpackChunkName: "concertos" */ '../views/stories/GeometricConcertos.vue'),
+            },
+        ],
     },
     {
         path: '/about',
@@ -38,7 +50,7 @@ const routes = [
             {
                 path: '',
                 name: 'Miniservices',
-                component: () => import(/* webpackChunkName: "urlShortener" */ '../views/mini-services/Services.vue'),
+                component: () => import(/* webpackChunkName: "services" */ '../views/mini-services/Services.vue'),
             },
             {
                 path: 'urlshortener',
@@ -56,7 +68,7 @@ const routes = [
     {
         path: '/projects/:title/:id',
         name: 'ProjectDetail',
-        component: () => import(/* webpackChunkName: "about" */ '../views/ProjectDetail.vue'),
+        component: () => import(/* webpackChunkName: "project-detail" */ '../views/ProjectDetail.vue'),
     },
 ];
 
@@ -64,6 +76,10 @@ const router = new VueRouter({
     mode: 'history',
     routes,
     linkActiveClass: 'is-active',
+
+    scrollBehavior() {
+        return { x: 0, y: 0 };
+    },
 });
 
 export default router;
