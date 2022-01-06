@@ -1,8 +1,8 @@
 <template>
     <div class="geometric-concertos container">
-        <div class="geometric-concertos__concertos">
-            <header class="geometric-concertos__header">
-                <h1 class="title my-3 is-2">GEOMETRIC CONCERTOS</h1>
+        <div class="geometric-concertos__concertos mt-5">
+            <header class="geometric-concertos__header has-text-centered mb-5">
+                <h1 class="title my-5 is-2">GEOMETRIC CONCERTOS</h1>
                 <h2 class="subtitle">(scroll down)</h2>
                 <button class="button is-black" @click="reloadPage()">Da Capo</button>
             </header>
@@ -21,7 +21,7 @@
                             :top="square.top"
                             :left="square.left"
                             :color="square.color"
-                            link="/projects"
+                            link="#"
                         />
                     </SquareNavGroup>
                 </div>
@@ -390,6 +390,7 @@ export default {
 
 <style lang="scss" scoped>
 .geometric-concertos {
+    min-height: 90vh;
     &__concertos {
         display: flex;
         justify-content: space-between;

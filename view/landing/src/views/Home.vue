@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapMutations } from 'vuex';
 import * as cookies from '@/constants/cookies';
 import getProjects from '@/config/projects';
 import getPolygonSpecs from '@/config/polygons';
@@ -45,8 +45,6 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['isMobile']),
-
         isNewVisitor() {
             return this.$route.query.new === 'false' || this.$getCookie(cookies.SAW_INTRO);
         },
@@ -89,7 +87,7 @@ export default {
 <style lang="scss" scoped>
 $total-portal-background-height: 250vh;
 .home {
-    min-height: $total-portal-background-height + 100vh;
+    min-height: $total-portal-background-height;
     /*
     * Bulma Overrides
     */
@@ -109,7 +107,7 @@ $total-portal-background-height: 250vh;
         }
     }
     &__projects {
-        min-height: 200vh;
+        min-height: 180vh;
         h1 {
             grid-column: 1 / span 3;
             margin-bottom: 5rem;

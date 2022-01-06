@@ -26,7 +26,6 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { isMobile } from '@/utils';
 import Navbar from '@/components/Navbar.vue';
 
 export default {
@@ -43,9 +42,7 @@ export default {
         ...mapActions(['initApp']),
     },
     created() {
-        this.initApp({
-            isMobile: isMobile(),
-        });
+        this.initApp();
 
         if (this.$route.name !== 'Home') {
             this.toggleNav(true);

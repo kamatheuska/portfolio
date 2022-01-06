@@ -82,7 +82,10 @@ export default {
 <style lang="scss">
 .timestamp {
     &__preview {
-        width: 40rem;
+        @include tablet {
+            width: 40rem;
+        }
+
         pre {
             display: flex;
             align-items: center;
