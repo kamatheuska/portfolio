@@ -9,7 +9,7 @@
 
 <script>
 import { sleep } from '@/utils';
-import ScriptAnimation from '@/components/ScriptAnimation.vue';
+import ScriptAnimation from '@/components/animations/ScriptAnimation.vue';
 import EightNote from '@/components/svg/EightNote.vue';
 
 export default {

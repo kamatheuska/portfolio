@@ -8,6 +8,7 @@ import { envMixin, darkThemeMixin, cookiesMixin } from './mixins/global';
 import '@/assets/styles/global.scss';
 
 Vue.config.productionTip = false;
+Vue.config.ignoredElements = [/^ion-/];
 
 Vue.mixin(envMixin());
 Vue.mixin(darkThemeMixin());

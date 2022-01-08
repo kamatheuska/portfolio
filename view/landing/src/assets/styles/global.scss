@@ -60,3 +60,11 @@ body {
     transition-duration: .2s;
     transition-delay: 0s;
 }
+
+// Removing ion-icon tooltip  https://github.com/ionic-team/ionicons/issues/949#issuecomment-859793631
+ion-icon:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

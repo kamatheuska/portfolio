@@ -3,6 +3,7 @@
         class="script gray-scale-transition"
         :class="{
             'script--is-gray': isGray,
+            'script--has-small-text': isSmall,
             'script--is-animated': isAnimated,
         }"
     >
@@ -10,7 +11,7 @@
             <div
                 class="script__rect script__slide--right slide"
                 :style="transitionOverrides"
-                :class="slideAnimationClasses('slashMoreThan')"
+                :class="rectClasses('slashMoreThan')"
             >
                 <Slash class="script__slash" />
                 <MoreThan class="script__more-than" />
@@ -18,7 +19,7 @@
             <div
                 class="script__rect script__slide--left slide"
                 :style="transitionOverrides"
-                :class="slideAnimationClasses('lessThan')"
+                :class="rectClasses('lessThan')"
             >
                 <LessThan class="script__less-than" />
             </div>
@@ -51,6 +52,9 @@ export default {
     props: {
         text: String,
         fill: String,
+        isOpened: Boolean,
+        isTransparent: Boolean,
+        isSmall: Boolean,
         /**
          * @type {TransitionRule[]}
          *
@@ -82,7 +86,19 @@ export default {
         },
     },
 
+    mounted() {
+        if (this.isOpened) {
+            this.showText();
+        }
+    },
+
     methods: {
+        rectClasses(svgName) {
+            return {
+                ...this.slideAnimationClasses(svgName),
+                'script__rect--is-transparent': this.isTransparent,
+            };
+        },
         slideAnimationClasses(svgName) {
             return {
                 'slide--initial': this[svgName].initial,
@@ -144,6 +160,9 @@ $script-initial-width: 200px;
     &--is-animated {
         transform: scale(0.8, 1) rotate(3deg);
     }
+    &--has-small-text {
+        font-size: 1.1rem;
+    }
     &--is-gray {
         fill: $p-gray;
         stroke: $p-gray;
@@ -166,6 +185,9 @@ $script-initial-width: 200px;
         position: absolute;
         height: 1.5em;
         width: 50%;
+        &--is-transparent {
+            background-color: inherit;
+        }
     }
     &__slide {
         &--right {

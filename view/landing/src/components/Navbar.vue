@@ -98,7 +98,7 @@
 <script>
 import vClickOutside from 'v-click-outside';
 import { mapGetters, mapMutations } from 'vuex';
-import ScriptAnimation from '@/components/ScriptAnimation.vue';
+import ScriptAnimation from '@/components/animations/ScriptAnimation.vue';
 import { isProd, sleep } from '@/utils';
 
 const routes = [
