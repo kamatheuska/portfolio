@@ -8,30 +8,20 @@
                 <router-view @toggle-navigation="showNav = !showNav"></router-view>
             </transition>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p>
-                    Portfolio by Nicolas Ramirez. Source code for this website can be found on
-                    <a href="https://github.com/kamatheuska/portfolio" target="_blank" rel="noopener noreferrer">
-                        Github
-                    </a>
-                </p>
-                <p>
-                    <strong>Barcelona, 2022 </strong>
-                </p>
-            </div>
-        </footer>
+        <Footer />
     </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
     name: 'App',
     components: {
         Navbar,
+        Footer,
     },
     computed: {
         ...mapGetters('navigation', ['showNav']),
