@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Intro from '../views/Intro.vue';
 import MiniServices from '../views/mini-services/index.vue';
 import Stories from '../views/stories/index.vue';
+import Projects from '../views/projects/index.vue';
 
 Vue.use(VueRouter);
 
@@ -65,10 +66,22 @@ const routes = [
             },
         ],
     },
+
     {
-        path: '/projects/:title/:id',
-        name: 'ProjectDetail',
-        component: () => import(/* webpackChunkName: "project-detail" */ '../views/ProjectDetail.vue'),
+        path: '/projects',
+        component: Projects,
+        children: [
+            {
+                path: '',
+                name: 'Projects',
+                component: () => import(/* webpackChunkName: "projects" */ '../views/projects/Projects.vue'),
+            },
+            {
+                path: ':title/:id',
+                name: 'ProjectDetail',
+                component: () => import(/* webpackChunkName: "project-detail" */ '../views/projects/ProjectDetail.vue'),
+            },
+        ],
     },
 ];
 

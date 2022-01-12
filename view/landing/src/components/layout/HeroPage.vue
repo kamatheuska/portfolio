@@ -10,7 +10,7 @@
         <slot name="content" v-if="sections">
             <section class="section" v-for="(section, i) in sections" :key="`hero-page-section-${i}`">
                 <div class="columns">
-                    <div class="column">
+                    <div class="column is-offset-3 is-6">
                         <p
                             class="block is-size-5 has-text-justified"
                             v-for="(paragraph, j) in section"

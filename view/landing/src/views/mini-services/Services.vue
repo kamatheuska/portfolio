@@ -2,7 +2,11 @@
     <div class="services">
         <HeroPage :title="title" :sections="sections">
             <template v-slot:after-sections>
-                <LevelSection :items="items" />
+                <div class="columns">
+                    <div class="column is-offset-3 is-6">
+                        <LevelSection :items="items" />
+                    </div>
+                </div>
             </template>
         </HeroPage>
     </div>
@@ -63,6 +67,9 @@ export default {
 .services {
     .level-item {
         margin-bottom: 3rem;
+        @include tablet {
+            margin-bottom: 0;
+        }
     }
 
     .level-item:last-child {

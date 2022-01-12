@@ -1,8 +1,12 @@
 <template>
     <div class="project-detail">
         <HeroPage :title="title">
-            <template #sections>
-                <p>under construction</p>
+            <template #after-sections>
+                <div class="columns mb-5">
+                    <div class="column is-offset-3 is-6 has-text-centered">
+                        <p>...under construction...</p>
+                    </div>
+                </div>
             </template>
         </HeroPage>
     </div>

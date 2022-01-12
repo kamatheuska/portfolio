@@ -141,6 +141,8 @@ const routes = [
     },
     {
         text: 'Projects',
+        path: '/projects',
+        name: 'Projects',
         children: [
             {
                 path: '/projects/react',
