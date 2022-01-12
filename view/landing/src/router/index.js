@@ -64,6 +64,11 @@ const routes = [
                 name: 'Timestamp',
                 component: () => import(/* webpackChunkName: "timestamp" */ '../views/mini-services/Timestamp.vue'),
             },
+            {
+                path: 'whoami',
+                name: 'Whoami',
+                component: () => import(/* webpackChunkName: "whoami" */ '../views/mini-services/Whoami.vue'),
+            },
         ],
     },
 

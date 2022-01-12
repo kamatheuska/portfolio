@@ -137,6 +137,11 @@ const routes = [
                 text: 'Timestamp Generator',
                 name: 'Timestamp',
             },
+            {
+                path: '/miniservices/Whoami',
+                text: 'Who Am I',
+                name: 'Whoami',
+            },
         ],
     },
     {
