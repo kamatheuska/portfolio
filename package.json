@@ -77,8 +77,8 @@
         "url-loader": "^1.0.1"
     },
     "engines": {
-        "node": "14.17.0",
-        "npm": "6.14.0"
+        "node": "16.x",
+        "npm": "8.x"
     },
     "author": "Nicolas Ramirez",
     "license": "ISC"
