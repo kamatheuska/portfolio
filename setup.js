@@ -41,7 +41,7 @@ function setView(app, { staticsFolder, stage }) {
     app.get(/projects\/react/, (req, res) => {
         res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/react-projects/index.html'));
     });
-    app.use(history({ verbose: true }));
+    app.use(history());
     app.use(express.static(staticsFolder));
     app.get('/index.html', (req, res) => {
         res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/landing/index.html'));
