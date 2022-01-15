@@ -1,0 +1,13 @@
+.navigation {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+
+  &-link {
+    font-weight: 900;
+    &--is-active {
+      display: none;
+    }
+  }
+}
