@@ -1,5 +1,5 @@
 {
-    "name": "server",
+    "name": "portfolio-server",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
@@ -7,11 +7,6 @@
         "test": "tests"
     },
     "scripts": {
-        "build:view": "npm run build:landing && npm run build:react-projects",
-        "build:landing": "cd \"$MAIN/view/landing\" && npm run build",
-        "build:react-projects": "cd \"$MAIN/view/react-projects\" && npm run build",
-        "build": ". ./setMainFolder.sh && . ./buildEnvs.sh && npm run build:view",
-        "clean": "rm -rf node_modules",
         "debug:watch": "nodemon --inspect init.js",
         "debug": "node --inspect init.js",
         "predeploy:prod": "npm run prebuild",
