@@ -1,80 +1,80 @@
 <template>
-    <div class="square-nav">
-        <router-link
-            class="square-nav__link"
-            :to="link"
-            :style="linkStyles"
-            :class="{
-                'square-nav__link--is-right': isRight,
-                'square-nav__link--is-left': !isRight,
-            }"
-        >
-            <div
-                class="square-nav__box"
-                :style="boxStyles"
-                :class="{
-                    'square-nav__box--is-darker': isRight,
-                }"
-            >
-                <slot></slot>
-            </div>
-        </router-link>
-    </div>
+  <div class="square-nav">
+    <router-link
+      class="square-nav__link"
+      :to="link"
+      :style="linkStyles"
+      :class="{
+        'square-nav__link--is-right': isRight,
+        'square-nav__link--is-left': !isRight,
+      }"
+    >
+      <div
+        class="square-nav__box"
+        :style="boxStyles"
+        :class="{
+          'square-nav__box--is-darker': isRight,
+        }"
+      >
+        <slot />
+      </div>
+    </router-link>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'SquareNav',
-    props: {
-        link: {
-            type: String,
-            default: '',
-        },
-        isRight: {
-            type: Boolean,
-            default: false,
-        },
-        height: {
-            type: Number,
-            default: 0,
-        },
-        index: {
-            type: Number,
-            default: null,
-        },
-        top: {
-            type: Number,
-            default: 20,
-        },
-        left: {
-            type: Number,
-            default: 20,
-        },
-        color: {
-            type: String,
-            required: true,
-        },
-        isFirst: {
-            type: Boolean,
-            default: false,
-        },
+  name: 'SquareNav',
+  props: {
+    link: {
+      type: String,
+      default: '',
     },
-    computed: {
-        boxStyles() {
-            return `
+    isRight: {
+      type: Boolean,
+      default: false,
+    },
+    height: {
+      type: Number,
+      default: 0,
+    },
+    index: {
+      type: Number,
+      default: null,
+    },
+    top: {
+      type: Number,
+      default: 20,
+    },
+    left: {
+      type: Number,
+      default: 20,
+    },
+    color: {
+      type: String,
+      required: true,
+    },
+    isFirst: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    boxStyles() {
+      return `
                 min-height: ${this.height}px;
                 background-color: ${this.color};
                 opacity: 0.5;
 
             `;
-        },
-        linkStyles() {
-            return `
+    },
+    linkStyles() {
+      return `
                 top: ${this.top}px;
                 left: ${this.left}px;
             `;
-        },
     },
+  },
 };
 </script>
 

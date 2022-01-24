@@ -11,29 +11,29 @@
  * @param {Function | null} options.mapper - maps backend response to a certain signature
  */
 const request = async ({
-    baseUrl = '/api',
-    body, // empty body is ignored by fetch
-    endpoint = '',
-    method = 'GET',
-    headers = {},
-    mapper = null,
+  baseUrl = '/api',
+  body, // empty body is ignored by fetch
+  endpoint = '',
+  method = 'GET',
+  headers = {},
+  mapper = null,
 } = {}) => {
-    try {
-        const fullUrl = `${baseUrl}${endpoint}`;
-        const response = await fetch(fullUrl, {
-            method,
-            headers,
-            body,
-        });
+  try {
+    const fullUrl = `${baseUrl}${endpoint}`;
+    const response = await fetch(fullUrl, {
+      method,
+      headers,
+      body,
+    });
 
-        const responseBody = await response.json();
+    const responseBody = await response.json();
 
-        return mapper ? mapper(responseBody) : responseBody;
-    } catch (error) {
-        console.error(`[request]: Error on ${method} ${endpoint}`);
+    return mapper ? mapper(responseBody) : responseBody;
+  } catch (error) {
+    console.error(`[request]: Error on ${method} ${endpoint}`);
 
-        throw error;
-    }
+    throw error;
+  }
 };
 
 export default request;

@@ -1,10 +1,16 @@
 <template>
-    <div class="home-animation">
-        <div class="home-animation__note gray-scale-transition" :class="{ 'home-animation__note--gray': isNoteGray }">
-            <EightNote />
-        </div>
-        <ScriptAnimation ref="animation" :text="scriptText" />
+  <div class="home-animation">
+    <div
+      class="home-animation__note gray-scale-transition"
+      :class="{ 'home-animation__note--gray': isNoteGray }"
+    >
+      <EightNote />
     </div>
+    <ScriptAnimation
+      ref="animation"
+      :text="scriptText"
+    />
+  </div>
 </template>
 
 <script>
@@ -13,73 +19,77 @@ import ScriptAnimation from '@/components/animations/ScriptAnimation.vue';
 import EightNote from '@/components/svg/EightNote.vue';
 
 export default {
-    name: 'HomeAnimation',
-    components: {
-        ScriptAnimation,
-        EightNote,
+  name: 'HomeAnimation',
+  components: {
+    ScriptAnimation,
+    EightNote,
+  },
+
+  props: {
+    hasAnimatedText: {
+      type: Boolean,
+      default: true,
     },
+  },
 
-    props: {
-        'animate:text': {
-            type: Boolean,
-            default: true,
-        },
+  emits: {
+    'done:final': Boolean,
+  },
+
+  data() {
+    return {
+      scriptText: '',
+      isNoteGray: false,
+    };
+  },
+
+  computed: {
+    initialSleep() {
+      return this.animateText ? 1000 : 300;
     },
-
-    data() {
-        return {
-            scriptText: '',
-            isNoteGray: false,
-        };
+    animateText() {
+      return !!this.hasAnimatedText;
     },
+  },
+  async mounted() {
+    this.scriptText = 'nicolas ramirez';
+    await sleep(this.initialSleep);
+    this.$refs.animation.showText();
+    await sleep(this.initialSleep + 200);
+    this.isNoteGray = true;
+    this.$refs.animation.animateText();
+    await sleep(400);
 
-    computed: {
-        initialSleep() {
-            return this.animateText ? 1000 : 300;
-        },
-        animateText() {
-            return !!this['animate:text'];
-        },
+    if (this.hasAnimatedText) {
+      await this.changeAnimationText('software engineer', { sleepInterval: 400 });
+      await this.changeAnimationText('frontend developer', { sleepInterval: 400 });
+      await this.changeAnimationText('composer', { sleepInterval: 400 });
+      await this.changeAnimationText('nicolas ramirez', { sleepInterval: 700 });
+    }
+
+    this.$emit('done:final', true);
+  },
+
+  methods: {
+    async changeAnimationText(text, { sleepInterval = 1200, delay = 500 } = {}) {
+      // console.log('[app.log] :::: 1. sleepInterval:', sleepInterval);
+      await sleep(sleepInterval);
+      // console.log('[app.log] :::: hideText:');
+      this.$refs.animation.hideText();
+      // console.log('[app.log] :::: 2. sleepInterval:', sleepInterval);
+      await sleep(sleepInterval);
+
+      // console.log('[app.log] :::: text:');
+      this.scriptText = text;
+
+      // console.log('[app.log] :::: 3. sleep:', 100);
+      await sleep(100);
+      this.$refs.animation.showText();
+
+      // console.log('[app.log] :::: 4. delay:', delay);
+      await sleep(delay);
     },
-    async mounted() {
-        this.scriptText = 'nicolas ramirez';
-        await sleep(this.initialSleep);
-        this.$refs.animation.showText();
-        await sleep(this.initialSleep + 200);
-        this.isNoteGray = true;
-        this.$refs.animation.animateText();
-        await sleep(400);
-
-        if (this['animate:text']) {
-            await this.changeAnimationText('software engineer', { sleepInterval: 400 });
-            await this.changeAnimationText('frontend developer', { sleepInterval: 400 });
-            await this.changeAnimationText('composer', { sleepInterval: 400 });
-            await this.changeAnimationText('nicolas ramirez', { sleepInterval: 700 });
-        }
-
-        this.$emit('done:final', true);
-    },
-
-    methods: {
-        async changeAnimationText(text, { sleepInterval = 1200, delay = 500 } = {}) {
-            // console.log('[app.log] :::: 1. sleepInterval:', sleepInterval);
-            await sleep(sleepInterval);
-            // console.log('[app.log] :::: hideText:');
-            this.$refs.animation.hideText();
-            // console.log('[app.log] :::: 2. sleepInterval:', sleepInterval);
-            await sleep(sleepInterval);
-
-            // console.log('[app.log] :::: text:');
-            this.scriptText = text;
-
-            // console.log('[app.log] :::: 3. sleep:', 100);
-            await sleep(100);
-            this.$refs.animation.showText();
-
-            // console.log('[app.log] :::: 4. delay:', delay);
-            await sleep(delay);
-        },
-    },
+  },
 };
 </script>
 <style lang="scss" scoped>

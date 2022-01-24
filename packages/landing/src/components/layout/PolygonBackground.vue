@@ -1,79 +1,79 @@
 <template>
-    <Portal :selector="`#${portalSelector}`">
-        <transition name="fade-in">
-            <div v-if="show" class="polygon-background" :style="polygonStyle"></div>
-        </transition>
-    </Portal>
+  <Teleport :to="`[data-teleport=${portalSelector}]`">
+    <transition name="fade-in">
+      <div
+        v-if="show"
+        class="polygon-background"
+        :style="polygonStyle"
+      />
+    </transition>
+  </Teleport>
 </template>
 
 <script>
-import { Portal } from '@linusborg/vue-simple-portal';
-
 export default {
-    props: {
-        show: Boolean,
-        portalSelector: String,
-        gradientSpecs: Object,
-        polygon: Object,
-        marginTop: String,
-        height: String,
+  props: {
+    show: Boolean,
+    portalSelector: String,
+    gradientSpecs: Object,
+    polygon: Object,
+    marginTop: String,
+    height: String,
+  },
+  computed: {
+    polygonStyle() {
+      const expression = this.getGradientExpression();
+      const polygon = this.getPolygon();
+
+      let styles = `background: linear-gradient(${expression}); margin-top: ${this.marginTop}; `;
+      if (polygon) {
+        styles += `--polygon: ${polygon}; `;
+      }
+      if (this.height) {
+        styles += `height: ${this.height}; `;
+      }
+
+      return styles.trim();
     },
-    components: {
-        Portal,
+  },
+  methods: {
+    getGradientExpression() {
+      let colorsExpr = '';
+
+      if (!this.gradientSpecs || !this.gradientSpecs.colors || this.gradientSpecs.colors.length < 2) return null;
+
+      const { colors, angle } = this.gradientSpecs;
+
+      for (let i = 0; i < colors.length; i++) {
+        const color = colors[i];
+        const isLast = i === colors.length - 1;
+
+        colorsExpr += `${color}`;
+
+        if (!isLast) {
+          colorsExpr += ', ';
+        }
+      }
+
+      const angleExpr = angle ? `${angle},` : '';
+
+      return `${angleExpr} ${colorsExpr}`;
     },
-    methods: {
-        getGradientExpression() {
-            let colorsExpr = '';
 
-            if (!this.gradientSpecs || !this.gradientSpecs.colors || this.gradientSpecs.colors.length < 2) return null;
+    getPolygon() {
+      if (!this.polygon || !this.polygon.points || this.polygon.points.length < 2) return null;
 
-            const { colors, angle } = this.gradientSpecs;
+      return this.polygon.points.reduce((acc, point, i, arr) => {
+        const isLast = i === arr.length - 1;
+        let partial = `${acc} ${point[0]} ${point[1]}`;
 
-            for (let i = 0; i < colors.length; i++) {
-                const color = colors[i];
-                const isLast = i === colors.length - 1;
-
-                colorsExpr += `${color}`;
-
-                if (!isLast) {
-                    colorsExpr += ', ';
-                }
-            }
-
-            const angleExpr = angle ? `${angle},` : '';
-
-            return `${angleExpr} ${colorsExpr}`;
-        },
-        getPolygon() {
-            if (!this.polygon || !this.polygon.points || this.polygon.points.length < 2) return null;
-
-            return this.polygon.points.reduce((acc, point, i, arr) => {
-                const isLast = i === arr.length - 1;
-                let partial = `${acc} ${point[0]} ${point[1]}`;
-
-                if (!isLast) {
-                    partial += ', ';
-                }
-                return partial;
-            }, ' ');
-        },
+        if (!isLast) {
+          partial += ', ';
+        }
+        return partial;
+      }, ' ');
     },
-    computed: {
-        polygonStyle() {
-            const expression = this.getGradientExpression();
-            const polygon = this.getPolygon();
-
-            let styles = `background: linear-gradient(${expression}); margin-top: ${this.marginTop}; `;
-            if (polygon) {
-                styles += `--polygon: ${polygon}; `;
-            }
-            if (this.height) {
-                styles += `height: ${this.height}; `;
-            }
-
-            return styles.trim();
-        },
-    },
+  },
 };
 </script>
 

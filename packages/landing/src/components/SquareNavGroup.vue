@@ -1,24 +1,27 @@
 <template>
-    <div class="square-nav-group" style="groupStyles">
-        <slot></slot>
-    </div>
+  <div
+    class="square-nav-group"
+    style="groupStyles"
+  >
+    <slot />
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'SquareNavGroup',
-    // props: {
-    //     amount: {
-    //         type: Number,
-    //         required: true,
-    //     },
-    // },
-    computed: {
-        groupStyles() {
-            return `
+  name: 'SquareNavGroup',
+  // props: {
+  //     amount: {
+  //         type: Number,
+  //         required: true,
+  //     },
+  // },
+  computed: {
+    groupStyles() {
+      return `
             `;
-        },
     },
+  },
 };
 </script>
 

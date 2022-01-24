@@ -1,57 +1,52 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    root: true,
-
-    env: {
-        node: true,
+  root: true,
+  env: {
+    node: true,
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-recommended',
+    '@vue/airbnb',
+  ],
+  parserOptions: {
+    parser: 'babel-eslint',
+  },
+  rules: {
+    indent: ['error', 2],
+    'no-console': [isProd ? 'error' : 'warn', { allow: ['error', 'warn'] }],
+    'no-debugger': isProd ? 'warn' : 'off',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'import/export': 0,
+    'import/prefer-default-export': 0,
+    'consistent-return': 0,
+    'vue/require-default-prop': 0,
+    'max-len': ['error', {
+      code: 120,
+      ignoreTemplateLiterals: true,
+      ignoreStrings: true,
+      ignorePattern: 'd=".+',
+    }],
+  },
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+      ],
+      extends: ['plugin:jest/recommended'],
+      plugins: ['jest'],
+      env: {
+        jest: true,
+      },
+      rules: {
+        'jest/no-disabled-tests': 'warn',
+        'jest/no-focused-tests': 'error',
+        'jest/no-identical-title': 'error',
+        'jest/prefer-to-have-length': 'warn',
+        'jest/valid-expect': 'error',
+      },
     },
-
-    extends: ['plugin:vue/essential', '@vue/airbnb', 'plugin:prettier/recommended'],
-
-    parserOptions: {
-        parser: 'babel-eslint',
-    },
-
-    rules: {
-        'prettier/prettier': [
-            'error',
-            {
-                tabWidth: 4,
-                useTabs: false,
-                printWidth: 120,
-                semi: true,
-                singleQuote: true,
-                quoteProps: 'consistent',
-                trailingComma: 'all',
-                bracketSpacing: true,
-                arrowParens: 'always',
-                endOfLine: 'auto',
-            },
-        ],
-        'no-console': [isProd ? 'error' : 'warn', { allow: ['error', 'warn'] }],
-        'no-debugger': isProd ? 'warn' : 'off',
-        'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-        'import/export': 0,
-        'import/prefer-default-export': 0,
-        'consistent-return': 0,
-    },
-
-    overrides: [
-        {
-            files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/mocks/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
-            extends: ['plugin:jest/recommended'],
-            plugins: ['jest'],
-            rules: {
-                'jest/no-disabled-tests': 'warn',
-                'jest/no-focused-tests': 'error',
-                'jest/no-identical-title': 'error',
-                'jest/prefer-to-have-length': 'warn',
-                'jest/valid-expect': 'error',
-            },
-            env: {
-                jest: true,
-            },
-        },
-    ],
+  ],
 };

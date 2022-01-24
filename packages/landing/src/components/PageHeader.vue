@@ -1,21 +1,21 @@
 <template>
-    <header class="page-header mt-5 pt-5">
-        <h1 class="title is-3">
-            {{ title }}
-        </h1>
-    </header>
+  <header class="page-header mt-5 pt-5">
+    <h1 class="title is-3">
+      {{ title }}
+    </h1>
+  </header>
 </template>
 
 <script>
 export default {
-    name: 'PageHeader',
+  name: 'PageHeader',
 
-    props: {
-        title: {
-            type: String,
-            default: '',
-        },
+  props: {
+    title: {
+      type: String,
+      default: '',
     },
+  },
 };
 </script>
 

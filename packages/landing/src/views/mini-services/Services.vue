@@ -1,15 +1,18 @@
 <template>
-    <div class="services">
-        <HeroPage :title="title" :sections="sections">
-            <template v-slot:after-sections>
-                <div class="columns">
-                    <div class="column is-offset-3 is-6">
-                        <LevelSection :items="items" />
-                    </div>
-                </div>
-            </template>
-        </HeroPage>
-    </div>
+  <div class="services">
+    <HeroPage
+      :title="title"
+      :sections="sections"
+    >
+      <template #after-sections>
+        <div class="columns">
+          <div class="column is-offset-3 is-6">
+            <LevelSection :items="items" />
+          </div>
+        </div>
+      </template>
+    </HeroPage>
+  </div>
 </template>
 
 <script>
@@ -18,48 +21,48 @@ import LevelSection from '@/components/layout/LevelSection.vue';
 import screw from '@/assets/svg/screw.svg';
 
 const microServicesItems = [
-    {
-        isInternalLink: true,
-        heading: 'Url Shortener',
-        imageSrc: screw,
-        link: '/miniservices/urlshortener',
-        hasSmallImage: true,
-    },
-    {
-        isInternalLink: true,
-        heading: 'Timestamp',
-        link: '/miniservices/timestamp',
-        imageSrc: screw,
-        hasSmallImage: true,
-    },
+  {
+    isInternalLink: true,
+    heading: 'Url Shortener',
+    imageSrc: screw,
+    link: '/miniservices/urlshortener',
+    hasSmallImage: true,
+  },
+  {
+    isInternalLink: true,
+    heading: 'Timestamp',
+    link: '/miniservices/timestamp',
+    imageSrc: screw,
+    hasSmallImage: true,
+  },
 ];
 
 const sections = [
-    [
-        `On this section, you will find different microservices from FreeCodeCamp
+  [
+    `On this section, you will find different microservices from FreeCodeCamp
         challenges, that are mostly done as exercises to increase NodeJS backend knowledge`,
 
-        `Microservices architecture concept is loosely used in here for practical purposes,
+    `Microservices architecture concept is loosely used in here for practical purposes,
         since these challenges/exercises are fairly small ion the most part. It can be encompased
         en deployed along side my main project. I will provide here as well the source code for
         it, which is all open source on my github.`,
-    ],
+  ],
 ];
 
 export default {
-    name: 'ServicesView',
-    components: {
-        HeroPage,
-        LevelSection,
-    },
+  name: 'ServicesView',
+  components: {
+    HeroPage,
+    LevelSection,
+  },
 
-    data() {
-        return {
-            items: microServicesItems,
-            title: 'Microservices',
-            sections,
-        };
-    },
+  data() {
+    return {
+      items: microServicesItems,
+      title: 'Microservices',
+      sections,
+    };
+  },
 };
 </script>
 

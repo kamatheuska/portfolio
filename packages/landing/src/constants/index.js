@@ -5,11 +5,11 @@ export const DARK_THEME_CSS_CLASS = 'is-dark';
 // Url Shortener
 export const MAX_LENGTH_URL = 70;
 export const environments = {
-    PROD: 'prod',
-    TEST: 'test',
+  PROD: 'prod',
+  TEST: 'test',
 };
 
 export const breakpoints = {
-    SM: '768px',
-    XS: '425px',
+  SM: '768px',
+  XS: '425px',
 };

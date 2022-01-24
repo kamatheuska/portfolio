@@ -1,98 +1,119 @@
 <template>
-    <nav
-        class="navbar is-fixed-top is-spaced is-transparent"
-        role="navigation"
-        aria-label="main navigation"
-        v-click-outside="onClickOutside"
+  <nav
+    v-click-outside="onClickOutside"
+    class="navbar is-fixed-top is-spaced is-transparent"
+    role="navigation"
+    aria-label="main navigation"
+    :class="{
+      'is-primary': color === 'primary',
+      'is-info': color === 'info',
+      'navbar--is-active': activeNavbar,
+    }"
+  >
+    <div class="navbar-brand">
+      <router-link
+        v-if="showLogo"
+        to="/"
+        class="navbar-item"
+      >
+        <ScriptAnimation
+          ref="logo"
+          text="PORTFOLIO"
+          :is-dark="true"
+          :transition="[{ name: 'transition-duration', value: '0.3s' }]"
+        />
+      </router-link>
+      <a
+        v-if="showLinks"
+        role="button"
+        class="navbar-burger"
         :class="{
-            'is-primary': color === 'primary',
-            'is-info': color === 'info',
-            'navbar--is-active': activeNavbar,
+          'is-active': activeNavbar,
         }"
-    >
-        <div class="navbar-brand">
-            <router-link v-if="showLogo" to="/" class="navbar-item">
-                <ScriptAnimation
-                    ref="logo"
-                    text="PORTFOLIO"
-                    :isDark="true"
-                    :transition="[{ name: 'transition-duration', value: '0.3s' }]"
-                />
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbar"
+        @click="activeNavbar = !activeNavbar"
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </a>
+    </div>
+    <transition name="fade-in-fast">
+      <div
+        v-if="activeNavbar"
+        class="navbar-menu"
+        :class="{
+          'is-active': activeNavbar,
+        }"
+      >
+        <div
+          v-if="showLinks"
+          class="navbar-end"
+        >
+          <template v-for="(route, i) in routes">
+            <router-link
+              v-if="!route.children"
+              :key="`route-navbar-item${i}`"
+              class="navbar-item"
+              :to="route.path"
+            >
+              {{ route.text }}
             </router-link>
-            <a
-                role="button"
-                class="navbar-burger"
-                :class="{
-                    'is-active': activeNavbar,
-                }"
-                aria-label="menu"
-                aria-expanded="false"
-                data-target="navbar"
-                v-if="showLinks"
-                @click="activeNavbar = !activeNavbar"
-            >
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <transition name="fade-in-fast">
+
             <div
-                class="navbar-menu"
-                :class="{
-                    'is-active': activeNavbar,
-                }"
-                v-if="activeNavbar"
+              v-else
+              :key="`route-navbar-item${i}`"
+              class="navbar-item has-dropdown is-hoverable"
             >
-                <div class="navbar-end" v-if="showLinks">
-                    <template v-for="(route, i) in routes">
-                        <router-link
-                            v-if="!route.children"
-                            class="navbar-item"
-                            :to="route.path"
-                            :key="`route-navbar-item${i}`"
-                        >
-                            {{ route.text }}
-                        </router-link>
+              <router-link
+                v-if="route.path"
+                class="navbar-link is-arrowless"
+                :to="route.path"
+              >
+                {{ route.text }}
+              </router-link>
+              <a
+                v-else
+                class="navbar-link is-arrowless"
+              > {{ route.text }} </a>
 
-                        <div class="navbar-item has-dropdown is-hoverable" :key="`route-navbar-item${i}`" v-else>
-                            <router-link v-if="route.path" class="navbar-link is-arrowless" :to="route.path">
-                                {{ route.text }}
-                            </router-link>
-                            <a class="navbar-link is-arrowless" v-else> {{ route.text }} </a>
-
-                            <div class="navbar-dropdown is-right" @click="unfocusNavbarDropdown">
-                                <template v-for="(childRoute, j) in route.children">
-                                    <a
-                                        :key="`child-route-navbar-item${i}${j}`"
-                                        :class="{
-                                            'is-active': $route.name === childRoute.name,
-                                        }"
-                                        class="navbar-item"
-                                        :href="childRoute.path"
-                                        v-if="childRoute.isExternalLink"
-                                    >
-                                        {{ childRoute.text }}
-                                    </a>
-                                    <router-link
-                                        :key="`child-route-navbar-item${i}${j}`"
-                                        :to="childRoute.path"
-                                        :class="{
-                                            'is-active': $route.name === childRoute.name,
-                                        }"
-                                        class="navbar-item"
-                                        v-else
-                                    >
-                                        {{ childRoute.text }}
-                                    </router-link>
-                                </template>
-                            </div>
-                        </div>
-                    </template>
-                </div>
+              <div
+                class="navbar-dropdown is-right"
+                @click="unfocusNavbarDropdown"
+              >
+                <template v-for="(childRoute, j) in route.children">
+                  <a
+                    v-if="childRoute.isExternalLink"
+                    :key="`child-route-navbar-item${i}${j}`"
+                    :class="{
+                      'is-active': $route.name === childRoute.name,
+                    }"
+                    class="navbar-item"
+                    :href="childRoute.path"
+                  >
+                    {{ childRoute.text }}
+                  </a>
+                  <router-link
+                    v-else
+                    :key="`child-route-navbar-item${i}${j}`"
+                    :to="childRoute.path"
+                    :class="{
+                      'is-active': $route.name === childRoute.name,
+                    }"
+                    class="navbar-item"
+                  >
+                    {{ childRoute.text }}
+                  </router-link>
+                </template>
+              </div>
             </div>
-        </transition>
-    </nav>
+          </template>
+        </div>
+      </div>
+    </transition>
+  </nav>
 </template>
 
 <script>
@@ -102,158 +123,155 @@ import ScriptAnimation from '@/components/animations/ScriptAnimation.vue';
 import { isProd, sleep } from '@/utils';
 
 const routes = [
-    {
-        path: '/home?new=false',
-        text: 'Home',
-    },
-    {
-        path: '/about',
-        text: 'About',
-    },
-    {
-        text: 'Stories',
-        path: '/stories',
-        name: 'Stories',
-        children: [
-            {
-                path: '/stories/concertos',
-                text: 'Geometric Concertos',
-                name: 'Concertos',
-            },
-        ],
-    },
-    {
-        text: 'Services',
-        path: '/miniservices',
-        name: 'Miniservices',
-        children: [
-            {
-                path: '/miniservices/urlshortener',
-                text: 'URL Shortener',
-                name: 'UrlShortener',
-            },
-            {
-                path: '/miniservices/timestamp',
-                text: 'Timestamp Generator',
-                name: 'Timestamp',
-            },
-            {
-                path: '/miniservices/whoami',
-                text: 'Who Am I',
-                name: 'Whoami',
-            },
-            {
-                path: '/miniservices/exercise-tracker',
-                text: 'Exercise Tracker',
-                name: 'ExerciseTracker',
-            },
-        ],
-    },
-    {
-        text: 'Projects',
-        path: '/projects',
-        name: 'Projects',
-        children: [
-            {
-                path: '/projects/react',
-                text: 'React Based Projects',
-                isExternalLink: true,
-            },
-        ],
-    },
+  {
+    path: '/home?new=false',
+    text: 'Home',
+  },
+  {
+    path: '/about',
+    text: 'About',
+  },
+  {
+    text: 'Stories',
+    path: '/stories',
+    name: 'Stories',
+    children: [
+      {
+        path: '/stories/concertos',
+        text: 'Geometric Concertos',
+        name: 'Concertos',
+      },
+    ],
+  },
+  {
+    text: 'Services',
+    path: '/miniservices',
+    name: 'Miniservices',
+    children: [
+      {
+        path: '/miniservices/urlshortener',
+        text: 'URL Shortener',
+        name: 'UrlShortener',
+      },
+      {
+        path: '/miniservices/timestamp',
+        text: 'Timestamp Generator',
+        name: 'Timestamp',
+      },
+      {
+        path: '/miniservices/Whoami',
+        text: 'Who Am I',
+        name: 'Whoami',
+      },
+    ],
+  },
+  {
+    text: 'Projects',
+    path: '/projects',
+    name: 'Projects',
+    children: [
+      {
+        path: '/projects/react',
+        text: 'React Based Projects',
+        isExternalLink: true,
+      },
+    ],
+  },
 ];
 
 const logoBgColor = {
-    TEST: '#b9f6ff',
-    PROD: '#fff',
+  TEST: '#b9f6ff',
+  PROD: '#fff',
 };
 
 export default {
-    name: 'Navbar',
-    components: {
-        ScriptAnimation,
+  name: 'Navbar',
+
+  components: {
+    ScriptAnimation,
+  },
+
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
+
+  props: {
+    showLinks: {
+      type: Boolean,
+      default: true,
     },
-    props: {
-        showLinks: {
-            type: Boolean,
-            default: true,
-        },
-        color: {
-            type: String,
-            default: '',
-        },
-        isMobile: Boolean,
+    color: {
+      type: String,
+      default: '',
     },
+    isMobile: Boolean,
+  },
 
-    async mounted() {
-        this.showNavbarMenuOnMdDevices();
-        await sleep(500);
-        this.toggleLogoOnHome();
-        this.animateLogo();
+  data: () => ({
+    activeNavbar: false,
+    routes,
+  }),
+
+  computed: {
+    ...mapGetters('navigation', ['showLogo']),
+    logoBgColor() {
+      return isProd() ? logoBgColor.PROD : logoBgColor.TEST;
     },
+  },
 
-    data: () => ({
-        activeNavbar: false,
-        routes,
-    }),
-
-    computed: {
-        ...mapGetters('navigation', ['showLogo']),
-        logoBgColor() {
-            return isProd() ? logoBgColor.PROD : logoBgColor.TEST;
-        },
+  watch: {
+    '$route.path': 'hideNavbarBurgerMenu',
+    '$route.name': function onRouteNameChange() {
+      this.toggleLogoOnHome();
+      this.animateLogo();
     },
+  },
 
-    directives: {
-        clickOutside: vClickOutside.directive,
-    },
+  async mounted() {
+    this.showNavbarMenuOnMdDevices();
+    await sleep(500);
+    this.toggleLogoOnHome();
+    this.animateLogo();
+  },
 
-    methods: {
-        ...mapMutations('navigation', ['toggleNav', 'toggleLogo']),
+  methods: {
+    ...mapMutations('navigation', ['toggleNav', 'toggleLogo']),
 
-        unfocusNavbarDropdown(event) {
-            event.target.blur();
-        },
-
-        showNavbarMenuOnMdDevices() {
-            if (this.isMobile) return;
-            this.activeNavbar = true;
-        },
-
-        toggleLogoOnHome() {
-            if (this.$route.name === 'Home') this.toggleLogo(false);
-            else this.toggleLogo(true);
-        },
-
-        async animateLogo() {
-            if (!this.showLogo) return;
-            await this.$nextTick();
-
-            await sleep(300);
-
-            this.$refs.logo.showText();
-        },
-
-        onClickOutside() {
-            this.hideNavbarBurgerMenu();
-        },
-
-        hideNavbarBurgerMenu() {
-            this.$nextTick(() => {
-                if (this.isMobile) {
-                    this.activeNavbar = false;
-                }
-            });
-        },
+    unfocusNavbarDropdown(event) {
+      event.target.blur();
     },
 
-    watch: {
-        '$route.path': 'hideNavbarBurgerMenu',
-        '$route.name': function onRouteNameChange() {
-            this.toggleLogoOnHome();
-            this.animateLogo();
-        },
+    showNavbarMenuOnMdDevices() {
+      if (this.isMobile) return;
+      this.activeNavbar = true;
     },
+
+    toggleLogoOnHome() {
+      if (this.$route.name === 'Home') this.toggleLogo(false);
+      else this.toggleLogo(true);
+    },
+
+    async animateLogo() {
+      if (!this.showLogo) return;
+      await this.$nextTick();
+
+      await sleep(300);
+
+      this.$refs.logo.showText();
+    },
+
+    onClickOutside() {
+      this.hideNavbarBurgerMenu();
+    },
+
+    hideNavbarBurgerMenu() {
+      this.$nextTick(() => {
+        if (this.isMobile) {
+          this.activeNavbar = false;
+        }
+      });
+    },
+  },
 };
 </script>
 

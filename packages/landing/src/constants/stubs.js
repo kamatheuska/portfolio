@@ -4,7 +4,7 @@ export const VALID_HREF = `/api/shorturl/${SHORT_URL}`;
 export const BASE_URL_STUB = 'https://www.foo.com';
 export const API_URL_STUB = '/api/foo';
 export const apiResponseBodyStub = {
-    foo: true,
+  foo: true,
 };
 
 export const URL_TO_BE_SHORTENED = 'https://www.feh.com/fi/123?param=true';

@@ -1,32 +1,32 @@
 <template>
-    <div
-        class="script gray-scale-transition"
-        :class="{
-            'script--is-gray': isGray,
-            'script--has-small-text': isSmall,
-            'script--is-animated': isAnimated,
-        }"
-    >
-        <div class="script__vectors">
-            <div
-                class="script__rect script__slide--right slide"
-                :style="transitionOverrides"
-                :class="rectClasses('slashMoreThan')"
-            >
-                <Slash class="script__slash" />
-                <MoreThan class="script__more-than" />
-            </div>
-            <div
-                class="script__rect script__slide--left slide"
-                :style="transitionOverrides"
-                :class="rectClasses('lessThan')"
-            >
-                <LessThan class="script__less-than" />
-            </div>
-        </div>
-
-        <span class="script__text">{{ text }}</span>
+  <div
+    class="script gray-scale-transition"
+    :class="{
+      'script--is-gray': isGray,
+      'script--has-small-text': isSmall,
+      'script--is-animated': isAnimated,
+    }"
+  >
+    <div class="script__vectors">
+      <div
+        class="script__rect script__slide--right slide"
+        :style="transitionOverrides"
+        :class="rectClasses('slashMoreThan')"
+      >
+        <Slash class="script__slash" />
+        <MoreThan class="script__more-than" />
+      </div>
+      <div
+        class="script__rect script__slide--left slide"
+        :style="transitionOverrides"
+        :class="rectClasses('lessThan')"
+      >
+        <LessThan class="script__less-than" />
+      </div>
     </div>
+
+    <span class="script__text">{{ text }}</span>
+  </div>
 </template>
 
 <script>
@@ -41,91 +41,97 @@ import Slash from '@/components/svg/Slash.vue';
  */
 
 export default {
-    name: 'ScriptAnimation',
+  name: 'ScriptAnimation',
 
-    components: {
-        MoreThan,
-        Slash,
-        LessThan,
-    },
+  components: {
+    MoreThan,
+    Slash,
+    LessThan,
+  },
 
-    props: {
-        text: String,
-        fill: String,
-        isOpened: Boolean,
-        isTransparent: Boolean,
-        isSmall: Boolean,
-        /**
+  props: {
+    text: String,
+    fill: String,
+    isOpened: Boolean,
+    isTransparent: Boolean,
+    isSmall: Boolean,
+    /**
          * @type {TransitionRule[]}
          *
          */
-        transition: {
-            type: Array,
-            default: () => [],
-        },
+    transition: {
+      type: Array,
+      default: () => [],
     },
+  },
 
-    data: () => ({
-        isAnimated: false,
-        isGray: false,
-        lessThan: {
-            moveLeft: false,
-            initial: false,
-        },
-        slashMoreThan: {
-            moveRight: false,
-            initial: false,
-        },
-    }),
+  emits: {
+    'text:showed': null,
+    'text:hidden': null,
+    'text:animated': null,
+  },
 
-    computed: {
-        transitionOverrides() {
-            if (this.transition.length === 0) return '';
-
-            return this.transition.reduce((acc, rule) => `${acc} ${rule.name}: ${rule.value}; `, '').trim();
-        },
+  data: () => ({
+    isAnimated: false,
+    isGray: false,
+    lessThan: {
+      moveLeft: false,
+      initial: false,
     },
-
-    mounted() {
-        if (this.isOpened) {
-            this.showText();
-        }
+    slashMoreThan: {
+      moveRight: false,
+      initial: false,
     },
+  }),
 
-    methods: {
-        rectClasses(svgName) {
-            return {
-                ...this.slideAnimationClasses(svgName),
-                'script__rect--is-transparent': this.isTransparent,
-            };
-        },
-        slideAnimationClasses(svgName) {
-            return {
-                'slide--initial': this[svgName].initial,
-                'slide--translate-left': this[svgName].moveLeft,
-                'slide--translate-right': this[svgName].moveRight,
-            };
-        },
-        showText() {
-            this.lessThan.initial = false;
-            this.slashMoreThan.initial = false;
-            this.lessThan.moveLeft = true;
-            this.slashMoreThan.moveRight = true;
-            this.$emit('text:showed');
-        },
-        hideText() {
-            this.lessThan.initial = true;
-            this.slashMoreThan.initial = true;
-            this.lessThan.moveLeft = false;
-            this.slashMoreThan.moveRight = false;
-            this.$emit('text:hidden');
-        },
-        animateText() {
-            this.isGray = true;
-            this.isAnimated = true;
-            this.$emit('text:animated');
-        },
+  computed: {
+    transitionOverrides() {
+      if (this.transition.length === 0) return '';
+
+      return this.transition.reduce((acc, rule) => `${acc} ${rule.name}: ${rule.value}; `, '').trim();
     },
+  },
+
+  mounted() {
+    if (this.isOpened) {
+      this.showText();
+    }
+  },
+
+  methods: {
+    rectClasses(svgName) {
+      return {
+        ...this.slideAnimationClasses(svgName),
+        'script__rect--is-transparent': this.isTransparent,
+      };
+    },
+    slideAnimationClasses(svgName) {
+      return {
+        'slide--initial': this[svgName].initial,
+        'slide--translate-left': this[svgName].moveLeft,
+        'slide--translate-right': this[svgName].moveRight,
+      };
+    },
+    showText() {
+      this.lessThan.initial = false;
+      this.slashMoreThan.initial = false;
+      this.lessThan.moveLeft = true;
+      this.slashMoreThan.moveRight = true;
+      this.$emit('text:showed');
+    },
+    hideText() {
+      this.lessThan.initial = true;
+      this.slashMoreThan.initial = true;
+      this.lessThan.moveLeft = false;
+      this.slashMoreThan.moveRight = false;
+      this.$emit('text:hidden');
+    },
+    animateText() {
+      this.isGray = true;
+      this.isAnimated = true;
+      this.$emit('text:animated');
+    },
+  },
 };
 </script>
 

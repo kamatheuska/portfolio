@@ -1,13 +1,13 @@
 <template>
-    <nav
-        class="horizontal-level level py-5"
-        :class="{
-            'horizontal-level--is-fixed-three': numberOfItems && numberOfItems === 3,
-            'horizontal-level--is-fixed-four': numberOfItems && numberOfItems === 4,
-        }"
-    >
-        <slot></slot>
-    </nav>
+  <nav
+    class="horizontal-level level py-5"
+    :class="{
+      'horizontal-level--is-fixed-three': numberOfItems && numberOfItems === 3,
+      'horizontal-level--is-fixed-four': numberOfItems && numberOfItems === 4,
+    }"
+  >
+    <slot />
+  </nav>
 </template>
 
 <script>
@@ -15,11 +15,11 @@
  * Used in conjuction of a LevelItem as slots
  */
 export default {
-    name: 'HorizontalLevel',
+  name: 'HorizontalLevel',
 
-    props: {
-        numberOfItems: Number,
-    },
+  props: {
+    numberOfItems: Number,
+  },
 };
 </script>
 

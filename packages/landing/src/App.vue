@@ -1,15 +1,27 @@
 <template>
-    <div id="app" class="root">
+  <div
+    id="app"
+    class="root"
+  >
+    <div data-teleport="overlay" />
+    <transition name="fade-in">
+      <Navbar
+        v-if="showNav"
+        :is-mobile="isMobile"
+      />
+    </transition>
+    <main>
+      <router-view
+        v-slot="{ Component }"
+        @toggle-navigation="showNav = !showNav"
+      >
         <transition name="fade-in">
-            <Navbar v-if="showNav" :isMobile="isMobile" />
+          <component :is="Component" />
         </transition>
-        <main>
-            <transition name="fade-in">
-                <router-view @toggle-navigation="showNav = !showNav"></router-view>
-            </transition>
-        </main>
-        <Footer />
-    </div>
+      </router-view>
+    </main>
+    <Footer />
+  </div>
 </template>
 
 <script>
@@ -18,25 +30,29 @@ import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
-    name: 'App',
-    components: {
-        Navbar,
-        Footer,
-    },
-    computed: {
-        ...mapGetters('navigation', ['showNav']),
-        ...mapGetters(['isMobile']),
-    },
-    methods: {
-        ...mapMutations('navigation', ['toggleNav']),
-        ...mapActions(['initApp']),
-    },
-    created() {
-        this.initApp();
+  name: 'App',
 
-        if (this.$route.name !== 'Home') {
-            this.toggleNav(true);
-        }
-    },
+  components: {
+    Navbar,
+    Footer,
+  },
+
+  computed: {
+    ...mapGetters('navigation', ['showNav']),
+    ...mapGetters(['isMobile']),
+  },
+
+  created() {
+    this.initApp();
+
+    if (this.$route.name !== 'Home') {
+      this.toggleNav(true);
+    }
+  },
+
+  methods: {
+    ...mapMutations('navigation', ['toggleNav']),
+    ...mapActions(['initApp']),
+  },
 };
 </script>
