@@ -1,7 +1,3 @@
-'use strict';
-
-const server = require('..');
-
 describe('server', () => {
-    it('needs tests');
+    it.skip('needs tests', () => {});
 });
