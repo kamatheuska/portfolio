@@ -2,5 +2,11 @@
   "packages": [
     "packages/*"
   ],
+  "command": {
+      "run": {
+        "stream": true,
+        "parallel": false
+      }
+  },
   "version": "independent"
 }

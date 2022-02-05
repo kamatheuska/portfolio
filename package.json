@@ -3,7 +3,14 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "dev": "lerna run dev",
+    "test": "lerna run test",
+    "debug:server": "cd packages/server && npm run debug",
+    "test:server:all": "lerna exec --scope server npm test",
+    "dev:server": "lerna run --scope server dev",
+    "dev:landing": "lerna exec --scope landing npm run dev",
+    "dev:react-projects": "lerna exec --scope react-projects npm run dev"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
