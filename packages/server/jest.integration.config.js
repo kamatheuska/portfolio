@@ -2,7 +2,9 @@
 // Sync object
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
-    testPathIgnorePatterns: ['/tests/integration/']
+    preset: '@shelf/jest-mongodb',
+    testRegex: '/integration/',
+    globalSetup: './tests/integration/setup.js'
 };
 
 module.exports = config;
