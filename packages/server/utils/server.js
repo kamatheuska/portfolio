@@ -18,7 +18,13 @@ const startServer = (app) => {
  */
 const stopServer = async (server) => {
     if (!server) throw new TypeError('No server passed');
-    server.close(async () => disconnectFromDatabase());
+    server.close(async () => {
+        const { port } = getConfig();
+
+        logInfo('app.stopServer', `Stopped listening to port ${port}`);
+        
+        await disconnectFromDatabase()
+    });
 };
 
 exports.startServer = startServer;
