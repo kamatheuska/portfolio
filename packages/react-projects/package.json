@@ -23,7 +23,8 @@
     "deploy": "npm run build && surge build",
     "eject": "react-scripts eject",
     "start": "craco start",
-    "test": "craco test",
+    "dev": "npm start",
+    "test": "CI=true craco test",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },
@@ -44,7 +45,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "node-sass": "^6.0.1",
     "prettier": "^2.4.1",
-    "surge": "^0.23.0"
+    "surge": "^0.23.0",
+    "landing": "1.0.0"
   },
   "jest": {
     "moduleNameMapper": {
