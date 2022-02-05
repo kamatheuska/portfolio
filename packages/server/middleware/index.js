@@ -5,7 +5,7 @@ const { getApiPayload, sendApiRequest } = require('../utils');
 function forceSsl(req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
         const { logInfo } = res.locals;
-        logInfo('Redireting to https')
+        logInfo('Redireting to https');
         return res.redirect(301, ['https://', req.get('Host'), req.url].join(''));
     }
     next();

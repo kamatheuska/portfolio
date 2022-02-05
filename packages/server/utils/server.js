@@ -22,8 +22,8 @@ const stopServer = async (server) => {
         const { port } = getConfig();
 
         logInfo('app.stopServer', `Stopped listening to port ${port}`);
-        
-        await disconnectFromDatabase()
+
+        await disconnectFromDatabase();
     });
 };
 

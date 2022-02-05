@@ -4,7 +4,7 @@
 const config = {
     preset: '@shelf/jest-mongodb',
     testRegex: '/integration/',
-    globalSetup: './tests/integration/setup.js'
+    globalSetup: './tests/integration/setup.js',
 };
 
 module.exports = config;
