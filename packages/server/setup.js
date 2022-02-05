@@ -12,8 +12,9 @@ const { getConfig } = require('./config');
 const { STAGE } = require('./constants/cookies');
 
 function setMiddleware(app, { isProduction, isDevelopment }) {
+    app.use(require('./middleware/logger'));
+
     if (isProduction) {
-        app.use(forceSsl);
         // see https://expressjs.com/en/guide/behind-proxies.html
         app.set('trust proxy', 1);
         app.use('/api', limiter);
@@ -26,7 +27,6 @@ function setMiddleware(app, { isProduction, isDevelopment }) {
     app.use(cookieParser());
     app.use(express.json({ limit: '10kb' }));
     app.use(express.urlencoded({ extended: true }));
-    app.use(require('./middleware/logger'));
 }
 
 function setApi(app, { fccOptions }) {
@@ -37,7 +37,10 @@ function setApi(app, { fccOptions }) {
     app.use('/api/blog', require('./controllers/blog'));
 }
 
-function setView(app, { staticsFolder, stage }) {
+function setView(app, { staticsFolder, stage, isProduction }) {
+    if (isProduction) {
+        app.use(forceSsl);
+    }
     app.get(/projects\/react/, (req, res) => {
         res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/react-projects/index.html'));
     });
