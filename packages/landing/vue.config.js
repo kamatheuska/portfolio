@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   chainWebpack: (config) => {
     config.module
@@ -30,4 +32,6 @@ module.exports = {
       },
     },
   },
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/landing',
+  outputDir: path.resolve(__dirname, '..', 'server/public/landing'),
 };
