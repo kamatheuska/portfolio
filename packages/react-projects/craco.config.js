@@ -10,6 +10,11 @@ module.exports = {
     },
   },
   webpack: {
+    configure: (webpackConfig, { env, paths }) => {
+      paths.appBuild = webpackConfig.output.path = path.resolve(__dirname, '..', 'server/public/react-projects');
+
+      return webpackConfig;
+    },
     alias: {
       '~': path.resolve(__dirname, 'src'),
       '~constants': path.resolve(__dirname, 'src', 'constants'),

@@ -1,4 +1,4 @@
-export const BASE_URL = '/';
+export const BASE_URL = '/projects/react';
 
 const routes = {
   home: {
