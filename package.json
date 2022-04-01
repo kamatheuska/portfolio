@@ -11,7 +11,7 @@
     "deploy:stage": "git push stage develop:master",
     "deploy:prod": "git push prod master",
     "predeploy:prod": "npm run prebuild",
-    "dev:react-projects": "lerna exec --scope react-projects npm run dev",
+    "dev:react-projects": "lerna exec --scope react-projects npm run dev"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
