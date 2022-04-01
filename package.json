@@ -2,19 +2,19 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "lerna run build",
     "clean": "lerna clean -y",
     "dev": "lerna run dev",
     "test": "lerna run test",
-    "heroku-prebuild": "./scripts/install-view.sh",
-    "heroku-postbuild": "npm run build",
+    "postinstall": "./postinstall.sh",
+    "build": "lerna run build",
+    "heroku-postbuild": "rm -rf packages/landing && rm -rf packages/react-projects && find packages -maxdepth 3 -mindepth 2",
     "deploy:stage": "git push stage develop:master",
     "deploy:prod": "git push prod master",
     "predeploy:prod": "npm run prebuild",
     "dev:react-projects": "lerna exec --scope react-projects npm run dev",
     "start": "lerna exec --scope server npm start"
   },
-  "devDependencies": {
+  "dependencies": {
     "lerna": "^4.0.0"
   },
   "engines": {

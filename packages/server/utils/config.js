@@ -11,6 +11,7 @@ class ConfigUtils {
         return env;
     }
 
+    // eslint-disable-next-line default-param-last
     static getEnvVar(key, defaultValue = null, type) {
         if (process.env[key]) {
             return ConfigUtils.serializeEnv(process.env[key], type);
