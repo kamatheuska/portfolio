@@ -3,14 +3,14 @@ const path = require('path');
 module.exports = {
   style: {
     sass: {
-      loaderOptions: (sassLoaderOptions, { env, paths }) => {
+      loaderOptions: (sassLoaderOptions) => {
         sassLoaderOptions.sourceMap = true;
         return sassLoaderOptions;
       },
     },
   },
   webpack: {
-    configure: (webpackConfig, { env, paths }) => {
+    configure: (webpackConfig, { paths }) => {
       paths.appBuild = webpackConfig.output.path = path.resolve(__dirname, '..', 'server/public/react-projects');
 
       return webpackConfig;
