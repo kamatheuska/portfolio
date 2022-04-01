@@ -3,10 +3,10 @@
     "packages/*"
   ],
   "command": {
-      "run": {
-        "stream": true,
-        "parallel": false
-      }
+    "run": {
+      "stream": true,
+      "parallel": false
+    }
   },
   "version": "independent"
 }
