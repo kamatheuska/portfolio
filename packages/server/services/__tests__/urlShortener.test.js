@@ -35,7 +35,7 @@ describe('🌳 UrlShortener Service', () => {
         it.each([
             [VALID_HOSTNAME],
             ['https://itnext.io/make-security-on-your-nodejs-api-the-priority-50da8dc71d68'],
-            ['https://www.nicolasramirezka.com/miniservices/urlshortener'],
+            ['https://www.nicolasramirez.dev/miniservices/urlshortener'],
             ['https://jestjs.io/docs/expect#tothrowerror'],
         ])('🌱 should return true when hostname=%s is valid', async (hostname) => {
             try {
