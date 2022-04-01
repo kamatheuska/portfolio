@@ -12,6 +12,7 @@
     "test:all": "npm run test:unit && npm run test:integration",
     "test:integration": "jest -c jest.integration.config.js",
     "test:unit": "jest",
+    "build": "ls -la",
     "prebuild": "npm run lint && npm test",
     "lint": "eslint --ext .js \"**/*.js\"",
     "lint:fix": "eslint --ext .js \"**/*.js\" --fix",
