@@ -18,15 +18,17 @@
   },
   "scripts": {
     "build": "craco build",
-    "build:local": "craco build",
-    "prebuild": "npm run lint && CI=true npm test",
+    "prebuild:ci": "npm run lint && CI=true npm test",
+    "install:ci": "NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --production=false",
+    "build:ci": "NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm run build",
     "deploy": "npm run build && surge build",
     "eject": "react-scripts eject",
     "start": "craco start",
     "dev": "npm start",
     "test": "CI=true craco test",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "clean": "rm -rf node_modules"
   },
   "browserslist": {
     "production": [

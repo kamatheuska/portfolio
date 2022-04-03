@@ -17,7 +17,8 @@
     "debug:watch": "nodemon --inspect init.js",
     "debug": "node --inspect=0.0.0.0:9229 init.js",
     "dev:debug-log-mode": "DEBUG_MODE=true nodemon init.js",
-    "dev": "nodemon init.js"
+    "dev": "nodemon init.js",
+    "clean": "rm -rf node_modules"
   },
   "dependencies": {
     "bluebird": "^3.7.2",

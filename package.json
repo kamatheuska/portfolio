@@ -2,25 +2,23 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "clean": "lerna clean -y",
-    "dev": "lerna run dev",
-    "test": "lerna run test",
-    "postinstall": "./postinstall.sh",
-    "build": "lerna run build",
-    "heroku-postbuild": "rm -rf packages/landing && rm -rf packages/react-projects && find packages -maxdepth 3 -mindepth 2",
     "deploy:stage": "git push stage develop:master",
     "deploy:prod": "git push prod master",
-    "predeploy:prod": "npm run prebuild",
-    "dev:react-projects": "lerna exec --scope react-projects npm run dev",
-    "start": "lerna exec --scope server npm start"
-  },
-  "dependencies": {
-    "lerna": "^4.0.0"
+    "preinstall": "printenv | egrep \"NVM|NPM\"",
+    "preheroku-prebuild": "printenv | egrep \"NVM|NPM\"",
+    "heroku-prebuild": "npm run install:ci --workspace=landing  --workspace=react-projects",
+    "heroku-postbuild": "npm run clean --workspace=landing  --workspace=react-projects",
+    "build": "npm run build:ci --workspace=landing  --workspace=react-projects"
   },
   "engines": {
     "node": "16.14.x",
     "npm": "8.3.x"
   },
   "author": "Nicolas Ramirez",
-  "license": "ISC"
+  "license": "ISC",
+  "workspaces": [
+    "packages/server",
+    "packages/landing",
+    "packages/react-projects"
+  ]
 }
