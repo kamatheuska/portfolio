@@ -1,42 +1,26 @@
-import { Link } from '@reach/router';
+import { useResolvedPath, useMatch, Link } from 'react-router-dom';
 
-import routes from '~/routes';
+function PortfolioLink({ children, to, ...props }) {
+  let resolved = useResolvedPath(to);
+  let match = useMatch({ path: resolved.pathname, end: true });
+  let baseUrlMatch = useMatch({ path: '/projects/react', end: true });
 
-const getIsCurrentClasses = (isCurrent) => (isCurrent ? 'navigation-link--is-active' : '');
+  const isActiveClass = (isMatch) => (isMatch ? 'navigation__link--hide' : '');
+  const isWhite = (isMatch) => (isMatch ? 'has-text-white' : '');
 
-const getNoProjectTextColorClass = (pathname) => (/projects\/react$/.test(pathname) ? 'has-text-white' : '');
+  return (
+    <Link className={`navigation__link ${isActiveClass(match)} ${isWhite(baseUrlMatch)}`} to={to} {...props}>
+      {children}
+    </Link>
+  );
+}
 
-const getLinkCssClasses = ({ isCurrent, pathname }) => {
-  const defaultClasses = 'navigation-link is-size-5';
-  const custom = `${getIsCurrentClasses(isCurrent)} ${getNoProjectTextColorClass(pathname)}`;
-
-  return `${defaultClasses} ${custom}`;
-};
-
-const NavigationLink = (props) => (
-  <Link
-    {...props}
-    getProps={({ isCurrent, location }) => {
-      return {
-        className: getLinkCssClasses({ isCurrent, pathname: location.pathname }),
-      };
-    }}
-  />
-);
-
-export default function Navigation({ location }) {
+export default function Navigation() {
   return (
     <nav className="navigation mt-2">
-      <NavigationLink to={routes.home.path}>Back</NavigationLink>
-      <a
-        href="/"
-        className={getLinkCssClasses({
-          isCurrent: false,
-          pathname: location.pathname,
-        })}
-      >
-        Portfolio
-      </a>
+      <PortfolioLink to="/projects/react">Back</PortfolioLink>
+
+      <PortfolioLink to="/">Portfolio</PortfolioLink>
     </nav>
   );
 }

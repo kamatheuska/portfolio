@@ -4,9 +4,9 @@
   display: flex;
   justify-content: space-evenly;
 
-  &-link {
+  &__link {
     font-weight: 900;
-    &--is-active {
+    &--hide {
       display: none;
     }
   }
