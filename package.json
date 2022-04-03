@@ -2,13 +2,12 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "start": "npm start --workspace=server",
     "deploy:stage": "git push stage develop:master",
     "deploy:prod": "git push prod master",
     "preinstall": "printenv | egrep \"NVM|NPM\"",
     "preheroku-prebuild": "printenv | egrep \"NVM|NPM\"",
-    "heroku-prebuild": "npm run install:ci --workspace=landing  --workspace=react-projects",
-    "heroku-postbuild": "npm run clean --workspace=landing  --workspace=react-projects",
-    "build": "npm run build:ci --workspace=landing  --workspace=react-projects"
+    "heroku-prebuild": "npm run install:ci --workspace=landing --workspace=react-projects && npm run build:ci --workspace=landing  --workspace=react-projects && rm -rf packages/landing packages/react-projects"
   },
   "engines": {
     "node": "16.14.x",
