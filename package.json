@@ -5,9 +5,10 @@
     "start": "npm start --workspace=server",
     "deploy:stage": "git push stage develop:master",
     "deploy:prod": "git push prod master",
-    "preinstall": "printenv | egrep \"NVM|NPM\"",
+    "preinstall": "printenv | egrep \"NVM|NPM\" && npm run log:files",
     "preheroku-prebuild": "printenv | egrep \"NVM|NPM\"",
-    "heroku-prebuild": "npm run install:ci --workspace=landing --workspace=react-projects && npm run build:ci --workspace=landing  --workspace=react-projects && rm -rf packages/landing packages/react-projects"
+    "heroku-prebuild": "npm run install:ci --workspace=landing --workspace=react-projects && npm run build:ci --workspace=landing  --workspace=react-projects && rm -rf packages/landing packages/react-projects",
+    "log:files": "find . -maxdepth 2 -mindepth 2"
   },
   "engines": {
     "node": "16.14.x",
