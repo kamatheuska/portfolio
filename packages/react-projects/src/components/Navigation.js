@@ -20,7 +20,9 @@ export default function Navigation() {
     <nav className="navigation mt-2">
       <PortfolioLink to="/projects/react">Back</PortfolioLink>
 
-      <PortfolioLink to="/">Portfolio</PortfolioLink>
+      <PortfolioLink to="/" reloadDocument>
+        Portfolio
+      </PortfolioLink>
     </nav>
   );
 }
