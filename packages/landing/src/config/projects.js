@@ -21,6 +21,9 @@ const getProjects = ({ portfolioBucketUrl }) => [
     ],
     isTransparent: true,
     loading: 'lazy',
+    styles: {
+      softShadow: true,
+    },
     meta: {
       title: 'lidl-recommendations-team',
     },
@@ -47,8 +50,65 @@ const getProjects = ({ portfolioBucketUrl }) => [
     ],
     isTransparent: true,
     loading: 'lazy',
+    styles: {
+      softShadow: true,
+    },
     meta: {
       title: 'lidl-content-team',
+    },
+  },
+  {
+    id: '1003',
+    highlights: [
+      'React based mini projects that I have build in my free time over the years',
+    ],
+    imageSrc: `${portfolioBucketUrl}/images/projects/react-projects.jpg`,
+    imageAlt: 'React Projects',
+    title: 'React Projects',
+    company: 'Personal',
+    tags: ['React', 'HTML', 'SASS'],
+    links: [
+      {
+        text: 'Project URL',
+        url: '/projects/react',
+      },
+    ],
+    isTransparent: true,
+    loading: 'lazy',
+    styles: {
+      softShadow: false,
+    },
+    meta: {
+      title: 'react-projects',
+    },
+  },
+  {
+    id: '1004',
+    highlights: [
+      'Search engine for itunes albums. Done for a technical exercise some time ago...',
+    ],
+    imageSrc: `${portfolioBucketUrl}/images/projects/itunes-server.jpg`,
+    imageAlt: 'Itunes Search - Jobim',
+    title: 'Itunes Search',
+    company: 'Personal',
+    tags: ['Vuejs', 'Express', 'Jest'],
+    links: [
+      {
+        text: 'Project URL',
+        url: 'https://itunes-server.herokuapp.com/',
+      },
+      {
+        text: 'Github',
+        url: 'https://github.com/kamatheuska/itunes-search',
+      },
+    ],
+    isTransparent: true,
+    loading: 'lazy',
+    styles: {
+      softShadow: false,
+    },
+    meta: {
+      title: 'itunes-search',
     },
   },
 ];
