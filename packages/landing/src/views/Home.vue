@@ -144,9 +144,6 @@ $total-portal-background-height: 250vh;
         h1 {
             grid-column: 1 / span 3;
             margin-bottom: 5rem;
-            @include tablet {
-                margin-bottom: 0;
-            }
         }
         @include tablet {
             display: grid;
