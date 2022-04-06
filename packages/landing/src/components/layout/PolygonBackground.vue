@@ -85,7 +85,6 @@ export default {
     position: relative;
     width: 100vw;
     height: 100vh;
-    top: 80vh;
     -webkit-clip-path: polygon(var(--polygon));
     clip-path: polygon(var(--polygon));
 

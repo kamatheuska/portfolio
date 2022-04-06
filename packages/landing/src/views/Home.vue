@@ -105,8 +105,20 @@ export default {
 };
 </script>
 
+<style lang="scss">
+body {
+  position: relative;
+  overflow-y: hidden;
+}
+
+#background[data-teleport="background"] {
+  top: 80vh;
+}
+</style>
+
 <style lang="scss" scoped>
 $total-portal-background-height: 250vh;
+
 .home {
     min-height: $total-portal-background-height;
     /*
@@ -139,8 +151,6 @@ $total-portal-background-height: 250vh;
         @include tablet {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: 14rem;
-            grid-auto-rows: $project-card-height-fully-opened;
             grid-column-gap: 1rem;
             grid-row-gap: 1rem;
         }

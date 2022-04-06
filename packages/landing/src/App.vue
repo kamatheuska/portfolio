@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="app"
-    class="root"
-  >
+  <div class="root">
     <div data-teleport="overlay" />
     <transition name="fade-in">
       <Navbar

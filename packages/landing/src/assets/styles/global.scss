@@ -37,10 +37,9 @@ body {
   z-index: 1;
 }
 
-[data-teleport="background"] {
+#background[data-teleport="background"] {
   position: absolute;
   z-index: -10;
-  top: 0;
   height: auto;
   overflow-x: hidden;
 }
