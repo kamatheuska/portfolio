@@ -1,6 +1,11 @@
 <template>
   <header class="page-header">
-    <h1 class="title is-3 my-5">
+    <h1
+      class="title is-3 my-5"
+      :class="{
+        'has-text-centered': isCentered
+      }"
+    >
       {{ title }}
     </h1>
   </header>
@@ -15,6 +20,7 @@ export default {
       type: String,
       default: '',
     },
+    isCentered: Boolean,
   },
 };
 </script>
