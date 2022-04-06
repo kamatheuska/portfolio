@@ -1,6 +1,6 @@
 <template>
-  <header class="page-header mt-5 pt-5">
-    <h1 class="title is-3">
+  <header class="page-header">
+    <h1 class="title is-3 my-5">
       {{ title }}
     </h1>
   </header>

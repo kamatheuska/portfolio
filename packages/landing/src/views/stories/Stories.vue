@@ -54,9 +54,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$footer-height: 12rem;
-$navbar-height: 4rem;
-
 .stories {
     min-height: calc(100vh - $footer-height - $navbar-height);
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="geometric-concertos container">
-    <div class="geometric-concertos__concertos mt-5">
+    <div class="geometric-concertos__concertos">
       <header class="geometric-concertos__header has-text-centered mb-5">
         <h1 class="title my-5 is-2">
           GEOMETRIC CONCERTOS

@@ -18,6 +18,10 @@ $primary: $p-dark-blue;
 
 $project-card-height-fully-opened: 1120px;
 
+$footer-height: 12rem;
+// As in https://github.com/jgthms/bulma/blob/master/sass/components/navbar.sass
+$navbar-height: 3.25rem !default;
+
 // Typography
 @import '~bulma/sass/utilities/derived-variables';
 

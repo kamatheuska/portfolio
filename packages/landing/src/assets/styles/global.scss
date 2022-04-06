@@ -44,10 +44,6 @@ body {
   overflow-x: hidden;
 }
 
-.title {
-  @include has-title-font(900);
-}
-
 .responsive-svg {
   height: 100%;
   width: auto;
@@ -65,4 +61,13 @@ ion-icon:before {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+// Bulma overrides
+
+.title {
+  @include has-title-font(900);
+}
+.has-navbar-fixed-top.is-spaced {
+  padding-top: $navbar-height + ($navbar-padding-vertical * 2);
 }
