@@ -7,8 +7,11 @@
     "deploy:prod": "git push prod master",
     "preinstall": "printenv | egrep \"NVM|NPM\" && npm run log:files",
     "preheroku-prebuild": "printenv | egrep \"NVM|NPM\"",
-    "heroku-prebuild": "npm run install:ci --workspace=landing --workspace=react-projects && npm run build:ci --workspace=landing  --workspace=react-projects && rm -rf packages/landing packages/react-projects",
-    "log:files": "find . -maxdepth 2 -mindepth 2"
+    "heroku-prebuild": "npm run install:view && npm run build:view && npm run purge:view",
+    "log:files": "find . -maxdepth 2 -mindepth 2",
+    "build:view": "npm run build:ci --workspace=landing --workspace=react-projects",
+    "install:view": "npm run install:ci --workspace=landing --workspace=react-projects",
+    "purge:view": "rm -rf packages/landing packages/react-projects"
   },
   "engines": {
     "node": "16.14.x",
