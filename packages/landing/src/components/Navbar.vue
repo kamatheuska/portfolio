@@ -135,19 +135,42 @@ const routes = [
     text: 'Stories',
     path: '/stories',
     name: 'Stories',
-    children: [
-      {
-        path: '/stories/concertos',
-        text: 'Geometric Concertos',
-        name: 'Concertos',
-      },
-    ],
   },
   {
     text: 'Services',
     path: '/miniservices',
     name: 'Miniservices',
+  },
+  {
+    text: 'Projects',
+    path: '/projects',
+    name: 'Projects',
     children: [
+      {
+        path: '/projects/react',
+        text: 'React Projects',
+        isExternalLink: true,
+      },
+      {
+        path: '/projects/react/drum-machine',
+        text: 'Drum Machine',
+        isExternalLink: true,
+      },
+      {
+        path: '/projects/react/markdown-previewer',
+        text: 'Markdown Previewer',
+        isExternalLink: true,
+      },
+      {
+        path: '/projects/react/calculator',
+        text: 'JS Calculator',
+        isExternalLink: true,
+      },
+      {
+        path: '/projects/react/drum-machine',
+        text: 'Drum Machine',
+        isExternalLink: true,
+      },
       {
         path: '/miniservices/urlshortener',
         text: 'URL Shortener',
@@ -163,17 +186,10 @@ const routes = [
         text: 'Who Am I',
         name: 'Whoami',
       },
-    ],
-  },
-  {
-    text: 'Projects',
-    path: '/projects',
-    name: 'Projects',
-    children: [
       {
-        path: '/projects/react',
-        text: 'React Based Projects',
-        isExternalLink: true,
+        path: '/stories/concertos',
+        text: 'Geometric Concertos',
+        name: 'Concertos',
       },
     ],
   },
