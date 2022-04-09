@@ -2,15 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "start": "npm start --workspace=server",
     "deploy:stage": "git push stage develop:master",
-    "deploy:prod": "git push prod master",
-    "preheroku-prebuild": "printenv | egrep \"NVM|NPM\" && ls -la && ls -la $BUILD_DIR",
-    "heroku-prebuild": "npm run install:view && npm run build:view && npm run purge:view",
-    "log:files": "find . -maxdepth 2 -mindepth 2",
-    "build:view": "cd $BUILD_DIR/packages/landing && npm run build:ci && cd $BUILD_DIR/packages/react-projects && npm run build:ci",
-    "install:view": "cd $BUILD_DIR/packages/landing && npm run install:ci && cd $BUILD_DIR/packages/react-projects && npm run install:ci",
-    "purge:view": "rm -rf packages/landing packages/react-projects"
+    "deploy:prod": "git push prod master"
   },
   "engines": {
     "node": "16.14.x",

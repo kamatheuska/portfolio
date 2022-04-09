@@ -18,7 +18,13 @@
     "debug": "node --inspect=0.0.0.0:9229 init.js",
     "dev:debug-log-mode": "DEBUG_MODE=true nodemon init.js",
     "dev": "nodemon init.js",
-    "clean": "rm -rf node_modules"
+    "clean": "rm -rf node_modules",
+    "preheroku-prebuild": "printenv | egrep \"NVM|NPM\" && ls -la && ls -la $BUILD_DIR",
+    "heroku-prebuild": "npm run install:view && npm run build:view && npm run purge:view:ci",
+    "build:view": "cd $BUILD_DIR/packages/landing && npm run build:ci && cd $BUILD_DIR/packages/react-projects && npm run build:ci",
+    "install:view": "cd $BUILD_DIR/packages/landing && npm run install:ci && cd $BUILD_DIR/packages/react-projects && npm run install:ci",
+    "purge:view:ci": "rm -rf packages/landing packages/react-projects",
+    "log:files": "find . -maxdepth 2 -mindepth 2"
   },
   "dependencies": {
     "bluebird": "^3.7.2",
