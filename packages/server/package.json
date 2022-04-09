@@ -19,11 +19,11 @@
     "dev:debug-log-mode": "DEBUG_MODE=true nodemon init.js",
     "dev": "nodemon init.js",
     "clean": "rm -rf node_modules",
-    "preheroku-prebuild": "printenv | egrep \"NVM|NPM\" && ls -la && ls -la $BUILD_DIR",
+    "preheroku-prebuild": "printenv | egrep \"NVM|NPM\" && ls -la && ls -la $PWD",
     "heroku-prebuild": "npm run install:view && npm run build:view && npm run purge:view:ci",
-    "build:view": "echo \"prebuild env: \" && printenv && cd $BUILD_DIR/packages/landing && npm run build:ci && cd $BUILD_DIR/packages/react-projects && npm run build:ci",
-    "install:view": "printf \"\n\n*** LOG PWD *** \n\n \" && ls -la $PWD && cd $BUILD_DIR/packages/landing && printf \"\n\n*** LOG PWD *** \n\n \" && ls -la $PWD && npm run install:ci && cd $BUILD_DIR/packages/react-projects && npm run install:ci",
-    "purge:view:ci": "rm -rf packages/landing packages/react-projects",
+    "build:view": "cd $PWD/packages/landing && npm run build:ci && cd $PWD/packages/react-projects && npm run build:ci",
+    "install:view": "cd $PWD/packages/landing && npm run install:ci && cd $PWD/packages/react-projects && npm run install:ci",
+    "purge:view:ci": "rm -rf $PWD/packages/landing $PWD/packages/react-projects",
     "log:files": "find . -maxdepth 2 -mindepth 2"
   },
   "dependencies": {
