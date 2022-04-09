@@ -22,9 +22,10 @@
     "preheroku-prebuild": "printenv | egrep \"NVM|NPM\" && ls -la && ls -la $PWD",
     "heroku-prebuild": "npm run install:view && npm run build:view && npm run purge:view:ci",
     "build:view": "cd $PWD/packages/landing && npm run build:ci && cd $PWD/packages/react-projects && npm run build:ci",
-    "install:view": "cd $PWD/packages/landing && npm run install:ci && cd $PWD/packages/react-projects && npm run install:ci",
+    "install:view": "npm run log:separator && echo $BUILD_DIR && echo \"$1\" npm run log:separator && cd $PWD/packages/landing && npm run install:ci && cd $PWD/packages/react-projects && npm run install:ci",
     "purge:view:ci": "rm -rf $PWD/packages/landing $PWD/packages/react-projects",
-    "log:files": "find . -maxdepth 2 -mindepth 2"
+    "log:files": "find . -maxdepth 2 -mindepth 2",
+    "log:separator": "printf \"\n\n\n************************\n*** LOGGING ***\n************************\n\n\n \""
   },
   "dependencies": {
     "bluebird": "^3.7.2",
