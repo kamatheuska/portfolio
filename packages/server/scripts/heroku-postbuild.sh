@@ -3,14 +3,14 @@
 # Ensure wildcards in globs match dotfiles too.
 shopt -s dotglob
 
-indent() {
-  sed -u 's/^/      /'
+log_title() {
+  sed -u 's/^/--------->  /'
 }
 
 BUILD_DIR="$(pwd)"
 
 install_view () {
-  echo "INSTALL VIEW" | indent
+  echo "INSTALL VIEW" | log_title
   cd $BUILD_DIR/packages/landing &&
   npm run install:ci &&
   cd $BUILD_DIR/packages/react-projects &&
@@ -18,7 +18,7 @@ install_view () {
 }
 
 build_view () {
-  echo "BUILD VIEW" | indent
+  echo "BUILD VIEW" | log_title
   cd $BUILD_DIR/packages/landing &&
   npm run build:ci &&
   cd $BUILD_DIR/packages/react-projects &&
@@ -26,7 +26,7 @@ build_view () {
 }
 
 purge_view () {
-  echo "PÜRGE VIEW" | indent
+  echo "PURGE VIEW" | log_title
   rm -rf $BUILD_DIR/packages
 }
 
@@ -37,8 +37,8 @@ purge_view () {
 )
 
 if [ $? -ne 0 ]; then
-  echo "FAILED to build view" | indent
+  echo "FAILED to build view" | log_title
   exit 1
 fi
 
-echo "Builded view successfully" | indent
+echo "Builded view successfully" | log_title
