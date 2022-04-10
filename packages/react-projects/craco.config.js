@@ -1,5 +1,7 @@
 const path = require('path');
 
+const BUILD_DIR = process.env.BUILD_DIR || 'server';
+
 module.exports = {
   style: {
     sass: {
@@ -11,7 +13,7 @@ module.exports = {
   },
   webpack: {
     configure: (webpackConfig, { paths }) => {
-      paths.appBuild = webpackConfig.output.path = path.resolve(__dirname, '..', 'server/public/react-projects');
+      paths.appBuild = webpackConfig.output.path = path.resolve(__dirname, '..', BUILD_DIR, 'public/react-projects');
 
       return webpackConfig;
     },
