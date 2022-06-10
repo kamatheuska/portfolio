@@ -1,31 +1,19 @@
 const request = require('supertest');
-const { teardown, setupTests } = require('../setup');
+const { getApp } = require('../setup');
 
 const BASE_URL = '/api/timestamp';
-let response;
-let url;
-let createdApp;
-let createdServer;
 
 describe('🌳  Integration: Quotes', () => {
-    beforeAll(async () => {
-        try {
-            const { app, server } = await setupTests();
-
-            createdApp = app;
-            createdServer = server;
-        } catch (error) {
-            console.error(error);
-        }
-    });
-
-    afterAll(async () => teardown(createdServer));
+    let response;
+    let url;
 
     describe(`🌴 GET ${BASE_URL}`, () => {
         it('🌱 should return a generated timestamp', async () => {
+            const app = getApp();
+
             url = `${BASE_URL}`;
 
-            response = await request(createdApp).get(url);
+            response = await request(app).get(url);
             expect(response.status).toBe(200);
             expect(typeof response.body.unix).toBe('number');
             expect(typeof response.body.utc).toBe('string');
@@ -41,9 +29,11 @@ describe('🌳  Integration: Quotes', () => {
         ])(
             '🌱 should return a generated timestamp with unix=%s and utc=%s when date=%s',
             async (expectedUnix, expectedUtc, date) => {
+                const app = getApp();
+
                 url = `${BASE_URL}/${date}`;
 
-                response = await request(createdApp).get(url);
+                response = await request(app).get(url);
                 expect(response.status).toBe(200);
                 expect(response.body.unix).toBe(expectedUnix);
                 expect(response.body.utc).toBe(expectedUtc);

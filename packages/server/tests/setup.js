@@ -1,30 +1,28 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
+/* eslint-disable no-undef */
 
 const mongoose = require('mongoose');
 const { stopServer } = require('../utils/server');
 const init = require('../app');
-const { toBoolean } = require('../utils');
 
-let forceExit;
+process.env.PORT = 9899;
+process.env.NODE_ENV = 'test';
+process.env.DEBUG_MODE = false;
 
-const setTestDefaults = ({ timeout = 30000, port = 9899, debug = 'false' } = {}) => {
-    process.env.PORT = port;
-    process.env.NODE_ENV = 'test';
-    process.env.DEBUG_MODE = debug;
-    forceExit = toBoolean(process.env.FORCE_EXIT || true);
+mongoose.set('useCreateIndex', true);
+mongoose.promise = global.Promise;
+jest.setTimeout(30000); // eslint-disable-line no-undef
 
-    jest.setTimeout(timeout); // eslint-disable-line no-undef
-    mongoose.set('useCreateIndex', true);
-    mongoose.promise = global.Promise;
-};
+let createdApp;
+let createdServer;
 
-const setupTests = async ({ timeout, port } = {}) => {
-    setTestDefaults({ timeout, port });
-
+const setupTests = async () => {
     try {
-        const instance = await init();
-        return instance;
+        const { app, server } = await init();
+
+        createdApp = app;
+        createdServer = server;
     } catch (error) {
         console.error(error);
     }
@@ -63,11 +61,14 @@ const teardown = async (server) => {
         await stopServer(server);
     } catch (error) {
         console.error(error);
-        if (forceExit) process.exit(1);
     }
 };
+
+beforeAll(async () => setupTests());
+afterAll(async () => teardown(createdServer));
 
 exports.cleanDb = cleanDb;
 exports.dropAll = dropAll;
 exports.setupTests = setupTests;
 exports.teardown = teardown;
+exports.getApp = () => createdApp;

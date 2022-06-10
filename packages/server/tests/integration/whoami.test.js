@@ -1,32 +1,20 @@
 const request = require('supertest');
-const { teardown, setupTests } = require('../setup');
+const { getApp } = require('../setup');
 const { ACCEPT_LANGUAGE_HEADER_STUB, USER_AGENT_HEADER_STUB } = require('../../constants/stubs');
 
 const BASE_URL = '/api/whoami';
-let response;
-let url;
-let createdApp;
-let createdServer;
 
-describe('🌳  Integration: Quotes', () => {
-    beforeAll(async () => {
-        try {
-            const { app, server } = await setupTests();
-
-            createdApp = app;
-            createdServer = server;
-        } catch (error) {
-            console.error(error);
-        }
-    });
-
-    afterAll(async () => teardown(createdServer));
+describe('🌳  Integration: WhoAmI', () => {
+    let url;
+    let response;
 
     describe(`🌴 GET ${BASE_URL}`, () => {
         beforeEach(async () => {
+            const app = getApp();
+
             url = `${BASE_URL}`;
 
-            response = await request(createdApp)
+            response = await request(app)
                 .get(url)
                 .set('accept-language', ACCEPT_LANGUAGE_HEADER_STUB)
                 .set('user-agent', USER_AGENT_HEADER_STUB);

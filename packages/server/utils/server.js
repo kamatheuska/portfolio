@@ -16,16 +16,19 @@ const startServer = (app) => {
 /**
  * @param {import('http2').Http2Server} server
  */
-const stopServer = async (server) => {
-    if (!server) throw new TypeError('No server passed');
-    server.close(async () => {
-        const { port } = getConfig();
+const stopServer = (server) =>
+    new Promise((resolve, reject) => {
+        if (!server) throw new TypeError('No server passed');
+        server.close((error) => {
+            if (error) return reject(error);
 
-        logInfo('app.stopServer', `Stopped listening to port ${port}`);
+            const { port } = getConfig();
 
-        await disconnectFromDatabase();
+            logInfo('app.stopServer', `Stopped listening to port ${port}`);
+
+            disconnectFromDatabase().then(resolve).catch(reject);
+        });
     });
-};
 
 exports.startServer = startServer;
 exports.stopServer = stopServer;

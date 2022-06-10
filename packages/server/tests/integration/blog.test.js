@@ -3,11 +3,9 @@
 const request = require('supertest');
 const { seedBlogs } = require('../seed/blog.seed');
 const { generatePostStubs } = require('../../constants/stubs');
-const { cleanDb, teardown, setupTests } = require('../setup');
+const { getApp, cleanDb } = require('../setup');
 const BlogPost = require('../../model/blogPost');
 
-let createdApp;
-let createdServer;
 let response;
 let blogStubs;
 let seeded;
@@ -16,26 +14,16 @@ const BASE_URL = '/api/blog';
 const amount = 4;
 
 describe(`🌳  Integration: BlogPost`, () => {
-    beforeAll(async () => {
-        try {
-            const { app, server } = await setupTests({
-                timeout: 25000,
-            });
-
-            createdApp = app;
-            createdServer = server;
-        } catch (error) {
-            console.error(error);
-        }
-    });
     afterEach(async () => cleanDb());
-    afterAll(async () => teardown(createdServer, { forceExit: false }));
 
     describe(`🍉  GET ${BASE_URL}/posts`, () => {
         beforeEach(async () => {
+            const app = getApp();
+
             blogStubs = generatePostStubs(amount);
+
             await seedBlogs(blogStubs);
-            response = await request(createdApp).get(`${BASE_URL}/posts`);
+            response = await request(app).get(`${BASE_URL}/posts`);
         });
 
         it(`🌱 returns all entity blogPost saved in the db`, () => {
@@ -60,7 +48,9 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 returns blogPost with the given id', async () => {
-            response = await request(createdApp).get(`${BASE_URL}/posts/${seeded[2]._id}`);
+            const app = getApp();
+
+            response = await request(app).get(`${BASE_URL}/posts/${seeded[2]._id}`);
             expect(response.status).toBe(200);
             expect(response.body.content).toBe(seeded[2].content);
             expect(response.body.title).toBe(seeded[2].title);
@@ -70,7 +60,9 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it(`🌱 fails and throws 400 if id is not found`, async () => {
-            response = await request(createdApp).get(`${BASE_URL}/posts/123123`);
+            const app = getApp();
+
+            response = await request(app).get(`${BASE_URL}/posts/123123`);
             expect(response.status).toBe(400);
             expect(response.body).toEqual({});
         });
@@ -82,9 +74,11 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 creates a new blogPost', async () => {
+            const app = getApp();
+
             const { content, title } = blogStubs[0];
 
-            response = await request(createdApp).post(`${BASE_URL}/posts`).send({
+            response = await request(app).post(`${BASE_URL}/posts`).send({
                 content,
                 title,
             });
@@ -98,10 +92,12 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 fails to save html content if is all dirty', async () => {
+            const app = getApp();
+
             const { title } = blogStubs[0];
             const dirtyHtml = '<script>alert("Some alert") var dirty = "dirty"; </script>';
 
-            response = await request(createdApp).post(`${BASE_URL}/posts`).send({
+            response = await request(app).post(`${BASE_URL}/posts`).send({
                 content: dirtyHtml,
                 title,
             });
@@ -113,11 +109,13 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 saves valid html but removes dirty html from it', async () => {
+            const app = getApp();
+
             const { title } = blogStubs[0];
             const dirtyHtml = '<script>alert("Some alert") var dirty = "dirty"; </script>';
             const cleanHtml = '<p>this is clean</p>';
 
-            response = await request(createdApp)
+            response = await request(app)
                 .post(`${BASE_URL}/posts`)
                 .send({
                     content: `${dirtyHtml} ${cleanHtml} ${dirtyHtml}`,
@@ -137,7 +135,9 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it(`🌱 fails and throws 400 if no body is sended`, async () => {
-            response = await request(createdApp).post(`${BASE_URL}/posts`);
+            const app = getApp();
+
+            response = await request(app).post(`${BASE_URL}/posts`);
             expect(response.status).toBe(400);
             expect(response.body).toEqual({});
         });
@@ -150,10 +150,12 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 updates a blogPost with the given id', async () => {
+            const app = getApp();
+
             const savedBlogPostId = blogStubs[3]._id;
             const { content, title } = blogStubs[4];
 
-            response = await request(createdApp).put(`${BASE_URL}/posts/${savedBlogPostId}`).send({
+            response = await request(app).put(`${BASE_URL}/posts/${savedBlogPostId}`).send({
                 content,
                 title,
             });
@@ -171,10 +173,12 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 saves blogPost with empty html content if is content is dirty', async () => {
+            const app = getApp();
+
             const { _id, content, title } = blogStubs[9];
             const dirtyHtml = '<script>alert("Some alert") var dirty = "dirty"; </script>';
 
-            response = await request(createdApp).put(`${BASE_URL}/posts/${_id}`).send({
+            response = await request(app).put(`${BASE_URL}/posts/${_id}`).send({
                 content: dirtyHtml,
                 title: blogStubs[1],
             });
@@ -186,11 +190,13 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 fails to save dirty html', async () => {
+            const app = getApp();
+
             const { _id } = blogStubs[0];
             const dirtyHtml = '<script>alert("Some alert") var dirty = "dirty"; </script>';
             const cleanHtml = '<p>this is clean</p>';
 
-            response = await request(createdApp)
+            response = await request(app)
                 .put(`${BASE_URL}/posts/${_id}`)
                 .send({
                     content: `${dirtyHtml} ${cleanHtml} ${dirtyHtml}`,
@@ -211,8 +217,10 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it(`🌱 fails and throws 400 if no body is sended`, async () => {
+            const app = getApp();
+
             const savedBlogPostId = blogStubs[10]._id;
-            response = await request(createdApp).put(`${BASE_URL}/posts/${savedBlogPostId}`);
+            response = await request(app).put(`${BASE_URL}/posts/${savedBlogPostId}`);
             expect(response.status).toBe(400);
             expect(response.body).toEqual({});
         });
@@ -225,9 +233,11 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it('🌱 deletes a blogPost with the given id', async () => {
+            const app = getApp();
+
             const savedBlogPostId = blogStubs[3]._id;
 
-            response = await request(createdApp).delete(`${BASE_URL}/posts/${savedBlogPostId}`);
+            response = await request(app).delete(`${BASE_URL}/posts/${savedBlogPostId}`);
             expect(response.status).toBe(200);
             expect(response.body.deletedCount).toBe(1);
 
@@ -236,7 +246,9 @@ describe(`🌳  Integration: BlogPost`, () => {
         });
 
         it(`🌱 fails and throws 400 if id does not exist`, async () => {
-            response = await request(createdApp).put(`${BASE_URL}/posts/123123`);
+            const app = getApp();
+
+            response = await request(app).put(`${BASE_URL}/posts/123123`);
             expect(response.status).toBe(400);
             expect(response.body).toEqual({});
         });
