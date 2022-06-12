@@ -23,9 +23,8 @@
           :transition="[{ name: 'transition-duration', value: '0.3s' }]"
         />
       </router-link>
-      <a
+      <button
         v-if="showLinks"
-        role="button"
         class="navbar-burger"
         :class="{
           'is-active': activeNavbar,
@@ -34,11 +33,12 @@
         aria-expanded="false"
         data-target="navbar"
         @click="activeNavbar = !activeNavbar"
+        @keypress.enter="activeNavbar = !activeNavbar"
       >
         <span aria-hidden="true" />
         <span aria-hidden="true" />
         <span aria-hidden="true" />
-      </a>
+      </button>
     </div>
     <transition name="fade-in-fast">
       <div
@@ -79,6 +79,7 @@
                 class="navbar-link is-arrowless"
               > {{ route.text }} </a>
 
+              <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
               <div
                 class="navbar-dropdown is-right"
                 @click="unfocusNavbarDropdown"
@@ -201,7 +202,7 @@ const logoBgColor = {
 };
 
 export default {
-  name: 'Navbar',
+  name: 'NavBar',
 
   components: {
     ScriptAnimation,

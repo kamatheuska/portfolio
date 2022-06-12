@@ -24,12 +24,14 @@
       </template>
       <div class="field mt-5">
         <div class="control">
-          <input
-            v-model="form.date"
-            class="input"
-            type="text"
-            required
-          >
+          <label>
+            <input
+              v-model="form.date"
+              class="input"
+              type="text"
+              required
+            >
+          </label>
         </div>
       </div>
       <button

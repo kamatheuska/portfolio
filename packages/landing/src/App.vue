@@ -23,7 +23,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import Navbar from '@/components/Navbar.vue';
+import Navbar from '@/components/NavBar.vue';
 import TheFooter from '@/components/TheFooter.vue';
 
 export default {
