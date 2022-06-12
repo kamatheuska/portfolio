@@ -75,7 +75,7 @@ import * as cookies from '@/constants/cookies';
 const WHITE = '#fff';
 
 export default {
-  name: 'Intro',
+  name: 'IntroView',
 
   data: () => ({
     hero: {

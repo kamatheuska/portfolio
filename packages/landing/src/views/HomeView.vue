@@ -57,7 +57,7 @@ import PolygonBackground from '@/components/layout/PolygonBackground.vue';
 import ProjectCard from '@/components/ProjectCard.vue';
 
 export default {
-  name: 'Home',
+  name: 'HomeView',
   components: {
     HomeAnimation,
     PolygonRayAnimation,

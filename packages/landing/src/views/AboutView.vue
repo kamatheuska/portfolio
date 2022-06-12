@@ -81,7 +81,7 @@
 <script>
 import HorizontalLevel from '@/components/layout/HorizontalLevel.vue';
 import LevelItem from '@/components/LevelItem.vue';
-import Waves from '@/components/svg/Waves.vue';
+import Waves from '@/components/svg/WavesSvg.vue';
 import aboutContentFactory from '@/content/aboutFactory';
 import { sleep } from '@/utils';
 
@@ -94,7 +94,7 @@ const waveColors = {
 };
 
 export default {
-  name: 'About',
+  name: 'AboutView',
 
   components: {
     HorizontalLevel,

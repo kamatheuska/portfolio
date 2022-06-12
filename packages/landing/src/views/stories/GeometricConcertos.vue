@@ -87,7 +87,7 @@ const ODD_SQUARE_RANGES = {
 const BULMA_TABLET_PIXELS_BREAKPOINT = 769;
 
 export default {
-  name: 'Home',
+  name: 'GeometricConcertos',
   components: {
     SquareNav,
     SquareNavGroup,

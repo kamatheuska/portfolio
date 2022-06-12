@@ -53,7 +53,7 @@ import { getWhoami } from '@/services/whoami';
 
 // const getTimestampByDate = () => {};
 export default {
-  name: 'Whoami',
+  name: 'WhoAmI',
   components: {
     BoxForm,
     PageHeader,

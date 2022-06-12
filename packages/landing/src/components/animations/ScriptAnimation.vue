@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import MoreThan from '@/components/svg/MoreThan.vue';
-import LessThan from '@/components/svg/LessThan.vue';
-import Slash from '@/components/svg/Slash.vue';
+import MoreThan from '@/components/svg/MoreThanSvg.vue';
+import LessThan from '@/components/svg/LessThanSvg.vue';
+import Slash from '@/components/svg/SlashSvg.vue';
 
 /**
  * @typedef {Object} TransitionRule

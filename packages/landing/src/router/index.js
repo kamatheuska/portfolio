@@ -2,11 +2,11 @@ import {
   createRouter,
   createWebHistory,
 } from 'vue-router';
-import Home from '../views/Home.vue';
-import Intro from '../views/Intro.vue';
-import MiniServices from '../views/mini-services/index.vue';
-import Stories from '../views/stories/index.vue';
-import Projects from '../views/projects/index.vue';
+import HomeView from '../views/HomeView.vue';
+import IntroView from '../views/IntroView.vue';
+import ServicesRoot from '../views/mini-services/ServicesRoot.vue';
+import StoriesRoot from '../views/stories/StoriesRoot.vue';
+import ProjectsRoot from '../views/projects/ProjectsRoot.vue';
 
 const routes = [
   {
@@ -15,22 +15,22 @@ const routes = [
   },
   {
     path: '/home',
-    component: Home,
+    component: HomeView,
     name: 'Home',
   },
   {
     path: '/intro',
     name: 'Intro',
-    component: Intro,
+    component: IntroView,
   },
   {
     path: '/stories',
-    component: Stories,
+    component: StoriesRoot,
     children: [
       {
         path: '',
         name: 'Stories',
-        component: () => import(/* webpackChunkName: "stories" */ '../views/stories/Stories.vue'),
+        component: () => import(/* webpackChunkName: "stories" */ '../views/stories/StoriesList.vue'),
       },
       {
         path: '/stories/concertos',
@@ -42,16 +42,16 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
   },
   {
     path: '/miniservices',
-    component: MiniServices,
+    component: ServicesRoot,
     children: [
       {
         path: '',
         name: 'Miniservices',
-        component: () => import(/* webpackChunkName: "services" */ '../views/mini-services/Services.vue'),
+        component: () => import(/* webpackChunkName: "services" */ '../views/mini-services/ServicesList.vue'),
       },
       {
         path: 'urlshortener',
@@ -61,24 +61,24 @@ const routes = [
       {
         path: 'timestamp',
         name: 'Timestamp',
-        component: () => import(/* webpackChunkName: "timestamp" */ '../views/mini-services/Timestamp.vue'),
+        component: () => import(/* webpackChunkName: "timestamp" */ '../views/mini-services/TimeStamp.vue'),
       },
       {
         path: 'whoami',
         name: 'Whoami',
-        component: () => import(/* webpackChunkName: "whoami" */ '../views/mini-services/Whoami.vue'),
+        component: () => import(/* webpackChunkName: "whoami" */ '../views/mini-services/WhoAmI.vue'),
       },
     ],
   },
 
   {
     path: '/projects',
-    component: Projects,
+    component: ProjectsRoot,
     children: [
       {
         path: '',
         name: 'Projects',
-        component: () => import(/* webpackChunkName: "projects" */ '../views/projects/Projects.vue'),
+        component: () => import(/* webpackChunkName: "projects" */ '../views/projects/ProjectsList.vue'),
       },
       {
         path: ':title/:id',

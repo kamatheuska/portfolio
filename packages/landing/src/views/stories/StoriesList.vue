@@ -37,7 +37,7 @@ const sections = [
 ];
 
 export default {
-  name: 'ServicesView',
+  name: 'StoriesList',
   components: {
     HeroPage,
     LevelSection,

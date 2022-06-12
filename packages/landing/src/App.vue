@@ -17,21 +17,21 @@
         </transition>
       </router-view>
     </main>
-    <Footer />
+    <TheFooter />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
+import TheFooter from '@/components/TheFooter.vue';
 
 export default {
   name: 'App',
 
   components: {
     Navbar,
-    Footer,
+    TheFooter,
   },
 
   computed: {

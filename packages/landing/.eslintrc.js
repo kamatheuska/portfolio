@@ -28,6 +28,10 @@ module.exports = {
       ignoreStrings: true,
       ignorePattern: 'd=".+',
     }],
+    // to be fixed
+    'vuejs-accessibility/anchor-has-content': 0,
+    'vuejs-accessibility/alt-text': 0,
+    'vuejs-accessibility/label-has-for': 0,
   },
   overrides: [
     {

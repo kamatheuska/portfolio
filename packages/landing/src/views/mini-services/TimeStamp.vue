@@ -56,7 +56,7 @@ import { generateTimestamp, getTimestampByDate } from '@/services/timestamp';
 
 // const getTimestampByDate = () => {};
 export default {
-  name: 'Timestamp',
+  name: 'TimeStamp',
   components: {
     BoxForm,
     PageHeader,

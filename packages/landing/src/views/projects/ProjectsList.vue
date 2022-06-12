@@ -38,7 +38,7 @@ const sections = [
 ];
 
 export default {
-  name: 'ServicesView',
+  name: 'ProjectsList',
   components: {
     HeroPage,
   },
