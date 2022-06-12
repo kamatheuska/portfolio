@@ -8,15 +8,21 @@
       @submit="onSubmit"
     >
       <div class="field">
-        <label class="label">URL</label>
-        <div class="control">
-          <input
-            v-model="form.url"
-            class="input"
-            type="url"
-            required
-          >
-        </div>
+        <label
+          class="label"
+          for="url"
+        >
+          URL
+          <div class="control mt-2">
+            <input
+              id="url"
+              v-model="form.url"
+              class="input"
+              type="url"
+              required
+            >
+          </div>
+        </label>
       </div>
     </BoxForm>
     <section v-else>

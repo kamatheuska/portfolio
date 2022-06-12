@@ -24,8 +24,9 @@
       </template>
       <div class="field mt-5">
         <div class="control">
-          <label>
+          <label for="newDate">
             <input
+              id="newDate"
               v-model="form.date"
               class="input"
               type="text"

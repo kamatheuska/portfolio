@@ -28,8 +28,6 @@ module.exports = {
       ignoreStrings: true,
       ignorePattern: 'd=".+',
     }],
-    // to be fixed
-    'vuejs-accessibility/label-has-for': 0,
   },
   overrides: [
     {
