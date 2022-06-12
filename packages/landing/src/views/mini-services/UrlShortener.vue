@@ -53,7 +53,10 @@
           style="width: 14rem; margin: 0 auto"
         >
           <figure class="image is-square">
-            <img :src="resultGifSrcImage">
+            <img
+              alt=""
+              :src="resultGifSrcImage"
+            >
           </figure>
         </div>
       </div>

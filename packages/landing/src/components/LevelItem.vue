@@ -20,6 +20,7 @@
           class="level-item__image"
           :class="{ 'level-item__image--is-small': hasSmallImage }"
           :src="imageSrc"
+          :alt="heading"
         >
       </router-link>
     </template>
@@ -32,6 +33,7 @@
         <img
           v-if="imageSrc"
           class="level-item__image"
+          :alt="heading"
           :class="{ 'level-item__image--is-small': hasSmallImage }"
           :src="imageSrc"
         >
