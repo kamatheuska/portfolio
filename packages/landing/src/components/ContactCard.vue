@@ -33,9 +33,12 @@
           <a
             :href="item.link"
             target="_blank"
-            :title="item.title"
+            :aria-label="item.title"
           >
-            <span class="icon has-text-primary">
+            <span
+              aria-hidden="true"
+              class="icon has-text-primary"
+            >
               <ion-icon :name="item.iconName" />
             </span>
           </a>
@@ -58,22 +61,22 @@ export default {
     social: [
       {
         link: 'https://www.linkedin.com/in/nicolasramirezdev',
-        title: 'LinkedIn Profile',
+        title: 'Link to LinkedIn Profile',
         iconName: 'logo-linkedin',
       },
       {
         link: 'http://www.instagram.com/nicoramirezdev',
-        title: 'Instagram Profile',
+        title: 'Link to Instagram Profile',
         iconName: 'logo-instagram',
       },
       {
         link: 'https://www.github.com/kamatheuska',
-        title: 'Github Profile',
+        title: 'Link to Github Profile',
         iconName: 'logo-github',
       },
       {
         link: 'https://stackoverflow.com/u/7868769',
-        title: 'Stackoverflow Profile',
+        title: 'Link to Stackoverflow Profile',
         iconName: 'logo-stackoverflow',
       },
     ],
