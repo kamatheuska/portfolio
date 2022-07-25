@@ -19,7 +19,7 @@
     "dev:debug-log-mode": "DEBUG_MODE=true nodemon init.js",
     "dev": "nodemon init.js",
     "clean": "rm -rf node_modules",
-    "heroku-postbuild": "./scripts/heroku-postbuild.sh",
+    "heroku-postbuild": "./scripts/build-view.sh",
     "log:files": "find . -maxdepth 2 -mindepth 2"
   },
   "dependencies": {
