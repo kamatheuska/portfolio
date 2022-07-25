@@ -37,6 +37,13 @@ function setApi(app, { fccOptions }) {
     app.use('/api/blog', require('./controllers/blog'));
 }
 
+function setProjects(app, { fccOptions }) {
+    require('./fcc-projects/exercise-tracker')(app, {
+        fccOptions,
+        rootPath: '/fcc-projects/exercise-tracker',
+    });
+}
+
 function setView(app, { staticsFolder, stage, isProduction }) {
     if (isProduction) {
         app.use(forceSsl);
@@ -62,6 +69,7 @@ module.exports = function setupApp(app) {
 
     setMiddleware(app, config);
     setApi(app, config);
+    setProjects(app, config);
     setView(app, config);
     setErrors(app, config);
 };
