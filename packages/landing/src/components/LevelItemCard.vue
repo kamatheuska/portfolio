@@ -15,6 +15,7 @@
           class="level-item-card__image"
           :class="{ 'level-item-card__image--is-small': hasSmallImage }"
           :src="imageSrc"
+          alt=""
         >
       </router-link>
     </template>
@@ -31,6 +32,7 @@
           class="level-item-card__image"
           :class="{ 'level-item-card__image--is-small': hasSmallImage }"
           :src="imageSrc"
+          alt=""
         >
       </div>
     </template>
