@@ -30,12 +30,14 @@ purge_view () {
   rm -rf $BUILD_DIR/packages
 }
 
-(
-  install_view &&
-  build_view &&
-  purge_view
-)
+# (
+#   install_view &&
+#   build_view &&
+#   purge_view
+# )
 
+echo "BUILD DIR DEBUG"
+echo $BUILD_DIR;
 if [ $? -ne 0 ]; then
   echo "FAILED to build view" | log_title
   exit 1
