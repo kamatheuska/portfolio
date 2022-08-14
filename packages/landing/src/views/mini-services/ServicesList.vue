@@ -35,6 +35,13 @@ const microServicesItems = [
     imageSrc: screw,
     hasSmallImage: true,
   },
+  {
+    isInternalLink: true,
+    heading: 'Exercise Tracker',
+    link: '/miniservices/exercise-tracker',
+    imageSrc: screw,
+    hasSmallImage: true,
+  },
 ];
 
 const sections = [
