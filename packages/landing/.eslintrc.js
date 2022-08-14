@@ -22,7 +22,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'consistent-return': 0,
     'vue/require-default-prop': 0,
-    'linebreak-style': ['error', (process.platform === 'win32' ? 'windows' : 'unix')], // https://stackoverflow.com/q/39114446/2771889  
+    'linebreak-style': ['error', (process.platform === 'win32' ? 'windows' : 'unix')], // https://stackoverflow.com/q/39114446/2771889
     'max-len': ['error', {
       code: 120,
       ignoreTemplateLiterals: true,
@@ -30,4 +30,24 @@ module.exports = {
       ignorePattern: 'd=".+',
     }],
   },
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+      ],
+      extends: ['plugin:jest/recommended'],
+      plugins: ['jest'],
+      env: {
+        jest: true,
+      },
+      rules: {
+        'jest/no-disabled-tests': 'warn',
+        'jest/no-focused-tests': 'error',
+        'jest/no-identical-title': 'error',
+        'jest/prefer-to-have-length': 'warn',
+        'jest/valid-expect': 'error',
+      },
+    },
+  ],
 };
