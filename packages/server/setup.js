@@ -34,7 +34,7 @@ function setApi(app, { fccOptions }) {
     app.use('/api/whoami', cors(fccOptions), require('./controllers/whoami'));
     app.use('/api/shorturl', cors(fccOptions), require('./controllers/urlShortener'));
     app.use('/api/quote', require('./controllers/quote'));
-    app.use('/exercise-tracker', require('./controllers/exercise-tracker'));
+    app.use('/exercise-tracker', cors(fccOptions), require('./controllers/exercise-tracker'));
     app.use('/api/blog', require('./controllers/blog'));
 }
 
