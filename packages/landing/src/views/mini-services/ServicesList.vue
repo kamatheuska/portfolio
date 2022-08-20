@@ -42,6 +42,13 @@ const microServicesItems = [
     imageSrc: screw,
     hasSmallImage: true,
   },
+  {
+    isInternalLink: true,
+    heading: 'File Metadata',
+    link: '/miniservices/file-metadata',
+    imageSrc: screw,
+    hasSmallImage: true,
+  },
 ];
 
 const sections = [

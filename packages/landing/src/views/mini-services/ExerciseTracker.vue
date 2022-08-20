@@ -1,5 +1,5 @@
 <template>
-  <div class="url-shortener container">
+  <div class="exercise-tracker container">
     <PageHeader :title="title" />
     <BoxForm
       description="Create a new user"
@@ -110,7 +110,7 @@ import BoxForm from '@/components/BoxForm.vue';
 import PageHeader from '@/components/PageHeader.vue';
 
 export default {
-  name: 'UrlShortener',
+  name: 'ExerciseTracker',
   components: {
     BoxForm,
     PageHeader,
@@ -168,7 +168,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.url-shortener {
+.exercise-tracker {
     @include tablet {
         padding-left: 0;
     }
