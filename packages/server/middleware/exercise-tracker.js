@@ -14,8 +14,16 @@ async function getAllExerciseUsers() {
     return users;
 }
 
-async function addExerciseToUser(userId, exercise) {
+async function getUserById(userId) {
     const user = await ExerciseUser.findById(userId).exec();
+
+    if (!user) throw new Error(`No user found with user id ${userId}`);
+
+    return user;
+}
+
+async function addExerciseToUser(userId, exercise) {
+    const user = await getUserById(userId);
 
     user.exercises.push(exercise);
 
@@ -24,13 +32,7 @@ async function addExerciseToUser(userId, exercise) {
     return savedUser;
 }
 
-async function getExerciseLogsFromUser(userId) {
-    const user = await ExerciseUser.findById(userId).exec();
-
-    return user;
-}
-
 exports.createExerciseUser = createExerciseUser;
 exports.getAllExerciseUsers = getAllExerciseUsers;
 exports.addExerciseToUser = addExerciseToUser;
-exports.getExerciseLogsFromUser = getExerciseLogsFromUser;
+exports.getUserById = getUserById;

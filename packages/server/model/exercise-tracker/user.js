@@ -16,7 +16,7 @@ exerciseUserSchema.methods.toNewExerciseDTO = function toNewExerciseDTO(exercise
         _id: this._id,
         username: this.username,
         description: exercise.description,
-        duration: exercise.duration,
+        duration: parseInt(exercise.duration),
         date: exercise.date.toDateString(),
     };
 };
