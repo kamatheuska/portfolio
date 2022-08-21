@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from 'react';
 import initialMarkdown from './initialData';
 import MarkdownPreview from './MarkdownPreview';
 import MarkdownEditor from './MarkdownEditor';
-import { isMobile } from '~utils';
+import { isMobile } from '../../utils';
 
 export default function MarkdownPreviewer() {
   const [editorText, setEditorText] = useState(initialMarkdown);

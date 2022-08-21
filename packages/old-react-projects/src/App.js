@@ -1,10 +1,10 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 
-import Calculator from './projects/calculator/Calculator';
-import DrumMachine from './projects/drum-machine/DrumMachine';
-import MarkdownPreviewer from './projects/markdown-previewer/MarkdownPreviewer';
-import Home from './components/Home';
-import Navigation from './components/Navigation';
+import Calculator from '~projects/calculator/Calculator';
+import DrumMachine from '~projects/drum-machine/DrumMachine';
+import MarkdownPreviewer from '~projects/markdown-previewer/MarkdownPreviewer';
+import Home from '~components/Home';
+import Navigation from '~components/Navigation';
 
 function Layout() {
   return (

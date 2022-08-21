@@ -1,6 +1,6 @@
-import drumMachineThumbnail from '../assets/images/thumbnails/drum-machine.gif';
-import markdownPreviewerThumbnail from '../assets/images/thumbnails/markdown-previewer.gif';
-import calculatorThumbnail from '../assets/images/thumbnails/calculator.gif';
+import drumMachineThumbnail from '~assets/images/thumbnails/drum-machine.gif';
+import markdownPreviewerThumbnail from '~assets/images/thumbnails/markdown-previewer.gif';
+import calculatorThumbnail from '~assets/images/thumbnails/calculator.gif';
 
 const projects = [
   {

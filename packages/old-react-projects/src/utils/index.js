@@ -1,4 +1,4 @@
-import { breakpoints } from '../constants';
+import { breakpoints } from '~constants/index';
 
 export const matchesMediaQuery = (query) => window.matchMedia(query).matches;
 

@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import marked from 'marked';
 import DOMPurify from 'dompurify';
 
 export default function MarkdownPreview({ show, text, children }) {
