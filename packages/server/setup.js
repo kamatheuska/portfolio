@@ -44,11 +44,9 @@ function setView(app, { staticsFolder, stage, isProduction }) {
     if (isProduction) {
         app.use(forceSsl);
     }
-    app.get(/projects\/react/, (req, res) => {
-        res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/react-projects/index.html'));
-    });
+    app.use('/projects/react', express.static(path.join(staticsFolder, 'react-projects')));
     app.use(history());
-    app.use(express.static(staticsFolder));
+    app.use('/landing', express.static(path.join(staticsFolder, 'landing')));
     app.get('/index.html', (req, res) => {
         res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/landing/index.html'));
     });

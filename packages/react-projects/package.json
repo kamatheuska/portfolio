@@ -30,6 +30,7 @@
     "lint:fix": "eslint ./src --fix",
     "clean": "rm -rf node_modules"
   },
+  "homepage": "/projects/react",
   "eslintConfig": {
     "extends": [
       "react-app",
