@@ -4,6 +4,7 @@
     <BoxForm
       description="Please upload a file to be analised"
       submit-button-text="Upload"
+      :disable-submit="!file"
       @submit="onSubmit"
     >
       <div class="mb-5 file has-name">
@@ -16,7 +17,10 @@
               Choose a file…
             </span>
           </span>
-          <span class="file-name">
+          <span
+            v-if="filename"
+            class="file-name"
+          >
             {{ filename }}
           </span>
           <input
@@ -30,7 +34,7 @@
       <template #preview>
         <div
           v-if="response"
-          class="timestamp__preview"
+          class="file-metadata__preview"
         >
           <pre>{{ response }}</pre>
         </div>
@@ -79,7 +83,7 @@ export default {
         if (this.file) {
           const formData = new FormData();
 
-          formData.append('attachment', this.file);
+          formData.append('upfile', this.file);
           this.response = await this.uploadFile(formData);
         }
       } catch (error) {
@@ -99,6 +103,18 @@ export default {
         @include tablet {
             display: flex;
             justify-content: center;
+        }
+    }
+
+    &__preview {
+        @include tablet {
+            width: 40rem;
+        }
+
+        pre {
+            display: flex;
+            align-items: center;
+            min-height: 10rem;
         }
     }
 }

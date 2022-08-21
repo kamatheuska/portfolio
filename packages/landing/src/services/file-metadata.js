@@ -1,6 +1,6 @@
 import request from '@/request';
 
-const baseUrl = '/file-metadata';
+const baseUrl = '/api/file-analyse';
 
 export const uploadFile = async (body) => request({
   baseUrl,
