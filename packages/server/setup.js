@@ -29,6 +29,18 @@ function setMiddleware(app, { isProduction, isDevelopment }) {
     app.use(express.urlencoded({ extended: true }));
 }
 
+function setRedirects(app, { fccOptions }) {
+    app.get('/fcc/fileanalyse', (req, res) => {
+        res.redirect('/miniservices/file-metadata');
+    });
+
+    app.use(
+        '/fcc/fileanalyse/api/fileanalyse',
+        cors(fccOptions),
+        require('./controllers/file-analyse'),
+    );
+}
+
 function setApi(app, { fccOptions }) {
     app.use('/api/blog', require('./controllers/blog'));
     app.use('/api/quote', require('./controllers/quote'));
@@ -62,6 +74,7 @@ module.exports = function setupApp(app) {
     const config = getConfig();
 
     setMiddleware(app, config);
+    setRedirects(app, config);
     setApi(app, config);
     setView(app, config);
     setErrors(app, config);
