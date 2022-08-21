@@ -31,7 +31,7 @@ function setMiddleware(app, { isProduction, isDevelopment }) {
 
 function setRedirects(app, { fccOptions }) {
     app.get('/fcc/fileanalyse', cors(fccOptions), (req, res) => {
-        res.redirect('/miniservices/file-metadata');
+        res.sendFile(path.resolve(__dirname, 'fcc/file-analyse/index.html'));
     });
 
     app.use(
