@@ -30,7 +30,7 @@ function setMiddleware(app, { isProduction, isDevelopment }) {
 }
 
 function setRedirects(app, { fccOptions }) {
-    app.get('/fcc/fileanalyse', (req, res) => {
+    app.get('/fcc/fileanalyse', cors(fccOptions), (req, res) => {
         res.redirect('/miniservices/file-metadata');
     });
 
