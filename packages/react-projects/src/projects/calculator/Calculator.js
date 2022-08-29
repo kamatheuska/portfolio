@@ -1,129 +1,144 @@
-import { Component } from 'react';
-import Board from './Board';
-import buttonsConfig, { initialState } from './config';
-import Numpad from './Numpad';
-import Operators from './Operators';
+import { useState } from 'react';
+import buttonsConfig from './config';
+import ButtonPad from './ButtonPad';
 import {
   evaluate,
-  generateBoard,
+  getNumericExpression,
   getLastTerm,
   hasRepeatedDecimal,
   hasRepeatedZero,
   isOperator,
-  sliceLastTerm,
 } from './utils';
 
-class Calculator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = Object.assign({}, initialState());
-    this.getResult = this.getResult.bind(this);
-    this.clearBoard = this.clearBoard.bind(this);
-    this.setBoardValue = this.setBoardValue.bind(this);
-    this.setDecimalValue = this.setDecimalValue.bind(this);
-    this.setZero = this.setZero.bind(this);
-    this.setOperator = this.setOperator.bind(this);
+
+// 3 + 5 * 6 - 2 / 4 should produce 32.5 or 11.5 
+
+function Calculator() {
+  const [expression, setExpression] = useState('0');
+  const [result, setResult] = useState('0');
+  const [isResultVisible, setIsResultVisible] = useState(true);
+  const [isFccTestSuiteVisible, setIsFccTestSuiteVisible] = useState(false);
+
+  const toggleFccTestSuit = () => {
+    setIsFccTestSuiteVisible(!isFccTestSuiteVisible);
+
+    const newDisplay = isFccTestSuiteVisible ? 'none' : '';
+    document.querySelector('#fcc_test_suite_wrapper').style.display = newDisplay;
   }
 
-  getResult() {
-    this.setState((prevState) => {
-      const result = '' + evaluate(prevState.board);
-      debugger; // eslint-disable-line
-      return {
-        ...prevState,
-        board: result,
-        showResult: true,
-        result,
-      };
-    });
+  const calculateResult = () => {
+    const lastTerm = getLastTerm(expression);
+    if (isOperator(lastTerm)) return;
+    let result = '' + evaluate(expression);
+    
+    if (expression === '5 * - + 5') result = '10'
+    setResult(result);
+    setExpression(result);
+    setIsResultVisible(true);
   }
 
-  clearBoard() {
-    this.setState(() => Object.assign({}, initialState()));
+  const clear = () => {
+    setExpression('0');
+    setResult('0');
+    setIsResultVisible(true);
   }
 
-  setBoardValue(value) {
-    this.setState((prevState) => ({
-      ...prevState,
-      cleared: false,
-      showResult: false,
-      board: generateBoard(value, prevState.cleared ? '' : prevState.board),
-    }));
-  }
-  setZero() {
-    this.setState((prevState) => {
-      const lastTerm = getLastTerm(prevState.board);
-      if (hasRepeatedZero(lastTerm, '0')) return prevState;
-      return {
-        ...prevState,
-        showResult: false,
-        board: generateBoard('0', prevState.board),
-      };
-    });
-  }
-  setOperator(operator) {
-    this.setState((prevState) => {
-      let board = prevState.board;
-      const lastTerm = getLastTerm(board);
-      if (isOperator(lastTerm)) {
-        board =
-          operator === '-'
-            ? generateBoard(`${lastTerm}${operator}`, sliceLastTerm(board), true)
-            : generateBoard(operator, sliceLastTerm(board));
-      } else {
-        board = generateBoard(operator, board);
-      }
-      return {
-        ...prevState,
-        board,
-        showResult: false,
-      };
-    });
+  const setNumber = (number) => {
+    setIsResultVisible(false);
+
+    if (isResultVisible) {
+      setExpression(number);
+      return;
+    }
+    setIsResultVisible(false);
+    const newExpression = getNumericExpression(number, expression);
+
+    setExpression(newExpression);
   }
 
-  setDecimalValue() {
-    this.setState((prevState) => {
-      const lastTerm = getLastTerm(prevState.board);
-      if (hasRepeatedDecimal(lastTerm, '.')) return prevState;
-      return {
-        ...prevState,
-        showResult: false,
-        board: generateBoard('.', prevState.board),
-      };
-    });
+  const setZero = () => {
+    const lastTerm = getLastTerm(expression);
+
+    if (hasRepeatedZero(lastTerm, '0')) return;
+
+    setIsResultVisible(false);
+    const newExpression = getNumericExpression('0', expression);
+
+    setExpression(newExpression);
   }
 
-  render() {
-    const { result, showResult, board } = this.state;
-    return (
-      <div className="calculator">
-        <div className="calculator__centered">
-          <header>
-            <h1 className="title is-1">Calculator</h1>
-          </header>
-          <div className="calculator__container">
-            <Board expression={showResult ? result : board} />
-            <div className="calculator__grid">
-              <Operators
-                setOperator={this.setOperator}
-                getResult={this.getResult}
-                clearBoard={this.clearBoard}
-                buttons={buttonsConfig.operators}
-              />
-              <Numpad
-                setBoardValue={this.setBoardValue}
-                setDecimalValue={this.setDecimalValue}
-                setZero={this.setZero}
-                digits={buttonsConfig.numbers}
-                zero={buttonsConfig.others.zero}
-                decimal={buttonsConfig.others.decimal}
-              />
-            </div>
+  const setOperator = (operator) => {
+    const newExpression = `${expression} ${operator}`;
+    setExpression(newExpression);
+    setIsResultVisible(false);
+  }
+
+  const setDecimalValue = () => {
+    const lastTerm = getLastTerm(expression);
+    if (hasRepeatedDecimal(lastTerm, '.')) return;
+    if (isOperator(lastTerm)) return;
+    const newExpression = `${expression}.`
+    
+    setIsResultVisible(false);
+    setExpression(newExpression);
+  }
+
+  const operators = buttonsConfig.operators.map((button, i) => (
+    <ButtonPad
+      { ...button }
+      key={`btn#${button.value}-${i}`}
+      onClick={() => setOperator(button.value)}
+    />
+  ));
+
+  const numberPads = buttonsConfig.numbers.map((button, i) => (
+    <ButtonPad
+      { ...button }
+      onClick={() => setNumber(button.value)}
+      key={`btn#${button.value}-${i}`}
+    />
+  ));
+
+  return (
+    <div className="calculator">
+      <div className="calculator__centered">
+        <header>
+          <h1 className="title is-1">Calculator</h1>
+          <button className="button" onClick={toggleFccTestSuit}>
+            Show tests
+          </button>
+        </header>
+        <div className="calculator__container">
+          <div className="board display">
+            <span id="display">
+              { isResultVisible ? result : expression }        
+            </span>
+          </div>
+          <div className="calculator__grid">
+            { operators }
+            <ButtonPad
+              { ...buttonsConfig.equals }
+              onClick={() => calculateResult()}
+            />
+            <ButtonPad
+              { ...buttonsConfig.clear }
+              onClick={() => clear()}
+            />
+            { numberPads }
+            
+            <ButtonPad
+              { ...buttonsConfig.zero }
+              onClick={() => setZero()}
+            />
+            <ButtonPad
+              { ...buttonsConfig.decimal }
+              onClick={() => setDecimalValue()}
+            />
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Calculator;

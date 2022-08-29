@@ -15,13 +15,11 @@ const buttonsConfig = {
     { type: 'operator', value: '-', id: 'subtract' },
     { type: 'operator', value: '*', id: 'multiply' },
     { type: 'operator', value: '/', id: 'divide' },
-    { type: 'operator', value: '=', id: 'equals', size: 'double' },
-    { type: 'operator', value: 'AC', id: 'clear', size: 'double' },
   ],
-  others: {
-    zero: { value: '0', id: 'zero', size: 'double' },
-    decimal: { value: '.', id: 'decimal' },
-  },
+  zero: { value: '0', id: 'zero', size: 'double' },
+  decimal: { value: '.', id: 'decimal' },
+  equals: { type: 'operator', value: '=', id: 'equals', size: 'double' },
+  clear: { type: 'operator', value: 'AC', id: 'clear', size: 'double' },
 };
 
 export const initialState = () => ({

@@ -5,6 +5,7 @@ import DrumMachine from './projects/drum-machine/DrumMachine';
 import MarkdownPreviewer from './projects/markdown-previewer/MarkdownPreviewer';
 import Home from './components/Home';
 import Navigation from './components/Navigation';
+import { useEffect } from 'react';
 
 function Layout() {
   return (
@@ -18,6 +19,10 @@ function Layout() {
 }
 
 function App() {
+  useEffect(() => {
+    document.querySelector('#fcc_test_suite_wrapper').style.display = 'none'
+  });
+
   return (
     <Routes>
       <Route path="/projects/react" element={<Layout />}>

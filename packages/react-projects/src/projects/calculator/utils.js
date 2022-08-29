@@ -1,7 +1,7 @@
 /* eslint no-eval: 0 */
 
 export const isNum = (n) => /\d+/.test(n);
-export const isOperator = (n) => /[+,-,*,/,=](?!\d)/.test(n) || n === 'AC';
+export const isOperator = (n) => /[+,\-,*,/,=](?!\d)/.test(n) || n === 'AC';
 export const hasRepeatedZero = (term, newArg) => term === '0' && newArg === '0';
 export const hasRepeatedDecimal = (term, newArg) => newArg === '.' && term.match(/\./);
 export const getLastTerm = (board) => board.split(' ').slice(-1)[0];
@@ -18,14 +18,21 @@ export const hasRepeatedDecimalPoint = ({ firstTerm, secondTerm }, newArg) => {
     : false;
 };
 
-export const generateBoard = (value, board, hasMultipleOperations = false) => {
-  const isLastCharOperator = isOperator(board.slice(-1));
-  const isValueOperator = isOperator(value);
+export const getOperationExpression = (value, previous) => {
+  const isLastCharOperator = isOperator(previous.slice(-1));
 
-  if (isLastCharOperator && isValueOperator) return board;
-  if (isLastCharOperator || isValueOperator) return `${board} ${value}`;
+  if (isLastCharOperator) return previous;
 
-  return `${board}${value}`;
+  return `${previous} ${value}`;
+};
+
+
+export const getNumericExpression = (value, previous) => {
+  const isLastCharOperator = isOperator(previous.slice(-1));
+
+  if (isLastCharOperator) return `${previous} ${value}`;
+
+  return `${previous}${value}`;
 };
 
 export const evaluate = eval;
