@@ -1,4 +1,5 @@
 const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const BUILD_DIR = process.env.BUILD_DIR || 'server';
 
@@ -14,6 +15,9 @@ module.exports = {
           isCustomElement: (tag) => tag.startsWith('ion-'),
         },
       }));
+  },
+  configureWebpack: {
+    plugins: [new BundleAnalyzerPlugin()],
   },
 
   devServer: {
