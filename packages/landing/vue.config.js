@@ -16,9 +16,9 @@ module.exports = {
         },
       }));
   },
-  configureWebpack: {
-    plugins: [new BundleAnalyzerPlugin()],
-  },
+  // configureWebpack: {
+  //   plugins: [new BundleAnalyzerPlugin()],
+  // },
 
   devServer: {
     proxy: {
