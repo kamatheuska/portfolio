@@ -1,6 +1,7 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 
 import Calculator from './projects/calculator/Calculator';
+import BreakClock from './projects/break-clock/BreakClock';
 import DrumMachine from './projects/drum-machine/DrumMachine';
 import MarkdownPreviewer from './projects/markdown-previewer/MarkdownPreviewer';
 import Home from './components/Home';
@@ -30,6 +31,7 @@ function App() {
         <Route path="drum-machine" element={<DrumMachine />} />
         <Route path="markdown-previewer" element={<MarkdownPreviewer />} />
         <Route path="calculator" element={<Calculator />} />
+        <Route path="break-clock" element={<BreakClock />} />
       </Route>
     </Routes>
   );

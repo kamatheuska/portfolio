@@ -9,6 +9,7 @@ import {
   hasRepeatedZero,
   isOperator,
 } from './utils';
+import { useFccTestToggle } from '../../hooks/fcc';
 
 
 // 3 + 5 * 6 - 2 / 4 should produce 32.5 or 11.5 
@@ -17,15 +18,7 @@ function Calculator() {
   const [expression, setExpression] = useState('0');
   const [result, setResult] = useState('0');
   const [isResultVisible, setIsResultVisible] = useState(true);
-  const [isFccTestSuiteVisible, setIsFccTestSuiteVisible] = useState(false);
-
-  const toggleFccTestSuit = () => {
-    setIsFccTestSuiteVisible(!isFccTestSuiteVisible);
-
-    const newDisplay = isFccTestSuiteVisible ? 'none' : '';
-    document.querySelector('#fcc_test_suite_wrapper').style.display = newDisplay;
-  }
-
+  const [toggleFccTestSuit] = useFccTestToggle();
   const calculateResult = () => {
     const lastTerm = getLastTerm(expression);
     if (isOperator(lastTerm)) return;

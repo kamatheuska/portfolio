@@ -31,6 +31,15 @@ const projects = [
     `,
     path: 'calculator',
   },
+  {
+    id: 'break-clock',
+    title: 'Break Clock',
+    thumbnailImage: calculatorThumbnail,
+    description: `
+      25 + 5 Clock
+    `,
+    path: 'break-clock',
+  },
 ];
 
 export default projects;
