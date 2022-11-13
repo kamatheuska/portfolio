@@ -1,5 +1,16 @@
-import quotesList from './quotes.data.js';
 import S from 'fluent-json-schema';
+
+import quotesList from './quotes.data.js';
+
+const randomQuoteSchema = {
+	description: 'Route to get a random quote',
+	response: {
+		200: S.object()
+			.prop('id', S.string())
+			.prop('text', S.string())
+			.prop('author', S.string()),
+	},
+};
 
 async function quotesPlugin(fastify) {
 	const {
@@ -10,15 +21,7 @@ async function quotesPlugin(fastify) {
 		method: 'GET',
 		path: '/projects/apis/quotes/random',
 		handler: onRandomQuote,
-		schema: {
-			description: 'Route to get a random quote',
-			response: {
-				200: S.object()
-					.prop('id', S.string())
-					.prop('text', S.string())
-					.prop('author', S.string()),
-			},
-		},
+		schema: randomQuoteSchema,
 	});
 
 	async function onRandomQuote(request) {
