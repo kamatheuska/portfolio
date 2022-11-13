@@ -6,6 +6,7 @@ import Autoload from '@fastify/autoload';
 
 import { join } from './utils/dir.js';
 import quotesPlugin from './projects/apis/quotes/quotes.plugin.js';
+import timestampPlugin from './projects/apis/timestamp/timestamp.plugin.js';
 
 export default async function createApp(fastify, opts) {
 	const envOptions = {
@@ -22,5 +23,7 @@ export default async function createApp(fastify, opts) {
 		dir: join(import.meta.url, 'plugins'),
 		options: { ...opts },
 	});
+
 	await fastify.register(quotesPlugin);
+	await fastify.register(timestampPlugin);
 }
