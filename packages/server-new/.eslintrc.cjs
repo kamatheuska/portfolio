@@ -14,9 +14,18 @@ module.exports = {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
 	},
+	settings: {
+		'import/ignore': [
+			'@fastify',
+		],
+	},
 	rules: {
 		'import/extensions': ['error', {
 			js: 'always',
 		}],
+		'object-curly-spacing': [
+			'error',
+			'always',
+		],
 	},
 };

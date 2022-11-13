@@ -1,13 +1,26 @@
 
-import fastify from 'fastify';
-import projectsContext from './projects/apis/index.js';
+import Env from '@fastify/env';
+import S from 'fluent-json-schema';
+import Sensible from '@fastify/sensible';
+import Autoload from '@fastify/autoload';
 
-export default function createApp() {
-	const app = fastify({
-		logger: true,
+import { join } from './utils/dir.js';
+import quotesPlugin from './projects/apis/quotes/quotes.plugin.js';
+
+export default async function createApp(fastify, opts) {
+	await fastify.register(Env, {
+		dotenv: true,
+		schema: S.object()
+			.prop('NODE_ENV', S.string().required())
+			.valueOf(),
 	});
 
-	app.register(projectsContext);
+	await fastify.register(Sensible);
 
-	return app;
+	await fastify.register(Autoload, {
+		dir: join(import.meta.url, 'plugins'),
+		options: { ...opts },
+	});
+
+	await fastify.register(quotesPlugin);
 }

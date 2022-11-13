@@ -1,21 +1,26 @@
 import tape from 'tape';
-import createApp from '../../app.js';
+import { build } from '../helpers.js';
 
-const {test} = tape;
+const { test } = tape;
 
 test('GET /projects/apis/quotes/random', async t => {
-	const app = createApp();
+	const app = await build();
 
 	t.teardown(() => app.close());
 
-	const response = await app.inject({
-		method: 'GET',
-		url: '/projects/apis/quotes/random',
-		headers: 
-	});
+	try {
+		const response = await app.inject({
+			method: 'GET',
+			url: '/projects/apis/quotes/random',
+		});
 
-	t.equal(response.statusCode, 200, 'returns a status code of 200');
-	t.equal(typeof response.body?.id, 'string', 'returns an object with a string id');
-	t.equal(typeof response.body?.text, 'string', 'returns an object with a string text');
-	t.equal(typeof response.body?.author, 'string', 'returns an object with a string author');
+		const body = JSON.parse(response.body);
+		t.equal(response.statusCode, 200, 'returns a status code of 200');
+		t.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
+		t.equal(typeof body.id, 'string', 'returns an object with a string id');
+		t.equal(typeof body.text, 'string', 'returns an object with a string text');
+		t.equal(typeof body.author, 'string', 'returns an object with a string author');
+	} catch (error) {
+		console.error(error);
+	}
 });
