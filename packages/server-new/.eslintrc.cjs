@@ -27,5 +27,6 @@ module.exports = {
 			'error',
 			'always',
 		],
+		'capitalized-comments': 0,
 	},
 };
