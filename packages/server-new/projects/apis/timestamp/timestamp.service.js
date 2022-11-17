@@ -1,4 +1,4 @@
-import createError from 'http-errors';
+import createHttpError from 'http-errors';
 
 export default class TimestampService {
 	static create(date = new Date()) {
@@ -33,6 +33,6 @@ export default class TimestampService {
 	}
 
 	static dateError() {
-		return createError(400, 'Invalid Date', { error: 'Invalid Date' });
+		return createHttpError(400, 'Invalid Date', { error: 'Invalid Date' });
 	}
 }
