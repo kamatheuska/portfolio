@@ -64,6 +64,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "timestamp" */ '../views/mini-services/TimeStamp.vue'),
       },
       {
+        path: 'exercise-tracker',
+        name: 'ExerciseTracker',
+        component: () => import(/* webpackChunkName: "exercisetracker" */ '../views/mini-services/ExerciseTracker.vue'),
+      },
+      {
+        path: 'file-metadata',
+        name: 'FileMetadata',
+        component: () => import(/* webpackChunkName: "filemetadata" */ '../views/mini-services/FileMetadata.vue'),
+      },
+      {
         path: 'whoami',
         name: 'Whoami',
         component: () => import(/* webpackChunkName: "whoami" */ '../views/mini-services/WhoAmI.vue'),

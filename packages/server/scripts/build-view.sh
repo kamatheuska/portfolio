@@ -31,7 +31,8 @@ build_view () {
   cd "${PACKAGES_DIR}/landing" &&
   npm run build:ci &&
   cd "${PACKAGES_DIR}/react-projects" &&
-  npm run build:ci
+  npm run build:ci &&
+  mv "${PACKAGES_DIR}/react-projects/build" "${BUILD_DIR}/public/react-projects" 
 }
 
 purge_view () {

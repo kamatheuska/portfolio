@@ -44,7 +44,6 @@
       </div>
     </section>
     <section
-      v-if="isNewLandingPageDone"
       class="section is-medium"
     >
       <h2 class="title is-3 has-text-centered mb-6">
@@ -57,14 +56,6 @@
           v-bind="tech"
         />
       </HorizontalLevel>
-    </section>
-    <section
-      v-else
-      class="section is-medium"
-    >
-      <p class="title is-5 has-text-centered mb-6">
-        ...in construction...
-      </p>
     </section>
 
     <Waves
@@ -105,7 +96,6 @@ export default {
   data: () => ({
     about: {},
     waveColors,
-    isNewLandingPageDone: false,
     isLoading: true,
   }),
 

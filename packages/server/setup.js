@@ -29,23 +29,36 @@ function setMiddleware(app, { isProduction, isDevelopment }) {
     app.use(express.urlencoded({ extended: true }));
 }
 
+function setRedirects(app, { fccOptions }) {
+    app.get('/fcc/fileanalyse', cors(fccOptions), (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'fcc/file-analyse/index.html'));
+    });
+
+    app.use(
+        '/fcc/fileanalyse/api/fileanalyse',
+        cors(fccOptions),
+        require('./controllers/file-analyse'),
+    );
+}
+
 function setApi(app, { fccOptions }) {
-    app.use('/api/timestamp', require('./controllers/timestamp'));
-    app.use('/api/whoami', cors(fccOptions), require('./controllers/whoami'));
-    app.use('/api/shorturl', cors(fccOptions), require('./controllers/urlShortener'));
-    app.use('/api/quote', require('./controllers/quote'));
     app.use('/api/blog', require('./controllers/blog'));
+    app.use('/api/quote', require('./controllers/quote'));
+    app.use('/api/timestamp', require('./controllers/timestamp'));
+
+    app.use('/api/fileanalyse', cors(fccOptions), require('./controllers/file-analyse'));
+    app.use('/api/shorturl', cors(fccOptions), require('./controllers/urlShortener'));
+    app.use('/api/whoami', cors(fccOptions), require('./controllers/whoami'));
+    app.use('/exercise-tracker', cors(fccOptions), require('./controllers/exercise-tracker'));
 }
 
 function setView(app, { staticsFolder, stage, isProduction }) {
     if (isProduction) {
         app.use(forceSsl);
     }
-    app.get(/projects\/react/, (req, res) => {
-        res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/react-projects/index.html'));
-    });
+    app.use('/projects/react', express.static(path.join(staticsFolder, 'react-projects')));
     app.use(history());
-    app.use(express.static(staticsFolder));
+    app.use('/landing', express.static(path.join(staticsFolder, 'landing')));
     app.get('/index.html', (req, res) => {
         res.cookie(STAGE, stage).sendFile(path.join(staticsFolder, '/landing/index.html'));
     });
@@ -61,6 +74,7 @@ module.exports = function setupApp(app) {
     const config = getConfig();
 
     setMiddleware(app, config);
+    setRedirects(app, config);
     setApi(app, config);
     setView(app, config);
     setErrors(app, config);

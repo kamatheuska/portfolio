@@ -3,10 +3,6 @@ const path = require('path');
 const { logDebug } = require('../services/logger');
 const ConfigUtils = require('../utils/config');
 
-const isTest = process.env.NODE_ENV === 'test';
-const isDevelopment = process.env.NODE_ENV === 'development';
-const isProduction = process.env.NODE_ENV === 'production';
-
 let $config;
 
 const getNodeEnvIndependentEnvs = () => ({
@@ -29,6 +25,10 @@ const getNodeEnvIndependentEnvs = () => ({
 
 function buildConfigByEnvironment() {
     let mongoDbUri;
+
+    const isTest = process.env.NODE_ENV === 'test';
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const isProduction = process.env.NODE_ENV === 'production';
 
     if (isTest) {
         mongoDbUri = 'mongodb://localhost:27017/portfolio-test';

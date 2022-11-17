@@ -22,6 +22,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'consistent-return': 0,
     'vue/require-default-prop': 0,
+    'linebreak-style': ['error', (process.platform === 'win32' ? 'windows' : 'unix')], // https://stackoverflow.com/q/39114446/2771889
     'max-len': ['error', {
       code: 120,
       ignoreTemplateLiterals: true,

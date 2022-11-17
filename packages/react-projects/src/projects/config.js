@@ -1,6 +1,6 @@
-import drumMachineThumbnail from '~assets/images/thumbnails/drum-machine.gif';
-import markdownPreviewerThumbnail from '~assets/images/thumbnails/markdown-previewer.gif';
-import calculatorThumbnail from '~assets/images/thumbnails/calculator.gif';
+import drumMachineThumbnail from '../assets/images/thumbnails/drum-machine.gif';
+import markdownPreviewerThumbnail from '../assets/images/thumbnails/markdown-previewer.gif';
+import calculatorThumbnail from '../assets/images/thumbnails/calculator.gif';
 
 const projects = [
   {
@@ -30,6 +30,15 @@ const projects = [
       Would you ever wonder if you needed yet another calculator? Wonder no more!
     `,
     path: 'calculator',
+  },
+  {
+    id: 'break-clock',
+    title: 'Break Clock',
+    thumbnailImage: calculatorThumbnail,
+    description: `
+      25 + 5 Clock
+    `,
+    path: 'break-clock',
   },
 ];
 

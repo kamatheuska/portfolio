@@ -1,0 +1,47 @@
+@mixin centered-layout($top-padding: 1rem, $position: inherit) {
+  height: calc(100vh - #{$top-padding});
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: $position;
+}
+
+@mixin transition($property: opacity, $duration: 100ms) {
+  transition-property: $property;
+  transition-timing-function: ease-in;
+  transition-duration: $duration;
+}
+
+@mixin blurry-text($color: rgba(0, 0, 0, 0.5)) {
+  color: transparent;
+  text-shadow: 0 0 5px $color;
+}
+
+@mixin hide-on-mobile($display: inline) {
+  display: none;
+
+  @include tablet {
+    display: $display;
+  }
+}
+
+@mixin show-on-mobile-only($display: block) {
+  display: $display;
+
+  @include tablet {
+    display: none;
+  }
+}
+
+@mixin project-header {
+  header {
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      color: $primary;
+      animation: changeTitleColor 3s 1s infinite;
+    }
+  }
+}
