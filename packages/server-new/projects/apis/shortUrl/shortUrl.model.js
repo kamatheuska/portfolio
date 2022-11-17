@@ -11,6 +11,7 @@ const urlSchema = new mongoose.Schema({
 	short: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 });
 
@@ -18,37 +19,16 @@ function savePreSchemaHook() {
 	this.original = addHttp(this.original);
 }
 
-function checkDatabaseUrlCount(documentLimit, count) {
+async function checkDocumentCount(documentLimit) {
+	const count = await this.estimatedDocumentCount().exec();
+
 	if (documentLimit < count) {
 		throw new createHttpError.BadRequest('Database capacity limit reached. Please contact the administrator');
 	}
 }
 
-async function countUrlDocuments() {
-	const count = await this.estimatedDocumentCount().exec();
-
-	return count;
-}
-
-/**
-* Return a new Url object
-*
-* @param {String} url
-* @param {Number} count
-*
-* @returns {UrlModel}
-*/
-async function createUrlDoc(url, count) {
-	return new this({
-		original: url,
-		short: count + 1,
-	});
-}
-
 urlSchema.pre('save', savePreSchemaHook);
-urlSchema.statics.countUrlDocuments = countUrlDocuments;
-urlSchema.statics.createUrlDoc = createUrlDoc;
-urlSchema.statics.checkDatabaseUrlCount = checkDatabaseUrlCount;
+urlSchema.statics.checkDocumentCount = checkDocumentCount;
 
 export const modelAlias = 'ShortUrl';
 

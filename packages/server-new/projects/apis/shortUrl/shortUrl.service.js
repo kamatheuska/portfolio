@@ -1,6 +1,7 @@
 import util from 'util';
 import dns from 'dns';
 import createHttpError from 'http-errors';
+import crypto from 'crypto';
 import { getHostNameFromUrl } from '../../../utils/url.js';
 
 const lookup = util.promisify(dns.lookup);
@@ -14,14 +15,16 @@ class ShortUrlService {
 
 	async create(url) {
 		await this.validateUrl(url);
+		await this.ShortUrl.checkDocumentCount(this.dbDocumentLimit);
+
 		return this.build(url);
 	}
 
-	async get(id) {
+	async get(shortUrl) {
 		const log = this.log.child({ context: 'ShortUrlService.getUrl' });
 
 		const url = await this.ShortUrl
-			.findOne({ short: id })
+			.findOne({ short: shortUrl })
 			.exec();
 
 		if (!url) {
@@ -29,6 +32,8 @@ class ShortUrlService {
 		}
 
 		log.info(`Url found: ${url}`);
+
+		return url;
 	}
 
 	async validateUrl(url) {
@@ -54,12 +59,12 @@ class ShortUrlService {
 	}
 
 	async build(url) {
-		const { ShortUrl } = this;
+		const shortUrl = new this.ShortUrl({
+			original: url,
+			short: crypto.randomBytes(3).toString('hex'),
+		});
 
-		const count = await ShortUrl.countUrlDocuments();
-		ShortUrl.checkDatabaseUrlCount(this.dbDocumentLimit, count);
-
-		return ShortUrl.createUrlDoc(url, count);
+		return shortUrl.save();
 	}
 
 	static urlError(message) {

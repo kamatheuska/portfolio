@@ -9,7 +9,7 @@ const shortUrlSchema = {
 	400: S
 		.object()
 		.prop('error', S.string().required()),
-	301: S.object(),
+	302: S.object(),
 };
 
 async function shortUrlPlugin(fastify) {
@@ -31,7 +31,7 @@ async function shortUrlPlugin(fastify) {
 
 	fastify.route({
 		method: 'GET',
-		path: '/projects/apis/shorturl/:id',
+		path: '/short/:shortUrl',
 		handler: getShortUrl,
 		schema: {
 			description: 'Route to get a short url from a provided url',
@@ -48,13 +48,13 @@ async function shortUrlPlugin(fastify) {
 	}
 
 	async function getShortUrl(req, reply) {
-		const { id } = req.params;
+		const { shortUrl } = req.params;
 
-		const url = await shortUrlService.get(id);
+		const url = await shortUrlService.get(shortUrl);
 
 		log.info(`Redirecting to: ${url.original}`);
 
-		return reply.redirect(url);
+		return reply.redirect(url.original);
 	}
 }
 
