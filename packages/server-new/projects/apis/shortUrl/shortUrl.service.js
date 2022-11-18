@@ -8,65 +8,65 @@ const lookup = util.promisify(dns.lookup);
 const urlError = message => createHttpError(400, message, { error: 'invalid url' });
 
 class ShortUrlService {
-	constructor(models, logger, { documentLimit }) {
-		this.ShortUrl = models.ShortUrl;
-		this.log = logger;
-		this.dbDocumentLimit = documentLimit;
-	}
+  constructor(models, logger, { documentLimit }) {
+    this.ShortUrl = models.ShortUrl;
+    this.log = logger;
+    this.dbDocumentLimit = documentLimit;
+  }
 
-	async create(url) {
-		await this.validateUrl(url);
-		await this.ShortUrl.checkDocumentCount(this.dbDocumentLimit);
+  async create(url) {
+    await this.validateUrl(url);
+    await this.ShortUrl.checkDocumentCount(this.dbDocumentLimit);
 
-		return this.build(url);
-	}
+    return this.build(url);
+  }
 
-	async build(url) {
-		const shortUrl = new this.ShortUrl({
-			original: url,
-			short: crypto.randomBytes(3).toString('hex'),
-		});
+  async build(url) {
+    const shortUrl = new this.ShortUrl({
+      original: url,
+      short: crypto.randomBytes(3).toString('hex'),
+    });
 
-		return shortUrl.save();
-	}
+    return shortUrl.save();
+  }
 
-	async get(shortUrl) {
-		const log = this.log.child({ context: 'ShortUrlService.getUrl' });
+  async get(shortUrl) {
+    const log = this.log.child({ context: 'ShortUrlService.getUrl' });
 
-		const url = await this.ShortUrl
-			.findOne({ short: shortUrl })
-			.exec();
+    const url = await this.ShortUrl
+      .findOne({ short: shortUrl })
+      .exec();
 
-		if (!url) {
-			throw new createHttpError.NotFound('Url was not found');
-		}
+    if (!url) {
+      throw new createHttpError.NotFound('Url was not found');
+    }
 
-		log.info(`Url found: ${url}`);
+    log.info(`Url found: ${url}`);
 
-		return url;
-	}
+    return url;
+  }
 
-	async validateUrl(url) {
-		const hostname = getHostNameFromUrl(url);
+  async validateUrl(url) {
+    const hostname = getHostNameFromUrl(url);
 
-		if (!hostname) {
-			throw urlError('Invalid Hostname');
-		}
+    if (!hostname) {
+      throw urlError('Invalid Hostname');
+    }
 
-		await this.validateHostname(hostname);
-	}
+    await this.validateHostname(hostname);
+  }
 
-	async validateHostname(hostname = '') {
-		try {
-			await lookup(hostname);
-		} catch (error) {
-			if (error.code === 'ENOTFOUND') {
-				throw urlError('Invalid Hostname');
-			}
+  async validateHostname(hostname = '') {
+    try {
+      await lookup(hostname);
+    } catch (error) {
+      if (error.code === 'ENOTFOUND') {
+        throw urlError('Invalid Hostname');
+      }
 
-			throw error;
-		}
-	}
+      throw error;
+    }
+  }
 }
 
 export default ShortUrlService;
