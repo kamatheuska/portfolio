@@ -12,6 +12,7 @@ import quotes from './projects/apis/quotes/quotes.plugin.js';
 import timestamp from './projects/apis/timestamp/timestamp.plugin.js';
 import shortUrl from './projects/apis/shortUrl/shortUrl.plugin.js';
 import fileAnalyse from './projects/apis/file-analyse/file-analyse.plugin.js';
+import whoami from './projects/apis/whoami/whoami.plugin.js';
 
 export default async function createApp(fastify, opts) {
   const envOptions = {
@@ -36,6 +37,7 @@ export default async function createApp(fastify, opts) {
   await fastify.register(timestamp);
   await fastify.register(shortUrl);
   await fastify.register(fileAnalyse);
+  await fastify.register(whoami);
 }
 
 export const options = {
