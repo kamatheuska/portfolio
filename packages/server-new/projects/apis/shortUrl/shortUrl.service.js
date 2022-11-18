@@ -22,10 +22,14 @@ class ShortUrlService {
   }
 
   async build(url) {
+    const log = this.log.child({ context: 'ShortUrlService.getUrl' });
+
     const shortUrl = new this.ShortUrl({
       original: url,
       short: crypto.randomBytes(3).toString('hex'),
     });
+
+    log.info(`New shortUrl: ${shortUrl}`);
 
     return shortUrl.save();
   }
