@@ -15,7 +15,8 @@ const shortUrlSchema = {
 async function shortUrlPlugin(fastify) {
   const { log, config } = fastify;
   const { ShortUrl } = fastify.mongoose.models;
-  const shortUrlService = new ShortUrlService({ ShortUrl }, log, {
+
+  const getServiceOpts = () => ({
     documentLimit: config.DB_DOCUMENT_LIMIT,
   });
 
@@ -40,17 +41,20 @@ async function shortUrlPlugin(fastify) {
   });
 
   async function createShortUrl(req) {
+    const service = new ShortUrlService({ ShortUrl }, log, getServiceOpts());
+
     const { url } = req.body;
 
-    const shortUrl = await shortUrlService.create(url);
+    const shortUrl = await service.create(url);
 
     return shortUrl;
   }
 
   async function getShortUrl(req, reply) {
+    const service = new ShortUrlService({ ShortUrl }, log, getServiceOpts());
     const { shortUrl } = req.params;
 
-    const url = await shortUrlService.get(shortUrl);
+    const url = await service.get(shortUrl);
 
     log.info(`Redirecting to: ${url.original}`);
 

@@ -18,7 +18,7 @@ function createMockFormData(filename) {
 
 test('File Analyse Integration', async t => {
   t.comment('POST /projects/apis/fileanalyse');
-  t.test('Small text file', { skip: false }, async st => {
+  t.test('Small text file', { skip: true }, async st => {
     const app = await build();
     const formData = createMockFormData('plain.txt');
 
@@ -58,7 +58,7 @@ test('File Analyse Integration', async t => {
     }
   });
 
-  t.test('Big text file', async st => {
+  t.test('Big text file', { skip: true }, async st => {
     const app = await build();
     const formData = createMockFormData('yarn.lock');
 
@@ -92,6 +92,34 @@ test('File Analyse Integration', async t => {
         typeof body.size,
         'string',
         'should return an "author" prop type "string"',
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  t.test('No file', async st => {
+    const app = await build();
+    const formData = new FormData();
+
+    st.teardown(app.close.bind(app));
+
+    try {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/projects/apis/fileanalyse',
+        headers: formData.getHeaders(),
+        payload: formData,
+      });
+
+      const body = JSON.parse(response.body);
+
+      st.equal(response.statusCode, 400, 'returns a status code of 400');
+      st.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
+      st.equal(
+        body.message,
+        'No file uploaded',
+        'should return an error message',
       );
     } catch (error) {
       console.error(error);
