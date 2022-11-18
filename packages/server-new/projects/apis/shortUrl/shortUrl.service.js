@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { getHostNameFromUrl } from '../../../utils/url.js';
 
 const lookup = util.promisify(dns.lookup);
+const urlError = message => createHttpError(400, message, { error: 'invalid url' });
 
 class ShortUrlService {
 	constructor(models, logger, { documentLimit }) {
@@ -18,6 +19,15 @@ class ShortUrlService {
 		await this.ShortUrl.checkDocumentCount(this.dbDocumentLimit);
 
 		return this.build(url);
+	}
+
+	async build(url) {
+		const shortUrl = new this.ShortUrl({
+			original: url,
+			short: crypto.randomBytes(3).toString('hex'),
+		});
+
+		return shortUrl.save();
 	}
 
 	async get(shortUrl) {
@@ -40,7 +50,7 @@ class ShortUrlService {
 		const hostname = getHostNameFromUrl(url);
 
 		if (!hostname) {
-			throw ShortUrlService.urlError('Invalid Hostname');
+			throw urlError('Invalid Hostname');
 		}
 
 		await this.validateHostname(hostname);
@@ -51,24 +61,11 @@ class ShortUrlService {
 			await lookup(hostname);
 		} catch (error) {
 			if (error.code === 'ENOTFOUND') {
-				throw ShortUrlService.urlError('Invalid Hostname');
+				throw urlError('Invalid Hostname');
 			}
 
 			throw error;
 		}
-	}
-
-	async build(url) {
-		const shortUrl = new this.ShortUrl({
-			original: url,
-			short: crypto.randomBytes(3).toString('hex'),
-		});
-
-		return shortUrl.save();
-	}
-
-	static urlError(message) {
-		return createHttpError(400, message, { error: 'invalid url' });
 	}
 }
 
