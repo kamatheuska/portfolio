@@ -6,7 +6,7 @@
   "scripts": {
     "test": "tape 'tests/**/*.js' | tap-spec",
     "start": "fastify start -l info app.js",
-		"dev": "fastify start --watch --ignore-watch='data .git node_modules' -l info -P app.js",
+    "dev": "fastify start --watch --ignore-watch='data .git node_modules' -l info -P app.js",
     "lint": "npx eslint ./"
   },
   "author": "",
@@ -14,12 +14,15 @@
   "dependencies": {
     "@fastify/autoload": "^5.4.1",
     "@fastify/env": "^4.1.0",
+    "@fastify/multipart": "^7.3.0",
     "@fastify/sensible": "^5.1.1",
     "fastify": "^4.9.2",
     "fastify-cli": "^5.5.1",
     "fluent-json-schema": "^4.0.0",
+    "form-data": "^4.0.0",
     "http-errors": "^2.0.0",
     "mongoose": "^6.7.2",
+    "pretty-bytes": "^6.0.0",
     "tape": "^5.6.1"
   },
   "engines": {

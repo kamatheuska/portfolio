@@ -3,11 +3,15 @@ import Env from '@fastify/env';
 import S from 'fluent-json-schema';
 import Sensible from '@fastify/sensible';
 import Autoload from '@fastify/autoload';
+import Multipart from '@fastify/multipart';
 
 import { join } from './utils/dir.js';
-import quotesPlugin from './projects/apis/quotes/quotes.plugin.js';
-import timestampPlugin from './projects/apis/timestamp/timestamp.plugin.js';
-import shortUrlPlugin from './projects/apis/shortUrl/shortUrl.plugin.js';
+
+// Plugins
+import quotes from './projects/apis/quotes/quotes.plugin.js';
+import timestamp from './projects/apis/timestamp/timestamp.plugin.js';
+import shortUrl from './projects/apis/shortUrl/shortUrl.plugin.js';
+import fileAnalyse from './projects/apis/file-analyse/file-analyse.plugin.js';
 
 export default async function createApp(fastify, opts) {
   const envOptions = {
@@ -21,15 +25,17 @@ export default async function createApp(fastify, opts) {
 
   await fastify.register(Env, envOptions);
   await fastify.register(Sensible);
+  await fastify.register(Multipart);
 
   await fastify.register(Autoload, {
     dir: join(import.meta.url, 'plugins'),
     options: { ...opts },
   });
 
-  await fastify.register(quotesPlugin);
-  await fastify.register(timestampPlugin);
-  await fastify.register(shortUrlPlugin);
+  await fastify.register(quotes);
+  await fastify.register(timestamp);
+  await fastify.register(shortUrl);
+  await fastify.register(fileAnalyse);
 }
 
 export const options = {
