@@ -23,10 +23,13 @@ class ShortUrlService {
 
   async build(url) {
     const log = this.log.child({ context: 'ShortUrlService.getUrl' });
+    const hex = crypto.randomBytes(3).toString('hex');
+    const short = `/short/${hex}`;
 
     const shortUrl = new this.ShortUrl({
       original: url,
-      short: crypto.randomBytes(3).toString('hex'),
+      hex,
+      short,
     });
 
     log.info(`New shortUrl: ${shortUrl}`);
@@ -38,7 +41,7 @@ class ShortUrlService {
     const log = this.log.child({ context: 'ShortUrlService.getUrl' });
 
     const url = await this.ShortUrl
-      .findOne({ short: shortUrl })
+      .findOne({ hex: shortUrl })
       .exec();
 
     if (!url) {

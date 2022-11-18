@@ -11,6 +11,10 @@ const urlSchema = new mongoose.Schema({
   short: {
     type: String,
     required: true,
+  },
+  hex: {
+    type: String,
+    required: true,
     unique: true,
   },
 });

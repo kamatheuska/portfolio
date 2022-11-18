@@ -3,7 +3,7 @@ import { build } from '../helpers.js';
 
 const { test } = tape;
 
-test.skip('GET /projects/apis/timestamp', async t => {
+test('GET /projects/apis/timestamp', async t => {
   const app = await build();
 
   t.teardown(() => app.close());
