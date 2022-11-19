@@ -1,39 +1,43 @@
-const request = require('supertest');
-const { getApp } = require('../setup');
-const { ACCEPT_LANGUAGE_HEADER_STUB, USER_AGENT_HEADER_STUB } = require('../../constants/stubs');
+import tape from 'tape';
+import { build } from '../helpers.js';
 
-const BASE_URL = '/api/whoami';
+const { test } = tape;
 
-describe('🌳  Integration: WhoAmI', () => {
-    let url;
-    let response;
+test('GET /projects/apis/whoami', async t => {
+  const app = await build();
 
-    describe(`🌴 GET ${BASE_URL}`, () => {
-        beforeEach(async () => {
-            const app = getApp();
+  t.teardown(() => app.close());
 
-            url = `${BASE_URL}`;
-
-            response = await request(app)
-                .get(url)
-                .set('accept-language', ACCEPT_LANGUAGE_HEADER_STUB)
-                .set('user-agent', USER_AGENT_HEADER_STUB);
-        });
-
-        it('🌱 should have a valid response', () => {
-            expect(response.status).toBe(200);
-        });
-
-        it('🌱 body has an property ipaddress', () => {
-            expect(response.body.ipaddress).toBe('::ffff:127.0.0.1');
-        });
-
-        it('🌱 body has a property language', () => {
-            expect(response.body.language).toBe(ACCEPT_LANGUAGE_HEADER_STUB);
-        });
-
-        it('🌱 body has a property software', () => {
-            expect(response.body.software).toBe(USER_AGENT_HEADER_STUB);
-        });
+  try {
+    const response = await app.inject({
+      method: 'GET',
+      url: '/projects/apis/whoami',
+      headers: {
+        'accept-language': 'es',
+      },
     });
+
+    const body = JSON.parse(response.body);
+    t.equal(response.statusCode, 200, 'returns a status code of 200');
+    t.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
+    t.equal(
+      body.ipaddress,
+      '127.0.0.1',
+      'should return ipaddress of "127.0.0.1"',
+    );
+
+    t.equal(
+      body.language,
+      'es',
+      'should return language of "es"',
+    );
+
+    t.equal(
+      typeof body.software,
+      'string',
+      'should return software of type "string"',
+    );
+  } catch (error) {
+    console.error(error);
+  }
 });

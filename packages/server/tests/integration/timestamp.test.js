@@ -1,43 +1,64 @@
-const request = require('supertest');
-const { getApp } = require('../setup');
+import tape from 'tape';
+import { build } from '../helpers.js';
 
-const BASE_URL = '/api/timestamp';
+const { test } = tape;
 
-describe('🌳  Integration: Quotes', () => {
-    let response;
-    let url;
+test('GET /projects/apis/timestamp', async t => {
+  const app = await build();
 
-    describe(`🌴 GET ${BASE_URL}`, () => {
-        it('🌱 should return a generated timestamp', async () => {
-            const app = getApp();
+  t.teardown(() => app.close());
 
-            url = `${BASE_URL}`;
-
-            response = await request(app).get(url);
-            expect(response.status).toBe(200);
-            expect(typeof response.body.unix).toBe('number');
-            expect(typeof response.body.utc).toBe('string');
-        });
+  try {
+    const response = await app.inject({
+      method: 'GET',
+      url: '/projects/apis/timestamp',
     });
 
-    describe(`🌴 GET ${BASE_URL}/:date`, () => {
-        it.each([
-            // expectedUnix, expectedUtc, date
-            [1451001600000, 'Fri, 25 Dec 2015 00:00:00 GMT', '1451001600000'],
-            [819203040000, 'Sun, 17 Dec 1995 12:24:00 GMT', 'December%2017,%201995%2013:24:00'],
-            [819203040000, 'Sun, 17 Dec 1995 12:24:00 GMT', 'December 17, 1995 13:24:00'],
-        ])(
-            '🌱 should return a generated timestamp with unix=%s and utc=%s when date=%s',
-            async (expectedUnix, expectedUtc, date) => {
-                const app = getApp();
+    const body = JSON.parse(response.body);
+    t.equal(response.statusCode, 200, 'returns a status code of 200');
+    t.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
+    t.equal(typeof body.unix, 'number', 'returns an object with a number unix');
+    t.equal(typeof body.utc, 'string', 'returns an object with a string utc');
+  } catch (error) {
+    console.error(error);
+  }
+});
 
-                url = `${BASE_URL}/${date}`;
+[
+  {
+    expectedUnix: 1451001600000,
+    expectedUtc: 'Fri, 25 Dec 2015 00:00:00 GMT',
+    date: '1451001600000',
+  },
+  {
+    expectedUnix: 819203040000,
+    expectedUtc: 'Sun, 17 Dec 1995 12:24:00 GMT',
+    date: 'December%2017,%201995%2013:24:00',
+  },
+  {
+    expectedUnix: 819203040000,
+    expectedUtc: 'Sun, 17 Dec 1995 12:24:00 GMT',
+    date: 'December 17, 1995 13:24:00',
+  },
+].forEach(({ expectedUnix, expectedUtc, date }) => {
+  test(`GET /projects/apis/timestamp/:date when date is ${date}`, async t => {
+    const app = await build();
 
-                response = await request(app).get(url);
-                expect(response.status).toBe(200);
-                expect(response.body.unix).toBe(expectedUnix);
-                expect(response.body.utc).toBe(expectedUtc);
-            },
-        );
-    });
+    t.teardown(() => app.close());
+
+    try {
+      const response = await app.inject({
+        method: 'GET',
+        url: `/projects/apis/timestamp/${date}`,
+      });
+
+      const body = JSON.parse(response.body);
+      t.equal(response.statusCode, 200, 'returns a status code of 200');
+      t.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
+      t.equal(body.unix, expectedUnix, 'returns an object with a number unix');
+      t.equal(body.utc, expectedUtc, 'returns an object with a string utc');
+    } catch (error) {
+      console.error(error);
+    }
+  });
 });
