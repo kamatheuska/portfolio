@@ -18,7 +18,7 @@ function createMockFormData(filename) {
 
 test('File Analyse Integration', async t => {
   t.comment('POST /projects/apis/fileanalyse');
-  t.test('Small text file', { skip: true }, async st => {
+  t.test('Small text file', { skip: false }, async st => {
     const app = await build();
     const formData = createMockFormData('plain.txt');
 
@@ -58,7 +58,7 @@ test('File Analyse Integration', async t => {
     }
   });
 
-  t.test('Big text file', { skip: true }, async st => {
+  t.test('Big text file', { skip: false }, async st => {
     const app = await build();
     const formData = createMockFormData('yarn.lock');
 
