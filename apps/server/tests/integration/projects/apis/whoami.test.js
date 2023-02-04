@@ -1,9 +1,9 @@
 import tape from 'tape';
-import { build } from '../helpers.js';
+import { build } from '../../../helpers.js';
 
 const { test } = tape;
 
-test('GET /projects/apis/quotes/random', async t => {
+test('GET /projects/apis/whoami', async t => {
   const app = await build();
 
   t.teardown(() => app.close());
@@ -11,28 +11,31 @@ test('GET /projects/apis/quotes/random', async t => {
   try {
     const response = await app.inject({
       method: 'GET',
-      url: '/projects/apis/quotes/random',
+      url: '/projects/apis/whoami',
+      headers: {
+        'accept-language': 'es',
+      },
     });
 
     const body = JSON.parse(response.body);
     t.equal(response.statusCode, 200, 'returns a status code of 200');
     t.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
     t.equal(
-      typeof body.id,
-      'string',
-      'should return an "id" prop type "string"',
+      body.ipaddress,
+      '127.0.0.1',
+      'should return ipaddress of "127.0.0.1"',
     );
 
     t.equal(
-      typeof body.text,
-      'string',
-      'should return an "text" prop type "string"',
+      body.language,
+      'es',
+      'should return language of "es"',
     );
 
     t.equal(
-      typeof body.author,
+      typeof body.software,
       'string',
-      'should return an "author" prop type "string"',
+      'should return software of type "string"',
     );
   } catch (error) {
     console.error(error);
