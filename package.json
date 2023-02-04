@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "deploy:stage": "git push stage develop:master",
-    "deploy:prod": "git push prod master"
+    "deploy:prod": "git push prod master",
+    "preinstall": "npx only-allow pnpm"
   },
   "engines": {
     "node": "16.14.x",
