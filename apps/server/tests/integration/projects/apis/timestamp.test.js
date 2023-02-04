@@ -1,5 +1,5 @@
 import tape from 'tape';
-import { build } from '../helpers.js';
+import { build } from '../../../helpers.js';
 
 const { test } = tape;
 

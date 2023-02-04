@@ -1,14 +1,14 @@
 import tape from 'tape';
 import fs from 'fs';
 import FormData from 'form-data';
-import { build } from '../helpers.js';
-import { join } from '../../utils/dir.js';
+import { build } from '../../../helpers.js';
+import { join } from '../../../../utils/dir.js';
 
 const { test } = tape;
 
 function createMockFormData(filename) {
   const form = new FormData();
-  const pathToMockFile = join(import.meta.url, `../mocks/files/${filename}`);
+  const pathToMockFile = join(import.meta.url, `../../../mocks/files/${filename}`);
   const file = fs.createReadStream(pathToMockFile);
 
   form.append('file', file);
