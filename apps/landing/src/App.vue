@@ -1,55 +1,30 @@
+<script setup lang="ts">
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <div class="root">
-    <div data-teleport="overlay" />
-    <transition name="fade-in">
-      <Navbar
-        v-if="showNav"
-        :is-mobile="isMobile"
-      />
-    </transition>
-    <main>
-      <router-view
-        v-slot="{ Component }"
-        @toggle-navigation="showNav = !showNav"
-      >
-        <transition name="fade-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </main>
-    <TheFooter />
+  <div>
+    <a href="https://vitejs.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
   </div>
+  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<script>
-import { mapGetters, mapMutations, mapActions } from 'vuex';
-import Navbar from '@/components/NavBar.vue';
-import TheFooter from '@/components/TheFooter.vue';
-
-export default {
-  name: 'App',
-
-  components: {
-    Navbar,
-    TheFooter,
-  },
-
-  computed: {
-    ...mapGetters('navigation', ['showNav']),
-    ...mapGetters(['isMobile']),
-  },
-
-  created() {
-    this.initApp();
-
-    if (this.$route.name !== 'Home') {
-      this.toggleNav(true);
-    }
-  },
-
-  methods: {
-    ...mapMutations('navigation', ['toggleNav']),
-    ...mapActions(['initApp']),
-  },
-};
-</script>
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
+</style>
