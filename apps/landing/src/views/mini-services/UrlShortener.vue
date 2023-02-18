@@ -89,7 +89,7 @@ export default {
       url: '',
     },
     explanation: `
-            Tired of typing long urls that you do not want to remenmber? Just use
+            Tired of typing long urls that you do not want to remember? Just use
             this mini service to make that long and infinite procession of characters
             into a small and well behaved one.
         `,
