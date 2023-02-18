@@ -11,5 +11,8 @@
     "npm": "8.3.x"
   },
   "author": "Nicolas Ramirez",
-  "license": "ISC"
+  "license": "ISC",
+  "volta": {
+    "node": "18.12.1"
+  }
 }
