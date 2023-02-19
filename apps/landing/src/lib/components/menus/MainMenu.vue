@@ -7,6 +7,7 @@
 
 <script lang="ts" setup>
 import { navigationConfig } from '../../config/menus/navigation.menu';
+import LamaratiLogo from '../logos/LamaratiLogo.vue';
 import NavBar from '../navbar/NavBar.vue';
 </script>
 

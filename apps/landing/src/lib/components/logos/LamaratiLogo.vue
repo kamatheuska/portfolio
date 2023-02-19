@@ -1,3 +1,5 @@
 <template>
-    <svg></svg>
+    <div>
+        <span> Lamarati </span>
+    </div>
 </template>

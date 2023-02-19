@@ -6,6 +6,6 @@ describe('LamaratiLogo', () => {
     it('renders an svg element', () => {
         const wrapper = shallowMount(Logo);
 
-        expect(wrapper.get('svg')).toBeTruthy();
+        expect(wrapper.get('div')).toBeTruthy();
     });
 });
