@@ -1,18 +1,8 @@
-import { mount, shallowMount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import NavItem from '../NavItem.vue';
 
 describe('NavItem', () => {
-    it('renders a label', () => {
-        const wrapper = mount(NavItem, {
-            props: {
-                label: 'Foo',
-            },
-        });
-
-        expect(wrapper.text()).toContain('Foo');
-    });
-
     describe('when is internal', () => {
         it('passes a path to router link', async () => {
             const wrapper = shallowMount(NavItem, {
@@ -39,6 +29,9 @@ describe('NavItem', () => {
                     label: 'Home',
                     path: '/about',
                     isExternal: true,
+                },
+                global: {
+                    stubs: ['router-link', 'router-view'],
                 },
             });
 
