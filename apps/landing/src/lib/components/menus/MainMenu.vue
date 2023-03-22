@@ -3,7 +3,7 @@
         <div :class="$style.modal">
             <div :class="$style.container">
                 <div :class="$style.logo">
-                    <LamaratiLogo />
+                    <personal-logo />
                 </div>
             </div>
         </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import LamaratiLogo from '../logos/LamaratiLogo.vue';
+import PersonalLogo from '../logos/PersonalLogo.vue';
 import StarsMenu from './StarsMenu.vue';
 </script>
 
@@ -35,6 +35,6 @@ import StarsMenu from './StarsMenu.vue';
     align-items: center;
 }
 .logo {
-    font-size: 2.3rem;
+    font-size: 1.7rem;
 }
 </style>
