@@ -1,43 +1,51 @@
 <template>
     <div :class="$style.root">
         <div :class="$style.container">
-            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" @activated="onItemActivated" />
+            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" @selected="onItemSelected" />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { delay } from '../../utils';
 import StarItem, { StarItemProps } from '../icons/StarItem.vue';
+
+const router = useRouter();
 
 const menuItems = ref<StarItemProps[]>([
     {
         id: '1',
         isActive: false,
-        top: 600,
-        left: 230,
+        isHidden: true,
+        top: 530,
+        left: 220,
         radius: 10,
         label: 'About',
     },
     {
-        id: '2',
-        isActive: false,
-        top: 650,
-        left: 250,
-        radius: 18,
-        label: 'Stories',
-    },
-    {
         id: '3',
         isActive: false,
+        isHidden: true,
         top: 150,
         left: 150,
         radius: 25,
         label: 'Portfolio',
     },
     {
+        id: '2',
+        isActive: false,
+        isHidden: true,
+        top: 750,
+        left: 290,
+        radius: 18,
+        label: 'Stories',
+    },
+    {
         id: '4',
         isActive: false,
+        isHidden: true,
         top: 250,
         left: 50,
         radius: 8,
@@ -45,7 +53,7 @@ const menuItems = ref<StarItemProps[]>([
     },
 ]);
 
-function onItemActivated(id: string) {
+async function onItemSelected(id: string) {
     menuItems.value = menuItems.value.map((item) => {
         if (item.id === id) {
             return {
@@ -58,13 +66,41 @@ function onItemActivated(id: string) {
             isActive: false,
         };
     });
+    await delay(1000);
+
+    const currentItem = menuItems.value.find((item) => item.id === id);
+
+    router.push({ name: currentItem?.label || '' });
 }
+
+async function showItemsIncrementally() {
+    for (let index = 0; index < menuItems.value.length; index++) {
+        if (index > 0) {
+            await delay(1500);
+        }
+
+        menuItems.value = menuItems.value.map((item, i) => {
+            if (index === i) {
+                return {
+                    ...item,
+                    isHidden: false,
+                };
+            }
+
+            return item;
+        });
+    }
+}
+onMounted(async () => {
+    await delay(1000);
+    showItemsIncrementally();
+});
 </script>
 
 <style module>
 .root {
-    height: 100vh;
-    position: absolute;
+    height: 100%;
+    position: fixed;
     width: 100vw;
 }
 .container {
