@@ -1,8 +1,8 @@
 <template>
-    <div :style="rootStyles" :class="$style.root">
+    <div @click="onItemClick" :style="rootStyles" :class="[$style.root, isHidden && $style.hidden]">
         <div :class="$style.container">
             <div :class="[$style.inner]" :style="innerCircleStyles" />
-            <div :class="[$style.outer]" :style="outerCircleStyles" @click="onCircleClick" class="pulsar" />
+            <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" />
             <div :class="[$style.tooltip, isActive && $style.active]">
                 <tooltip-item :text="label" />
             </div>
@@ -12,12 +12,13 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, withDefaults } from 'vue';
-import { animate, stagger } from 'motion';
+import { animate } from 'motion';
 import TooltipItem from '../tooltips/TooltipItem.vue';
 
 export interface StarItemProps {
     id: string;
     isActive: boolean;
+    isHidden: boolean;
     top?: number;
     left?: number;
     radius?: number;
@@ -31,7 +32,7 @@ const props = withDefaults(defineProps<StarItemProps>(), {
     label: '',
 });
 
-const emits = defineEmits(['activated']);
+const emits = defineEmits(['selected']);
 
 const rootStyles = computed(() => ({
     top: `${props.top}px`,
@@ -47,18 +48,19 @@ const outerCircleStyles = computed(() => ({
     height: `${props.radius + 5}px`,
 }));
 
-function onCircleClick() {
-    emits('activated', props.id);
+function onItemClick() {
+    emits('selected', props.id);
 }
 
 onMounted(() => {
     animate(
         '.pulsar',
-        { scale: '1.9' },
+        { transform: ['scale(1.9)', 'scale(1)'] },
         {
-            delay: stagger(0.8),
             duration: 2,
+            easing: 'ease-in',
             repeat: Infinity,
+            offset: [0.5, 1],
         }
     );
 });
@@ -69,6 +71,9 @@ onMounted(() => {
     top: 0;
     left: 0;
     position: absolute;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
 }
 .container {
     position: relative;
@@ -90,10 +95,15 @@ onMounted(() => {
     top: 30px;
     color: #ccc;
     transition: transform 0.2s ease-in;
+    font-size: 1.4rem;
 }
 
 .active {
     color: #6d6d6d;
     transform: scale(1.5);
+}
+.hidden {
+    visibility: hidden;
+    opacity: 0;
 }
 </style>
