@@ -2,32 +2,36 @@
     <div :style="rootStyles" :class="$style.root">
         <div :class="$style.container">
             <div :class="[$style.inner]" :style="innerCircleStyles" />
-            <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" />
+            <div :class="[$style.outer]" :style="outerCircleStyles" @click="onCircleClick" class="pulsar" />
+            <div :class="[$style.tooltip, isActive && $style.active]">
+                <tooltip-item :text="label" />
+            </div>
         </div>
-        <!-- <svg :width="itemWidth" :height="itemWidth" xmlns="http://www.w3.org/2000/svg">
-            <circle @click="onCircleClick" :class="$style.circle" :cx="itemXPosition" :cy="itemXPosition" :r="radius" />
-        </svg> -->
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, onMounted, withDefaults } from 'vue';
 import { animate, stagger } from 'motion';
+import TooltipItem from '../tooltips/TooltipItem.vue';
 
-const props = defineProps({
-    top: {
-        type: Number,
-        default: 0,
-    },
-    left: {
-        type: Number,
-        default: 0,
-    },
-    radius: {
-        type: Number,
-        default: 10,
-    },
+export interface StarItemProps {
+    id: string;
+    isActive: boolean;
+    top?: number;
+    left?: number;
+    radius?: number;
+    label?: string;
+}
+
+const props = withDefaults(defineProps<StarItemProps>(), {
+    top: 0,
+    left: 0,
+    radius: 10,
+    label: '',
 });
+
+const emits = defineEmits(['activated']);
 
 const rootStyles = computed(() => ({
     top: `${props.top}px`,
@@ -43,20 +47,17 @@ const outerCircleStyles = computed(() => ({
     height: `${props.radius + 5}px`,
 }));
 
-// const outerCircleRadius = ref(0);
-
-// function onCircleClick() {
-//     console.log('test');
-//     outerCircleRadius.value = props.radius * 3;
-// }
+function onCircleClick() {
+    emits('activated', props.id);
+}
 
 onMounted(() => {
     animate(
         '.pulsar',
-        { scale: '1.6' },
+        { scale: '1.9' },
         {
-            delay: stagger(0.4),
-            duration: 1,
+            delay: stagger(0.8),
+            duration: 2,
             repeat: Infinity,
         }
     );
@@ -71,8 +72,6 @@ onMounted(() => {
 }
 .container {
     position: relative;
-    height: 50px;
-    width: 50px;
 }
 .inner {
     position: absolute;
@@ -85,5 +84,16 @@ onMounted(() => {
     background-color: #9a9a9a;
     opacity: 0.3;
     border-radius: 50%;
+}
+.tooltip {
+    position: absolute;
+    top: 30px;
+    color: #ccc;
+    transition: transform 0.2s ease-in;
+}
+
+.active {
+    color: #6d6d6d;
+    transform: scale(1.5);
 }
 </style>
