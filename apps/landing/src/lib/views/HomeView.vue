@@ -1,5 +1,5 @@
 <template>
-    <default-layout>
+    <default-layout :show-main-menu="true">
         <template #content>
             <main>Homepage Content</main>
         </template>

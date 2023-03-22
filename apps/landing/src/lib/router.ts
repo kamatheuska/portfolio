@@ -11,18 +11,22 @@ const routes: readonly RouteRecordRaw[] = [
     },
     {
         path: '/home',
+        name: 'Home',
         component: HomeView,
     },
     {
         path: '/about',
+        name: 'About',
         component: AboutView,
     },
     {
         path: '/stories',
+        name: 'Stories',
         component: StoriesView,
     },
     {
         path: '/portfolio',
+        name: 'Portfolio',
         component: PortfolioView,
     },
 ];
