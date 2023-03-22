@@ -21,9 +21,9 @@ import StarsMenu from './StarsMenu.vue';
     position: relative;
 }
 .modal {
-    height: 100vh;
+    height: 100%;
     width: 100vw;
-    position: absolute;
+    position: fixed;
     background-color: white;
 }
 
