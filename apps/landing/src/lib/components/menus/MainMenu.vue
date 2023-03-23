@@ -1,15 +1,15 @@
 <template>
     <div>
-        <div :class="[$style.menu, hideMenu && $style.hidden]">
+        <div :class="[$style.container, hideMenu && $style.hidden]">
             <div :class="$style.modal">
-                <div :class="$style.container">
-                    <div :class="[$style.logo, hideLogo && $style.hidden]">
-                        <personal-logo />
-                    </div>
+                <div :class="$style.menu">
+                    <stars-menu @selected="toggleLogo" />
                 </div>
             </div>
-            <div>
-                <stars-menu @selected="toggleLogo" />
+            <div :class="$style.logoWrapper">
+                <div :class="[$style.logo, hideLogo && $style.hidden]">
+                    <personal-logo />
+                </div>
             </div>
         </div>
         <div :class="$style.bars">
@@ -30,7 +30,6 @@ const props = defineProps({
         default: true,
     },
 });
-
 const hideMenu = ref(true);
 const hideLogo = ref(false);
 
@@ -50,7 +49,7 @@ onMounted(() => {
 </script>
 
 <style module>
-.menu {
+.container {
     position: relative;
     visibility: visible;
     opacity: 1;
@@ -63,12 +62,11 @@ onMounted(() => {
     background-color: white;
 }
 
-.container {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+.logoWrapper {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 0);
 }
 .bars {
     top: var(--default-layout-padding-right);
@@ -81,6 +79,10 @@ onMounted(() => {
     visibility: visible;
     opacity: 1;
     transition: visibility 0s, opacity 0.5s linear;
+    z-index: 1000;
+}
+.menu {
+    z-index: 100;
 }
 .hidden {
     visibility: hidden;
