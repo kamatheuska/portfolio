@@ -54,24 +54,27 @@ const menuItems = ref<StarItemProps[]>([
 ]);
 
 async function onItemSelected(id: string) {
-    menuItems.value = menuItems.value.map((item) => {
-        if (item.id === id) {
-            return {
-                ...item,
-                isActive: !item.isActive,
-            };
-        }
-        return {
-            ...item,
-            isActive: false,
-            isHidden: true,
-        };
-    });
+    menuItems.value = menuItems.value.map((item) => toggleItemById(id, item));
+
     await delay(1000);
 
     const currentItem = menuItems.value.find((item) => item.id === id);
 
     router.push({ name: currentItem?.label || '' });
+}
+
+function toggleItemById(id: string, item: StarItemProps) {
+    if (item.id === id) {
+        return {
+            ...item,
+            isActive: !item.isActive,
+        };
+    }
+    return {
+        ...item,
+        isActive: false,
+        isHidden: true,
+    };
 }
 
 async function showItemsIncrementally() {
