@@ -64,6 +64,7 @@ async function onItemSelected(id: string) {
         return {
             ...item,
             isActive: false,
+            isHidden: true,
         };
     });
     await delay(1000);
