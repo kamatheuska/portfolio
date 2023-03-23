@@ -1,14 +1,19 @@
 <template>
-    <div :class="[$style.root, hideMenu && $style.hidden]">
-        <div :class="$style.modal">
-            <div :class="$style.container">
-                <div :class="$style.logo">
-                    <personal-logo />
+    <div>
+        <div :class="[$style.root, hideMenu && $style.hidden]">
+            <div :class="$style.modal">
+                <div :class="$style.container">
+                    <div :class="$style.logo">
+                        <personal-logo />
+                    </div>
                 </div>
             </div>
+            <div>
+                <stars-menu />
+            </div>
         </div>
-        <div>
-            <stars-menu />
+        <div :class="$style.bars">
+            <font-awesome-icon icon="fa-solid fa-bars" />
         </div>
     </div>
 </template>
@@ -51,6 +56,12 @@ onMounted(() => {
     width: 100%;
     justify-content: center;
     align-items: center;
+}
+.bars {
+    top: var(--default-layout-padding-right);
+    right: var(--default-layout-padding-right);
+    position: fixed;
+    font-size: 2rem;
 }
 .logo {
     font-size: 1.7rem;
