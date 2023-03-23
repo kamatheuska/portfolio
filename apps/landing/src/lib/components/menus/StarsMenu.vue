@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, RouteLocationNormalizedLoaded } from 'vue-router';
 import { delay } from '../../utils';
 import StarItem, { StarItemProps } from '../icons/StarItem.vue';
 
@@ -82,23 +82,37 @@ function toggleItemById(id: string, item: StarItemProps) {
 }
 
 async function showItemsIncrementally() {
+    const currentRoute = router.currentRoute.value;
+
     for (let index = 0; index < menuItems.value.length; index++) {
+        if (isLabelEqualToRouteName(currentRoute, menuItems.value[index])) {
+            continue;
+        }
+
         if (index > 0) {
             await delay(1500);
         }
 
-        menuItems.value = menuItems.value.map((item, i) => {
-            if (index === i) {
-                return {
-                    ...item,
-                    isHidden: false,
-                };
-            }
-
-            return item;
-        });
+        menuItems.value = getItemsVisibleByIndex(index);
     }
 }
+
+const isLabelEqualToRouteName = (route: RouteLocationNormalizedLoaded, item: StarItemProps) =>
+    item.label === route.name;
+
+function getItemsVisibleByIndex(currentIndex: number) {
+    return menuItems.value.map((item, i) => {
+        if (currentIndex === i) {
+            return {
+                ...item,
+                isHidden: false,
+            };
+        }
+
+        return item;
+    });
+}
+
 onMounted(async () => {
     await delay(1000);
     showItemsIncrementally();
