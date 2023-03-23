@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import HomeView from './views/HomeView.vue';
 import AboutView from './views/AboutView.vue';
-import StoriesView from './views/StoriesView.vue';
+import ContactView from './views/ContactView.vue';
+import HomeView from './views/HomeView.vue';
 import PortfolioView from './views/PortfolioView.vue';
+import StoriesView from './views/StoriesView.vue';
 
 const routes: readonly RouteRecordRaw[] = [
     {
@@ -10,24 +11,29 @@ const routes: readonly RouteRecordRaw[] = [
         redirect: '/home',
     },
     {
-        path: '/home',
-        name: 'Home',
-        component: HomeView,
-    },
-    {
         path: '/about',
         name: 'About',
         component: AboutView,
     },
     {
-        path: '/stories',
-        name: 'Stories',
-        component: StoriesView,
+        path: '/contact',
+        name: 'Contact',
+        component: ContactView,
+    },
+    {
+        path: '/home',
+        name: 'Home',
+        component: HomeView,
     },
     {
         path: '/portfolio',
         name: 'Portfolio',
         component: PortfolioView,
+    },
+    {
+        path: '/stories',
+        name: 'Stories',
+        component: StoriesView,
     },
 ];
 
