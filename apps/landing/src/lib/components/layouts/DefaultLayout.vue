@@ -1,7 +1,7 @@
 <template>
     <div>
         <slot name="menu">
-            <div v-if="showMainMenu">
+            <div :class="hideMenu && $style.hidden">
                 <main-menu />
             </div>
         </slot>
@@ -12,11 +12,27 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import MainMenu from '../menus/MainMenu.vue';
-defineProps({
-    showMainMenu: {
+const props = defineProps({
+    hideMainMenuAtStart: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 });
+
+const hideMenu = ref(true);
+
+onMounted(() => {
+    if (!props.hideMainMenuAtStart) {
+        hideMenu.value = false;
+    }
+});
 </script>
+
+<style module>
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+</style>
