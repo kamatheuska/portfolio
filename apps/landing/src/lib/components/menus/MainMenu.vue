@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div :class="[$style.root, hideMenu && $style.hidden]">
+        <div :class="[$style.menu, hideMenu && $style.hidden]">
             <div :class="$style.modal">
                 <div :class="$style.container">
                     <div :class="$style.logo">
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div :class="$style.bars">
-            <font-awesome-icon icon="fa-solid fa-bars" />
+            <font-awesome-icon icon="fa-solid fa-bars" @click="toggleMenu" />
         </div>
     </div>
 </template>
@@ -32,16 +32,23 @@ const props = defineProps({
 
 const hideMenu = ref(true);
 
+function toggleMenu() {
+    hideMenu.value = !hideMenu.value;
+}
+
 onMounted(() => {
     if (!props.hideAtStart) {
-        hideMenu.value = false;
+        toggleMenu();
     }
 });
 </script>
 
 <style module>
-.root {
+.menu {
     position: relative;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
 }
 .modal {
     height: 100%;
