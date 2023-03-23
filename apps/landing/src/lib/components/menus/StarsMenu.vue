@@ -14,6 +14,8 @@ import StarItem, { StarItemProps } from '../icons/StarItem.vue';
 
 const router = useRouter();
 
+const emits = defineEmits(['selected']);
+
 const menuItems = ref<StarItemProps[]>([
     {
         id: '1',
@@ -54,6 +56,8 @@ const menuItems = ref<StarItemProps[]>([
 ]);
 
 async function onItemSelected(id: string) {
+    emits('selected', id);
+
     menuItems.value = menuItems.value.map((item) => toggleItemById(id, item));
 
     await delay(1000);

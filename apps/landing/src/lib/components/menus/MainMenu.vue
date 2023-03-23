@@ -3,13 +3,13 @@
         <div :class="[$style.menu, hideMenu && $style.hidden]">
             <div :class="$style.modal">
                 <div :class="$style.container">
-                    <div :class="$style.logo">
+                    <div :class="[$style.logo, hideLogo && $style.hidden]">
                         <personal-logo />
                     </div>
                 </div>
             </div>
             <div>
-                <stars-menu />
+                <stars-menu @selected="toggleLogo" />
             </div>
         </div>
         <div :class="$style.bars">
@@ -32,9 +32,14 @@ const props = defineProps({
 });
 
 const hideMenu = ref(true);
+const hideLogo = ref(false);
 
 function toggleMenu() {
     hideMenu.value = !hideMenu.value;
+}
+
+function toggleLogo() {
+    hideLogo.value = !hideLogo.value;
 }
 
 onMounted(() => {
@@ -73,6 +78,9 @@ onMounted(() => {
 }
 .logo {
     font-size: 1.7rem;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
 }
 .hidden {
     visibility: hidden;
