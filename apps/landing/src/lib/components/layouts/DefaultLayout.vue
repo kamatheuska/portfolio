@@ -5,7 +5,7 @@
                 <main-menu :hide-at-start="hideMainMenuAtStart" />
             </div>
         </slot>
-        <div>
+        <div :class="$style.content">
             <slot name="content"></slot>
         </div>
     </div>
@@ -20,3 +20,11 @@ defineProps({
     },
 });
 </script>
+
+<style module>
+.content {
+    padding-top: var(--default-layout-padding-top);
+    padding-left: var(--default-layout-padding-left);
+    padding-right: var(--default-layout-padding-right);
+}
+</style>

@@ -28,9 +28,6 @@ import DefaultLayout from '../components/layouts/DefaultLayout.vue';
 
 <style module>
 .main {
-    padding-top: 5rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
     text-align: justify;
 }
 </style>
