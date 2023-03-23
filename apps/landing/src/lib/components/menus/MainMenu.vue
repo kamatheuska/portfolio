@@ -13,7 +13,8 @@
             </div>
         </div>
         <div :class="$style.bars">
-            <font-awesome-icon icon="fa-solid fa-bars" @click="toggleMenu" />
+            <font-awesome-icon v-if="hideMenu" icon="fa-solid fa-bars" @click="toggleMenu" />
+            <font-awesome-icon v-else icon="fa-solid fa-xmark" @click="toggleMenu" />
         </div>
     </div>
 </template>
