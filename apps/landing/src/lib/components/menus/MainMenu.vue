@@ -6,11 +6,6 @@
                     <stars-menu @selected="toggleLogo" />
                 </div>
             </div>
-            <div :class="$style.logoWrapper">
-                <div :class="[$style.logo, hideLogo && $style.hidden]">
-                    <personal-logo />
-                </div>
-            </div>
         </div>
         <div :class="$style.bars">
             <font-awesome-icon v-if="hideMenu" icon="fa-solid fa-bars" @click="toggleMenu" />
@@ -21,7 +16,6 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import PersonalLogo from '../logos/PersonalLogo.vue';
 import StarsMenu from './StarsMenu.vue';
 
 const props = defineProps({
