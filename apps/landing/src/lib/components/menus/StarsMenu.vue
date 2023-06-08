@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useRouter, RouteLocationNormalizedLoaded } from 'vue-router';
-import { delay } from '../../utils';
+import { delay, getRandomNumber } from '../../utils';
 import StarItem, { StarItemProps } from '../icons/StarItem.vue';
 
 const router = useRouter();
@@ -25,55 +25,14 @@ const colors = {
     lightBrown: '#DDD4D4',
 };
 
-const menuItems = ref<StarItemProps[]>([
-    {
-        backgroundColor: colors.lightBlue,
-        id: '1',
-        isActive: false,
-        isHidden: true,
-        label: 'About',
-        left: 220,
-        radius: 10,
-        top: 530,
-    },
-    {
-        backgroundColor: colors.darkBlue,
-        id: '3',
-        isActive: false,
-        isHidden: true,
-        label: 'Portfolio',
-        left: 150,
-        radius: 25,
-        top: 150,
-    },
-    {
-        backgroundColor: colors.lightBlue,
-        id: '2',
-        isActive: false,
-        isHidden: true,
-        top: 750,
-        left: 290,
-        radius: 18,
-        label: 'Stories',
-    },
-    {
-        backgroundColor: colors.darkBlue,
-        id: '4',
-        isActive: false,
-        isHidden: true,
-        top: 250,
-        left: 50,
-        radius: 8,
-        label: 'Contact',
-    },
-]);
+const menuItems = ref<StarItemProps[]>([]);
 
 async function onItemSelected(id: string) {
     emits('selected', id);
 
     menuItems.value = menuItems.value.map((item) => toggleItemById(id, item));
 
-    await delay(1000);
+    // await delay(1000);
 
     const currentItem = menuItems.value.find((item) => item.id === id);
 
@@ -126,7 +85,65 @@ function getItemsVisibleByIndex(currentIndex: number) {
     });
 }
 
+function setMenuItems() {
+    const initialItems: StarItemProps[] = [
+        {
+            backgroundColor: colors.lightBlue,
+            id: '1',
+            isActive: false,
+            isHidden: true,
+            label: 'Home',
+            left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+            radius: getRandomNumber(8, 20),
+            top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+        },
+        {
+            backgroundColor: colors.lightBlue,
+            id: '2',
+            isActive: false,
+            isHidden: true,
+            label: 'About',
+            left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+            radius: getRandomNumber(8, 20),
+            top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+        },
+        {
+            backgroundColor: colors.darkBlue,
+            id: '3',
+            isActive: false,
+            isHidden: true,
+            label: 'Portfolio',
+            left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+            radius: getRandomNumber(8, 20),
+            top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+        },
+        {
+            backgroundColor: colors.lightBlue,
+            id: '4',
+            isActive: false,
+            isHidden: true,
+            label: 'Stories',
+            left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+            radius: getRandomNumber(8, 20),
+            top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+        },
+        {
+            backgroundColor: colors.darkBlue,
+            id: '5',
+            isActive: false,
+            isHidden: true,
+            label: 'Contact',
+            left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+            radius: getRandomNumber(8, 20),
+            top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+        },
+    ];
+
+    menuItems.value = initialItems;
+}
+
 onMounted(async () => {
+    setMenuItems();
     await delay(1000);
     showItemsIncrementally();
 });
@@ -137,6 +154,7 @@ onMounted(async () => {
     height: 100%;
     position: fixed;
     width: 100vw;
+    padding: 20px;
 }
 .container {
     position: relative;

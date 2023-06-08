@@ -19,16 +19,16 @@ export interface StarItemProps {
     id: string;
     isActive: boolean;
     isHidden: boolean;
-    top?: number;
-    left?: number;
+    top?: string;
+    left?: string;
     radius?: number;
     label?: string;
     backgroundColor?: string;
 }
 
 const props = withDefaults(defineProps<StarItemProps>(), {
-    top: 0,
-    left: 0,
+    top: '0',
+    left: '0',
     radius: 10,
     label: '',
     backgroundColor: 'black',
@@ -37,8 +37,8 @@ const props = withDefaults(defineProps<StarItemProps>(), {
 const emits = defineEmits(['selected']);
 
 const rootStyles = computed(() => ({
-    top: `${props.top}px`,
-    left: `${props.left}px`,
+    top: props.top,
+    left: props.left,
     color: props.backgroundColor,
 }));
 
