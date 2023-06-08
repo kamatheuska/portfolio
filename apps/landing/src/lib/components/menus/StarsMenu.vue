@@ -93,7 +93,7 @@ function setMenuItems() {
             isActive: false,
             isHidden: true,
             label: 'Home',
-            left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+            left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
             radius: getRandomNumber(8, 20),
             top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
         },
@@ -103,7 +103,7 @@ function setMenuItems() {
             isActive: false,
             isHidden: true,
             label: 'About',
-            left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+            left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
             radius: getRandomNumber(8, 20),
             top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
         },
@@ -113,7 +113,7 @@ function setMenuItems() {
             isActive: false,
             isHidden: true,
             label: 'Portfolio',
-            left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+            left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
             radius: getRandomNumber(8, 20),
             top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
         },
@@ -144,7 +144,7 @@ function setMenuItems() {
 
 onMounted(async () => {
     setMenuItems();
-    await delay(1000);
+    await delay(500);
     showItemsIncrementally();
 });
 </script>
