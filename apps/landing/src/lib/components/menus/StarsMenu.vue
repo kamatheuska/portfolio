@@ -16,26 +16,38 @@ const router = useRouter();
 
 const emits = defineEmits(['selected']);
 
+const colors = {
+    lightBlue: '#95BCCC',
+    pink: '#FCDCDC',
+    darkBlue: '#2B4C59',
+    brown: '#988080',
+    gray: '#BECEDA',
+    lightBrown: '#DDD4D4',
+};
+
 const menuItems = ref<StarItemProps[]>([
     {
+        backgroundColor: colors.lightBlue,
         id: '1',
         isActive: false,
         isHidden: true,
-        top: 530,
+        label: 'About',
         left: 220,
         radius: 10,
-        label: 'About',
+        top: 530,
     },
     {
+        backgroundColor: colors.darkBlue,
         id: '3',
         isActive: false,
         isHidden: true,
-        top: 150,
+        label: 'Portfolio',
         left: 150,
         radius: 25,
-        label: 'Portfolio',
+        top: 150,
     },
     {
+        backgroundColor: colors.lightBlue,
         id: '2',
         isActive: false,
         isHidden: true,
@@ -45,6 +57,7 @@ const menuItems = ref<StarItemProps[]>([
         label: 'Stories',
     },
     {
+        backgroundColor: colors.darkBlue,
         id: '4',
         isActive: false,
         isHidden: true,
@@ -90,7 +103,7 @@ async function showItemsIncrementally() {
         }
 
         if (index > 0) {
-            await delay(1500);
+            await delay(500);
         }
 
         menuItems.value = getItemsVisibleByIndex(index);

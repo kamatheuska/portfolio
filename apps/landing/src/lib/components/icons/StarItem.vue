@@ -23,6 +23,7 @@ export interface StarItemProps {
     left?: number;
     radius?: number;
     label?: string;
+    backgroundColor?: string;
 }
 
 const props = withDefaults(defineProps<StarItemProps>(), {
@@ -30,6 +31,7 @@ const props = withDefaults(defineProps<StarItemProps>(), {
     left: 0,
     radius: 10,
     label: '',
+    backgroundColor: 'black',
 });
 
 const emits = defineEmits(['selected']);
@@ -37,15 +39,18 @@ const emits = defineEmits(['selected']);
 const rootStyles = computed(() => ({
     top: `${props.top}px`,
     left: `${props.left}px`,
+    color: props.backgroundColor,
 }));
 
 const innerCircleStyles = computed(() => ({
     width: `${props.radius}px`,
     height: `${props.radius}px`,
+    backgroundColor: props.backgroundColor,
 }));
 const outerCircleStyles = computed(() => ({
     width: `${props.radius + 5}px`,
     height: `${props.radius + 5}px`,
+    backgroundColor: props.backgroundColor,
 }));
 
 function onItemClick() {
@@ -82,7 +87,6 @@ onMounted(() => {
     position: absolute;
     background-color: #000000;
     border-radius: 50%;
-    opacity: 0.6;
 }
 .outer {
     position: absolute;
@@ -93,7 +97,7 @@ onMounted(() => {
 .tooltip {
     position: absolute;
     top: 30px;
-    color: #ccc;
+    color: inherit;
     transition: transform 0.2s ease-in;
     font-size: 1.4rem;
 }
