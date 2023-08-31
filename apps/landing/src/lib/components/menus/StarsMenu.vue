@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { useRouter, RouteLocationNormalizedLoaded } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { delay, getRandomNumber } from '../../utils';
 import StarItem, { StarItemProps } from '../icons/StarItem.vue';
 
@@ -25,7 +25,58 @@ const colors = {
     lightBrown: '#DDD4D4',
 };
 
-const menuItems = ref<StarItemProps[]>([]);
+const menuItems = ref<StarItemProps[]>([
+    {
+        backgroundColor: colors.lightBlue,
+        id: '1',
+        isActive: false,
+        isHidden: true,
+        label: 'Home',
+        left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+    },
+    {
+        backgroundColor: colors.lightBlue,
+        id: '2',
+        isActive: false,
+        isHidden: true,
+        label: 'About',
+        left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+    },
+    {
+        backgroundColor: colors.darkBlue,
+        id: '3',
+        isActive: false,
+        isHidden: true,
+        label: 'Portfolio',
+        left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+    },
+    {
+        backgroundColor: colors.lightBlue,
+        id: '4',
+        isActive: false,
+        isHidden: true,
+        label: 'Stories',
+        left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+    },
+    {
+        backgroundColor: colors.darkBlue,
+        id: '5',
+        isActive: false,
+        isHidden: true,
+        label: 'Contact',
+        left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+    },
+]);
 
 async function onItemSelected(id: string) {
     emits('selected', id);
@@ -57,20 +108,17 @@ async function showItemsIncrementally() {
     const currentRoute = router.currentRoute.value;
 
     for (let index = 0; index < menuItems.value.length; index++) {
-        if (isLabelEqualToRouteName(currentRoute, menuItems.value[index])) {
+        if (currentRoute.name === menuItems.value[index].label) {
             continue;
         }
 
         if (index > 0) {
-            await delay(500);
+            await delay(200);
         }
 
         menuItems.value = getItemsVisibleByIndex(index);
     }
 }
-
-const isLabelEqualToRouteName = (route: RouteLocationNormalizedLoaded, item: StarItemProps) =>
-    item.label === route.name;
 
 function getItemsVisibleByIndex(currentIndex: number) {
     return menuItems.value.map((item, i) => {
@@ -85,66 +133,8 @@ function getItemsVisibleByIndex(currentIndex: number) {
     });
 }
 
-function setMenuItems() {
-    const initialItems: StarItemProps[] = [
-        {
-            backgroundColor: colors.lightBlue,
-            id: '1',
-            isActive: false,
-            isHidden: true,
-            label: 'Home',
-            left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
-            radius: getRandomNumber(8, 20),
-            top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-        },
-        {
-            backgroundColor: colors.lightBlue,
-            id: '2',
-            isActive: false,
-            isHidden: true,
-            label: 'About',
-            left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
-            radius: getRandomNumber(8, 20),
-            top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-        },
-        {
-            backgroundColor: colors.darkBlue,
-            id: '3',
-            isActive: false,
-            isHidden: true,
-            label: 'Portfolio',
-            left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
-            radius: getRandomNumber(8, 20),
-            top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-        },
-        {
-            backgroundColor: colors.lightBlue,
-            id: '4',
-            isActive: false,
-            isHidden: true,
-            label: 'Stories',
-            left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
-            radius: getRandomNumber(8, 20),
-            top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
-        },
-        {
-            backgroundColor: colors.darkBlue,
-            id: '5',
-            isActive: false,
-            isHidden: true,
-            label: 'Contact',
-            left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-            radius: getRandomNumber(8, 20),
-            top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
-        },
-    ];
-
-    menuItems.value = initialItems;
-}
-
 onMounted(async () => {
-    setMenuItems();
-    await delay(500);
+    await delay(300);
     showItemsIncrementally();
 });
 </script>
@@ -160,5 +150,14 @@ onMounted(async () => {
     position: relative;
     height: 100%;
     width: 100%;
+}
+@media (min-width: 768px) {
+    .container {
+        max-width: 600px;
+    }
+    .root {
+        display: flex;
+        justify-content: center;
+    }
 }
 </style>
