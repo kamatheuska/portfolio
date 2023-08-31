@@ -1,13 +1,13 @@
 <template>
     <div :class="$style.root">
-        <div :class="$style.text" :style="textLocationStyles">
+        <div :style="textLocationStyles">
             <span> {{ text }}</span>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 defineProps({
     text: String,
@@ -16,10 +16,6 @@ defineProps({
 const textLocationStyles = ref({
     top: 0,
     left: 0,
-});
-
-onMounted(() => {
-    console.log('onMounted Tooltip');
 });
 </script>
 

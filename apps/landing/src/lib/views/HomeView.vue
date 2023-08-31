@@ -1,5 +1,5 @@
 <template>
-    <default-layout :hide-main-menu-at-start="false">
+    <default-layout>
         <template #content>
             <main>Homepage Content</main>
         </template>
