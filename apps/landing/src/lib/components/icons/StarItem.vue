@@ -3,17 +3,18 @@
         <div :class="$style.container">
             <div :class="[$style.inner]" :style="innerCircleStyles" />
             <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" />
-            <div :class="[$style.tooltip, isActive && $style.active]">
-                <tooltip-item :text="label" />
+            <div :class="[$style.tooltip__wrapper, isActive && $style.active]">
+                <div :class="$style.tooltip">
+                    <span ref="tooltipLabel"> {{ label }}</span>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, withDefaults } from 'vue';
+import { computed, onMounted, ref, withDefaults } from 'vue';
 import { animate } from 'motion';
-import TooltipItem from '../tooltips/TooltipItem.vue';
 
 export interface StarItemProps {
     id: string;
@@ -47,17 +48,28 @@ const innerCircleStyles = computed(() => ({
     height: `${props.radius}px`,
     backgroundColor: props.backgroundColor,
 }));
+
 const outerCircleStyles = computed(() => ({
     width: `${props.radius + 5}px`,
     height: `${props.radius + 5}px`,
     backgroundColor: props.backgroundColor,
 }));
 
+const tooltipLabel = ref<InstanceType<typeof HTMLElement> | null>(null);
+
 function onItemClick() {
     emits('selected', props.id);
 }
 
 onMounted(() => {
+    const padding = 20;
+    if (tooltipLabel.value) {
+        const rect = tooltipLabel.value.getBoundingClientRect();
+        if (rect.right >= window.innerWidth) {
+            tooltipLabel.value.style.left = `-${rect.right - window.innerWidth + padding}px`;
+        }
+    }
+
     animate(
         '.pulsar',
         { transform: ['scale(1.9)', 'scale(1)'] },
@@ -94,7 +106,7 @@ onMounted(() => {
     opacity: 0.3;
     border-radius: 50%;
 }
-.tooltip {
+.tooltip__wrapper {
     position: absolute;
     top: 30px;
     color: inherit;
@@ -102,6 +114,9 @@ onMounted(() => {
     font-size: 1.4rem;
 }
 
+.tooltip span {
+    position: absolute;
+}
 .active {
     color: #6d6d6d;
     transform: scale(1.5);
