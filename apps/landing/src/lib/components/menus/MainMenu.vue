@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div :class="[$style.container, hideMenu && $style.hidden]">
+        <div v-if="!hideMenu" :class="[$style.container, hideMenu && $style.hidden]">
             <div :class="$style.modal">
                 <div :class="$style.menu">
                     <stars-menu @selected="toggleLogo" />
