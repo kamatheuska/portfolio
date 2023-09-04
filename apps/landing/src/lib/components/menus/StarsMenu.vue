@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.root">
         <div :class="$style.container">
-            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" @selected="onItemSelected" />
+            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" @click="onItemSelected(item)" />
         </div>
     </div>
 </template>
@@ -27,50 +27,92 @@ const colors = {
 
 const menuItems = ref<StarItemProps[]>([
     {
-        backgroundColor: colors.lightBlue,
         id: '1',
-        isActive: false,
-        isHidden: true,
+        backgroundColor: colors.lightBlue,
         label: 'Home',
         left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
     },
+
     {
-        backgroundColor: colors.lightBlue,
         id: '2',
-        isActive: false,
-        isHidden: true,
+        backgroundColor: colors.lightBlue,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '3',
+        backgroundColor: colors.lightBlue,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '4',
+        backgroundColor: colors.lightBlue,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '5',
+        backgroundColor: colors.lightBlue,
         label: 'About',
         left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
     },
     {
-        backgroundColor: colors.darkBlue,
-        id: '3',
-        isActive: false,
-        isHidden: true,
+        id: '6',
+        backgroundColor: colors.lightBlue,
         label: 'Portfolio',
         left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
     },
+
     {
+        id: '7',
         backgroundColor: colors.lightBlue,
-        id: '4',
-        isActive: false,
-        isHidden: true,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '8',
+        backgroundColor: colors.lightBlue,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '9',
+        backgroundColor: colors.lightBlue,
         label: 'Stories',
         left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
     },
+
     {
-        backgroundColor: colors.darkBlue,
-        id: '5',
-        isActive: false,
-        isHidden: true,
+        id: '10',
+        backgroundColor: colors.lightBlue,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '11',
+        backgroundColor: colors.lightBlue,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '12',
+        backgroundColor: colors.lightBlue,
         label: 'Contact',
         left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
         radius: getRandomNumber(8, 20),
@@ -78,14 +120,16 @@ const menuItems = ref<StarItemProps[]>([
     },
 ]);
 
-async function onItemSelected(id: string) {
-    emits('selected', id);
+async function onItemSelected(item: StarItemProps) {
+    if (!item.label) return;
 
-    menuItems.value = menuItems.value.map((item) => toggleItemById(id, item));
+    emits('selected', item.id);
 
-    // await delay(1000);
+    menuItems.value = menuItems.value.map((_item) => toggleItemById(item.id, _item));
 
-    const currentItem = menuItems.value.find((item) => item.id === id);
+    await delay(1000);
+
+    const currentItem = menuItems.value.find((_item) => item.id === _item.id);
 
     router.push({ name: currentItem?.label || '' });
 }

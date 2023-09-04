@@ -8,8 +8,10 @@
             </div>
         </div>
         <div :class="$style.bars">
-            <font-awesome-icon v-if="hideMenu" icon="fa-solid fa-bars" @click="toggleMenu" />
-            <font-awesome-icon v-else icon="fa-solid fa-xmark" @click="toggleMenu" />
+            <transition name="fade" mode="out-in">
+                <font-awesome-icon v-if="hideMenu" icon="fa-solid fa-bars" @click="toggleMenu" />
+                <font-awesome-icon v-else icon="fa-solid fa-xmark" @click="toggleMenu" />
+            </transition>
         </div>
     </div>
 </template>
@@ -42,6 +44,18 @@ onMounted(() => {
 });
 </script>
 
+<style>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+</style>
+
 <style module>
 .container {
     position: relative;
@@ -53,7 +67,7 @@ onMounted(() => {
     height: 100%;
     width: 100vw;
     position: fixed;
-    background-color: white;
+    background-color: var(--darkBlue);
 }
 
 .logoWrapper {

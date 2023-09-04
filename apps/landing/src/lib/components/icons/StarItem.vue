@@ -1,9 +1,9 @@
 <template>
-    <div @click="onItemClick" :style="rootStyles" :class="[$style.root, isHidden && $style.hidden]">
+    <div :style="rootStyles" :class="[$style.root, isHidden && $style.hidden]">
         <div :class="$style.container">
             <div :class="[$style.inner]" :style="innerCircleStyles" />
             <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" />
-            <div :class="[$style.tooltip__wrapper, isActive && $style.active]">
+            <div v-if="label" :class="[$style.tooltip__wrapper, isActive && $style.active]">
                 <div :class="$style.tooltip">
                     <span ref="tooltipLabel"> {{ label }}</span>
                 </div>
@@ -18,8 +18,8 @@ import { animate } from 'motion';
 
 export interface StarItemProps {
     id: string;
-    isActive: boolean;
-    isHidden: boolean;
+    isActive?: boolean;
+    isHidden?: boolean;
     top?: string;
     left?: string;
     radius?: number;
@@ -28,14 +28,14 @@ export interface StarItemProps {
 }
 
 const props = withDefaults(defineProps<StarItemProps>(), {
+    isActive: false,
+    isHidden: true,
     top: '0',
     left: '0',
     radius: 10,
     label: '',
     backgroundColor: 'black',
 });
-
-const emits = defineEmits(['selected']);
 
 const rootStyles = computed(() => ({
     top: props.top,
@@ -57,16 +57,12 @@ const outerCircleStyles = computed(() => ({
 
 const tooltipLabel = ref<InstanceType<typeof HTMLElement> | null>(null);
 
-function onItemClick() {
-    emits('selected', props.id);
-}
-
 onMounted(() => {
-    const padding = 20;
+    const PADDING = 20;
     if (tooltipLabel.value) {
         const rect = tooltipLabel.value.getBoundingClientRect();
         if (rect.right >= window.innerWidth) {
-            tooltipLabel.value.style.left = `-${rect.right - window.innerWidth + padding}px`;
+            tooltipLabel.value.style.left = `-${rect.right - window.innerWidth + PADDING}px`;
         }
     }
 
@@ -111,14 +107,18 @@ onMounted(() => {
     top: 30px;
     color: inherit;
     transition: transform 0.2s ease-in;
-    font-size: 1.4rem;
 }
 
 .tooltip span {
     position: absolute;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-family: var(--font-family-mono);
+    letter-spacing: 3px;
 }
 .active {
-    color: #6d6d6d;
+    color: white;
     transform: scale(1.5);
 }
 .hidden {
