@@ -44,18 +44,6 @@ onMounted(() => {
 });
 </script>
 
-<style>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.3s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-</style>
-
 <style module>
 .container {
     position: relative;
@@ -81,6 +69,7 @@ onMounted(() => {
     right: var(--default-layout-padding-right);
     position: fixed;
     font-size: 2rem;
+    color: var(--pink);
 }
 .logo {
     font-size: 1.7rem;

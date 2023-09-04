@@ -32,10 +32,12 @@ defineProps({
 @media (min-width: 768px) {
     .content {
         max-width: 600px;
+        height: 100%;
     }
     .container {
         display: flex;
         justify-content: center;
+        height: 100%;
     }
 }
 </style>

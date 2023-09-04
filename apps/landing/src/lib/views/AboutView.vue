@@ -2,9 +2,15 @@
     <default-layout>
         <template #content>
             <main :class="$style.main">
-                <h1>About Me</h1>
+                <h1>About</h1>
                 <p>
-                    For the past five years, I have been working as a Fullstack Developer on an e-commerce company.
+                    For the past five years, I have been working as a developer on an
+                    <a href="https://www.lidl.de" target="_blank"> e-commerce company</a>, a
+                    <a href="https://www.cloudblue.com/" target="_blank">startup project</a> on a large corporation, a
+                    <a href="https://www.affluent.io/">marketing focused startup</a> and a
+                    <a href="https://en.c-981.com/">zero code SaaS startup</a>.
+                </p>
+                <p>
                     Although my main focus is in frontend development and its technologies, I was required to do a bit
                     of every rol and have learned a great deal about software development and working in a complex team.
                 </p>
@@ -28,6 +34,6 @@ import DefaultLayout from '../components/layouts/DefaultLayout.vue';
 
 <style module>
 .main {
-    text-align: justify;
+    line-height: 1.5;
 }
 </style>

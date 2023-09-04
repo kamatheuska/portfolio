@@ -37,7 +37,7 @@ const menuItems = ref<StarItemProps[]>([
 
     {
         id: '2',
-        backgroundColor: colors.lightBlue,
+        backgroundColor: colors.pink,
         left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
         radius: getRandomNumber(2, 6),
         top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
@@ -75,14 +75,14 @@ const menuItems = ref<StarItemProps[]>([
 
     {
         id: '7',
-        backgroundColor: colors.lightBlue,
+        backgroundColor: colors.brown,
         left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
         radius: getRandomNumber(2, 6),
         top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
     },
     {
         id: '8',
-        backgroundColor: colors.lightBlue,
+        backgroundColor: colors.pink,
         left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
         radius: getRandomNumber(2, 6),
         top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
@@ -98,7 +98,7 @@ const menuItems = ref<StarItemProps[]>([
 
     {
         id: '10',
-        backgroundColor: colors.lightBlue,
+        backgroundColor: colors.brown,
         left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
         radius: getRandomNumber(2, 6),
         top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
@@ -117,6 +117,20 @@ const menuItems = ref<StarItemProps[]>([
         left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+    },
+    {
+        id: '11',
+        backgroundColor: colors.lightBrown,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    },
+    {
+        id: '11',
+        backgroundColor: colors.lightBrown,
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(2, 6),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
     },
 ]);
 

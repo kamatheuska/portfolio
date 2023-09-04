@@ -111,7 +111,7 @@ onMounted(() => {
 
 .tooltip span {
     position: absolute;
-    color: white;
+    color: var(--pink);
     text-transform: uppercase;
     font-weight: 900;
     font-family: var(--font-family-mono);

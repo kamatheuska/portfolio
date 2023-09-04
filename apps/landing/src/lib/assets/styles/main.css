@@ -1,11 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&family=Fira+Mono:wght@400;500;700&display=swap');
 
 :root { 
     --default-layout-padding-left: 2rem;
     --default-layout-padding-right: 2rem;
     --default-layout-padding-top: 5rem;
+
+    --lightBlue: #95BCCC;
+    --pink: #FCDCDC;
+    --darkBlue: #2B4C59;
+    --brown: #988080;
+    --gray: #BECEDA;
+    --lightBrown: #DDD4D4;
+
+    --font-family-mono: 'Fira Mono', monospace;
+    --font-family-sans: 'Roboto', sans-serif;
 }
 
 body {
-    font-family: 'Fira Mono', monospace;
+    color: var(--gray);
+    font-family: var(--font-family-sans);
+    background-color: var(--darkBlue);
+    color: var(--gray);
+}
+
+h1 {
+    color: var(--pink);
+    font-family: var(--font-family-mono);
+    text-transform: uppercase;
+}
+
+p {
+    color: var(--lightBlue);
+}
+
+a {
+    font-weight: 900;
+    color: var(--lightBrown);
+    text-decoration: none;
+}
+
+
+/*
+* Transitions
+*/
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
