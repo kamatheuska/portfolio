@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.root">
         <div :class="$style.container">
-            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" @click="onItemSelected(item)" />
+            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" />
         </div>
     </div>
 </template>
@@ -134,34 +134,6 @@ const menuItems = ref<StarItemProps[]>([
     },
 ]);
 
-async function onItemSelected(item: StarItemProps) {
-    if (!item.label) return;
-
-    emits('selected', item.id);
-
-    menuItems.value = menuItems.value.map((_item) => toggleItemById(item.id, _item));
-
-    await delay(1000);
-
-    const currentItem = menuItems.value.find((_item) => item.id === _item.id);
-
-    router.push({ name: currentItem?.label || '' });
-}
-
-function toggleItemById(id: string, item: StarItemProps) {
-    if (item.id === id) {
-        return {
-            ...item,
-            isActive: !item.isActive,
-        };
-    }
-    return {
-        ...item,
-        isActive: false,
-        isHidden: true,
-    };
-}
-
 async function showItemsIncrementally() {
     const currentRoute = router.currentRoute.value;
 
@@ -210,9 +182,6 @@ onMounted(async () => {
     width: 100%;
 }
 @media (min-width: 768px) {
-    .container {
-        max-width: 600px;
-    }
     .root {
         display: flex;
         justify-content: center;

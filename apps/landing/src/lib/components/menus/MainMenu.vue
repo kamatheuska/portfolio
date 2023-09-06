@@ -1,17 +1,11 @@
 <template>
     <div>
-        <div v-if="!hideMenu" :class="[$style.container, hideMenu && $style.hidden]">
+        <div :class="[$style.container, !hideMenu && $style.blur]">
             <div :class="$style.modal">
                 <div :class="$style.menu">
-                    <stars-menu @selected="toggleLogo" />
+                    <stars-menu />
                 </div>
             </div>
-        </div>
-        <div :class="$style.bars">
-            <transition name="fade" mode="out-in">
-                <font-awesome-icon v-if="hideMenu" icon="fa-solid fa-bars" @click="toggleMenu" />
-                <font-awesome-icon v-else icon="fa-solid fa-xmark" @click="toggleMenu" />
-            </transition>
         </div>
     </div>
 </template>
@@ -27,14 +21,9 @@ const props = defineProps({
     },
 });
 const hideMenu = ref(true);
-const hideLogo = ref(false);
 
 function toggleMenu() {
     hideMenu.value = !hideMenu.value;
-}
-
-function toggleLogo() {
-    hideLogo.value = !hideLogo.value;
 }
 
 onMounted(() => {
@@ -55,7 +44,7 @@ onMounted(() => {
     height: 100%;
     width: 100vw;
     position: fixed;
-    background-color: var(--darkBlue);
+    z-index: -10;
 }
 
 .logoWrapper {
@@ -81,8 +70,7 @@ onMounted(() => {
 .menu {
     z-index: 100;
 }
-.hidden {
-    visibility: hidden;
-    opacity: 0;
+.blur {
+    filter: blur(10px);
 }
 </style>

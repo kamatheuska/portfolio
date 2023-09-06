@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, RouteRecordRaw, createWebHashHistory } from 'vue-router';
 import AboutView from './views/AboutView.vue';
 import ContactView from './views/ContactView.vue';
 import HomeView from './views/HomeView.vue';
@@ -38,7 +38,7 @@ const routes: readonly RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 });
 

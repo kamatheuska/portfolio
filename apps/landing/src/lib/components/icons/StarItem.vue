@@ -5,7 +5,9 @@
             <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" />
             <div v-if="label" :class="[$style.tooltip__wrapper, isActive && $style.active]">
                 <div :class="$style.tooltip">
-                    <span ref="tooltipLabel"> {{ label }}</span>
+                    <router-link :to="{ name: label }">
+                        <span ref="tooltipLabel"> {{ label }}</span>
+                    </router-link>
                 </div>
             </div>
         </div>

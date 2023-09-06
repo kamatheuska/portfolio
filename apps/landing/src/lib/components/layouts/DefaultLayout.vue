@@ -1,10 +1,8 @@
 <template>
     <div>
-        <slot name="menu">
-            <div>
-                <main-menu :hide-at-start="hideMainMenuAtStart" />
-            </div>
-        </slot>
+        <div>
+            <main-menu :hide-at-start="hideMainMenuAtStart" />
+        </div>
         <div :class="$style.container">
             <div :class="$style.content">
                 <slot name="content"></slot>
@@ -29,6 +27,7 @@ defineProps({
     padding-left: var(--default-layout-padding-left);
     padding-right: var(--default-layout-padding-right);
 }
+
 @media (min-width: 768px) {
     .content {
         max-width: 600px;
