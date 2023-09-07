@@ -2,7 +2,7 @@
     <div :style="rootStyles" :class="[$style.root, isHidden && $style.hidden]">
         <div :class="$style.container">
             <div :class="[$style.inner]" :style="innerCircleStyles" />
-            <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" />
+            <div :class="[$style.outer]" :style="outerCircleStyles" class="pulsar" :id="pulsarId" />
             <div v-if="label" :class="[$style.tooltip__wrapper, isActive && $style.active]">
                 <div :class="$style.tooltip">
                     <router-link :to="{ name: label }">
@@ -17,6 +17,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, withDefaults } from 'vue';
 import { animate } from 'motion';
+import { getRandomNumber } from '../../utils';
 
 export interface StarItemProps {
     id: string;
@@ -58,6 +59,7 @@ const outerCircleStyles = computed(() => ({
 }));
 
 const tooltipLabel = ref<InstanceType<typeof HTMLElement> | null>(null);
+const pulsarId = `outer-pulsar-${props.id}`;
 
 onMounted(() => {
     const PADDING = 20;
@@ -67,15 +69,16 @@ onMounted(() => {
             tooltipLabel.value.style.left = `-${rect.right - window.innerWidth + PADDING}px`;
         }
     }
+    const delay = getRandomNumber(10, 100) / 100;
 
     animate(
-        '.pulsar',
-        { transform: ['scale(1.9)', 'scale(1)'] },
+        `#${pulsarId}`,
+        { transform: [null, 'scale(1.9)'], opacity: [null, 0] },
         {
+            delay,
             duration: 2,
-            easing: 'ease-in',
+            easing: 'ease-out',
             repeat: Infinity,
-            offset: [0.5, 1],
         }
     );
 });
