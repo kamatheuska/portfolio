@@ -4,7 +4,7 @@
             <backdrop-box title="About">
                 <main>
                     <p>
-                        For the past five years, I have been working as a developer on an
+                        For the past years, I have been working as a developer on an
                         <a href="https://www.lidl.de" target="_blank"> e-commerce company</a>, a
                         <a href="https://www.cloudblue.com/" target="_blank">startup project</a> on a large corporation,
                         a <a href="https://www.affluent.io/">marketing focused startup</a> and a
@@ -22,8 +22,8 @@
                         I decided to learn to code.
                     </p>
                     <p>
-                        Almost five years after, I can see how the rigurosity of german music theory influence my love
-                        for clean and expresive code.
+                        After all this time, I can see how the rigurosity of german music theory influence my love for
+                        clean and expresive code.
                     </p>
                 </main>
             </backdrop-box>

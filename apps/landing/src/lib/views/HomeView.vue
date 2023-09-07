@@ -8,7 +8,7 @@
                 <main :class="$style.main">
                     <h3>Hi! My name is</h3>
                     <h1>Nicolas Ramirez</h1>
-                    <p>I am Software Developer specilized on web apps, APIs and great quality code</p>
+                    <p>I am Software Developer specilized on creating great products for the web</p>
                     <transition name="fade" mode="out-in">
                         <button v-if="showStartButton" class="button" @click="showMain = !showMain">Start</button>
                         <div v-else :class="$style.placeholder"></div>
