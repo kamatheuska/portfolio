@@ -2,7 +2,7 @@
     <transition name="fade" mode="out-in">
         <div :class="[$style.root, backdrop && $style.backdrop, padding && $style.padding]" v-if="show">
             <div :class="$style.close">
-                <font-awesome-icon @click="show = !show" :icon="['far', 'circle-xmark']" />
+                <font-awesome-icon @click="show = !show" :icon="['fa', 'circle-xmark']" />
             </div>
 
             <h1>
@@ -60,10 +60,19 @@ const show = ref(true);
     position: relative;
 }
 .close {
-    position: absolute;
+    position: sticky;
     font-size: 20px;
-    top: -10px;
+    top: 10px;
     right: -10px;
+    top: -1px;
+    z-index: 30;
+    color: var(--pink);
+}
+.close svg {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    font-size: 2rem;
 }
 .open {
     font-size: 15px;
