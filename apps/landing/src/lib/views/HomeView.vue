@@ -64,9 +64,12 @@ onMounted(async () => {
 </script>
 
 <style module>
+.root {
+    text-align: right;
+}
 .root h1 {
-    font-size: 3rem;
-    margin-top: 0;
+    font-size: 12vw;
+    margin: 0;
 }
 .root h3 {
     font-size: 1.1rem;
@@ -76,7 +79,6 @@ onMounted(async () => {
 }
 .root p {
     max-width: 300px;
-    text-align: right;
 }
 .list {
     margin-top: 0;
@@ -91,5 +93,10 @@ onMounted(async () => {
 }
 .placeholder {
     height: 3rem;
+}
+@media (min-width: 768px) {
+    .root h1 {
+        font-size: 6vw;
+    }
 }
 </style>

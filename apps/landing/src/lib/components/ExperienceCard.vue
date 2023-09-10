@@ -48,11 +48,12 @@ withDefaults(defineProps<ExperienceCardProps>(), {
     backdrop-filter: blur(10px);
     background-color: rgba(30, 53, 62, 0.3);
     border-radius: 1rem;
+    gap: 1rem;
 }
 .date {
     font-size: 0.8rem;
     font-weight: 900;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 .content h3,
 h4 {
@@ -79,6 +80,9 @@ h4 {
 @media (min-width: 768px) {
     .root {
         grid-template-columns: 5rem auto;
+    }
+    .date {
+        padding-top: 5px;
     }
 }
 </style>

@@ -64,10 +64,10 @@ onMounted(() => {
     visibility: visible;
     opacity: 1;
     transition: visibility 0s, opacity 0.5s linear;
-    z-index: 1000;
+    z-index: 20;
 }
 .menu {
-    z-index: 100;
+    z-index: 10;
 }
 .blur {
     filter: blur(10px);
