@@ -1,7 +1,7 @@
 import { createRouter, RouteRecordRaw, createWebHashHistory } from 'vue-router';
 import AboutView from './views/AboutView.vue';
 import HomeView from './views/HomeView.vue';
-import PortfolioView from './views/PortfolioView.vue';
+import ExperienceView from './views/ExperienceView.vue';
 import StoriesView from './views/StoriesView.vue';
 
 const routes: readonly RouteRecordRaw[] = [
@@ -20,9 +20,9 @@ const routes: readonly RouteRecordRaw[] = [
         component: HomeView,
     },
     {
-        path: '/portfolio',
-        name: 'Portfolio',
-        component: PortfolioView,
+        path: '/experience',
+        name: 'Experience',
+        component: ExperienceView,
     },
     {
         path: '/stories',

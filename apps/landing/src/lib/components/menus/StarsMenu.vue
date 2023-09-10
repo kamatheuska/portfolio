@@ -67,7 +67,7 @@ const menuItems = ref<StarItemProps[]>([
     {
         id: '6',
         backgroundColor: colors.lightBlue,
-        label: 'Portfolio',
+        label: 'Experience',
         left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
