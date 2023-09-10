@@ -10,6 +10,7 @@
     --lightBlue: #95BCCC;
     --pink: #FCDCDC;
     --darkBlue: #2B4C59;
+    --darkerBlue: hsl(197, 35%, 18%);
     --brown: #988080;
     --gray: #BECEDA;
     --lightBrown: #DDD4D4;
@@ -20,11 +21,17 @@
     --font-family-serif: 'Playfair Display', serif;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     color: var(--gray);
     font-family: var(--font-family-sans);
-    background-color: var(--darkBlue);
+    background: rgb(6,43,59);
+    background: radial-gradient(circle, var(--darkBlue) 50%, var(--darkerBlue) 90%);
     color: var(--gray);
+    height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -43,6 +50,9 @@ a {
     text-decoration: none;
 }
 
+li {
+    list-style-type: none;
+}
 
 /*
 * Transitions
@@ -85,10 +95,6 @@ button:focus {
     border: 2px solid var(--pink);
 }
 
-button:focus {
-    outline: 1px solid #fff;
-    outline-offset: -4px;
-}
 
 button:active {
     transform: scale(0.99);
