@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, withDefaults } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { animate } from 'motion';
 import { getRandomNumber } from '../../utils';
 
