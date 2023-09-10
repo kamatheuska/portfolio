@@ -1,0 +1,109 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@100;400;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+:root { 
+    --default-layout-padding-left: 2rem;
+    --default-layout-padding-right: 2rem;
+    --default-layout-padding-top: 5rem;
+
+    --lightBlue: #95BCCC;
+    --pink: #FCDCDC;
+    --darkBlue: #2B4C59;
+    --darkerBlue: hsl(197, 35%, 18%);
+    --brown: #988080;
+    --gray: #BECEDA;
+    --green: hsl(178, 100%, 55%);
+    --darkGreen: hsl(178, 20%, 35%);
+    --lightBrown: #DDD4D4;
+    --lightGreen: #b5fffd;
+
+    --font-family-mono: 'Fira Mono', monospace;
+    --font-family-sans: 'Roboto', sans-serif;
+    --font-family-serif: 'Playfair Display', serif;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    color: var(--gray);
+    font-family: var(--font-family-sans);
+    background: rgb(6,43,59);
+    background: radial-gradient(circle, var(--darkBlue) 50%, var(--darkerBlue) 90%);
+    color: var(--gray);
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--pink);
+    font-family: var(--font-family-serif);
+}
+
+
+h4 {
+    color: var(--brown)
+}
+
+p {
+    color: var(--lightBlue);
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+a {
+    font-weight: 900;
+    color: var(--lightBrown);
+    text-decoration: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+/*
+* Transitions
+*/
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+button {
+    display: inline-block;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    margin: 0;
+    text-decoration: none;
+    background: none;
+    border: 2px solid var(--lightBlue);
+    color: var(--pink);
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-weight: 900;
+}
+
+button:hover,
+button:focus {
+    background: var(--pink);
+    color: var(--darkBlue);
+    border: 2px solid var(--pink);
+}
+
+
+button:active {
+    transform: scale(0.99);
+}
