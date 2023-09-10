@@ -111,14 +111,6 @@ const menuItems = ref<StarItemProps[]>([
         top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
     },
     {
-        id: '12',
-        backgroundColor: colors.lightBlue,
-        label: 'Contact',
-        left: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-        radius: getRandomNumber(8, 20),
-        top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
-    },
-    {
         id: '11',
         backgroundColor: colors.lightBrown,
         left: `calc(95% - ${getRandomNumber(5, 95)}%)`,

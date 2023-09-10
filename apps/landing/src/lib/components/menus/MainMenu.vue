@@ -44,7 +44,6 @@ onMounted(() => {
     height: 100%;
     width: 100vw;
     position: fixed;
-    z-index: -10;
 }
 
 .logoWrapper {
