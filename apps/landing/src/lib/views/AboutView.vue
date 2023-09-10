@@ -1,7 +1,7 @@
 <template>
     <default-layout>
         <template #content>
-            <backdrop-box title="About">
+            <backdrop-box title="About" backdrop padding>
                 <main>
                     <p>
                         For the past years, I have been working as a developer on an

@@ -1,19 +1,22 @@
 <template>
     <default-layout>
         <template #content>
-            <main>
-                <experience-card
-                    :class="$style.card"
-                    v-for="(experience, i) in experiences"
-                    v-bind="experience"
-                    :key="`experience-${i}`"
-                />
-            </main>
+            <backdrop-box title="Experience" :has-backdrop="false">
+                <main>
+                    <experience-card
+                        :class="$style.card"
+                        v-for="(experience, i) in experiences"
+                        v-bind="experience"
+                        :key="`experience-${i}`"
+                    />
+                </main>
+            </backdrop-box>
         </template>
     </default-layout>
 </template>
 
 <script lang="ts" setup>
+import BackdropBox from '../components/BackdropBox.vue';
 import ExperienceCard, { ExperienceCardProps } from '../components/ExperienceCard.vue';
 import DefaultLayout from '../components/layouts/DefaultLayout.vue';
 
@@ -24,7 +27,7 @@ const experiences: ExperienceCardProps[] = [
         date: '2019 — 2021',
         description:
             'Product Team responsible of Search and UI for product searches. Maintenance of lerna packages that delivered components and core Typescript functionalities on a Nexus artifactory. Internationalization and accesibility as main focus, vital for conversion on an ecommerce site.',
-        tags: ['Vuejs', 'Nuxt', 'Typescript'],
+        tags: ['VueJS', 'Nuxt', 'Typescript', 'SpringBoot'],
         link: 'https://lidl.de',
     },
     {
@@ -33,7 +36,7 @@ const experiences: ExperienceCardProps[] = [
         date: '2019 — 2021',
         description:
             'Product Team responsible for the recommendations vertical, including Data Science and development of ML algorithms and a microfrontend component for display. Development of a DEMO environment for the recommendations vertical that allowed E2E processes and Data Scientist Analitics test to be done within the product.',
-        tags: ['Express', 'Node', 'Nuxt', 'VueJS', 'SpringBoot', 'Typescript'],
+        tags: ['Nuxt', 'VueJS', 'Express', 'Node', 'Typescript'],
         link: 'https://lidl.de',
     },
     {
