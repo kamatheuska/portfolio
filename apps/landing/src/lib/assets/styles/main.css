@@ -13,6 +13,8 @@
     --darkerBlue: hsl(197, 35%, 18%);
     --brown: #988080;
     --gray: #BECEDA;
+    --green: hsl(178, 100%, 55%);
+    --darkGreen: hsl(178, 20%, 35%);
     --lightBrown: #DDD4D4;
     --lightGreen: #b5fffd;
 
@@ -39,9 +41,15 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-family-serif);
 }
 
+
+h4 {
+    color: var(--brown)
+}
+
 p {
     color: var(--lightBlue);
     line-height: 1.5;
+    font-size: 0.9rem;
 }
 
 a {
