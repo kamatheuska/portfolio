@@ -167,6 +167,7 @@ onMounted(async () => {
     position: fixed;
     width: 100vw;
     padding: 20px;
+    padding-top: 6rem;
 }
 .container {
     position: relative;

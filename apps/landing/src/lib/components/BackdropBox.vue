@@ -57,7 +57,8 @@ const show = ref(true);
     align-items: center;
     padding: 1rem;
     width: max-content;
-    position: relative;
+    position: fixed;
+    top: 0;
 }
 .close {
     position: sticky;
