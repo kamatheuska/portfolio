@@ -3,7 +3,7 @@
         <fullscreen-layout :show-backdrop="showBackdrop">
             <h3>Hi! My name is</h3>
             <h1>Nicolas Ramirez</h1>
-            <p>I am Software Developer specilized on creating great products for the web</p>
+            <p>I am Software Developer specialized on creating great products for the web</p>
             <ul :class="$style.list">
                 <li v-for="(item, i) in social" :key="`social-link-${i}`" class="mr-2">
                     <a :href="item.link" target="_blank" :aria-label="item.title">
@@ -78,7 +78,7 @@ onMounted(async () => {
     color: var(--lightGreen);
 }
 .root p {
-    max-width: 300px;
+    max-width: 350px;
 }
 .list {
     margin-top: 0;
@@ -97,6 +97,9 @@ onMounted(async () => {
 @media (min-width: 768px) {
     .root h1 {
         font-size: 6vw;
+    }
+    .root p {
+        font-size: 1.2rem;
     }
 }
 </style>
