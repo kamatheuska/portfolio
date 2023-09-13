@@ -1,10 +1,10 @@
 <template>
     <div :class="$style.root">
-        <div :class="$style.date">
+        <header :class="$style.date">
             <span>
                 {{ date }}
             </span>
-        </div>
+        </header>
         <div :class="$style.content">
             <a :href="link" target="_blank" rel="noopener noreferrer">
                 <h3>
@@ -45,11 +45,13 @@ withDefaults(defineProps<ExperienceCardProps>(), {
 .root {
     display: grid;
     padding: 1rem;
+    padding-bottom: 1.5rem;
     backdrop-filter: blur(10px);
     background-color: rgba(30, 53, 62, 0.3);
     border-radius: 1rem;
     gap: 1rem;
 }
+
 .date {
     font-size: 0.8rem;
     font-weight: 900;

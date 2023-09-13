@@ -3,12 +3,11 @@
         <template #content>
             <backdrop-box title="Experience" :has-backdrop="false">
                 <main>
-                    <experience-card
-                        :class="$style.card"
-                        v-for="(experience, i) in experiences"
-                        v-bind="experience"
-                        :key="`experience-${i}`"
-                    />
+                    <ul>
+                        <li :class="$style.card" v-for="(experience, i) in experiences" :key="`experience-${i}`">
+                            <experience-card v-bind="experience" />
+                        </li>
+                    </ul>
                 </main>
             </backdrop-box>
         </template>
