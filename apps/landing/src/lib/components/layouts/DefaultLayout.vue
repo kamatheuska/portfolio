@@ -30,7 +30,7 @@ defineProps({
 
 @media (min-width: 768px) {
     .content {
-        max-width: 600px;
+        max-width: 700px;
         height: 100%;
     }
     .container {
