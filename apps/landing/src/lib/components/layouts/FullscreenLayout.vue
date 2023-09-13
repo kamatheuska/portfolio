@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div>
-            <main-menu />
-        </div>
+        <main-menu />
         <transition name="fade">
             <div :class="$style.backdrop" v-if="showBackdrop">
                 <main :class="$style.main">
@@ -14,7 +12,7 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import MainMenu from '../menus/MainMenu.vue';
+import MainMenu from '../MainMenu.vue';
 import { delay } from '../../utils';
 defineProps({
     showBackdrop: {

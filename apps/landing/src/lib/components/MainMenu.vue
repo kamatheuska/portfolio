@@ -1,7 +1,11 @@
 <template>
     <div :class="$style.root">
-        <div :class="$style.container">
-            <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" />
+        <div :class="$style.modal">
+            <div :class="$style.menu">
+                <div :class="$style.container">
+                    <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -9,12 +13,10 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { delay, getRandomNumber } from '../../utils';
-import StarItem, { StarItemProps } from '../icons/StarItem.vue';
+import { delay, getRandomNumber } from '../utils';
+import StarItem, { StarItemProps } from './icons/StarItem.vue';
 
 const router = useRouter();
-
-const emits = defineEmits(['selected']);
 
 const colors = {
     lightBlue: '#95BCCC',
@@ -163,11 +165,24 @@ onMounted(async () => {
 
 <style module>
 .root {
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+.modal {
+    height: 100%;
+    width: 100vw;
+    position: fixed;
+}
+
+.menu {
     height: 100%;
     position: fixed;
     width: 100vw;
     padding: 20px;
     padding-top: 6rem;
+    z-index: 10;
 }
 .container {
     position: relative;

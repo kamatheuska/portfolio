@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div>
-            <main-menu :hide-at-start="hideMainMenuAtStart" />
-        </div>
+        <main-menu />
         <div :class="$style.container">
             <div :class="$style.content">
                 <slot name="content"></slot>
@@ -12,13 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import MainMenu from '../menus/MainMenu.vue';
-defineProps({
-    hideMainMenuAtStart: {
-        type: Boolean,
-        default: true,
-    },
-});
+import MainMenu from '../MainMenu.vue';
 </script>
 
 <style module>
