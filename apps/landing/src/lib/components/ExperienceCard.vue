@@ -81,7 +81,7 @@ h4 {
 
 @media (min-width: 768px) {
     .root {
-        grid-template-columns: 5rem auto;
+        grid-template-columns: 8rem auto;
     }
     .date {
         padding-top: 5px;
