@@ -175,7 +175,6 @@ onMounted(async () => {
     width: 100vw;
     position: fixed;
 }
-
 .menu {
     height: 100%;
     position: fixed;
