@@ -6,7 +6,7 @@
             </span>
         </header>
         <div :class="$style.content">
-            <a :href="link" target="_blank" rel="noopener noreferrer">
+            <a v-if="link" :href="link" target="_blank" rel="noopener noreferrer">
                 <h3>
                     {{ workTitle }}
                     <span>
@@ -14,6 +14,10 @@
                     </span>
                 </h3>
             </a>
+
+            <h3 v-else>
+                {{ workTitle }}
+            </h3>
             <h4>{{ company }}</h4>
             <p>{{ description }}</p>
             <ul>
@@ -32,7 +36,7 @@ export interface ExperienceCardProps {
     company: string;
     description: string;
     tags: string[];
-    link: string;
+    link?: string;
 }
 
 withDefaults(defineProps<ExperienceCardProps>(), {
