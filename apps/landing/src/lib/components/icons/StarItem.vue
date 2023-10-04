@@ -20,14 +20,14 @@ import { animate } from 'motion';
 import { getRandomNumber } from '../../utils';
 
 export interface StarItemProps {
-    id: string;
+    id: number;
     isActive?: boolean;
     isHidden?: boolean;
     top?: string;
     left?: string;
     radius?: number;
     label?: string;
-    backgroundColor?: string;
+    color?: string;
 }
 
 const props = withDefaults(defineProps<StarItemProps>(), {
@@ -43,19 +43,19 @@ const props = withDefaults(defineProps<StarItemProps>(), {
 const rootStyles = computed(() => ({
     top: props.top,
     left: props.left,
-    color: props.backgroundColor,
+    color: props.color,
 }));
 
 const innerCircleStyles = computed(() => ({
     width: `${props.radius}px`,
     height: `${props.radius}px`,
-    backgroundColor: props.backgroundColor,
+    backgroundColor: props.color,
 }));
 
 const outerCircleStyles = computed(() => ({
     width: `${props.radius + 5}px`,
     height: `${props.radius + 5}px`,
-    backgroundColor: props.backgroundColor,
+    backgroundColor: props.color,
 }));
 
 const tooltipLabel = ref<InstanceType<typeof HTMLElement> | null>(null);
@@ -63,6 +63,7 @@ const pulsarId = `outer-pulsar-${props.id}`;
 
 onMounted(() => {
     const PADDING = 20;
+
     if (tooltipLabel.value) {
         const rect = tooltipLabel.value.getBoundingClientRect();
         if (rect.right >= window.innerWidth) {

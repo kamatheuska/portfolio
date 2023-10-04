@@ -2,7 +2,7 @@ import { createRouter, RouteRecordRaw, createWebHashHistory } from 'vue-router';
 import AboutView from './views/AboutView.vue';
 import HomeView from './views/HomeView.vue';
 import ExperienceView from './views/ExperienceView.vue';
-import StoriesView from './views/StoriesView.vue';
+import ChallengesView from './views/ChallengesView.vue';
 
 const routes: readonly RouteRecordRaw[] = [
     {
@@ -25,9 +25,9 @@ const routes: readonly RouteRecordRaw[] = [
         component: ExperienceView,
     },
     {
-        path: '/stories',
-        name: 'Stories',
-        component: StoriesView,
+        path: '/challenges',
+        name: 'Challenges',
+        component: ChallengesView,
     },
 ];
 

@@ -3,7 +3,7 @@
         <div :class="$style.modal">
             <div :class="$style.menu">
                 <div :class="$style.container">
-                    <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" />
+                    <star-item v-for="(item, i) in menuItems" :key="`star-${i}`" v-bind="item" :id="i" />
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { delay, getRandomNumber } from '../utils';
-import StarItem, { StarItemProps } from './icons/StarItem.vue';
+import StarItem from './icons/StarItem.vue';
 
 const router = useRouter();
 
@@ -27,40 +27,30 @@ const colors = {
     lightBrown: '#DDD4D4',
 };
 
-const menuItems = ref<StarItemProps[]>([
+const getPlaceholderStarItem = (color: string) => ({
+    color,
+    label: '',
+    left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    radius: getRandomNumber(2, 6),
+    top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+});
+
+const menuItems = ref([
     {
         id: '1',
-        backgroundColor: colors.lightBlue,
+        color: colors.lightBlue,
         label: 'Home',
         left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
     },
 
-    {
-        id: '2',
-        backgroundColor: colors.pink,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
-    {
-        id: '3',
-        backgroundColor: colors.lightBlue,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
-    {
-        id: '4',
-        backgroundColor: colors.lightBlue,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
+    getPlaceholderStarItem(colors.pink),
+    getPlaceholderStarItem(colors.lightBlue),
+    getPlaceholderStarItem(colors.lightBlue),
     {
         id: '5',
-        backgroundColor: colors.lightBlue,
+        color: colors.lightBlue,
         label: 'About',
         left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
         radius: getRandomNumber(8, 20),
@@ -68,64 +58,27 @@ const menuItems = ref<StarItemProps[]>([
     },
     {
         id: '6',
-        backgroundColor: colors.lightBlue,
+        color: colors.lightBlue,
         label: 'Experience',
         left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
     },
-
-    {
-        id: '7',
-        backgroundColor: colors.brown,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
-    {
-        id: '8',
-        backgroundColor: colors.pink,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
+    getPlaceholderStarItem(colors.brown),
+    getPlaceholderStarItem(colors.pink),
     {
         id: '9',
-        backgroundColor: colors.lightBlue,
-        label: 'Stories',
+        color: colors.lightBlue,
+        label: 'Challenges',
         left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
     },
 
-    {
-        id: '10',
-        backgroundColor: colors.brown,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
-    {
-        id: '11',
-        backgroundColor: colors.lightBlue,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
-    {
-        id: '11',
-        backgroundColor: colors.lightBrown,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
-    {
-        id: '11',
-        backgroundColor: colors.lightBrown,
-        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-        radius: getRandomNumber(2, 6),
-        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    },
+    getPlaceholderStarItem(colors.brown),
+    getPlaceholderStarItem(colors.lightBlue),
+    getPlaceholderStarItem(colors.lightBrown),
+    getPlaceholderStarItem(colors.lightBrown),
 ]);
 
 async function showItemsIncrementally() {

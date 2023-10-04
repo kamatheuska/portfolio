@@ -67,6 +67,9 @@ onMounted(async () => {
 .root {
     text-align: right;
 }
+.root p {
+    max-width: 350px;
+}
 .root h1 {
     font-size: 12vw;
     margin: 0;
@@ -76,9 +79,6 @@ onMounted(async () => {
     margin: 0;
     font-family: var(--font-family-mono);
     color: var(--lightGreen);
-}
-.root p {
-    max-width: 350px;
 }
 .list {
     margin-top: 0;
