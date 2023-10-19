@@ -2,7 +2,7 @@
     <transition name="fade" mode="out-in">
         <div :class="[$style.root, backdrop && $style.backdrop, padding && $style.padding]" v-if="show">
             <div :class="$style.close">
-                <font-awesome-icon @click="show = !show" :icon="['fa', 'circle-xmark']" />
+                <font-awesome-icon @click="show = !show" :icon="['fa', 'bars']" />
             </div>
 
             <h1>

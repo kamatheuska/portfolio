@@ -78,6 +78,7 @@ ul {
 .fade-leave-to {
     opacity: 0;
 }
+
 button {
     display: inline-block;
     border: none;

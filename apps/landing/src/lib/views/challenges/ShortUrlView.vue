@@ -1,6 +1,11 @@
 <template>
     <div :class="$style.root">
-        <fullscreen-layout>
+        <fullscreen-layout :show-backdrop="showBackdrop">
+            <header>
+                <div :class="$style.menu">
+                    <font-awesome-icon @click="showBackdrop = !showBackdrop" :icon="['fa', 'bars']" />
+                </div>
+            </header>
             <h1>Url Shortener</h1>
             <form @submit.prevent="createShortUrl">
                 <p>
@@ -57,6 +62,8 @@ const form = ref({
 });
 
 const resultUrl = ref('');
+
+const showBackdrop = ref(true);
 </script>
 
 <style module>
@@ -66,6 +73,19 @@ const resultUrl = ref('');
 .root p {
     text-align: justify;
 }
+.root header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+    font-weight: 900;
+    color: var(--lightBrown);
+    align-items: flex-end;
+}
+
+.menu {
+    font-size: 2rem;
+}
+
 .field {
     padding: 1rem 0;
 }

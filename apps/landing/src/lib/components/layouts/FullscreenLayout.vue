@@ -11,20 +11,12 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
 import MainMenu from '../MainMenu.vue';
-import { delay } from '../../utils';
 defineProps({
     showBackdrop: {
         type: Boolean,
         default: true,
     },
-});
-const showStartButton = ref(false);
-
-onMounted(async () => {
-    await delay(1000);
-    showStartButton.value = true;
 });
 </script>
 
