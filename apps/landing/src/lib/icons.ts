@@ -7,6 +7,7 @@ import {
     faEnvelope,
     faArrowUp,
     faCircleXmark,
+    faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faInstagram, faLinkedin, faStackOverflow } from '@fortawesome/free-brands-svg-icons';
 library.add(
@@ -19,7 +20,8 @@ library.add(
     faLinkedin,
     faStackOverflow,
     faEnvelope,
-    faArrowUp
+    faArrowUp,
+    faGear
 );
 
 export { FontAwesomeIcon as CustomFontAwesomeIcon };

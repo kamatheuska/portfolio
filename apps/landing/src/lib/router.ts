@@ -3,6 +3,7 @@ import AboutView from './views/AboutView.vue';
 import HomeView from './views/HomeView.vue';
 import ExperienceView from './views/ExperienceView.vue';
 import ChallengesView from './views/ChallengesView.vue';
+import ShortUrlView from './views/challenges/ShortUrlView.vue';
 
 const routes: readonly RouteRecordRaw[] = [
     {
@@ -28,6 +29,11 @@ const routes: readonly RouteRecordRaw[] = [
         path: '/challenges',
         name: 'Challenges',
         component: ChallengesView,
+    },
+    {
+        path: '/challenges/shorturl',
+        name: 'ShortUrlChallenge',
+        component: ShortUrlView,
     },
 ];
 
