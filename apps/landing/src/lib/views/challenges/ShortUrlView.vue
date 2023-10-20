@@ -1,32 +1,31 @@
 <template>
-    <div :class="$style.root">
-        <fullscreen-layout @toggle-backdrop="showBackdrop = !showBackdrop" :show-backdrop="showBackdrop" show-menu-icon>
-            <h1>Url Shortener</h1>
-            <form @submit.prevent="createShortUrl">
-                <p>
-                    Tired of typing long urls that you do not want to remember? Just use this mini service to make that
-                    long and infinite procession of characters into a small and well behaved one.
-                </p>
-                <div>
-                    <div :class="$style.field">
-                        <label for="url"> Type a URL </label>
-                        <input id="url" v-model="form.url" type="url" required placeholder="https:://google.com" />
-                    </div>
-                    <button class="button" type="submit">Send</button>
-                </div>
-                <div :class="$style.result" v-if="resultUrl">
-                    <p>Now you can access it by going to:</p>
-                    <a :href="resultUrl" target="_blank" rel="noopener noreferrer">
-                        {{ resultUrl }}
-                    </a>
-                </div>
-            </form>
-        </fullscreen-layout>
-    </div>
+    <challenge-layout>
+        <h1>Url Shortener</h1>
+        <form @submit.prevent="createShortUrl">
+            <p>
+                Tired of typing long urls that you do not want to remember? Just use this mini service to make that long
+                and infinite procession of characters into a small and well behaved one.
+            </p>
+            <div>
+                <form-field>
+                    <label for="url"> Type a URL </label>
+                    <input id="url" v-model="form.url" type="url" required placeholder="https:://google.com" />
+                </form-field>
+                <button class="button" type="submit">Send</button>
+            </div>
+            <div :class="$style.result" v-if="resultUrl">
+                <p>Now you can access it by going to:</p>
+                <a :href="resultUrl" target="_blank" rel="noopener noreferrer">
+                    {{ resultUrl }}
+                </a>
+            </div>
+        </form>
+    </challenge-layout>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
-import FullscreenLayout from '../../components/layouts/FullscreenLayout.vue';
+import ChallengeLayout from '../../components/layouts/ChallengeLayout.vue';
+import FormField from '../../components/forms/FormField.vue';
 
 async function createShortUrl() {
     try {
@@ -57,31 +56,9 @@ const form = ref({
 });
 
 const resultUrl = ref('');
-
-const showBackdrop = ref(true);
 </script>
 
 <style module>
-.root form {
-    max-width: 350px;
-}
-.root p {
-    text-align: justify;
-}
-.field {
-    padding: 1rem 0;
-}
-
-.field label {
-    margin-bottom: 1rem;
-    display: block;
-}
-
-.field input {
-    padding: 0.5rem 0.5rem;
-    width: 100%;
-    border-radius: 10px;
-}
 .result {
     margin-top: 2rem;
 }
