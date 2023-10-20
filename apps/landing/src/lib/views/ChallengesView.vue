@@ -32,10 +32,6 @@ const challenges = [
         link: '/challenges/timestamp',
     },
     {
-        label: 'Exercise Tracker',
-        link: '/challenges/exercise-tracker',
-    },
-    {
         label: 'File Metadata',
         link: '/challenges/file-metadata',
     },
