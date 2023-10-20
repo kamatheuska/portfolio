@@ -5,6 +5,7 @@ import ExperienceView from './views/ExperienceView.vue';
 import ChallengesView from './views/ChallengesView.vue';
 import ShortUrlView from './views/challenges/ShortUrlView.vue';
 import TimestampView from './views/challenges/TimestampView.vue';
+import FileMetadataView from './views/challenges/FileMetadataView.vue';
 
 const routes: readonly RouteRecordRaw[] = [
     {
@@ -40,6 +41,11 @@ const routes: readonly RouteRecordRaw[] = [
         path: '/challenges/timestamp',
         name: 'TimestampChallenge',
         component: TimestampView,
+    },
+    {
+        path: '/challenges/file-metadata',
+        name: 'FileMetadataChallenge',
+        component: FileMetadataView,
     },
 ];
 
