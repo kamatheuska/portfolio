@@ -4,6 +4,7 @@ import HomeView from './views/HomeView.vue';
 import ExperienceView from './views/ExperienceView.vue';
 import ChallengesView from './views/ChallengesView.vue';
 import ShortUrlView from './views/challenges/ShortUrlView.vue';
+import TimestampView from './views/challenges/TimestampView.vue';
 
 const routes: readonly RouteRecordRaw[] = [
     {
@@ -34,6 +35,11 @@ const routes: readonly RouteRecordRaw[] = [
         path: '/challenges/shorturl',
         name: 'ShortUrlChallenge',
         component: ShortUrlView,
+    },
+    {
+        path: '/challenges/timestamp',
+        name: 'TimestampChallenge',
+        component: TimestampView,
     },
 ];
 
