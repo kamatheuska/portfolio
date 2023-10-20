@@ -79,7 +79,7 @@ ul {
     opacity: 0;
 }
 
-button {
+.button {
     display: inline-block;
     border: none;
     padding: 0.8rem 2rem;
@@ -100,14 +100,14 @@ button {
     font-weight: 900;
 }
 
-button:hover,
-button:focus {
+.button:hover,
+.button:focus {
     background: var(--pink);
     color: var(--darkBlue);
     border: 2px solid var(--pink);
 }
 
 
-button:active {
+.button:active {
     transform: scale(0.99);
 }
