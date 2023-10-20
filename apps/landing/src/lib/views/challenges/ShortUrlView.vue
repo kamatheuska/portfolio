@@ -1,12 +1,7 @@
 <template>
     <div :class="$style.root">
-        <fullscreen-layout :show-backdrop="showBackdrop">
-            <header>
-                <div :class="$style.menu">
-                    <font-awesome-icon @click="showBackdrop = !showBackdrop" :icon="['fa', 'bars']" />
-                </div>
-            </header>
-            <h1>Url Shortener</h1>
+        <fullscreen-layout @toggle-backdrop="showBackdrop = !showBackdrop" :show-backdrop="showBackdrop" show-menu-icon>
+            <h1>{{ title }}</h1>
             <form @submit.prevent="createShortUrl">
                 <p>
                     Tired of typing long urls that you do not want to remember? Just use this mini service to make that
@@ -57,6 +52,7 @@ async function createShortUrl() {
     }
 }
 
+const title = ref('Url Shortener');
 const form = ref({
     url: '',
 });
@@ -73,19 +69,6 @@ const showBackdrop = ref(true);
 .root p {
     text-align: justify;
 }
-.root header {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 3rem;
-    font-weight: 900;
-    color: var(--lightBrown);
-    align-items: flex-end;
-}
-
-.menu {
-    font-size: 2rem;
-}
-
 .field {
     padding: 1rem 0;
 }

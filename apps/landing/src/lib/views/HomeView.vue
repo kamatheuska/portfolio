@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <fullscreen-layout :show-backdrop="showBackdrop">
+        <fullscreen-layout :show-backdrop="showBackdrop" @toggleBackdrop="showBackdrop = !showBackdrop">
             <h3>Hi! My name is</h3>
             <h1>Nicolas Ramirez</h1>
             <p>I am Software Developer specialized on creating great products for the web</p>

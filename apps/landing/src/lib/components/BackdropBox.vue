@@ -10,17 +10,13 @@
             </h1>
             <slot></slot>
         </div>
-        <h1 v-else @click="show = !show" :class="$style.title">
-            {{ title }}
-            <span :class="$style.open">
-                <font-awesome-icon :icon="['fa', 'up-right-from-square']" />
-            </span>
-        </h1>
+        <back-button v-else @click="show = !show" />
     </transition>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import BackButton from './BackButton.vue';
 
 defineProps({
     title: String,
@@ -76,7 +72,7 @@ const show = ref(true);
     font-size: 2rem;
 }
 .open {
-    font-size: 15px;
-    margin-left: 1rem;
+    font-size: 2rem;
+    margin-right: 1rem;
 }
 </style>

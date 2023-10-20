@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <fullscreen-layout>
+        <fullscreen-layout @toggle-backdrop="showBackdrop = !showBackdrop" :show-backdrop="showBackdrop" show-menu-icon>
             <h1>Challenges</h1>
             <p>
                 On this section, you will find different FreeCodeCamp Challenges. Source code for this challenges is
@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import FullscreenLayout from '../components/layouts/FullscreenLayout.vue';
 
 const challenges = [
@@ -39,6 +40,7 @@ const challenges = [
         link: '/challenges/file-metadata',
     },
 ];
+const showBackdrop = ref(true);
 </script>
 
 <style module>
