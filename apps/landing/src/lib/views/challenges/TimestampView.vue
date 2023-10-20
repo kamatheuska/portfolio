@@ -71,18 +71,6 @@ const result = ref(null);
 </script>
 
 <style module>
-.container pre {
-    display: flex;
-    align-items: center;
-    min-height: 7rem;
-    background-color: var(--darkerBlue);
-    border-radius: 10px;
-    font-size: 0.875em;
-    overflow-x: auto;
-    padding: 1.25rem 1.5rem;
-    white-space: pre;
-    word-wrap: normal;
-}
 .buttons {
     display: flex;
     gap: 1rem;
