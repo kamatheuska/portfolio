@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "tape 'tests/**/*.js' | tap-arc",
-    "start": "fastify start -l info app.js",
-    "dev": "fastify start --watch --ignore-watch='data .git node_modules' -l info -P app.js",
+    "start": "fastify start app.js",
+    "dev": "fastify start --watch --ignore-watch='data .git node_modules' -P app.js",
     "lint": "npx eslint ./"
   },
   "author": "",
