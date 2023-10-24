@@ -38,6 +38,9 @@ export default async function createApp(fastify, opts) {
   await fastify.register(cors, {
     origin(origin, cb) {
       const { hostname } = new URL(origin);
+
+      fastify.log.debug(`CORS hostname ${hostname}`);
+
       if (hostname === 'localhost') {
         cb(null, true);
         return;
