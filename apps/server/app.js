@@ -45,9 +45,16 @@ export default async function createApp(fastify, opts) {
         return;
       }
 
-      const { hostname } = new URL(origin);
+      log.debug(`CORS origin: ${origin}`);
 
-      log.debug(`CORS hostname ${hostname}`);
+      let hostname;
+
+      try {
+        const url = new URL(origin);
+        hostname = url.hostname;
+      } catch (error) {
+        log.error(error);
+      }
 
       if (hostname === 'localhost') {
         cb(null, true);
