@@ -33,6 +33,7 @@ export default async function createApp(fastify, opts) {
     'nicolasramirez.dev',
     'portfolio-14g.pages.dev',
     'freecodecamp.org',
+    'www.freecodecamp.org',
   ];
 
   await fastify.register(cors, {
