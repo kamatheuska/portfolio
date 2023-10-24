@@ -1,9 +1,10 @@
-
 import Env from '@fastify/env';
 import S from 'fluent-json-schema';
 import Sensible from '@fastify/sensible';
 import Autoload from '@fastify/autoload';
 import Multipart from '@fastify/multipart';
+// import helmet from '@fastify/helmet';
+import cors from '@fastify/cors';
 
 import { join } from './utils/dir.js';
 
@@ -27,6 +28,28 @@ export default async function createApp(fastify, opts) {
   await fastify.register(Env, envOptions);
   await fastify.register(Sensible);
   await fastify.register(Multipart);
+
+  const WHITELISTED_DOMAINS = ['nicolasramirez.dev', 'portfolio-14g.pages.dev'];
+
+  await fastify.register(cors, {
+    origin(origin, cb) {
+      const { hostname } = new URL(origin);
+      if (hostname === 'localhost') {
+        cb(null, true);
+        return;
+      }
+
+      if (WHITELISTED_DOMAINS.includes(hostname)) {
+        cb(null, true);
+        return;
+      }
+
+      cb(new Error('Not allowed'), false);
+    },
+  });
+  //   await fastify.register(helmet, {
+  //     contentSecurityPolicy: false,
+  //   });
 
   await fastify.register(Autoload, {
     dir: join(import.meta.url, 'plugins'),
