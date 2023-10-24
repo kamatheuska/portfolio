@@ -32,7 +32,7 @@ export default async function createApp(fastify, opts) {
   const WHITELISTED_DOMAINS = [
     'nicolasramirez.dev',
     'portfolio-14g.pages.dev',
-    'https://www.freecodecamp.org',
+    'freecodecamp.org',
   ];
 
   await fastify.register(cors, {
