@@ -1,7 +1,4 @@
 import S from 'fluent-json-schema';
-
-import TimestampService from './timestamp.service.js';
-
 const timestampResponseSchema = {
   200: S.object()
     .prop('unix', S.number().required())
@@ -10,6 +7,10 @@ const timestampResponseSchema = {
 };
 
 async function timestampPlugin(fastify) {
+  fastify.setErrorHandler((error, request, reply) => {
+    reply.status(error.status).send({ error: error.message });
+  });
+
   fastify.route({
     method: 'GET',
     path: '/projects/apis/timestamp/api',
@@ -31,13 +32,40 @@ async function timestampPlugin(fastify) {
   });
 
   async function getTimestamp() {
-    return TimestampService.create();
+    return createTimestamp();
   }
 
   async function getTimestampByDate(request) {
     const { date } = request.params;
 
-    return TimestampService.parseAndCreate(date);
+    const parsedDate = parseDate(date);
+    const newDate = new Date(parsedDate);
+
+    return createTimestamp(newDate);
+  }
+
+  function createTimestamp(date = new Date()) {
+    const unix = date.getTime();
+
+    if (!unix) {
+      throw fastify.httpErrors.badRequest('Invalid Date');
+    }
+
+    return {
+      unix,
+      utc: date.toUTCString(),
+    };
+  }
+
+  function parseDate(dateString) {
+    const parsed = Number(dateString);
+    const date = Number.isNaN(parsed) ? decodeURI(dateString) : parsed;
+
+    if (!date) {
+      throw fastify.httpErrors.badRequest('Invalid Date');
+    }
+
+    return date;
   }
 }
 

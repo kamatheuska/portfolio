@@ -40,7 +40,7 @@ import ChallengeLayout from '../../components/layouts/ChallengeLayout.vue';
 const baseUrl = import.meta.env.VITE_API_URL;
 async function generateTimestamp() {
     try {
-        const response = await fetch(`${baseUrl}/projects/apis/timestamp`);
+        const response = await fetch(`${baseUrl}/projects/apis/timestamp/api`);
 
         if (!response.ok) {
             throw new Error('Error on request');
