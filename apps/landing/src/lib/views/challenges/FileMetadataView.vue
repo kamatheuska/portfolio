@@ -33,6 +33,7 @@ function setFile(event: Event) {
     const target = event.target as HTMLInputElement;
     file.value = target.files ? target.files[0] : null;
 }
+const baseUrl = import.meta.env.VITE_API_URL;
 
 async function uploadFile() {
     try {
@@ -41,7 +42,7 @@ async function uploadFile() {
 
             formData.append('upfile', file.value);
 
-            const response = await fetch('/projects/apis/fileanalyse', {
+            const response = await fetch(`${baseUrl}/projects/apis/fileanalyse`, {
                 body: formData,
                 method: 'POST',
             });

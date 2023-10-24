@@ -27,13 +27,14 @@ import { ref } from 'vue';
 import ChallengeLayout from '../../components/layouts/ChallengeLayout.vue';
 import FormField from '../../components/forms/FormField.vue';
 
+const baseUrl = import.meta.env.VITE_API_URL;
 async function createShortUrl() {
     try {
         if (!form.value.url) return;
 
         const body = JSON.stringify({ url: form.value.url });
 
-        const response = await fetch('/projects/apis/shorturl', {
+        const response = await fetch(`${baseUrl}/projects/apis/shorturl`, {
             body,
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -45,7 +46,7 @@ async function createShortUrl() {
 
         const responseBody = await response.json();
 
-        resultUrl.value = `${import.meta.env.VITE_API_URL}${responseBody.short}`;
+        resultUrl.value = `${baseUrl}${responseBody.short}`;
     } catch (error) {
         console.error(error);
     }

@@ -37,9 +37,10 @@ import { ref } from 'vue';
 import FormField from '../../components/forms/FormField.vue';
 import ChallengeLayout from '../../components/layouts/ChallengeLayout.vue';
 
+const baseUrl = import.meta.env.VITE_API_URL;
 async function generateTimestamp() {
     try {
-        const response = await fetch('/projects/apis/timestamp');
+        const response = await fetch(`${baseUrl}/projects/apis/timestamp`);
 
         if (!response.ok) {
             throw new Error('Error on request');
@@ -53,7 +54,7 @@ async function generateTimestamp() {
 async function getTimestampByDate() {
     try {
         const date = encodeURIComponent(form.value.date);
-        const response = await fetch(`/projects/apis/timestamp/${date}`);
+        const response = await fetch(`${baseUrl}/projects/apis/timestamp/${date}`);
 
         if (!response.ok) {
             throw new Error('Error on request');
