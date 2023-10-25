@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test tape 'tests/**/*.js' | tap-arc",
     "start": "fastify start app.js",
-    "dev": "fastify start --watch --ignore-watch='data .git node_modules' -P app.js",
+    "dev": "fastify start -l info --watch --ignore-watch='data .git node_modules' -P app.js",
     "lint": "npx eslint ./"
   },
   "author": "",
