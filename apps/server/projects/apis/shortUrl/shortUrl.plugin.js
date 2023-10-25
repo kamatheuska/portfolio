@@ -72,6 +72,7 @@ async function shortUrlPlugin(fastify) {
 
   async function getShortUrl(req, reply) {
     const { shortUrl } = req.params;
+    log.debug(`Requested shortUrl: ${shortUrl}`);
 
     const url = await ShortUrl.findOne({ hex: shortUrl }).exec();
 
