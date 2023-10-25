@@ -68,6 +68,7 @@ async function shortUrlPlugin(fastify) {
         short_url: shortUrl.hex,
       };
     } catch (error) {
+      log.debug(`Error: ${error}`);
       return {
         error: error.message,
       };
