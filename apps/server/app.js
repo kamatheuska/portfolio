@@ -40,7 +40,7 @@ export default async function createApp(fastify, opts) {
     origin(origin, cb) {
       const { log, config } = fastify;
 
-      if (config.NODE_ENV === 'test') {
+      if (config.NODE_ENV === 'test' || !origin) {
         cb(null, true);
         return;
       }
