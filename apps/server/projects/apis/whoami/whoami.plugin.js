@@ -13,7 +13,7 @@ const randomQuoteSchema = {
 async function whoami(fastify) {
   fastify.route({
     method: 'GET',
-    path: '/projects/apis/whoami',
+    path: '/projects/apis/whoami/api/whoami',
     handler: getWhoAmI,
     schema: randomQuoteSchema,
   });
