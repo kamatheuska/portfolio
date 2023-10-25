@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import tape from 'tape';
 import { build } from '../../../helpers.js';
 
@@ -6,7 +7,7 @@ const { test } = tape;
 async function populate(app, payload) {
   const response = await app.inject({
     method: 'POST',
-    url: '/projects/apis/shorturl',
+    url: '/projects/apis/shorturl/api/shorturl',
     payload,
   });
 
@@ -37,10 +38,10 @@ test('ShortUrl Integration', async t => {
     }
 
     try {
-      const { short_url: url } = JSON.parse(populateResponse.body);
+      const { short_url } = JSON.parse(populateResponse.body);
       const response = await app.inject({
         method: 'GET',
-        url,
+        url: `/projects/apis/shorturl/api/shorturl/${short_url}`,
       });
 
       st.equal(
@@ -76,7 +77,7 @@ test('ShortUrl Integration', async t => {
     try {
       const response = await app.inject({
         method: 'POST',
-        url: '/projects/apis/shorturl',
+        url: '/projects/apis/shorturl/api/shorturl',
         payload,
       });
 
