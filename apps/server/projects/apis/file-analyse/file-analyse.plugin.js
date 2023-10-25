@@ -18,7 +18,7 @@ async function fileAnalyse(fastify) {
 
   fastify.route({
     method: 'GET',
-    path: '/projects/apis/fileanalyse/',
+    path: '/projects/apis/fileanalyse',
     async handler() {
       return { ok: true };
     },
