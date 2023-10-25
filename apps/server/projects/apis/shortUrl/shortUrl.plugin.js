@@ -59,7 +59,7 @@ async function shortUrlPlugin(fastify) {
     return {
       // properties for fcc challenge
       original_url: shortUrl.original,
-      short_url: shortUrl.short,
+      short_url: shortUrl.hex,
     };
   }
 

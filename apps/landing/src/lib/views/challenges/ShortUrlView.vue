@@ -30,8 +30,6 @@ import FormField from '../../components/forms/FormField.vue';
 const baseUrl = import.meta.env.VITE_API_URL;
 async function createShortUrl() {
     try {
-        if (!form.value.url) return;
-
         const body = JSON.stringify({ url: form.value.url });
 
         const response = await fetch(`${baseUrl}/projects/apis/shorturl/api/shorturl`, {
@@ -46,7 +44,7 @@ async function createShortUrl() {
 
         const responseBody = await response.json();
 
-        resultUrl.value = `${baseUrl}${responseBody.short_url}`;
+        resultUrl.value = `${baseUrl}/short/${responseBody.short_url}`;
     } catch (error) {
         console.error(error);
     }
