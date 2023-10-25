@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import S from 'fluent-json-schema';
-import ShortUrlService from './shortUrl.service.js';
+import crypto from 'crypto';
+
+import { validateUrl } from '../../../utils/url.js';
 
 const shortUrlSchema = {
   200: S.object()
@@ -11,11 +13,12 @@ const shortUrlSchema = {
 };
 
 async function shortUrlPlugin(fastify) {
-  const { log, config } = fastify;
+  const { config } = fastify;
   const { ShortUrl } = fastify.mongoose.models;
+  const log = fastify.log.child({ context: 'shorturl' });
 
-  const getServiceOpts = () => ({
-    documentLimit: config.DB_DOCUMENT_LIMIT,
+  fastify.setErrorHandler((error, request, reply) => {
+    reply.status(error.status).send({ error: error.message });
   });
 
   fastify.route({
@@ -50,28 +53,51 @@ async function shortUrlPlugin(fastify) {
   });
 
   async function createShortUrl(req) {
-    const service = new ShortUrlService({ ShortUrl }, log, getServiceOpts());
-
     const { url } = req.body;
+    try {
+      await validateUrl(url);
+      await ShortUrl.checkDocumentCount(config.DB_DOCUMENT_LIMIT);
 
-    const shortUrl = await service.create(url);
+      const shortUrl = await buildUrl(url);
 
-    return {
-      // properties for fcc challenge
-      original_url: shortUrl.original,
-      short_url: shortUrl.hex,
-    };
+      return {
+        // properties for fcc challenge
+        original_url: shortUrl.original,
+        short_url: shortUrl.hex,
+      };
+    } catch (error) {
+      throw fastify.httpErrors.badRequest(error.message);
+    }
   }
 
   async function getShortUrl(req, reply) {
-    const service = new ShortUrlService({ ShortUrl }, log, getServiceOpts());
     const { shortUrl } = req.params;
 
-    const url = await service.get(shortUrl);
+    const url = await ShortUrl.findOne({ hex: shortUrl }).exec();
 
+    if (!url) {
+      throw new fastify.httpErrors.NotFound('Url was not found');
+    }
+
+    log.debug(`Url found: ${url}`);
     log.info(`Redirecting to: ${url.original}`);
 
     return reply.redirect(url.original);
+  }
+
+  async function buildUrl(url) {
+    const hex = crypto.randomBytes(3).toString('hex');
+    const short = `/short/${hex}`;
+
+    const shortUrl = new ShortUrl({
+      original: url,
+      hex,
+      short,
+    });
+
+    log.info(`New shortUrl: ${shortUrl}`);
+
+    return shortUrl.save();
   }
 }
 
