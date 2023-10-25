@@ -3,6 +3,7 @@ import S from 'fluent-json-schema';
 import Sensible from '@fastify/sensible';
 import Autoload from '@fastify/autoload';
 import Multipart from '@fastify/multipart';
+import FormBody from '@fastify/formbody';
 // import helmet from '@fastify/helmet';
 import cors from '@fastify/cors';
 
@@ -28,6 +29,7 @@ export default async function createApp(fastify, opts) {
   await fastify.register(Env, envOptions);
   await fastify.register(Sensible);
   await fastify.register(Multipart);
+  await fastify.register(FormBody);
 
   const WHITELISTED_DOMAINS = [
     'nicolasramirez.dev',
