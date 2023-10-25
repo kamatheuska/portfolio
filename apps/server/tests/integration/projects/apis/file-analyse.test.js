@@ -8,7 +8,10 @@ const { test } = tape;
 
 function createMockFormData(filename) {
   const form = new FormData();
-  const pathToMockFile = join(import.meta.url, `../../../mocks/files/${filename}`);
+  const pathToMockFile = join(
+    import.meta.url,
+    `../../../mocks/files/${filename}`,
+  );
   const file = fs.createReadStream(pathToMockFile);
 
   form.append('file', file);
@@ -16,7 +19,7 @@ function createMockFormData(filename) {
   return form;
 }
 
-test('File Analyse Integration', async t => {
+test.only('File Analyse Integration', async t => {
   t.comment('POST /projects/apis/fileanalyse');
   t.test('Small text file', { skip: false }, async st => {
     const app = await build();
@@ -35,18 +38,18 @@ test('File Analyse Integration', async t => {
       const body = JSON.parse(response.body);
 
       st.equal(response.statusCode, 200, 'returns a status code of 200');
-      st.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
+      st.equal(
+        response.headers['content-type'],
+        'application/json; charset=utf-8',
+        'returns content type application/json',
+      );
       st.equal(
         body.name,
         'plain.txt',
         'should return a "name" prop equal to "plain.txt"',
       );
 
-      st.equal(
-        body.type,
-        'text/plain',
-        'should return a type of text/plain',
-      );
+      st.equal(body.type, 'text/plain', 'should return a type of text/plain');
 
       st.equal(
         typeof body.size,
@@ -75,12 +78,12 @@ test('File Analyse Integration', async t => {
       const body = JSON.parse(response.body);
 
       st.equal(response.statusCode, 200, 'returns a status code of 200');
-      st.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
       st.equal(
-        body.name,
-        'yarn.lock',
-        'should return a name of "yarn.lock"',
+        response.headers['content-type'],
+        'application/json; charset=utf-8',
+        'returns content type application/json',
       );
+      st.equal(body.name, 'yarn.lock', 'should return a name of "yarn.lock"');
 
       st.equal(
         body.type,
@@ -115,9 +118,13 @@ test('File Analyse Integration', async t => {
       const body = JSON.parse(response.body);
 
       st.equal(response.statusCode, 400, 'returns a status code of 400');
-      st.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
       st.equal(
-        body.message,
+        response.headers['content-type'],
+        'application/json; charset=utf-8',
+        'returns content type application/json',
+      );
+      st.equal(
+        body.error,
         'No file uploaded',
         'should return an error message',
       );
@@ -126,4 +133,3 @@ test('File Analyse Integration', async t => {
     }
   });
 });
-

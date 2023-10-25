@@ -1,6 +1,11 @@
-import FileAnalyseService from './file-analyse.service.js';
+import { Buffer } from 'node:buffer';
+import prettyBytes from 'pretty-bytes';
 
 async function fileAnalyse(fastify) {
+  fastify.setErrorHandler((error, request, reply) => {
+    reply.status(error.status).send({ error: error.message });
+  });
+
   fastify.route({
     method: 'POST',
     path: '/projects/apis/fileanalyse',
@@ -14,7 +19,19 @@ async function fileAnalyse(fastify) {
   async function analyse(req) {
     const data = await req.file();
 
-    return FileAnalyseService.analyse(data);
+    if (!data) {
+      throw fastify.httpErrors.badRequest('No file uploaded');
+    }
+
+    const { filename, mimetype } = data;
+    const buffer = await data.toBuffer();
+    const size = Buffer.byteLength(buffer);
+
+    return {
+      name: filename,
+      type: mimetype,
+      size: prettyBytes(size),
+    };
   }
 }
 
