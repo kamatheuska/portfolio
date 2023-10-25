@@ -2,13 +2,10 @@ import S from 'fluent-json-schema';
 import ShortUrlService from './shortUrl.service.js';
 
 const shortUrlSchema = {
-  200: S
-    .object()
+  200: S.object()
     .prop('original', S.string().required())
     .prop('short', S.string().required()),
-  400: S
-    .object()
-    .prop('error', S.string().required()),
+  400: S.object().prop('error', S.string().required()),
   302: S.object(),
 };
 
@@ -36,6 +33,17 @@ async function shortUrlPlugin(fastify) {
     handler: getShortUrl,
     schema: {
       description: 'Route to get a short url from a provided url',
+      response: shortUrlSchema,
+    },
+  });
+
+  fastify.route({
+    method: 'GET',
+    path: '/projects/apis/shorturl/api/shorturl/:shortUrl',
+    handler: getShortUrl,
+    schema: {
+      description:
+        'Route to get a short url from a provided url, specific for freecodecamp',
       response: shortUrlSchema,
     },
   });
