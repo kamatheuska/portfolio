@@ -71,7 +71,7 @@ test('GET /projects/apis/timestamp', async t => {
   });
 });
 
-test.only('GET /projects/apis/timestamp/api/not-a-date', async t => {
+test('GET /projects/apis/timestamp/api/not-a-date', async t => {
   const app = await build();
 
   t.teardown(() => app.close());
