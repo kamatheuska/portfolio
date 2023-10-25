@@ -54,6 +54,8 @@ async function shortUrlPlugin(fastify) {
 
   async function createShortUrl(req) {
     const { url } = req.body;
+
+    log.debug(`Create url: ${url}`);
     try {
       await validateUrl(url);
       await ShortUrl.checkDocumentCount(config.DB_DOCUMENT_LIMIT);
