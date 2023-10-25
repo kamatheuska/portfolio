@@ -5,9 +5,9 @@ import crypto from 'crypto';
 import { validateUrl } from '../../../utils/url.js';
 
 const shortUrlSchema = {
-  200: S.object()
-    .prop('original_url', S.string().required())
-    .prop('short_url', S.string().required()),
+  // 200: S.object()
+  //   .prop('original_url', S.string().required())
+  //   .prop('short_url', S.string().required()),
   400: S.object().prop('error', S.string().required()),
   302: S.object(),
 };
@@ -68,7 +68,9 @@ async function shortUrlPlugin(fastify) {
         short_url: shortUrl.hex,
       };
     } catch (error) {
-      throw fastify.httpErrors.badRequest(error.message);
+      return {
+        error: error.message,
+      };
     }
   }
 
