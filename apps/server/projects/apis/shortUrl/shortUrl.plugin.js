@@ -20,7 +20,7 @@ async function shortUrlPlugin(fastify) {
 
   fastify.route({
     method: 'POST',
-    path: '/projects/apis/shorturl',
+    path: '/projects/apis/shorturl/api/shorturl',
     handler: createShortUrl,
     schema: {
       description: 'Route to create a short url from a provided url',

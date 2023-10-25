@@ -34,7 +34,7 @@ async function createShortUrl() {
 
         const body = JSON.stringify({ url: form.value.url });
 
-        const response = await fetch(`${baseUrl}/projects/apis/shorturl`, {
+        const response = await fetch(`${baseUrl}/projects/apis/shorturl/api/shorturl`, {
             body,
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
