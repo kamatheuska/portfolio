@@ -46,7 +46,7 @@ async function createShortUrl() {
 
         const responseBody = await response.json();
 
-        resultUrl.value = `${baseUrl}${responseBody.short}`;
+        resultUrl.value = `${baseUrl}${responseBody.short_url}`;
     } catch (error) {
         console.error(error);
     }

@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 import S from 'fluent-json-schema';
 import ShortUrlService from './shortUrl.service.js';
 
 const shortUrlSchema = {
   200: S.object()
-    .prop('original', S.string().required())
-    .prop('short', S.string().required()),
+    .prop('original_url', S.string().required())
+    .prop('short_url', S.string().required()),
   400: S.object().prop('error', S.string().required()),
   302: S.object(),
 };
@@ -55,7 +56,11 @@ async function shortUrlPlugin(fastify) {
 
     const shortUrl = await service.create(url);
 
-    return shortUrl;
+    return {
+      // properties for fcc challenge
+      original_url: shortUrl.original,
+      short_url: shortUrl.short,
+    };
   }
 
   async function getShortUrl(req, reply) {

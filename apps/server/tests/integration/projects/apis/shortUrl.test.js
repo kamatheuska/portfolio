@@ -37,14 +37,22 @@ test('ShortUrl Integration', async t => {
     }
 
     try {
-      const { short: url } = JSON.parse(populateResponse.body);
+      const { short_url: url } = JSON.parse(populateResponse.body);
       const response = await app.inject({
         method: 'GET',
         url,
       });
 
-      st.equal(response.statusCode, 302, 'should return a redirect status code of 302');
-      st.equal(response.headers.location, payload.url, 'should have a location header equal to populate');
+      st.equal(
+        response.statusCode,
+        302,
+        'should return a redirect status code of 302',
+      );
+      st.equal(
+        response.headers.location,
+        payload.url,
+        'should have a location header equal to populate',
+      );
     } catch (error) {
       st.error(error);
     }
@@ -75,16 +83,20 @@ test('ShortUrl Integration', async t => {
       const body = response.json();
 
       st.equal(response.statusCode, 200, 'returns a status code of 200');
-      st.equal(response.headers['content-type'], 'application/json; charset=utf-8', 'returns content type application/json');
       st.equal(
-        body.original,
-        payload.url,
-        'should return an "original" prop with the same value sended as "url"',
+        response.headers['content-type'],
+        'application/json; charset=utf-8',
+        'returns content type application/json',
       );
       st.equal(
-        typeof body.short,
+        body.original_url,
+        payload.url,
+        'should return an "original_url" prop with the same value sended as "url"',
+      );
+      st.equal(
+        typeof body.short_url,
         'string',
-        'should return a "short" prop type "string"',
+        'should return a "short_url" prop type "string"',
       );
     } catch (error) {
       st.error(error);
