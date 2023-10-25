@@ -43,6 +43,18 @@ async function shortUrlPlugin(fastify) {
 
   fastify.route({
     method: 'GET',
+    path: '/projects/apis/shorturl',
+    async handler() {
+      return { ok: true };
+    },
+    schema: {
+      description:
+        'Make FCC Challenge pass when requesting this URL from the redirect',
+    },
+  });
+
+  fastify.route({
+    method: 'GET',
     path: '/projects/apis/shorturl/api/shorturl/:shortUrl',
     handler: getShortUrl,
     schema: {
@@ -56,6 +68,7 @@ async function shortUrlPlugin(fastify) {
     const { url } = req.body;
 
     log.debug(`Create url: ${url}`);
+
     try {
       await validateUrl(url);
       await ShortUrl.checkDocumentCount(config.DB_DOCUMENT_LIMIT);
@@ -68,7 +81,6 @@ async function shortUrlPlugin(fastify) {
         short_url: shortUrl.hex,
       };
     } catch (error) {
-      log.debug(`Error: ${error}`);
       return {
         error: error.message,
       };

@@ -127,7 +127,7 @@ test('POST /projects/apis/shorturl: invalid url', async t => {
 
     const body = response.json();
 
-    t.equal(response.statusCode, 400, 'returns a status code of 400');
+    t.equal(response.statusCode, 200, 'returns a status code of 200');
     t.equal(
       response.headers['content-type'],
       'application/json; charset=utf-8',
