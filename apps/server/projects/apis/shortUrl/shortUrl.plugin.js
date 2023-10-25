@@ -43,7 +43,7 @@ async function shortUrlPlugin(fastify) {
 
   fastify.route({
     method: 'GET',
-    path: '/projects/apis/shorturl',
+    path: '/projects/apis/shorturl/',
     async handler() {
       return { ok: true };
     },
