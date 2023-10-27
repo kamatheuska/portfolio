@@ -34,12 +34,12 @@ async function fileAnalyse(fastify) {
       throw fastify.httpErrors.badRequest('No file uploaded');
     }
 
-    const { mimetype } = data;
+    const { filename, mimetype } = data;
     const buffer = await data.toBuffer();
     const size = Buffer.byteLength(buffer);
 
     return {
-      name: 'upfile',
+      name: filename,
       type: mimetype,
       size: prettyBytes(size),
     };
