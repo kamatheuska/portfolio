@@ -3,6 +3,7 @@ import S from 'fluent-json-schema';
 import crypto from 'crypto';
 
 import { validateUrl } from '../../../utils/url.js';
+import { getFccErrorHandler } from '../../../utils/error.js';
 
 const shortUrlSchema = {
   // 200: S.object()
@@ -17,9 +18,7 @@ async function shortUrlPlugin(fastify) {
   const { ShortUrl } = fastify.mongoose.models;
   const log = fastify.log.child({ context: 'shorturl' });
 
-  fastify.setErrorHandler((error, request, reply) => {
-    reply.status(error.status).send({ error: error.message });
-  });
+  fastify.setErrorHandler(getFccErrorHandler(fastify));
 
   fastify.route({
     method: 'POST',

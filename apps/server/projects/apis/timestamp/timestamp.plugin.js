@@ -1,4 +1,6 @@
 import S from 'fluent-json-schema';
+import { getFccErrorHandler } from '../../../utils/error.js';
+
 const timestampResponseSchema = {
   200: S.object()
     .prop('unix', S.number().required())
@@ -7,9 +9,7 @@ const timestampResponseSchema = {
 };
 
 async function timestampPlugin(fastify) {
-  fastify.setErrorHandler((error, request, reply) => {
-    reply.status(error.status).send({ error: error.message });
-  });
+  fastify.setErrorHandler(getFccErrorHandler(fastify));
 
   fastify.route({
     method: 'GET',

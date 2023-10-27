@@ -1,11 +1,10 @@
 import fs from 'fs';
 import prettyBytes from 'pretty-bytes';
 import { Buffer } from 'node:buffer';
+import { getFccErrorHandler } from '../../../utils/error.js';
 
 async function fileAnalyse(fastify) {
-  fastify.setErrorHandler((error, request, reply) => {
-    reply.status(error.status).send({ error: error.message });
-  });
+  fastify.setErrorHandler(getFccErrorHandler(fastify));
 
   fastify.get('/projects/apis/fileanalyse', (req, reply) => {
     const path = fastify.join(import.meta.url, 'index.html');
