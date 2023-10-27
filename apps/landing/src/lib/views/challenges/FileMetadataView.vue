@@ -5,9 +5,9 @@
             <p>Please upload a file to be analised</p>
             <form @submit.prevent="uploadFile">
                 <div>
-                    <label for="resume" class="button">
+                    <label for="upfile" class="button">
                         Choose a file
-                        <input type="file" id="resume" @change="setFile" />
+                        <input type="file" id="upfile" name="upfile" @change="setFile" />
                     </label>
                     <p :class="$style.filename" v-if="file">
                         {{ file.name }}
@@ -42,7 +42,7 @@ async function uploadFile() {
 
             formData.append('upfile', file.value);
 
-            const response = await fetch(`${baseUrl}/projects/apis/fileanalyse`, {
+            const response = await fetch(`${baseUrl}/projects/apis/fileanalyse/api/fileanalyse`, {
                 body: formData,
                 method: 'POST',
             });
