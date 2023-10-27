@@ -6,9 +6,12 @@ import { validateUrl } from '../../../utils/url.js';
 import { getFccErrorHandler } from '../../../utils/error.js';
 
 const shortUrlSchema = {
-  // 200: S.object()
-  //   .prop('original_url', S.string().required())
-  //   .prop('short_url', S.string().required()),
+  200: S.anyOf([
+    S.object()
+      .prop('original_url', S.string().required())
+      .prop('short_url', S.string().required()),
+    S.object().prop('error', S.string().required()),
+  ]),
   400: S.object().prop('error', S.string().required()),
   302: S.object(),
 };
