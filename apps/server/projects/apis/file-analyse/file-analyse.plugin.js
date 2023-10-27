@@ -1,9 +1,16 @@
-import { Buffer } from 'node:buffer';
+import fs from 'fs';
 import prettyBytes from 'pretty-bytes';
+import { Buffer } from 'node:buffer';
 
 async function fileAnalyse(fastify) {
   fastify.setErrorHandler((error, request, reply) => {
     reply.status(error.status).send({ error: error.message });
+  });
+
+  fastify.get('/projects/apis/fileanalyse', (req, reply) => {
+    const path = fastify.join(import.meta.url, 'index.html');
+    const stream = fs.createReadStream(path);
+    reply.type('text/html').send(stream);
   });
 
   fastify.route({
@@ -13,17 +20,6 @@ async function fileAnalyse(fastify) {
     schema: {
       description: 'Route to create a short url from a provided url',
       response: analyse,
-    },
-  });
-
-  fastify.route({
-    method: 'GET',
-    path: '/projects/apis/fileanalyse',
-    async handler() {
-      return { ok: true };
-    },
-    schema: {
-      description: 'Make FCC Challenge pass when requesting this URL',
     },
   });
 
