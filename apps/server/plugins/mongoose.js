@@ -14,10 +14,7 @@ async function mongooseConnector(fastify) {
     const uri = config.MONGODB_URI;
     childLog.info('Start connection to MongoDB');
 
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri);
 
     childLog.info(`Connected succesfully to ${uri}`);
   }
