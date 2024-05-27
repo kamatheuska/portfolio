@@ -19,7 +19,7 @@ function createMockFormData(filename) {
   return form;
 }
 
-test.only('File Analyse Integration', async t => {
+test('File Analyse Integration', async t => {
   t.comment('POST /projects/apis/fileanalyse');
   t.test('Small text file', { skip: false }, async st => {
     const app = await build();
@@ -30,7 +30,7 @@ test.only('File Analyse Integration', async t => {
     try {
       const response = await app.inject({
         method: 'POST',
-        url: '/projects/apis/fileanalyse',
+        url: '/projects/apis/fileanalyse/api/fileanalyse',
         headers: formData.getHeaders(),
         payload: formData,
       });
@@ -70,7 +70,7 @@ test.only('File Analyse Integration', async t => {
     try {
       const response = await app.inject({
         method: 'POST',
-        url: '/projects/apis/fileanalyse',
+        url: '/projects/apis/fileanalyse/api/fileanalyse',
         headers: formData.getHeaders(),
         payload: formData,
       });
@@ -110,7 +110,7 @@ test.only('File Analyse Integration', async t => {
     try {
       const response = await app.inject({
         method: 'POST',
-        url: '/projects/apis/fileanalyse',
+        url: '/projects/apis/fileanalyse/api/fileanalyse',
         headers: formData.getHeaders(),
         payload: formData,
       });
