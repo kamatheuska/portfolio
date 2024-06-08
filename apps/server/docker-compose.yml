@@ -1,8 +1,17 @@
-version: "3.7"
+version: '3.7'
 services:
-  mongodb:
-    image: mongo:latest
-    ports:
-      - 27020:27017
-    volumes:
-      - ./data/db:/data/db
+    mongodb:
+        image: mongo:latest
+        ports:
+            - 27020:27017
+        volumes:
+            - ./data/db:/data/db
+
+    app:
+        build: .
+        image: portfolio:development
+        ports:
+            - 3000:3000
+        env_file:
+            - .env
+        mem_limit: '300M'
