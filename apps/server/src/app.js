@@ -18,7 +18,6 @@ import whoami from './projects/apis/whoami/whoami.plugin.js';
 
 export default async function createApp(fastify, opts) {
     const envOptions = {
-        dotenv: true,
         schema: S.object()
             .prop('NODE_ENV', S.string().required())
             .prop('MONGODB_URI', S.string().required())

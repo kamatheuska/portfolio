@@ -6,7 +6,7 @@
     "scripts": {
         "test": "NODE_ENV=test tape 'tests/**/*.js' | tap-arc",
         "start": "node server.js",
-        "dev": "fastify start -l info --watch --ignore-watch='data .git node_modules' -P app.js",
+        "dev": "node --watch-path src src/server.js",
         "lint": "npx eslint ./"
     },
     "author": "",
@@ -33,6 +33,7 @@
         "eslint": ">=8.27.0",
         "eslint-config-xo": "^0.45.0",
         "eslint-plugin-import": "^2.26.0",
+        "pino-pretty": "^11.2.1",
         "prettier": "^3.3.1",
         "tap-arc": "^1.1.0"
     }

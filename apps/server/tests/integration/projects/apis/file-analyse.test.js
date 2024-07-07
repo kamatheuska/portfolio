@@ -2,7 +2,7 @@ import tape from 'tape';
 import fs from 'fs';
 import FormData from 'form-data';
 import { build } from '../../../helpers.js';
-import { join } from '../../../../utils/dir.js';
+import { join } from '../../../../src/utils/dir.js';
 
 const { test } = tape;
 

@@ -6,26 +6,33 @@ if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
 }
 
-import fastify from 'fastify';
+import Fastify from 'fastify';
 import closeWithGrace from 'close-with-grace';
 
 import appService from './app.js';
 
-const app = fastify({
-    logger: {
-        level: process.env.LOG_LEVEL,
-    },
+const logger = {
+    level: process.env.LOG_LEVEL,
+};
+
+if (process.env.NODE_ENV !== 'production') {
+    logger.transport = {
+        target: 'pino-pretty',
+    };
+}
+
+const app = Fastify({
+    logger,
 });
 
 app.register(appService);
 
 const closeListeners = closeWithGrace(
     { delay: process.env.FASTIFY_CLOSE_GRACE_DELAY || 500 },
-    async ({ err }) => {
+    async function ({ err }) {
         if (err) {
             app.log.error(err);
         }
-
         await app.close();
     },
 );
