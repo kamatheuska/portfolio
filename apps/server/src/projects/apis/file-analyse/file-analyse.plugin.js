@@ -1,6 +1,8 @@
-import fs from 'fs';
-import prettyBytes from 'pretty-bytes';
+import fs from 'node:fs';
 import { Buffer } from 'node:buffer';
+
+import prettyBytes from 'pretty-bytes';
+
 import { getFccErrorHandler } from '../../../utils/error.js';
 
 async function fileAnalyse(fastify) {

@@ -3,7 +3,7 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: ['xo', 'plugin:import/recommended'],
+    extends: ['xo'],
     plugins: ['import'],
     parserOptions: {
         ecmaVersion: 'latest',
@@ -21,12 +21,5 @@ module.exports = {
         ],
         'object-curly-spacing': ['error', 'always'],
         'capitalized-comments': 0,
-        indent: [
-            'error',
-            2,
-            {
-                SwitchCase: 1,
-            },
-        ],
     },
 };

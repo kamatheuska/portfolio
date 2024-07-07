@@ -1,5 +1,5 @@
 {
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
         "source.fixAll.tslint": "explicit",
@@ -11,12 +11,12 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[yml]": {
-        "editor.tabSize": 2,
+        "editor.tabSize": 4,
         "editor.detectIndentation": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[javascript]": {
-        "editor.tabSize": 2,
+        "editor.tabSize": 4,
         "editor.detectIndentation": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },

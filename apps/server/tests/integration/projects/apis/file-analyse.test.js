@@ -1,10 +1,10 @@
-import tape from 'tape';
-import fs from 'fs';
+import fs from 'node:fs';
+
 import FormData from 'form-data';
+import { afterEach, beforeEach, describe, assert, test } from 'vitest';
+
 import { build } from '../../../helpers.js';
 import { join } from '../../../../src/utils/dir.js';
-
-const { test } = tape;
 
 function createMockFormData(filename) {
     const form = new FormData();
@@ -19,125 +19,138 @@ function createMockFormData(filename) {
     return form;
 }
 
-test('File Analyse Integration', async t => {
-    t.comment('POST /projects/apis/fileanalyse');
-    t.test('Small text file', { skip: false }, async st => {
-        const app = await build();
-        const formData = createMockFormData('plain.txt');
+describe('File Analyse Integration', () => {
+    let app;
 
-        st.teardown(app.close.bind(app));
-
-        try {
-            const response = await app.inject({
-                method: 'POST',
-                url: '/projects/apis/fileanalyse/api/fileanalyse',
-                headers: formData.getHeaders(),
-                payload: formData,
-            });
-
-            const body = JSON.parse(response.body);
-
-            st.equal(response.statusCode, 200, 'returns a status code of 200');
-            st.equal(
-                response.headers['content-type'],
-                'application/json; charset=utf-8',
-                'returns content type application/json',
-            );
-            st.equal(
-                body.name,
-                'plain.txt',
-                'should return a "name" prop equal to "plain.txt"',
-            );
-
-            st.equal(
-                body.type,
-                'text/plain',
-                'should return a type of text/plain',
-            );
-
-            st.equal(
-                typeof body.size,
-                'string',
-                'should return an "author" prop type "string"',
-            );
-        } catch (error) {
-            console.error(error);
-        }
+    beforeEach(async () => {
+        app = await build();
     });
 
-    t.test('Big text file', { skip: false }, async st => {
-        const app = await build();
-        const formData = createMockFormData('yarn.lock');
-
-        st.teardown(app.close.bind(app));
-
-        try {
-            const response = await app.inject({
-                method: 'POST',
-                url: '/projects/apis/fileanalyse/api/fileanalyse',
-                headers: formData.getHeaders(),
-                payload: formData,
-            });
-
-            const body = JSON.parse(response.body);
-
-            st.equal(response.statusCode, 200, 'returns a status code of 200');
-            st.equal(
-                response.headers['content-type'],
-                'application/json; charset=utf-8',
-                'returns content type application/json',
-            );
-            st.equal(
-                body.name,
-                'yarn.lock',
-                'should return a name of "yarn.lock"',
-            );
-
-            st.equal(
-                body.type,
-                'application/octet-stream',
-                'should return a type of "application/octet-stream"',
-            );
-
-            st.equal(
-                typeof body.size,
-                'string',
-                'should return an "author" prop type "string"',
-            );
-        } catch (error) {
-            console.error(error);
-        }
+    afterEach(async () => {
+        app.close.bind(app);
     });
 
-    t.test('No file', async st => {
-        const app = await build();
-        const formData = new FormData();
+    describe('POST /projects/apis/fileanalyse', () => {
+        test('Small text file', async () => {
+            const formData = createMockFormData('plain.txt');
 
-        st.teardown(app.close.bind(app));
+            try {
+                const response = await app.inject({
+                    method: 'POST',
+                    url: '/projects/apis/fileanalyse/api/fileanalyse',
+                    headers: formData.getHeaders(),
+                    payload: formData,
+                });
 
-        try {
-            const response = await app.inject({
-                method: 'POST',
-                url: '/projects/apis/fileanalyse/api/fileanalyse',
-                headers: formData.getHeaders(),
-                payload: formData,
-            });
+                const body = JSON.parse(response.body);
 
-            const body = JSON.parse(response.body);
+                assert.equal(
+                    response.statusCode,
+                    200,
+                    'returns a status code of 200',
+                );
+                assert.equal(
+                    response.headers['content-type'],
+                    'application/json; charset=utf-8',
+                    'returns content type application/json',
+                );
+                assert.equal(
+                    body.name,
+                    'plain.txt',
+                    'should return a "name" prop equal to "plain.txt"',
+                );
 
-            st.equal(response.statusCode, 400, 'returns a status code of 400');
-            st.equal(
-                response.headers['content-type'],
-                'application/json; charset=utf-8',
-                'returns content type application/json',
-            );
-            st.equal(
-                body.error,
-                'No file uploaded',
-                'should return an error message',
-            );
-        } catch (error) {
-            console.error(error);
-        }
+                assert.equal(
+                    body.type,
+                    'text/plain',
+                    'should return a type of text/plain',
+                );
+
+                assert.equal(
+                    typeof body.size,
+                    'string',
+                    'should return an "author" prop type "string"',
+                );
+            } catch (error) {
+                console.error(error);
+            }
+        });
+        test('Big text file', async () => {
+            const formData = createMockFormData('yarn.lock');
+
+            try {
+                const response = await app.inject({
+                    method: 'POST',
+                    url: '/projects/apis/fileanalyse/api/fileanalyse',
+                    headers: formData.getHeaders(),
+                    payload: formData,
+                });
+
+                const body = JSON.parse(response.body);
+
+                assert.equal(
+                    response.statusCode,
+                    200,
+                    'returns a status code of 200',
+                );
+                assert.equal(
+                    response.headers['content-type'],
+                    'application/json; charset=utf-8',
+                    'returns content type application/json',
+                );
+                assert.equal(
+                    body.name,
+                    'yarn.lock',
+                    'should return a name of "yarn.lock"',
+                );
+
+                assert.equal(
+                    body.type,
+                    'application/octet-stream',
+                    'should return a type of "application/octet-stream"',
+                );
+
+                assert.equal(
+                    typeof body.size,
+                    'string',
+                    'should return an "author" prop type "string"',
+                );
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        test('No file', async () => {
+            const formData = new FormData();
+
+            try {
+                const response = await app.inject({
+                    method: 'POST',
+                    url: '/projects/apis/fileanalyse/api/fileanalyse',
+                    headers: formData.getHeaders(),
+                    payload: formData,
+                });
+
+                const body = JSON.parse(response.body);
+
+                assert.equal(
+                    response.statusCode,
+                    400,
+                    'returns a status code of 400',
+                );
+                assert.equal(
+                    response.headers['content-type'],
+                    'application/json; charset=utf-8',
+                    'returns content type application/json',
+                );
+                assert.equal(
+                    body.error,
+                    'No file uploaded',
+                    'should return an error message',
+                );
+            } catch (error) {
+                console.error(error);
+            }
+        });
     });
 });

@@ -1,43 +1,53 @@
-import tape from 'tape';
+import { test, describe, assert, beforeEach, afterEach } from 'vitest';
 import { build } from '../../../helpers.js';
 
-const { test } = tape;
+describe('Whoami', () => {
+    let app;
 
-test('GET /projects/apis/whoami', async t => {
-    const app = await build();
+    beforeEach(async () => {
+        app = await build();
+    });
 
-    t.teardown(() => app.close());
+    afterEach(async () => {
+        app.close.bind(app);
+    });
 
-    try {
-        const response = await app.inject({
-            method: 'GET',
-            url: '/projects/apis/whoami/api/whoami',
-            headers: {
-                'accept-language': 'es',
-            },
-        });
+    test('GET /projects/apis/whoami', async () => {
+        try {
+            const response = await app.inject({
+                method: 'GET',
+                url: '/projects/apis/whoami/api/whoami',
+                headers: {
+                    'accept-language': 'es',
+                },
+            });
 
-        const body = JSON.parse(response.body);
-        t.equal(response.statusCode, 200, 'returns a status code of 200');
-        t.equal(
-            response.headers['content-type'],
-            'application/json; charset=utf-8',
-            'returns content type application/json',
-        );
-        t.equal(
-            body.ipaddress,
-            '127.0.0.1',
-            'should return ipaddress of "127.0.0.1"',
-        );
+            const body = JSON.parse(response.body);
+            assert.equal(
+                response.statusCode,
+                200,
+                'returns a status code of 200',
+            );
+            assert.equal(
+                response.headers['content-type'],
+                'application/json; charset=utf-8',
+                'returns content type application/json',
+            );
+            assert.equal(
+                body.ipaddress,
+                '127.0.0.1',
+                'should return ipaddress of "127.0.0.1"',
+            );
 
-        t.equal(body.language, 'es', 'should return language of "es"');
+            assert.equal(body.language, 'es', 'should return language of "es"');
 
-        t.equal(
-            typeof body.software,
-            'string',
-            'should return software of type "string"',
-        );
-    } catch (error) {
-        console.error(error);
-    }
+            assert.equal(
+                typeof body.software,
+                'string',
+                'should return software of type "string"',
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    });
 });

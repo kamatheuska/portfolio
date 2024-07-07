@@ -10,6 +10,7 @@ import cors from '@fastify/cors';
 import { join } from './utils/dir.js';
 
 // Plugins
+import health from './api/health.js';
 import quotes from './projects/apis/quotes/quotes.plugin.js';
 import timestamp from './projects/apis/timestamp/timestamp.plugin.js';
 import shortUrl from './projects/apis/shortUrl/shortUrl.plugin.js';
@@ -78,7 +79,7 @@ export default async function createApp(fastify, opts) {
         dir: join(import.meta.url, 'plugins'),
         options: { ...opts },
     });
-
+    await fastify.register(health);
     await fastify.register(quotes);
     await fastify.register(timestamp);
     await fastify.register(shortUrl);
