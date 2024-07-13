@@ -10,9 +10,23 @@ import Fastify from 'fastify';
 import closeWithGrace from 'close-with-grace';
 
 import appService from './app.js';
+import { stdSerializers } from 'pino';
 
 const logger = {
     level: process.env.LOG_LEVEL,
+    serializers: {
+        req(req) {
+            return stdSerializers.req(req);
+        },
+        res(res) {
+            return {
+                ...stdSerializers.res(res),
+                method: reply.request.method,
+                url: reply.request.url,
+                statusCode: reply.statusCode,
+            };
+        },
+    },
 };
 
 if (process.env.NODE_ENV !== 'production') {
