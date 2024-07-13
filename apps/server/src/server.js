@@ -21,9 +21,9 @@ const logger = {
         res(res) {
             return {
                 ...stdSerializers.res(res),
-                method: reply.request.method,
-                url: reply.request.url,
-                statusCode: reply.statusCode,
+                method: res.request.method,
+                url: res.request.url,
+                statusCode: res.statusCode,
             };
         },
     },
