@@ -2,7 +2,8 @@ ARG NODE_VERSION=20
 
 FROM node:${NODE_VERSION}-alpine
 
-ENV NODE_ENV production
+ARG PORT
+ENV NODE_ENV=production
 ENV PORT=${PORT}
 
 WORKDIR /usr/src/app
@@ -18,4 +19,4 @@ COPY . .
 
 EXPOSE ${PORT}
 
-CMD ["node", "server.js"]
+CMD ["node", "src/server.js"]
