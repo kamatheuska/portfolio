@@ -51,7 +51,12 @@ app.addHook('onClose', async (instance, done) => {
     done();
 });
 
-app.listen({ port: process.env.PORT || 3000 }, err => {
+const options = {
+    port: process.env.PORT || 3000,
+    host: process.env.SERVER_HOST || '0.0.0.0',
+};
+
+app.listen(options, err => {
     if (err) {
         app.log.error(err);
         process.exit(1);
