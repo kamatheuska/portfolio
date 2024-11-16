@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "api": "pnpm --filter @lamarati/portfolio-server",
-    "landing": "pnpm --filter @lamarati/portfolio-landing"
+    "lan": "pnpm --filter @lamarati/portfolio-landing"
   },
   "keywords": [],
   "author": "",
