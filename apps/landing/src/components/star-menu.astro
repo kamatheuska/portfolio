@@ -1,0 +1,127 @@
+---
+// StarMenu.astro
+import { getRandomNumber } from "../utils";
+import StarItem from "./star-item.astro";
+
+const colors = {
+    lightBlue: "#95BCCC",
+    pink: "#FCDCDC",
+    darkBlue: "#2B4C59",
+    brown: "#988080",
+    gray: "#BECEDA",
+    lightBrown: "#DDD4D4",
+} as const;
+
+const getPlaceholderStarItem = (color: string) => ({
+    color,
+    label: "",
+    left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    radius: getRandomNumber(2, 6),
+    top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+});
+
+const menuItems = [
+    {
+        id: "1",
+        color: colors.lightBlue,
+        label: "Home",
+        left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+    },
+    getPlaceholderStarItem(colors.pink),
+    getPlaceholderStarItem(colors.lightBlue),
+    getPlaceholderStarItem(colors.lightBlue),
+    {
+        id: "5",
+        color: colors.lightBlue,
+        label: "About",
+        left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+    },
+    {
+        id: "6",
+        color: colors.lightBlue,
+        label: "Experience",
+        left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
+    },
+    getPlaceholderStarItem(colors.brown),
+    getPlaceholderStarItem(colors.pink),
+    {
+        id: "9",
+        color: colors.lightBlue,
+        label: "Challenges",
+        left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+        radius: getRandomNumber(8, 20),
+        top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
+    },
+    getPlaceholderStarItem(colors.brown),
+    getPlaceholderStarItem(colors.lightBlue),
+    getPlaceholderStarItem(colors.lightBrown),
+    getPlaceholderStarItem(colors.lightBrown),
+];
+
+// Get current route from Astro
+const currentPath = Astro.url.pathname;
+---
+
+<div
+    class="relative visible opacity-100 transition-[visibility,opacity] duration-500 ease-linear md:flex md:justify-center"
+>
+    <div class="h-full w-screen fixed">
+        <div class="h-full fixed w-screen p-5 pt-24 z-10">
+            <div class="relative h-full w-full">
+                {
+                    menuItems.map((item, index) => (
+                        <StarItem
+                            itemId={index}
+                            {...item}
+                            isHidden={true}
+                            isActive={currentPath === `/${item.label?.toLowerCase()}`}
+                        />
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { delay } from "../utils";
+
+    async function showItemsIncrementally() {
+        const currentPath = window.location.pathname;
+        const stars = document.querySelectorAll("[data-star-item]");
+
+        for (let index = 0; index < stars.length; index++) {
+            const star = stars[index] as HTMLElement;
+            const label = star.getAttribute("data-label")?.toLowerCase();
+
+            if (currentPath === `/${label}`) {
+                continue;
+            }
+
+            if (index > 0) {
+                await delay(200);
+            }
+
+            star.classList.remove("invisible", "opacity-0");
+            star.classList.add("visible", "opacity-100");
+        }
+    }
+
+    // Initialize animation after page load
+    document.addEventListener("DOMContentLoaded", async () => {
+        await delay(300);
+        showItemsIncrementally();
+    });
+
+    // Handle navigation changes
+    document.addEventListener("astro:page-load", async () => {
+        await delay(300);
+        showItemsIncrementally();
+    });
+</script>

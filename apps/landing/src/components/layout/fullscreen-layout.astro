@@ -1,0 +1,98 @@
+---
+// Layout.astro
+import StarMenu from "../star-menu.astro";
+import BackButton from "../back-button.astro";
+
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    showBackdrop?: boolean;
+    showMenuIcon?: boolean;
+}
+
+const { showBackdrop = true, showMenuIcon = false } = Astro.props;
+---
+
+<div>
+    <StarMenu />
+    <div data-backdrop-container>
+        {
+            showBackdrop ? (
+                <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
+                    <main class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]">
+                        {showMenuIcon && (
+                            <header class="flex flex-col mb-12 font-black text-neutral-200 items-end">
+                                <div class="text-3xl cursor-pointer" data-menu-toggle>
+                                    <Icon name="uil:bars" />
+                                </div>
+                            </header>
+                        )}
+                        <slot />
+                    </main>
+                </div>
+            ) : (
+                <BackButton data-back-button />
+            )
+        }
+    </div>
+</div>
+
+<style>
+    /* Fade transition styles */
+    [data-backdrop],
+    [data-back-button] {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    [data-backdrop].show,
+    [data-back-button].show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+</style>
+
+<script>
+    // Handle menu toggle functionality
+    function setupMenuToggle() {
+        const menuToggle = document.querySelector("[data-menu-toggle]");
+        const backdrop = document.querySelector("[data-backdrop]");
+        const backButton = document.querySelector("[data-back-button]");
+
+        function toggleBackdrop() {
+            if (backdrop) {
+                backdrop.classList.toggle("show");
+            }
+            if (backButton) {
+                backButton.classList.toggle("show");
+            }
+
+            // Dispatch custom event for parent components
+            document.dispatchEvent(new CustomEvent("toggleBackdrop"));
+        }
+
+        menuToggle?.addEventListener("click", toggleBackdrop);
+        backButton?.addEventListener("click", toggleBackdrop);
+
+        // Initial state
+        if (backdrop) {
+            backdrop.classList.add("show");
+        }
+    }
+
+    // Setup on initial load
+    document.addEventListener("DOMContentLoaded", setupMenuToggle);
+
+    // Setup on Astro page transitions
+    document.addEventListener("astro:page-load", setupMenuToggle);
+</script>

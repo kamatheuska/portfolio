@@ -1,0 +1,112 @@
+---
+import { getRandomNumber } from "../utils";
+interface Props {
+    itemId: number;
+    isActive?: boolean;
+    isHidden?: boolean;
+    top?: string;
+    left?: string;
+    radius?: number;
+    label?: string;
+    color?: string;
+}
+
+const {
+    itemId,
+    isActive = false,
+    isHidden = true,
+    top = "0",
+    left = "0",
+    radius = 10,
+    label = "",
+    color = "black",
+} = Astro.props;
+
+const innerSize = `${radius}px`;
+const outerSize = `${radius + 5}px`;
+const pulsarId = `outer-pulsar-${itemId}`;
+const delay = getRandomNumber(10, 100) / 100;
+---
+
+<div
+    class:list={[
+        "absolute transition-[visibility,opacity] duration-500 ease-linear",
+        isHidden ? "invisible opacity-0" : "visible opacity-100",
+    ]}
+    style={{
+        top,
+        left,
+        color,
+    }}
+>
+    <div class="relative">
+        <div
+            class="absolute rounded-full"
+            style={{
+                width: innerSize,
+                height: innerSize,
+                backgroundColor: color,
+            }}
+        >
+        </div>
+        <div
+            id={pulsarId}
+            class="absolute rounded-full opacity-30"
+            style={{
+                width: outerSize,
+                height: outerSize,
+                backgroundColor: color,
+            }}
+        >
+        </div>
+        {
+            label && (
+                <div
+                    class:list={[
+                        "absolute top-[30px] transition-transform duration-200 ease-in",
+                        isActive && "text-white scale-150",
+                    ]}
+                >
+                    <div class="relative">
+                        <a href={`/${label}`}>
+                            <span class="absolute uppercase font-mono font-black tracking-[3px] text-pink-500">
+                                {label}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            )
+        }
+    </div>
+</div>
+
+<script define:vars={{ pulsarId, delay }}>
+    document.addEventListener("DOMContentLoaded", () => {
+        const PADDING = 20;
+        const tooltipLabel = document.querySelector(`#${pulsarId} + div span`);
+
+        if (tooltipLabel) {
+            const rect = tooltipLabel.getBoundingClientRect();
+            if (rect.right >= window.innerWidth) {
+                tooltipLabel.style.left = `-${rect.right - window.innerWidth + PADDING}px`;
+            }
+        }
+
+        // Animation using Web Animations API instead of motion library
+        const pulsar = document.getElementById(pulsarId);
+        if (pulsar) {
+            pulsar.animate(
+                [
+                    { transform: "scale(1)", opacity: 0.3 },
+                    { transform: "scale(1.9)", opacity: 0 },
+                ],
+                {
+                    delay,
+                    duration: 2000,
+                    easing: "ease-out",
+                    iterations: Infinity,
+                },
+            );
+        }
+    });
+</script>
