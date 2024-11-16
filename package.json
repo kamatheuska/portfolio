@@ -7,13 +7,21 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "format": "pnpm prettier . --write",
         "api": "pnpm --filter @lamarati/portfolio-server",
-        "lan": "pnpm --filter @lamarati/portfolio-landing"
+        "lan": "pnpm --filter @lamarati/portfolio-landing",
+        "prepare": "husky"
     },
     "keywords": [],
     "author": "",
     "packageManager": "pnpm@9.13.2",
     "devDependencies": {
+        "husky": "^9.1.6",
+        "lint-staged": "^15.2.10",
         "prettier": "3.3.3",
         "prettier-plugin-tailwindcss": "^0.6.8"
+    },
+    "lint-staged": {
+        "*": [
+            "pnpm format"
+        ]
     }
 }
