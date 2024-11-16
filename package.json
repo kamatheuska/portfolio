@@ -1,14 +1,18 @@
 {
-  "name": "portfolio",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "api": "pnpm --filter @lamarati/portfolio-server",
-    "lan": "pnpm --filter @lamarati/portfolio-landing"
-  },
-  "keywords": [],
-  "author": "",
-  "packageManager": "pnpm@9.13.2"
+    "name": "portfolio",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "pnpm prettier . --write",
+        "api": "pnpm --filter @lamarati/portfolio-server",
+        "lan": "pnpm --filter @lamarati/portfolio-landing"
+    },
+    "keywords": [],
+    "author": "",
+    "packageManager": "pnpm@9.13.2",
+    "devDependencies": {
+        "prettier": "3.3.3"
+    }
 }

@@ -1,23 +1,23 @@
 {
-  "editor.tabSize": 4,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.tslint": "explicit",
-    "source.fixAll.stylelint": "explicit"
-  },
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.tslint": "explicit",
+        "source.fixAll.stylelint": "explicit"
+    },
 
-  "[json]": {
-    "editor.detectIndentation": false,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yml]": {
-    "editor.tabSize": 4,
-    "editor.detectIndentation": false,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.tabSize": 4,
-    "editor.detectIndentation": false,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "[json]": {
+        "editor.detectIndentation": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yml]": {
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
