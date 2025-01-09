@@ -1,0 +1,157 @@
+---
+import "../styles/base.css";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script>
+            type SheetSystem = {
+                spacing: number;
+                px: number;
+            };
+            type Note = {
+                radius: number;
+            };
+            type Page = {
+                width: number;
+                height: number;
+                px: number;
+                py: number;
+                lineWidth: number;
+                system: SheetSystem;
+                note: Note;
+            };
+            type Position = {
+                x: number;
+                y: number;
+            };
+            function draw() {
+                const canvas = document.getElementById("canvas") as HTMLCanvasElement | null;
+                if (!canvas) {
+                    return;
+                }
+
+                if (!canvas.getContext) {
+                    return;
+                }
+                const currentPosition: Position = {
+                    x: 0,
+                    y: 0,
+                };
+
+                const ctx = canvas.getContext("2d");
+
+                if (!ctx) {
+                    return;
+                }
+
+                const page = getPage({
+                    px: 50,
+                    py: 20,
+                    width: 500,
+                    height: 300,
+                    system: {
+                        spacing: 9,
+                        px: 20,
+                    },
+                });
+
+                drawSystem(ctx, page);
+                currentPosition.x = 50;
+                currentPosition.y = 100;
+                drawNote(ctx, page, currentPosition);
+            }
+
+            type PageOptions = Partial<Page>;
+
+            function getPage(options: PageOptions): Page {
+                const systemSpacing = options.system?.spacing || 0;
+                const noteRadius = systemSpacing;
+
+                return {
+                    px: options.px || 0,
+                    py: options.py || 0,
+                    width: options.width || 100,
+                    height: options.height || 100,
+                    lineWidth: 1,
+                    system: {
+                        spacing: systemSpacing,
+                        px: options.system?.px || 10,
+                    },
+                    note: {
+                        radius: noteRadius,
+                    },
+                };
+            }
+
+            function getPercentage(x: number, y: number) {
+                return (x * y) / 10000;
+            }
+
+            function drawSystem(ctx: CanvasRenderingContext2D, page: Page) {
+                ctx.save();
+                ctx.beginPath();
+
+                const end = page.width - page.px;
+                let currentY = page.py;
+
+                ctx.lineWidth = page.lineWidth;
+                for (let i = 1; i <= 5; i++) {
+                    ctx.moveTo(page.px, currentY);
+                    ctx.lineTo(end, currentY);
+                    currentY += page.system.spacing;
+                }
+
+                ctx.stroke();
+                ctx.restore();
+                // Move cursor to initial position in the system
+            }
+
+            function getOffset(h: number, distance: number) {
+                const diff = h - distance;
+
+                return diff / 2;
+            }
+
+            function drawOval(ctx: CanvasRenderingContext2D, page: Page, position: Position) {
+                // #layer1
+                const points = [
+                    { cp1x: 12, cp1y: 79, cp2x: 1, cp2y: 68, x: 2, y: 53 },
+                    { cp1x: 8, cp1y: 7, cp2x: 65, cp2y: -9, x: 88, y: 11 },
+                    { cp1x: 120, cp1y: 42, cp2x: 67, cp2y: 92, x: 28, y: 83 },
+                ];
+                ctx.save();
+                ctx.beginPath();
+                ctx.translate(position.x, position.y);
+                ctx.scale(getPercentage(100, page.note.radius), getPercentage(100, page.note.radius));
+                ctx.strokeStyle = "rgb(0, 0, 0)";
+                ctx.lineWidth = 2;
+                ctx.moveTo(30, 83);
+                for (let i = 0; i < points.length; i++) {
+                    const p = points[i];
+                    ctx.bezierCurveTo(p.cp1x, p.cp1y, p.cp2x, p.cp2y, p.x, p.y);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function drawNote(ctx: CanvasRenderingContext2D, page: Page, position: Position) {
+                drawOval(ctx, page, position);
+                // ctx.translate(page.note.radius + 20, page.note.radius);
+                // const stemLength = page.lineWidth * 5 + page.system.spacing * 5;
+                // ctx.lineTo(0, stemLength);
+                // ctx.stroke();
+            }
+
+            window.addEventListener("load", draw);
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="300" class="border-2 border-black"> </canvas>
+    </body>
+</html>
