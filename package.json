@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "format": "pnpm prettier . --write",
         "api": "pnpm --filter @lamarati/portfolio-server",
-        "lan": "pnpm --filter @lamarati/portfolio-landing",
+        "landing": "pnpm --filter landing",
         "prepare": "husky"
     },
     "keywords": [],

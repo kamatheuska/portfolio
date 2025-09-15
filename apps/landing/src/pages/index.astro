@@ -2,6 +2,7 @@
 import "../styles/base.css";
 import { Icon } from "astro-icon/components";
 import FullscreenLayout from "../components/layout/fullscreen-layout.astro";
+import Button from "../components/button.astro";
 
 interface Social {
     link: string;
@@ -40,22 +41,6 @@ const social: Social[] = [
 // For client-side interactivity
 ---
 
-<script>
-    let showBackdrop = true;
-
-    // Show start button after delay
-    setTimeout(() => {
-        document.getElementById("startButton")?.classList.remove("hidden");
-    }, 600);
-
-    // Toggle backdrop
-    document.getElementById("startButton")?.addEventListener("click", () => {
-        showBackdrop = !showBackdrop;
-        // You'll need to implement the backdrop toggle logic here
-    });
-</script>
---- ---
-
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -80,7 +65,7 @@ const social: Social[] = [
                 <p class="text-light-blue max-w-[350px] md:text-lg mb-5">
                     I am Software Developer specialized on creating great products for the web
                 </p>
-                <ul class="mt-0 text-2xl flex">
+                <ul class="mt-0 text-2xl flex mb-5">
                     {
                         social.map((item, index) => (
                             <li class={index !== social.length - 1 ? "mr-4" : ""}>
@@ -97,11 +82,26 @@ const social: Social[] = [
                     }
                 </ul>
                 <div class="transition-opacity duration-300">
-                    <button id="startButton" class="button"> Start </button>
+                    <Button text="Start" />
                 </div>
             </FullscreenLayout>
         </div>
     </body>
+
+    <script>
+        let showBackdrop = true;
+
+        // Show start button after delay
+        setTimeout(() => {
+            document.getElementById("startButton")?.classList.remove("hidden");
+        }, 600);
+
+        // Toggle backdrop
+        document.getElementById("startButton")?.addEventListener("click", () => {
+            showBackdrop = !showBackdrop;
+            // You'll need to implement the backdrop toggle logic here
+        });
+    </script>
 </html>
 
 <style>
