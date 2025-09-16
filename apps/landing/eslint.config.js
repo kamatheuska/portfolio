@@ -1,14 +1,62 @@
+import { defineConfig } from "eslint/config";
 import globals from "globals";
-import pluginJs from "@eslint/js";
+import js from "@eslint/js";
 import tseslint from "typescript-eslint";
-import eslintPluginAstro from "eslint-plugin-astro";
+import astro from "eslint-plugin-astro";
+import prettier from "eslint-plugin-prettier";
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
-    { files: ["**/*.{js,mjs,cjs,ts}"] },
+// parsers
+const tsParser = tseslint.parser;
+const astroParser = astro.parser;
 
-    { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
-    pluginJs.configs.recommended,
-    ...tseslint.configs.recommended,
-    ...eslintPluginAstro.configs.recommended,
-];
+export default defineConfig([
+    // Global configuration
+    {
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            },
+        },
+    },
+
+    // Base configs
+    js.configs.recommended,
+
+    // Prettier config
+    {
+        plugins: {
+            prettier: prettier,
+        },
+        rules: {
+            // disable warnings, since prettier should format on save
+            "prettier/prettier": "off",
+        },
+    },
+
+    // // astro setup with a11y
+    astro.configs.recommended,
+    astro.configs["jsx-a11y-recommended"],
+    {
+        files: ["**/*.astro"],
+        languageOptions: {
+            parser: astroParser,
+            parserOptions: {
+                parser: tsParser,
+                extraFileExtensions: [".astro"],
+                sourceType: "module",
+                ecmaVersion: "latest",
+                project: "./tsconfig.json",
+            },
+        },
+        rules: {
+            "no-undef": "off", // Disable "not defined" errors for specific Astro types that are globally available (ImageMetadata)
+            "@typescript-eslint/no-explicit-any": "off", // you may want this as it can get annoying
+        },
+    },
+
+    // Ignore patterns
+    {
+        ignores: ["dist/**", "**/*.d.ts", ".github/"],
+    },
+]);

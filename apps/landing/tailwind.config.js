@@ -16,8 +16,10 @@ export default {
                     800: "#655858",
                     900: "#322c2c",
                 },
-                "dark-blue": "#2B4C59",
-                "darker-blue": "hsl(197, 35%, 18%)",
+                blue: {
+                    700: "#2B4C59",
+                    800: "hsl(197, 35%, 16%)",
+                },
                 brown: "#988080",
                 gray: "#BECEDA",
                 green: "hsl(178, 100%, 55%)",

@@ -1,20 +1,61 @@
 ---
-// Button.astro
 export interface Props {
-    text?: string;
     type?: "button" | "submit" | "reset";
     disabled?: boolean;
     class?: string;
+    "@click"?: any;
+    variant?: string;
 }
 
-const { text = "Click Me", type = "button", disabled = false, class: className = "" } = Astro.props;
+const {
+    type = "button",
+    disabled = false,
+    class: className = "",
+    "@click": onClick = () => {},
+    variant = "primary",
+} = Astro.props;
+
+let classList = [
+    className,
+    "border-2",
+    "border-light-blue",
+    "bg-transparent",
+    "rounded-md",
+    "text-pink-100",
+    "font-black",
+    "text-base",
+    "font-sans",
+    "cursor-pointer",
+    "text-center",
+    "transition-all",
+    "duration-250",
+    "ease-in-out",
+    "appearance-none",
+    "active:scale-[0.99]",
+    "disabled:opacity-50",
+    "disabled:cursor-not-allowed",
+    "disabled:hover:bg-transparent",
+    "disabled:hover:text-pink-100",
+    "disabled:hover:border-light-blue",
+];
+
+if (variant === "ghost") {
+    classList.push(...["p-0"]);
+} else if (variant === "primary") {
+    classList.push(
+        ...[
+            "px-8",
+            "py-3",
+            "focus:border-pink-100",
+            "focus:outline-none",
+            "hover:bg-pink-100",
+            "hover:text-dark-blue",
+            "hover:border-pink-100",
+        ],
+    );
+}
 ---
 
-<button
-    type={type}
-    disabled={disabled}
-    class={`border-2 border-light-blue bg-transparent px-8 py-3 rounded-md text-pink-100 font-black text-base font-sans cursor-pointer text-center transition-all duration-250 ease-in-out appearance-none hover:bg-pink-100 hover:text-dark-blue hover:border-pink-100 focus:border-pink-100 focus:outline-none active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-pink-100 disabled:hover:border-light-blue ${className}
-  `}
->
-    {text}
+<button data-variant={variant} type={type} disabled={disabled} class={classList.join(" ")} @click={onClick}>
+    <slot />
 </button>
