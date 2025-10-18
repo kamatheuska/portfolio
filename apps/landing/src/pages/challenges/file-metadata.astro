@@ -1,0 +1,24 @@
+---
+import Background from "../../components/background.astro";
+import Content from "../../components/content.astro";
+import LinesMenu from "../../components/lines-menu.astro";
+import Menu from "../../components/menu.astro";
+import RootLayout from "../../layouts/root-layout.astro";
+---
+
+<RootLayout>
+    <main class="text-right" x-data="stars">
+        <div>
+            <Menu />
+            <Content>
+                <LinesMenu />
+                <h2 class="text-pink-400 font-bold font-serif text-[9vw] md:text-[4vw] m-0">File Metadata</h2>
+                <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
+                    <p></p>
+                </div>
+            </Content>
+            <Background />
+        </div>
+        <script src="../../scripts/star-menu-controller"></script>
+    </main>
+</RootLayout>
