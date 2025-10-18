@@ -3,3 +3,4 @@ build
 coverage
 other
 archive
+*.yml

@@ -1,0 +1,47 @@
+{
+  "type": "module",
+  "name": "lamarati-api",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with Fastify-CLI.",
+  "main": "app.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run build:ts && tsc -p test/tsconfig.json && FASTIFY_AUTOLOAD_TYPESCRIPT=1 node --test --experimental-test-coverage --loader ts-node/esm test/**/*.ts",
+    "start": "node --env-file .env ./dist/server.js",
+    "dev": "node --env-file .env --watch ./dist/server.js",
+    "build:ts": "tsc",
+    "watch:ts": "tsc -w",
+    "dev:con": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
+    "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/autoload": "6.3.1",
+    "@fastify/sensible": "6.0.3",
+    "@stripe/stripe-js": "8.1.0",
+    "close-with-grace": "2.3.0",
+    "drizzle-orm": "0.44.6",
+    "fastify": "5.6.1",
+    "fastify-cli": "7.4.0",
+    "fastify-plugin": "5.1.0",
+    "fluent-json-schema": "^6.0.0",
+    "pino-pretty": "13.1.2",
+    "postgres": "3.4.7",
+    "stripe": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.8.1",
+    "c8": "10.1.3",
+    "concurrently": "9.2.1",
+    "dotenv": "17.2.3",
+    "drizzle-kit": "0.31.5",
+    "fastify-tsconfig": "3.0.0",
+    "ts-node": "10.9.2",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  }
+}
