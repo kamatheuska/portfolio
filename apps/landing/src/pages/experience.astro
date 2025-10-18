@@ -1,7 +1,23 @@
 ---
+import { Icon } from "astro-icon/components";
+import Background from "../components/background.astro";
+import Content from "../components/content.astro";
+import Menu from "../components/menu.astro";
 import RootLayout from "../layouts/root-layout.astro";
+import LinesMenu from "../components/lines-menu.astro";
 ---
 
 <RootLayout>
-    <main>About</main>
+    <main class="text-right" x-data="stars">
+        <div>
+            <Menu />
+            <Content>
+                <LinesMenu />
+                <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">Experience</h1>
+                <p class="text-light-blue max-w-[350px] md:text-lg mb-5">Challenges for portfolio</p>
+            </Content>
+            <Background />
+        </div>
+        <script src="../scripts/star-menu-controller"></script>
+    </main>
 </RootLayout>

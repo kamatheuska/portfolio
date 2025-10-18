@@ -80,25 +80,3 @@ const social: Social[] = [
         <script src="../scripts/star-menu-controller"></script>
     </main>
 </RootLayout>
-
-<script>
-    let showBackdrop = true;
-
-    // Show start button after delay
-    setTimeout(() => {
-        document.getElementById("startButton")?.classList.remove("hidden");
-    }, 600);
-
-    // Toggle backdrop
-    document.getElementById("startButton")?.addEventListener("click", () => {
-        showBackdrop = !showBackdrop;
-        // You'll need to implement the backdrop toggle logic here
-    });
-</script>
-
-<style>
-    /* Add any custom styles that can't be handled by Tailwind here */
-    .fullscreen-layout {
-        /* Add your fullscreen layout styles */
-    }
-</style>
