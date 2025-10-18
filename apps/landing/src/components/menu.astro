@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+import Button from "./button.astro";
+import StarMenu from "./star-menu.astro";
+---
+
+<div class="relative" id="starMenuContainer" :style="starMenuStyle">
+    <header
+        class="flex flex-col mb-12 font-black text-neutral-200 absolute z-50"
+        x-show="isMenuOpen"
+        x-transition.opacity
+        x-transition:enter.duration.400ms
+        x-transition:leave.duration.400ms
+        x-transition.delay.400ms
+    >
+        <!-- <div class="text-3xl cursor-pointer" data-menu-toggle> -->
+        <!--     <Icon name="uil:bars" @click="toggle()" /> -->
+        <!-- </div> -->
+        <div class="text-3xl cursor-pointer" data-menu-toggle>
+            <Button
+                @click="updateBackgroundStyles($data)"
+                class="border-none p-0 hover:bg-none"
+                variant="ghost"
+            >
+                <span class="flex justify-center items-center gap-2 px-4 py-2">
+                    <Icon name="uil:arrow-left" />
+                    <span>Back</span>
+                </span>
+            </Button>
+        </div>
+    </header>
+    <StarMenu />
+</div>

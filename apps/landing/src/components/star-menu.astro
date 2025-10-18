@@ -16,6 +16,7 @@ const getPlaceholderStarItem = (color: string) => ({
     color,
     label: "",
     id: null,
+    href: "/",
     left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
     radius: getRandomNumber(2, 6),
     top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
@@ -25,6 +26,7 @@ const menuItems = [
     {
         id: "1",
         color: colors.lightBlue,
+        href: "/",
         label: "Home",
         left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
         radius: getRandomNumber(8, 20),
@@ -37,6 +39,7 @@ const menuItems = [
         id: "5",
         color: colors.lightBlue,
         label: "About",
+        href: "/about",
         left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
@@ -45,6 +48,7 @@ const menuItems = [
         id: "6",
         color: colors.lightBlue,
         label: "Experience",
+        href: "/experience",
         left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
@@ -55,6 +59,7 @@ const menuItems = [
         id: "9",
         color: colors.lightBlue,
         label: "Challenges",
+        href: "/challenges",
         left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
         radius: getRandomNumber(8, 20),
         top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
@@ -85,6 +90,7 @@ const currentPath = Astro.url.pathname;
                         isHidden={false}
                         itemId={item.id ? Number(item.id) : index + 1000}
                         label={item.label}
+                        href={item.href}
                     />
                     // <span
                     //     class="absolute"

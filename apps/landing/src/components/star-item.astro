@@ -20,6 +20,7 @@ const {
     radius = 10,
     label = "",
     color = "black",
+    href = "/",
 } = Astro.props;
 
 const innerSize = `${radius}px`;
@@ -68,7 +69,7 @@ const delay = getRandomNumber(10, 100) / 100;
                     ]}
                 >
                     <div class="relative">
-                        <a href={`/${label}`}>
+                        <a href={href}>
                             <span class="absolute uppercase font-mono font-black tracking-[3px] text-pink-500">
                                 {label}
                             </span>
