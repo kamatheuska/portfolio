@@ -42,8 +42,8 @@ export const stripeProductsMetadata = pgTable("stripe_products_metadata", {
 });
 
 export const categories = pgTable("categories", {
-    categoryId: serial("category_id").imaryKey().notNull(),
     name: varchar("name", { length: 100 }).notNull(),
+    categoryId: serial("category_id").primaryKey().notNull(),
     slug: varchar("slug", { length: 100 }).unique().notNull(),
     description: text("description"),
     parentId: integer("parent_id"),
