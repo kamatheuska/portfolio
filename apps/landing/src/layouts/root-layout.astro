@@ -13,22 +13,12 @@ const { title } = Astro.props;
             href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@100;400;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet"
         />
+
         <title>{title}</title>
-
-        <script>
-            let showBackdrop = true;
-
-            // Show start button after delay
-            setTimeout(() => {
-                document.getElementById("startButton")?.classList.remove("hidden");
-            }, 600);
-
-            // Toggle backdrop
-            document.getElementById("startButton")?.addEventListener("click", () => {
-                showBackdrop = !showBackdrop;
-                // You'll need to implement the backdrop toggle logic here
-            });
-        </script>
     </head>
-    <slot />
+    <body
+        class="min-h-full text-custom-gray font-sans bg-gradient-radial from-blue-700 via-blue-700 to-blue-800"
+    >
+        <slot />
+    </body>
 </html>

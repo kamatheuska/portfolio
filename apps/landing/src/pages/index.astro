@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import FullscreenLayout from "../components/layout/fullscreen-layout.astro";
 import Button from "../components/button.astro";
 import StarMenu from "../components/star-menu.astro";
-
+import RootLayout from "../layouts/root-layout.astro";
 interface Social {
     link: string;
     title: string;
@@ -42,34 +42,12 @@ const social: Social[] = [
 // For client-side interactivity
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@100;400;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-            rel="stylesheet"
-        />
-        <title>Astro</title>
-    </head>
-    <body
-        class="min-h-full text-custom-gray font-sans bg-gradient-radial from-blue-700 via-blue-700 to-blue-800"
-    >
-        <main
-            class="text-right"
-            x-data="{
-                isMenuOpen: false,
-                toggle() {
-                    this.isMenuOpen = !this.isMenuOpen
-                }
-            }"
-        >
-            <div class="relative">
-                <!-- <StarMenu /> -->
+<RootLayout>
+    <main class="text-right" x-data="stars">
+        <div>
+            <div class="relative" id="starMenuContainer" :style="starMenuStyle">
                 <header
-                    class="flex flex-col mb-12 font-black text-neutral-200 absolute z-10"
+                    class="flex flex-col mb-12 font-black text-neutral-200 absolute z-50"
                     x-show="isMenuOpen"
                     x-transition.opacity
                     x-transition:enter.duration.400ms
@@ -79,8 +57,13 @@ const social: Social[] = [
                     <!-- <div class="text-3xl cursor-pointer" data-menu-toggle> -->
                     <!--     <Icon name="uil:bars" @click="toggle()" /> -->
                     <!-- </div> -->
+                    <p x-text="isMenuOpen"></p>
                     <div class="text-3xl cursor-pointer" data-menu-toggle>
-                        <Button @click="toggle()" class="border-none p-0 hover:bg-none" variant="ghost">
+                        <Button
+                            @click="updateBackgroundStyles($data)"
+                            class="border-none p-0 hover:bg-none"
+                            variant="ghost"
+                        >
                             <span class="flex justify-center items-center gap-2 px-4 py-2">
                                 <Icon name="uil:arrow-left" />
                                 <span>Back</span>
@@ -88,52 +71,101 @@ const social: Social[] = [
                         </Button>
                     </div>
                 </header>
-                <div data-backdrop-container>
-                    <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
+                <StarMenu />
+            </div>
+            <div class="relative" :style="contentStyle">
+                <div class="w-full transition-all duration-500 ease-out" data-backdrop>
+                    <div
+                        class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]"
+                    >
                         <div
-                            class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]"
+                            x-show="!isMenuOpen"
+                            x-transition.opacity
+                            x-transition:enter.duration.400ms
+                            x-transition:leave.duration.400ms
+                            class="flex flex-col justify-end items-end"
                         >
-                            <div
-                                x-show="!isMenuOpen"
-                                x-transition.opacity
-                                x-transition:enter.duration.400ms
-                                x-transition:leave.duration.400ms
-                                class="flex flex-col justify-end items-end"
-                            >
-                                <h3 class="text-light-green text-lg font-mono m-0">Hi! My name is</h3>
-                                <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
-                                    Nicolas Ramirez
-                                </h1>
-                                <p class="text-light-blue max-w-[350px] md:text-lg mb-5">
-                                    I am Software Developer specialized on creating great products for the web
-                                </p>
-                                <ul class="mt-0 text-2xl flex mb-5">
-                                    {
-                                        social.map((item, index) => (
-                                            <li class={index !== social.length - 1 ? "mr-4" : ""}>
-                                                <a
-                                                    href={item.link}
-                                                    target="_blank"
-                                                    aria-label={item.title}
-                                                    class="text-pink-500 hover:text-green-400 transition-colors"
-                                                >
-                                                    <Icon name={item.icon} class="w-8 h-8" />
-                                                </a>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                                <div class="transition-opacity duration-300">
-                                    <Button @click="toggle()"> Start </Button>
-                                </div>
+                            <h3 class="text-light-green text-lg font-mono m-0">Hi! My name is</h3>
+                            <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
+                                Nicolas Ramirez
+                            </h1>
+                            <p class="text-light-blue max-w-[350px] md:text-lg mb-5">
+                                I am Software Developer specialized on creating great products for the web
+                            </p>
+                            <ul class="mt-0 text-2xl flex mb-5">
+                                {
+                                    social.map((item, index) => (
+                                        <li class={index !== social.length - 1 ? "mr-4" : ""}>
+                                            <a
+                                                href={item.link}
+                                                target="_blank"
+                                                aria-label={item.title}
+                                                class="text-pink-500 hover:text-green-400 transition-colors"
+                                            >
+                                                <Icon name={item.icon} class="w-8 h-8" />
+                                            </a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                            <div class="transition-opacity duration-300">
+                                <Button @click="updateBackgroundStyles($data)"> Start </Button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </body>
-</html>
+            <div class="relative" :style="backgroundStyle">
+                <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
+                    <div
+                        class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]"
+                    >
+                        <div
+                            x-show="!isMenuOpen"
+                            x-transition.opacity
+                            x-transition:enter.duration.400ms
+                            x-transition:leave.duration.400ms
+                            class="flex flex-col justify-end items-end"
+                        >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const starMenuContainer = document.getElementById("starMenuContainer");
+            console.log("star", starMenuContainer);
+            if (!starMenuContainer) {
+                throw new Error("No starMenu container");
+            }
+
+            document.addEventListener("alpine:init", () => {
+                // @ts-ignore
+                Alpine.data("stars", () => ({
+                    isMenuOpen: false,
+                    backgroundStyle: "z-index: 0",
+                    starMenuStyle: "z-index: -10",
+                    contentStyle: "z-index: 10",
+                    updateBackgroundStyles({ isMenuOpen }: { isMenuOpen: boolean }) {
+                        console.log("current state", isMenuOpen);
+                        let isOpen = this.isMenuOpen;
+                        this.isMenuOpen = !this.isMenuOpen;
+                        if (isOpen) {
+                            this.backgroundStyle = "z-index: 0";
+                            this.starMenuStyle = "z-index: -10";
+                            this.contentStyle = "z-index: 10";
+                        } else {
+                            this.backgroundStyle = "z-index: -10";
+                            this.starMenuStyle = "z-index: 10";
+                            this.contentStyle = "z-index: 0";
+                        }
+                    },
+                }));
+            });
+            starMenuContainer.style.color = "red";
+        </script>
+    </main>
+</RootLayout>
 
 <script>
     let showBackdrop = true;

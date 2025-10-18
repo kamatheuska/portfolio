@@ -15,6 +15,7 @@ const colors = {
 const getPlaceholderStarItem = (color: string) => ({
     color,
     label: "",
+    id: null,
     left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
     radius: getRandomNumber(2, 6),
     top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
@@ -69,59 +70,21 @@ const currentPath = Astro.url.pathname;
 ---
 
 <div
-    class="relative visible opacity-100 transition-[visibility,opacity] duration-500 ease-linear md:flex md:justify-center"
+    class="absolute w-screen h-screen visible opacity-100 transition-[visibility,opacity] duration-500 ease-linear md:flex md:justify-center"
 >
-    <div class="h-full w-screen fixed">
-        <div class="h-full fixed w-screen p-5 pt-24 z-10">
-            <div class="relative h-full w-full">
-                {
-                    menuItems.map((item, index) => (
-                        <StarItem
-                            itemId={index}
-                            {...item}
-                            isHidden={true}
-                            isActive={currentPath === `/${item.label?.toLowerCase()}`}
-                        />
-                    ))
-                }
-            </div>
+    <div class="h-full fixed w-screen p-5 pt-24">
+        <div class="relative h-full w-full">
+            {
+                menuItems.map((item, index) => (
+                    <span
+                        class="absolute"
+                        id={item.id ?? String(index + 1000)}
+                        style={`background-color: ${item.color}; top: ${item.top}; left: ${item.left} `}
+                    >
+                        {item.label}
+                    </span>
+                ))
+            }
         </div>
     </div>
 </div>
-
-<script>
-    import { delay } from "../utils";
-
-    async function showItemsIncrementally() {
-        const currentPath = window.location.pathname;
-        const stars = document.querySelectorAll("[data-star-item]");
-
-        for (let index = 0; index < stars.length; index++) {
-            const star = stars[index] as HTMLElement;
-            const label = star.getAttribute("data-label")?.toLowerCase();
-
-            if (currentPath === `/${label}`) {
-                continue;
-            }
-
-            if (index > 0) {
-                await delay(200);
-            }
-
-            star.classList.remove("invisible", "opacity-0");
-            star.classList.add("visible", "opacity-100");
-        }
-    }
-
-    // Initialize animation after page load
-    document.addEventListener("DOMContentLoaded", async () => {
-        await delay(300);
-        showItemsIncrementally();
-    });
-
-    // Handle navigation changes
-    document.addEventListener("astro:page-load", async () => {
-        await delay(300);
-        showItemsIncrementally();
-    });
-</script>
