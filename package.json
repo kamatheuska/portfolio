@@ -14,8 +14,8 @@
     "packageManager": "pnpm@9.13.2",
     "devDependencies": {
         "eslint": "catalog:dev",
-        "prettier-plugin-astro": "^0.14.1",
         "prettier": "3.3.3",
-        "prettier-plugin-tailwindcss": "^0.6.8"
+        "prettier-plugin-astro": "^0.14.1",
+        "prettier-plugin-tailwindcss": "^0.6.14"
     }
 }

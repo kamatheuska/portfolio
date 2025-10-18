@@ -1,7 +1,0 @@
-packages:
-    - "apps/*"
-    - "packages/**"
-
-catalogs:
-    dev:
-        eslint: 9.35.0

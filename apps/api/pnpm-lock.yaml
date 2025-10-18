@@ -32,6 +32,9 @@ importers:
       fastify-plugin:
         specifier: 5.1.0
         version: 5.1.0
+      fluent-json-schema:
+        specifier: ^6.0.0
+        version: 6.0.0
       pino-pretty:
         specifier: 13.1.2
         version: 13.1.2
@@ -387,6 +390,9 @@ packages:
 
   '@fastify/deepmerge@2.0.2':
     resolution: {integrity: sha512-3wuLdX5iiiYeZWP6bQrjqhrcvBIf0NHbQH1Ur1WbHvoiuTYUEItgygea3zs8aHpiitn0lOB8gX20u1qO+FDm7Q==}
+
+  '@fastify/deepmerge@3.1.0':
+    resolution: {integrity: sha512-lCVONBQINyNhM6LLezB6+2afusgEYR4G8xenMsfe+AT+iZ7Ca6upM5Ha8UkZuYSnuMw3GWl/BiPXnLMi/gSxuQ==}
 
   '@fastify/error@4.2.0':
     resolution: {integrity: sha512-RSo3sVDXfHskiBZKBPRgnQTtIqpi/7zhJOEmAxCiBcM7d0uwdGdxLlsCaLzGs8v8NnxIRlfG0N51p5yFaOentQ==}
@@ -804,6 +810,9 @@ packages:
   find-up@5.0.0:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
+
+  fluent-json-schema@6.0.0:
+    resolution: {integrity: sha512-6AEL/74vC5MB7MVK8NQrNcIol7tAlbuKwjvYVXPSIlIhgvT+4EhzFi6FWijbDjnyDKgDfKY/yHIjD1Gm6PF8Uw==}
 
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
@@ -1504,6 +1513,8 @@ snapshots:
 
   '@fastify/deepmerge@2.0.2': {}
 
+  '@fastify/deepmerge@3.1.0': {}
+
   '@fastify/error@4.2.0': {}
 
   '@fastify/fast-json-stringify-compiler@5.0.3':
@@ -1893,6 +1904,10 @@ snapshots:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
+
+  fluent-json-schema@6.0.0:
+    dependencies:
+      '@fastify/deepmerge': 3.1.0
 
   foreground-child@3.3.1:
     dependencies:
