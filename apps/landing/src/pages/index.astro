@@ -57,7 +57,6 @@ const social: Social[] = [
                     <!-- <div class="text-3xl cursor-pointer" data-menu-toggle> -->
                     <!--     <Icon name="uil:bars" @click="toggle()" /> -->
                     <!-- </div> -->
-                    <p x-text="isMenuOpen"></p>
                     <div class="text-3xl cursor-pointer" data-menu-toggle>
                         <Button
                             @click="updateBackgroundStyles($data)"
@@ -74,7 +73,7 @@ const social: Social[] = [
                 <StarMenu />
             </div>
             <div class="relative" :style="contentStyle">
-                <div class="w-full transition-all duration-500 ease-out" data-backdrop>
+                <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
                     <div
                         class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]"
                     >
@@ -143,21 +142,20 @@ const social: Social[] = [
                 // @ts-ignore
                 Alpine.data("stars", () => ({
                     isMenuOpen: false,
-                    backgroundStyle: "z-index: 0",
-                    starMenuStyle: "z-index: -10",
-                    contentStyle: "z-index: 10",
+                    backgroundStyle: "z-index: 10",
+                    starMenuStyle: "z-index: 20",
+                    contentStyle: "z-index: 30",
                     updateBackgroundStyles({ isMenuOpen }: { isMenuOpen: boolean }) {
                         console.log("current state", isMenuOpen);
-                        let isOpen = this.isMenuOpen;
                         this.isMenuOpen = !this.isMenuOpen;
-                        if (isOpen) {
-                            this.backgroundStyle = "z-index: 0";
-                            this.starMenuStyle = "z-index: -10";
-                            this.contentStyle = "z-index: 10";
+                        if (this.isMenuOpen) {
+                            this.backgroundStyle = "z-index: 10";
+                            this.starMenuStyle = "z-index: 30";
+                            this.contentStyle = "z-index: 20";
                         } else {
-                            this.backgroundStyle = "z-index: -10";
-                            this.starMenuStyle = "z-index: 10";
-                            this.contentStyle = "z-index: 0";
+                            this.backgroundStyle = "z-index: 10";
+                            this.starMenuStyle = "z-index: 20";
+                            this.contentStyle = "z-index: 30";
                         }
                     },
                 }));

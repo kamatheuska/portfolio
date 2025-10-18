@@ -76,13 +76,23 @@ const currentPath = Astro.url.pathname;
         <div class="relative h-full w-full">
             {
                 menuItems.map((item, index) => (
-                    <span
-                        class="absolute"
-                        id={item.id ?? String(index + 1000)}
-                        style={`background-color: ${item.color}; top: ${item.top}; left: ${item.left} `}
-                    >
-                        {item.label}
-                    </span>
+                    <StarItem
+                        top={item.top}
+                        left={item.left}
+                        isActive={false}
+                        radius={item.radius}
+                        color={item.color}
+                        isHidden={false}
+                        itemId={item.id ? Number(item.id) : index + 1000}
+                        label={item.label}
+                    />
+                    // <span
+                    //     class="absolute"
+                    //     id={item.id ?? String(index + 1000)}
+                    //     style={`background-color: ${item.color}; top: ${item.top}; left: ${item.left} `}
+                    // >
+                    //     {item.label}
+                    // </span>
                 ))
             }
         </div>
