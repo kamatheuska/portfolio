@@ -1,3 +1,5 @@
+import { string } from "astro:schema";
+
 document.addEventListener("alpine:init", () => {
     // @ts-ignore
     Alpine.data("useUrlShortenerForm", () => ({
@@ -8,6 +10,10 @@ document.addEventListener("alpine:init", () => {
             const data = inputs.reduce((object, key) => ({ ...object, [key.name]: key.value }), {});
             return data;
         },
+
+        shortUrl: "",
+        originalUrl: "",
+        shortenedUrlHref: "",
 
         async post() {
             let response;
@@ -22,6 +28,7 @@ document.addEventListener("alpine:init", () => {
                 });
             } catch (error) {
                 console.error("Error while fetch post shorturl", error);
+                throw error;
             }
 
             if (!response) {
@@ -30,9 +37,18 @@ document.addEventListener("alpine:init", () => {
 
             let json;
             try {
-                json = response.json();
+                json = await response.json();
             } catch (error) {
                 console.error("Error while parsing json", error);
+                throw error;
+            }
+
+            if ("short_url" in json) {
+                this.shortUrl = json.short_url;
+                this.shortenedUrlHref = `/api/url-shortener/${json.short_url}`;
+            }
+            if ("original_url" in json) {
+                this.originalUrl = json.original_url;
             }
         },
     }));

@@ -122,36 +122,7 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
 
     fastify.route({
         method: "GET",
-        url: "/api/short/:shortUrl",
-        handler: async function getShortUrl(req, reply) {
-            const { shortUrl } = req.params as { shortUrl: string };
-            log.debug(`Requested shortUrl: ${shortUrl}`);
-
-            const [url] = await db.select().from(urls).where(eq(urls.hex, shortUrl));
-
-            if (!url) {
-                throw fastify.httpErrors.notFound("Url was not found");
-            }
-
-            log.debug(`Url found: ${url}`);
-            log.info(`Redirecting to: ${url.original}`);
-
-            return reply.redirect(url.original);
-        },
-    });
-
-    fastify.route({
-        method: "GET",
-        url: "/api/shorturl",
-        async handler() {
-            return { ok: true };
-        },
-    });
-
-    fastify.route({
-        method: "GET",
-        url: "/api/shorturl/:shortUrl",
-        // same as above
+        url: "/:shortUrl",
         handler: async function getShortUrl(req, reply) {
             const { shortUrl } = req.params as { shortUrl: string };
             log.debug(`Requested shortUrl: ${shortUrl}`);
