@@ -1,6 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tailwindcss";
+
+@theme {
+    /* Custom Colors */
+    --color-light-blue: #95bccc;
+
+    --color-pink-100: #fef8f8;
+    --color-pink-200: #fef1f1;
+    --color-pink-300: #fdeaea;
+    --color-pink-400: #fde3e3;
+    --color-pink-500: #fcdcdc;
+    --color-pink-600: #cab0b0;
+    --color-pink-700: #978484;
+    --color-pink-800: #655858;
+    --color-pink-900: #322c2c;
+
+    --color-blue-700: #2b4c59;
+    --color-blue-800: hsl(197, 35%, 16%);
+
+    --color-brown: #988080;
+    --color-gray: #beceda;
+    --color-green: hsl(178, 100%, 55%);
+    --color-dark-green: hsl(178, 20%, 35%);
+    --color-light-brown: #ddd4d4;
+    --color-light-green: #b5fffd;
+
+    /* Custom Font Families */
+    --font-family-mono: "Fira Mono", monospace;
+    --font-family-sans: "Roboto", sans-serif;
+    --font-family-serif: "Playfair Display", serif;
+}
+
+/* Custom Background Image Utility */
 
 @layer components {
     .button {

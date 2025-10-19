@@ -3,7 +3,10 @@
 ---
 
 <div class="relative" :style="contentStyle">
-    <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
+    <div
+        class="bg-radial from-blue-700 from-40% to-blue-800 to-90% w-full transition-all duration-500 ease-out"
+        data-backdrop
+    >
         <div class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]">
             <div
                 x-show="!isMenuOpen"

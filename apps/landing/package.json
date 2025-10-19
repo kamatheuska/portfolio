@@ -14,12 +14,12 @@
         "@astrojs/alpinejs": "0.4.9",
         "@astrojs/check": "0.9.4",
         "@astrojs/node": "^9.5.0",
-        "@astrojs/tailwind": "6.0.2",
+        "@tailwindcss/vite": "^4.1.14",
         "@types/alpinejs": "3.13.11",
         "alpinejs": "3.15.0",
         "astro": "5.14.6",
         "astro-icon": "1.1.5",
-        "tailwindcss": "3.0.24",
+        "tailwindcss": "^4.1.14",
         "typescript": "5.9.3"
     },
     "devDependencies": {
