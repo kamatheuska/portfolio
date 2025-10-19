@@ -1,0 +1,60 @@
+---
+export interface Props {
+    date: string;
+    workTitle: string;
+    company: string;
+    description: string;
+    tags: string[];
+    link?: string;
+}
+
+const { date, workTitle, company, description, tags = [], link } = Astro.props;
+---
+
+<div
+    class="grid gap-4 rounded-2xl p-4 pb-6 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)] md:grid-cols-[8rem_auto]"
+>
+    <header class="text-sm font-black mb-2 md:pt-1.5 text-light-green">
+        <span>
+            {date}
+        </span>
+    </header>
+    <div class="experience-content h-full">
+        {
+            link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer">
+                    <h3 class="m-0 text-pink-300">
+                        {workTitle}
+                        <span class="inline-block rotate-45">
+                            <svg
+                                class="w-[0.7em] h-[0.7em] inline-block"
+                                fill="currentColor"
+                                viewBox="0 0 384 512"
+                            >
+                                <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+                            </svg>
+                        </span>
+                    </h3>
+                </a>
+            ) : (
+                <h3 class="m-0 text-pink-300">{workTitle}</h3>
+            )
+        }
+        <h4 class="m-0 text-light-green">{company}</h4>
+        <p class="text-blue-200">{description}</p>
+        <ul class="flex flex-wrap gap-1.5 p-0 text-sm list-none">
+            {
+                tags.map(tag => (
+                    <li class="bg-emerald-800 text-emerald-300 px-2.5 py-1.5 rounded-2xl">{tag}</li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
+
+<style>
+    .experience-content h3,
+    .experience-content h4 {
+        margin: 0;
+    }
+</style>
