@@ -21,6 +21,7 @@
     "license": "ISC",
     "dependencies": {
         "@fastify/autoload": "6.3.1",
+        "@fastify/cors": "^11.1.0",
         "@fastify/sensible": "6.0.3",
         "@stripe/stripe-js": "8.1.0",
         "close-with-grace": "2.3.0",
