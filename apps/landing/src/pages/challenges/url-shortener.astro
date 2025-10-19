@@ -12,56 +12,60 @@ import RootLayout from "../../layouts/root-layout.astro";
         <div>
             <Menu />
             <Content>
-                <LinesMenu />
-                <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
-                    URL Shortener
-                </h1>
-                <form
-                    class="text-blue-200"
-                    method="post"
-                    @submit.prevent="post"
-                    id="createShortUrl"
-                    x-data="useUrlShortenerForm"
-                >
-                    <div class="mb-8">
-                        <p>
-                            Tired of typing long urls that you do not want to remember? Just use this mini
-                            service to make that long and infinite procession of characters into a small and
-                            well behaved one.
-                        </p>
+                <div class="p-8 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)]">
+                    <div class="flex items-end w-full justify-end">
+                        <LinesMenu />
                     </div>
-                    <div class="mb-8">
-                        <div class="flex justify-between items-center gap-3">
-                            <label for="url"> Type a URL </label>
-                            <input
-                                class="grow bg-pink-100 text-blue-900 px-3 py-2"
-                                id="url"
-                                type="url"
-                                required
-                                name="url"
-                                placeholder="https:://google.com"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <Button type="submit" form="createShortUrl" @click="createShortUrl">Send</Button>
-                    </div>
-                    <div
-                        x-show="shortenedUrlHref"
-                        class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5"
+                    <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
+                        URL Shortener
+                    </h1>
+                    <form
+                        class="text-blue-200"
+                        method="post"
+                        @submit.prevent="post"
+                        id="createShortUrl"
+                        x-data="useUrlShortenerForm"
                     >
-                        <p>Now you can access it by going to:</p>
-                        <!-- eslint-disable-line -->
-                        <a
-                            class="text-pink-500 hover:text-green-400 transition-colors"
-                            target="_blank"
-                            x-bind:href="shortenedUrlHref"
-                            x-text="`/api/url-shortener/${shortUrl}`"
+                        <div class="mb-8">
+                            <p>
+                                Tired of typing long urls that you do not want to remember? Just use this mini
+                                service to make that long and infinite procession of characters into a small
+                                and well behaved one.
+                            </p>
+                        </div>
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center gap-3">
+                                <label for="url"> Type a URL </label>
+                                <input
+                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
+                                    id="url"
+                                    type="url"
+                                    required
+                                    name="url"
+                                    placeholder="https:://google.com"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <Button type="submit" form="createShortUrl" @click="createShortUrl">Send</Button>
+                        </div>
+                        <div
+                            x-show="shortenedUrlHref"
+                            class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5"
                         >
-                            test
-                        </a>
-                    </div>
-                </form>
+                            <p>Now you can access it by going to:</p>
+                            <!-- eslint-disable-line -->
+                            <a
+                                class="text-pink-500 hover:text-green-400 transition-colors"
+                                target="_blank"
+                                x-bind:href="shortenedUrlHref"
+                                x-text="`/api/url-shortener/${shortUrl}`"
+                            >
+                                test
+                            </a>
+                        </div>
+                    </form>
+                </div>
                 <Background />
             </Content>
             <script src="../../scripts/star-menu-controller"></script>

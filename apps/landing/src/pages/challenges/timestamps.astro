@@ -1,5 +1,6 @@
 ---
 import Background from "../../components/background.astro";
+import Button from "../../components/button.astro";
 import Content from "../../components/content.astro";
 import LinesMenu from "../../components/lines-menu.astro";
 import Menu from "../../components/menu.astro";
@@ -11,14 +12,62 @@ import RootLayout from "../../layouts/root-layout.astro";
         <div>
             <Menu />
             <Content>
-                <LinesMenu />
-                <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">Timestamps</h1>
-                <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
-                    <p>Times</p>
+                <div class="p-8 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)]">
+                    <div class="flex items-end w-full justify-end">
+                        <LinesMenu />
+                    </div>
+                    <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
+                        Timestamps
+                    </h1>
+
+                    <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
+                        <p>
+                            By clicking on <strong>Generate</strong>, you will get a timestamp for the current
+                            date and time on
+                            <strong>UTC and UNIX Format</strong>
+                        </p>
+                        <p>
+                            You can also type a date and get a timestamp for that specific date. The date
+                            types can be in different formats:
+                        </p>
+
+                        <ul>
+                            <li>Unix format: <strong>e.g. 1451001600000</strong></li>
+                            <li>
+                                <em>Or any valid date format</em>
+                            </li>
+                        </ul>
+                    </div>
+                    <form
+                        class="text-blue-200"
+                        method="post"
+                        @submit.prevent="post"
+                        id="createTimestamp"
+                        x-data="useTimestamps"
+                    >
+                        <div class="mb-4 flex">
+                            <input
+                                class="grow bg-pink-100 text-blue-900 px-3 py-2"
+                                id="timestamp"
+                                type="text"
+                                required
+                                name="timestamp"
+                                placeholder="1451001600000"
+                            />
+                        </div>
+                        <div class="flex gap-4">
+                            <Button @click="generateTimestamp"> Generate </Button>
+                            <Button @click="generateTimestamp"> Get for Date </Button>
+                        </div>
+                    </form>
+                    <div>
+                        <pre x-text="result"></pre>
+                    </div>
                 </div>
             </Content>
             <Background />
         </div>
         <script src="../../scripts/star-menu-controller"></script>
+        <script src="../../scripts/timestamps"></script>
     </main>
 </RootLayout>
