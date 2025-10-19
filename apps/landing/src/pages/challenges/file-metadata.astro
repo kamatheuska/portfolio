@@ -1,5 +1,6 @@
 ---
 import Background from "../../components/background.astro";
+import Button from "../../components/button.astro";
 import Content from "../../components/content.astro";
 import LinesMenu from "../../components/lines-menu.astro";
 import Menu from "../../components/menu.astro";
@@ -11,14 +12,48 @@ import RootLayout from "../../layouts/root-layout.astro";
         <div>
             <Menu />
             <Content>
-                <LinesMenu />
-                <h2 class="text-pink-400 font-bold font-serif text-[9vw] md:text-[4vw] m-0">File Metadata</h2>
-                <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
-                    <p></p>
+                <div class="p-8 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)]">
+                    <div class="flex items-end w-full justify-end">
+                        <LinesMenu />
+                    </div>
+                    <h2 class="text-pink-400 font-bold font-serif text-[9vw] md:text-[4vw] m-0">
+                        File Metadata
+                    </h2>
+
+                    <form
+                        class="text-blue-200"
+                        method="post"
+                        @submit.prevent="post"
+                        id="analyseFileMetadata"
+                        x-data="useFileMetadataForm"
+                    >
+                        <p class="mb-4">Please upload a file to be analised</p>
+                        <div class="mb-4">
+                            <label for="upfile" class="flex flex-col gap-4" aria-label="Choose file">
+                                <input
+                                    class="grow bg-pink-100 text-blue-900 px-3 py-2 font-normal text-normal"
+                                    placeholder="file.jpg"
+                                    x-model="file"
+                                    type="file"
+                                    id="upfile"
+                                    name="upfile"
+                                    @change="setFile"
+                                />
+                            </label>
+                            <p x-show="file" x-text="file"></p>
+                        </div>
+                        <div class="flex gap-4 mb-4">
+                            <Button x-show="file" @click="analyseFile">Analyse</Button>
+                        </div>
+                        <div>
+                            <pre class="text-left" x-text="result"></pre>
+                        </div>
+                    </form>
                 </div>
             </Content>
             <Background />
         </div>
+        <script src="../../scripts/file-analyse"></script>
         <script src="../../scripts/star-menu-controller"></script>
     </main>
 </RootLayout>
