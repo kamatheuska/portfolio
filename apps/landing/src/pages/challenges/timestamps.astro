@@ -43,13 +43,14 @@ import RootLayout from "../../layouts/root-layout.astro";
                         method="post"
                         @submit.prevent="post"
                         id="createTimestamp"
-                        x-data="useTimestamps"
+                        x-data="useTimestampsForm"
                     >
                         <div class="mb-4 flex">
                             <input
                                 class="grow bg-pink-100 text-blue-900 px-3 py-2"
                                 id="timestamp"
                                 type="text"
+                                x-model="timestamp"
                                 required
                                 name="timestamp"
                                 placeholder="1451001600000"

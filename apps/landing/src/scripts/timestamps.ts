@@ -4,24 +4,24 @@ const apiBaseURL = PUBLIC_API_BASE_URL ?? "";
 console.log("api", apiBaseURL);
 document.addEventListener("alpine:init", () => {
     // @ts-ignore
-    Alpine.data("useTimestamps", () => ({
+    Alpine.data("useTimestampsForm", () => ({
         data() {
             // @ts-ignore
             const inputs = Array.from(this.$el.querySelectorAll("input, textarea"));
+            console.log("i", inputs);
             // @ts-ignore
             const data = inputs.reduce((object, key) => ({ ...object, [key.name]: key.value }), {});
             return data;
         },
 
         result: "",
+        timestamp: "",
 
         async generateTimestampForDate() {
             let response;
-            const data = this.data();
-            console.log("d", data);
             try {
                 console.info("Form submitted");
-                response = await fetch(`${apiBaseURL}/api/timestamps/generate`, {
+                response = await fetch(`${apiBaseURL}/api/timestamps/generate/${this.timestamp}`, {
                     method: "GET",
                 });
             } catch (error) {
