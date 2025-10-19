@@ -1,5 +1,4 @@
-// @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 
 import icon from "astro-icon";
 
@@ -20,6 +19,15 @@ export default defineConfig({
                     target: "http://localhost:4001",
                 },
             },
+        },
+    },
+    env: {
+        schema: {
+            PUBLIC_API_BASE_URL: envField.string({
+                context: "client",
+                access: "public",
+                optional: true,
+            }),
         },
     },
     adapter: node({
