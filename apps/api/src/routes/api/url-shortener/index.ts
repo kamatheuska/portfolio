@@ -6,7 +6,7 @@ import dns from "dns";
 import { FastifyInstance } from "fastify";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { count, eq } from "drizzle-orm";
-import { urls } from "../../db/schema.js";
+import { urls } from "../../../db/schema.js";
 
 const PROTOCOL_REGEX = /^(?:f|ht)tps?:\/\//;
 const hasHttpProtocol = (url: string) => PROTOCOL_REGEX.test(url);
@@ -48,7 +48,6 @@ export async function validateHostname(hostname = "") {
         throw error;
     }
 }
-const shortUrlSchema = {};
 
 async function shortUrlPlugin(fastify: FastifyInstance) {
     const log = fastify.log.child({ context: "shorturl" });
@@ -58,7 +57,7 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
 
     fastify.route({
         method: "POST",
-        url: "/short",
+        url: "/",
         schema: {
             body: S.object().prop("url", S.string().required()),
             response: {
@@ -78,14 +77,22 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
             log.debug(`Create url: ${url}`);
 
             const MAX_COUNT_URL_ITEMS = 100;
+            let selectedCount;
 
             try {
+                const [result] = await db.select({ count: count() }).from(urls);
+                selectedCount = result.count;
+            } catch (error) {
+                throw fastify.httpErrors.internalServerError((error as Error).message);
+            }
+            try {
                 await validateUrl(url);
-                const [selectedCount] = await db.select({ count: count() }).from(urls);
 
-                if (!selectedCount) throw fastify.httpErrors.internalServerError("No Count for urls");
+                if (selectedCount === null || selectedCount === undefined) {
+                    throw fastify.httpErrors.internalServerError("No Count for urls");
+                }
 
-                if (selectedCount.count > MAX_COUNT_URL_ITEMS) {
+                if (selectedCount > MAX_COUNT_URL_ITEMS) {
                     throw fastify.httpErrors.badRequest("Count of shorturls exceeded limit");
                 }
 
@@ -115,10 +122,7 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
 
     fastify.route({
         method: "GET",
-        url: "/short/:shortUrl",
-        schema: {
-            response: shortUrlSchema,
-        },
+        url: "/api/short/:shortUrl",
         handler: async function getShortUrl(req, reply) {
             const { shortUrl } = req.params as { shortUrl: string };
             log.debug(`Requested shortUrl: ${shortUrl}`);
@@ -138,7 +142,7 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
 
     fastify.route({
         method: "GET",
-        url: "/shorturl",
+        url: "/api/shorturl",
         async handler() {
             return { ok: true };
         },
@@ -146,10 +150,7 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
 
     fastify.route({
         method: "GET",
-        url: "/shorturl/:shortUrl",
-        schema: {
-            response: shortUrlSchema,
-        },
+        url: "/api/shorturl/:shortUrl",
         // same as above
         handler: async function getShortUrl(req, reply) {
             const { shortUrl } = req.params as { shortUrl: string };

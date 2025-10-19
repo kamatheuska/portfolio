@@ -3,6 +3,7 @@ import Background from "../../components/background.astro";
 import Content from "../../components/content.astro";
 import LinesMenu from "../../components/lines-menu.astro";
 import Menu from "../../components/menu.astro";
+import Button from "../../components/button.astro";
 import RootLayout from "../../layouts/root-layout.astro";
 ---
 
@@ -15,12 +16,45 @@ import RootLayout from "../../layouts/root-layout.astro";
                 <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
                     URL Shortener
                 </h1>
-                <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
-                    <p></p>
-                </div>
+                <form
+                    class="text-blue-200"
+                    method="post"
+                    @submit.prevent="post"
+                    id="createShortUrl"
+                    x-data="useUrlShortenerForm"
+                >
+                    <div class="mb-8">
+                        <p>
+                            Tired of typing long urls that you do not want to remember? Just use this mini
+                            service to make that long and infinite procession of characters into a small and
+                            well behaved one.
+                        </p>
+                    </div>
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center gap-3">
+                            <label for="url"> Type a URL </label>
+                            <input
+                                class="grow bg-pink-100 text-blue-900 px-1 py-2"
+                                id="url"
+                                type="url"
+                                required
+                                name="url"
+                                placeholder="https:://google.com"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <Button type="submit" form="createShortUrl" @click="createShortUrl">Send</Button>
+                    </div>
+                    <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
+                        <p>Now you can access it by going to:</p>
+                        <a target="_blank" rel="noopener noreferrer" href="tes"> resultUrl </a>
+                    </div>
+                </form>
+                <Background />
             </Content>
-            <Background />
+            <script src="../../scripts/star-menu-controller"></script>
+            <script src="../../scripts/url-shortener"></script>
         </div>
-        <script src="../../scripts/star-menu-controller"></script>
     </main>
 </RootLayout>
