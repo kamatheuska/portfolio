@@ -14,6 +14,9 @@ export default fp(
         const config = fastify.config as unknown as Map<string, string | undefined>;
 
         const dbUrl = config.get("DATABASE_URL");
+
+        fastify.log.info("Init db plugin");
+
         if (!dbUrl) {
             throw new Error("DATABASE_URL is not defined in environment variables");
         }
@@ -21,9 +24,11 @@ export default fp(
         let db: PostgresJsDatabase & {
             $client: Sql;
         };
+        fastify.log.info("Connecting to DB");
         try {
             db = drizzle(dbUrl);
 
+            fastify.log.info("Test DB connection");
             await db.execute("SELECT 1 + 1");
 
             fastify.log.info("DB Connection stablished");
