@@ -15,16 +15,14 @@ document.addEventListener("alpine:init", () => {
 
         result: "",
 
-        async post() {
+        async generateTimestampForDate() {
             let response;
+            const data = this.data();
+            console.log("d", data);
             try {
                 console.info("Form submitted");
-                response = await fetch(`${apiBaseURL}/api/timestamps`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(this.data()),
+                response = await fetch(`${apiBaseURL}/api/timestamps/generate`, {
+                    method: "GET",
                 });
             } catch (error) {
                 console.error("Error while fetch post shorturl", error);
@@ -43,9 +41,35 @@ document.addEventListener("alpine:init", () => {
                 throw error;
             }
 
-            if ("result" in json) {
-                this.result = json.result;
+            this.result = JSON.stringify(json, undefined, 2);
+            console.log("res", this.result);
+        },
+        async generateTimestamp() {
+            let response;
+            try {
+                console.info("Form submitted");
+                response = await fetch(`${apiBaseURL}/api/timestamps/generate`, {
+                    method: "GET",
+                });
+            } catch (error) {
+                console.error("Error while fetch post shorturl", error);
+                throw error;
             }
+
+            if (!response) {
+                throw new Error("No response from api");
+            }
+
+            let json;
+            try {
+                json = await response.json();
+            } catch (error) {
+                console.error("Error while parsing json", error);
+                throw error;
+            }
+
+            this.result = JSON.stringify(json, undefined, 2);
+            console.log("res", this.result);
         },
     }));
 });

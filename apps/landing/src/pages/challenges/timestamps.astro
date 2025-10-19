@@ -55,14 +55,14 @@ import RootLayout from "../../layouts/root-layout.astro";
                                 placeholder="1451001600000"
                             />
                         </div>
-                        <div class="flex gap-4">
+                        <div class="flex gap-4 mb-4">
                             <Button @click="generateTimestamp"> Generate </Button>
-                            <Button @click="generateTimestamp"> Get for Date </Button>
+                            <Button @click="generateTimestampForDate"> Get for Date </Button>
+                        </div>
+                        <div>
+                            <pre class="text-left" x-text="result"></pre>
                         </div>
                     </form>
-                    <div>
-                        <pre x-text="result"></pre>
-                    </div>
                 </div>
             </Content>
             <Background />

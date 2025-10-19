@@ -24,10 +24,10 @@
                     <button class="button" type="button" @click="generateTimestamp">Generate</button>
                     <button class="button" type="submit">Get for Date</button>
                 </div>
+                <div>
+                    <pre v-text="result"></pre>
+                </div>
             </form>
-            <div>
-                <pre v-text="result"></pre>
-            </div>
         </div>
     </challenge-layout>
 </template>
@@ -77,6 +77,7 @@ const result = ref(null);
     gap: 1rem;
     width: 100%;
 }
+
 .buttons button {
     width: 100%;
 }
