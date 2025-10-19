@@ -6,7 +6,13 @@ import icon from "astro-icon";
 
 import alpinejs from "@astrojs/alpinejs";
 
+import node from "@astrojs/node";
+
 // https://astro.build/config
 export default defineConfig({
-    integrations: [tailwind({ applyBaseStyles: false }), icon(), alpinejs()],
+  integrations: [tailwind({ applyBaseStyles: false }), icon(), alpinejs()],
+
+  adapter: node({
+    mode: "standalone",
+  }),
 });
