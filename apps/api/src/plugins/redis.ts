@@ -17,13 +17,18 @@ export default fp(async fastify => {
     // @ts-expect-error not typed
     const config = fastify.config as unknown as Map<string, string | undefined>;
 
-    const redisUrl = config.get("REDIS_URL");
-
-    if (!redisUrl) throw new Error("Missing REDIS_URL on config");
+    const redisHost = config.get("REDIS_HOST");
+    const redisPassword = config.get("REDIS_PASSWORD");
+    const redisUsername = config.get("REDIS_USERNAME");
 
     let redis;
     try {
-        redis = new Redis(redisUrl);
+        redis = new Redis({
+            host: redisHost,
+            username: redisUsername,
+            password: redisPassword,
+            port: 6379,
+        });
     } catch (err) {
         fastify.log.error({ err }, "Error while connecting to redis:");
     }
