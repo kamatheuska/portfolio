@@ -82,9 +82,12 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
             try {
                 const [result] = await db.select({ count: count() }).from(urls);
                 selectedCount = result.count;
-            } catch (error) {
-                throw fastify.httpErrors.internalServerError((error as Error).message);
+            } catch (err) {
+                req.log.error({ err });
+                throw fastify.httpErrors.internalServerError("Error on url creation");
             }
+            let short = "";
+            let hex = "";
             try {
                 await validateUrl(url);
 
@@ -96,9 +99,14 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
                     throw fastify.httpErrors.badRequest("Count of shorturls exceeded limit");
                 }
 
-                const hex = crypto.randomBytes(3).toString("hex");
-                const short = `/short/${hex}`;
+                hex = crypto.randomBytes(3).toString("hex");
+                short = `/short/${hex}`;
+            } catch (err) {
+                req.log.error({ err }, "Error while creating hex and short");
+                throw fastify.httpErrors.internalServerError("Error on url creation");
+            }
 
+            try {
                 await db.insert(urls).values({
                     short,
                     original: url,
@@ -109,13 +117,9 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
                     original_url: url,
                     short_url: hex,
                 };
-            } catch (error) {
-                if (error instanceof Error) {
-                    return {
-                        error: error.message,
-                    };
-                }
-                throw error;
+            } catch (err) {
+                req.log.error({ err }, "Error on insert");
+                throw fastify.httpErrors.internalServerError("Error on url creation");
             }
         },
     });
