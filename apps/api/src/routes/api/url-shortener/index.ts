@@ -59,7 +59,7 @@ async function shortUrlPlugin(fastify: FastifyInstance) {
         method: "POST",
         url: "/",
         schema: {
-            body: S.object().prop("url", S.string().required()),
+            body: S.object().prop("url", S.string().maxLength(256).minLength(10).required()),
             response: {
                 200: S.anyOf([
                     S.object()

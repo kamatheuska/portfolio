@@ -32,6 +32,7 @@ async function timestampPlugin(fastify: FastifyInstance) {
         url: "/generate/:date",
         schema: {
             response: timestampResponseSchema,
+            params: S.object().prop("date", S.string().required()),
         },
         handler: async function generateTimestampForDate(request) {
             const { date } = request.params as { date: string };
