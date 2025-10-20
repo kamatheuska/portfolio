@@ -29,6 +29,7 @@ closeWithGrace(
 // Example usage:
 export const envConfig: Map<string, EnvVarConfig> = new Map([
     ["DATABASE_URL", { required: true }],
+    ["REDIS_URL", { required: true }],
     ["PORT", { default: "3000" }],
     ["NODE_ENV", { default: "development" }],
     ["LOG_LEVEL", { default: "info" }],
