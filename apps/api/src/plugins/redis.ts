@@ -1,3 +1,5 @@
+import fastifyAutoload from "@fastify/autoload";
+import closeWithGrace from "close-with-grace";
 import fp from "fastify-plugin";
 import { Redis } from "ioredis";
 
@@ -44,4 +46,27 @@ export default fp(async fastify => {
         fastify.log.error({ err }, "Error on testing redis connection");
         throw err;
     }
+
+    closeWithGrace(
+        { delay: Number(process.env.FASTIFY_CLOSE_GRACE_DELAY) ?? 500 },
+        async function ({ signal, err, manual }) {
+            if (err) {
+                fastify.log.error({ err, signal, manual }, "closing redis with grace due to error");
+            }
+            fastify.log.info({ signal, manual }, "closing redis with grace");
+            await redis.disconnect();
+        },
+    );
+
+    redis.on("err", err => {
+        if (err instanceof Error) {
+            fastify.log.error({ err }, "Error on redis:");
+        }
+    });
+
+    fastify.decorate("redis", {
+        getter() {
+            return redis;
+        },
+    });
 }, metadata);
