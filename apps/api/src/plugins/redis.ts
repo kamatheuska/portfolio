@@ -1,4 +1,3 @@
-import fastifyAutoload from "@fastify/autoload";
 import closeWithGrace from "close-with-grace";
 import fp from "fastify-plugin";
 import { Redis } from "ioredis";

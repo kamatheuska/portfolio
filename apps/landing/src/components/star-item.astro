@@ -1,5 +1,6 @@
 ---
 import { getRandomNumber } from "../utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
 interface Props {
     itemId: number;
     isActive?: boolean;
@@ -28,6 +29,7 @@ const innerSize = `${radius}px`;
 const outerSize = `${radius + 5}px`;
 const pulsarId = `outer-pulsar-${itemId}`;
 const delay = getRandomNumber(10, 100) / 100;
+const currentLocale = Astro.currentLocale ?? "en";
 ---
 
 <div
@@ -70,7 +72,7 @@ const delay = getRandomNumber(10, 100) / 100;
                     ]}
                 >
                     <div class="relative">
-                        <a href={href}>
+                        <a href={getRelativeLocaleUrl(currentLocale, href)}>
                             <span class="absolute uppercase font-mono font-black tracking-[3px] text-pink-500">
                                 {label}
                             </span>

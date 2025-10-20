@@ -1,0 +1,53 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Social {
+    link: string;
+    title: string;
+    icon: string;
+}
+const social: Social[] = [
+    {
+        link: "mailto:nicolas@matizlab.com",
+        title: "Get in touch",
+        icon: "mdi:envelope",
+    },
+    {
+        link: "https://www.linkedin.com/in/nicolasramirezdev",
+        title: "Link to LinkedIn Profile",
+        icon: "mdi:linkedin",
+    },
+    {
+        link: "http://www.instagram.com/nicoramirezdev",
+        title: "Link to Instagram Profile",
+        icon: "mdi:instagram",
+    },
+    {
+        link: "https://www.github.com/kamatheuska",
+        title: "Link to Github Profile",
+        icon: "mdi:github",
+    },
+    {
+        link: "https://stackoverflow.com/u/7868769",
+        title: "Link to Stackoverflow Profile",
+        icon: "mdi:stack-overflow",
+    },
+];
+---
+
+<ul class="mt-0 text-2xl flex mb-5">
+    {
+        social.map((item, index) => (
+            <li class={index !== social.length - 1 ? "mr-4" : ""}>
+                <a
+                    href={item.link}
+                    target="_blank"
+                    aria-label={item.title}
+                    class="text-pink-500 hover:text-green-400 transition-colors"
+                >
+                    <Icon name={item.icon} class="w-8 h-8" />
+                </a>
+            </li>
+        ))
+    }
+</ul>
