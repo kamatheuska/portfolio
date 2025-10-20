@@ -2,6 +2,7 @@
 import "../../styles/base.css";
 import { Icon } from "astro-icon/components";
 import Button from "../../components/button.astro";
+import Social from "../../components/base/social.astro";
 import Menu from "../../components/menu.astro";
 import RootLayout from "../../layouts/root-layout.astro";
 import Background from "../../components/background.astro";
@@ -62,22 +63,7 @@ const aboutURL = getRelativeLocaleUrl(currentLocale, "about");
                 <p class="text-light-blue max-w-[350px] md:text-lg mb-5">
                     I am Software Developer specialized on creating great products for the web
                 </p>
-                <ul class="mt-0 text-2xl flex mb-5">
-                    {
-                        social.map((item, index) => (
-                            <li class={index !== social.length - 1 ? "mr-4" : ""}>
-                                <a
-                                    href={getRelativeLocaleUrl(currentLocale, item.link)}
-                                    target="_blank"
-                                    aria-label={item.title}
-                                    class="text-pink-500 hover:text-green-400 transition-colors"
-                                >
-                                    <Icon name={item.icon} class="w-8 h-8" />
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ul>
+                <Social />
                 <div class="transition-opacity duration-300">
                     <Button @click="updateBackgroundStyles($data)"> Start </Button>
                 </div>
