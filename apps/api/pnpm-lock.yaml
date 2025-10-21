@@ -78,6 +78,9 @@ importers:
       fastify-tsconfig:
         specifier: 3.0.0
         version: 3.0.0
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
       ts-node:
         specifier: 10.9.2
         version: 10.9.2(@types/node@24.8.1)(typescript@5.9.3)
@@ -1107,6 +1110,11 @@ packages:
   postgres@3.4.7:
     resolution: {integrity: sha512-Jtc2612XINuBjIl/QTWsV5UvE8UHuNblcO3vVADSrKsrc6RqGX6lOW1cEo3CM2v0XG4Nat8nI+YM7/f26VxXLw==}
     engines: {node: '>=12'}
+
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   pretty-bytes@7.1.0:
     resolution: {integrity: sha512-nODzvTiYVRGRqAOvE84Vk5JDPyyxsVk0/fbA/bq7RqlnhksGpset09XTxbpvLTIjoaF7K8Z8DG8yHtKGTPSYRw==}
@@ -2264,6 +2272,8 @@ snapshots:
       find-up: 3.0.0
 
   postgres@3.4.7: {}
+
+  prettier@3.6.2: {}
 
   pretty-bytes@7.1.0: {}
 
