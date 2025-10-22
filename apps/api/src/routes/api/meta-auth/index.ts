@@ -7,7 +7,7 @@ import { Redis } from "ioredis";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
-const AUTH_COOKIE_NAME = 'x-auth-token';
+const AUTH_COOKIE_NAME = "x-auth-token";
 
 function parseCookies(request: FastifyRequest) {
     const list = {};
@@ -31,11 +31,11 @@ function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
     const cookie = parseCookies(req) as { [AUTH_COOKIE_NAME]: string };
     const token = cookie[AUTH_COOKIE_NAME];
 
-    req.log.debug({ headers: req.headers, cookie }, 'headers and cookie')
+    req.log.debug({ headers: req.headers, cookie }, "headers and cookie");
 
     if (!token) {
-        req.log.debug('No token on cookies')
-        throw fastify.httpErrors.unauthorized
+        req.log.debug("No token on cookies");
+        throw fastify.httpErrors.unauthorized();
     }
     const secret = getEnv(fastify, "JWT_SECRET");
 
@@ -164,11 +164,11 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 
             // TODO: replace password by hashed password
             if (hash !== user.password) {
-                req.log.debug('Hash is not equal to saved password hash');
+                req.log.debug("Hash is not equal to saved password hash");
                 throw fastify.httpErrors.unauthorized();
             }
 
-            req.log.debug('Password hash matches!')
+            req.log.debug("Password hash matches!");
 
             const secret = getEnv(fastify, "JWT_SECRET");
 
@@ -192,7 +192,7 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 })
                 .returning();
 
-            req.log.debug('Insert of session succesful!')
+            req.log.debug("Insert of session succesful!");
 
             const [session] = await queryWithError<
                 {
