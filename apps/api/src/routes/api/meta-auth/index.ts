@@ -5,6 +5,7 @@ import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { DrizzleQueryError, eq } from "drizzle-orm";
 import { Redis } from "ioredis";
 import jwt from "jsonwebtoken";
+import crypto from "node:crypto";
 
 function parseCookies(request: FastifyRequest) {
     const list = {};
@@ -28,7 +29,7 @@ function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
     const cookie = parseCookies(req) as { token: string };
     const token = cookie.token;
 
-    const secret = getEnv(fastify, 'JWT_SECRET')
+    const secret = getEnv(fastify, "JWT_SECRET");
 
     let decoded;
     try {
@@ -51,14 +52,14 @@ function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
     }
 
     return {
-        token, 
+        token,
         decoded,
-        user
+        user,
     };
 }
 
 async function queryWithError<R = any>(query: Promise<R>, fastify: FastifyInstance, req: FastifyRequest) {
-    let result
+    let result;
     try {
         result = await query;
     } catch (err) {
@@ -71,11 +72,10 @@ async function queryWithError<R = any>(query: Promise<R>, fastify: FastifyInstan
     }
 
     if (!result) {
-        throw fastify.httpErrors.internalServerError('No returning from Query')
+        throw fastify.httpErrors.internalServerError("No returning from Query");
     }
 
     return result;
-
 }
 
 function getEnv(fastify: FastifyInstance, env: string) {
@@ -108,16 +108,17 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         handler: async function createMetaUser(req, reply) {
             const { username, password } = req.body as { username: string; password: string };
 
+            const hash = crypto.createHash("sha256").update(password).digest("hex");
+
             const query = db
                 .insert(metaUsers)
                 .values({
                     username,
-                    password,
+                    password: hash,
                 })
                 .returning();
 
-
-            await queryWithError(query, fastify, req)
+            await queryWithError(query, fastify, req);
 
             return reply.code(204).send();
         },
@@ -144,17 +145,24 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 .where(eq(metaUsers.username, username))
                 .limit(1);
 
-            const [user] = await queryWithError<{
-                userId: string;
-                password: string;
-            }[]>(query, fastify, req)
+            const [user] = await queryWithError<
+                {
+                    userId: string;
+                    password: string;
+                }[]
+            >(query, fastify, req);
+
+            const hash = crypto.createHash("sha256").update(password).digest("hex");
 
             // TODO: replace password by hashed password
-            if (password !== user.password) {
+            if (hash !== user.password) {
+                req.log.debug('Hash is not equal to saved password hash');
                 throw fastify.httpErrors.unauthorized();
             }
 
-            const secret = getEnv(fastify, 'JWT_SECRET')
+            req.log.debug('Password hash matches!')
+
+            const secret = getEnv(fastify, "JWT_SECRET");
 
             const token = jwt.sign(
                 JSON.stringify({
@@ -176,10 +184,14 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 })
                 .returning();
 
-            const [session] = await queryWithError<{
-                token: string;
-                userId: string;
-            }[]>(insertQuery, fastify, req)
+            req.log.debug('Insert of session succesful!')
+
+            const [session] = await queryWithError<
+                {
+                    token: string;
+                    userId: string;
+                }[]
+            >(insertQuery, fastify, req);
 
             const cookie = "x-auth-token=" + session.token + ";" + "httpOnly=true";
 
@@ -198,10 +210,10 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             },
         },
         handler: async function getMetaUserSession(req, reply) {
-            const { token } = decodeToken(req, fastify)
+            const { token } = decodeToken(req, fastify);
 
             if (!token) {
-                throw fastify.httpErrors.unauthorized()
+                throw fastify.httpErrors.unauthorized();
             }
 
             let session: { token: string; userId: string };
@@ -243,20 +255,16 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             },
         },
         handler: async function deleteSession(req, reply) {
-            const { token } = decodeToken(req, fastify)
-            const query = db
-                .delete(metaSessions)
-                .where(eq(metaSessions.token, token))
-                .returning()
+            const { token } = decodeToken(req, fastify);
+            const query = db.delete(metaSessions).where(eq(metaSessions.token, token)).returning();
 
-            await queryWithError(query, fastify, req)
+            await queryWithError(query, fastify, req);
 
             const cookie = "x-auth-token=;expires=" + new Date(new Date().getTime()).toUTCString();
 
             reply.header("set-cookie", cookie);
 
-            return reply.code(204).send()
-            
+            return reply.code(204).send();
         },
     });
 };
