@@ -1,16 +1,16 @@
-import { FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync, FastifyRequest } from "fastify";
 import { S } from "fluent-json-schema";
-import { metaUsers } from "../../../db/schema.js";
+import { metaSessions, metaUsers } from "../../../db/schema.js";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { DrizzleQueryError, eq } from "drizzle-orm";
-import { Redis } from "ioredis"
-import  jwt from 'jsonwebtoken'
+import { Redis } from "ioredis";
+import jwt from "jsonwebtoken";
 
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const db = fastify.getDecorator<PostgresJsDatabase>("db");
 
-    const usernameSchema = S.string().required()
-    const passwordSchema = S.string().required()
+    const usernameSchema = S.string().required();
+    const passwordSchema = S.string().required();
 
     fastify.route({
         method: "POST",
@@ -52,83 +52,180 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     });
 
     fastify.route({
-        method: 'POST',
-        url: '/sessions',
+        method: "POST",
+        url: "/sessions",
         schema: {
             body: S.object().prop("username", usernameSchema).prop("password", passwordSchema),
             response: {
-                204: S.null()
-            }
+                204: S.null(),
+            },
         },
         handler: async function createSession(req, reply) {
-            const {username, password} = req.body as { username: string, password: string }
+            const { username, password } = req.body as { username: string; password: string };
             // verify username and password
-            let user: { userId: string, password: string }
+            let user: { userId: string; password: string };
             try {
-
-                const [_user] = await db.select({
-                    userId: metaUsers.userId,
-                    password: metaUsers.password
-                })
+                const [_user] = await db
+                    .select({
+                        userId: metaUsers.userId,
+                        password: metaUsers.password,
+                    })
                     .from(metaUsers)
                     .where(eq(metaUsers.username, username))
-                    .limit(1)
-                user = _user
-            } catch (err) { req.log.error({ err }, 'Error while fetching the user')
+                    .limit(1);
+                user = _user;
+            } catch (err) {
+                req.log.error({ err }, "Error while fetching the user");
                 if (err instanceof DrizzleQueryError) {
-                    throw fastify.httpErrors.badRequest()
+                    throw fastify.httpErrors.badRequest();
                 }
 
-                throw fastify.httpErrors.internalServerError()
+                throw fastify.httpErrors.internalServerError();
             }
 
             // TODO: replace password by hashed password
             if (password !== user.password) {
-                throw fastify.httpErrors.unauthorized()
+                throw fastify.httpErrors.unauthorized();
             }
 
             const config = fastify.getDecorator<Map<string, string | undefined>>("config");
 
-            const secret = config.get('JWT_SECRET')
+            const secret = config.get("JWT_SECRET");
 
             if (!secret) {
-                throw fastify.httpErrors.internalServerError('No secret configured')
+                throw fastify.httpErrors.internalServerError("No secret configured");
             }
 
             // create token for user
             // TODO: use jsonwebtoken
-            const token = jwt.sign(JSON.stringify({
-                username,
-                userId: user.userId
-            }), secret)
-            
+            const token = jwt.sign(
+                JSON.stringify({
+                    username,
+                    userId: user.userId,
+                }),
+                secret,
+            );
+
             const redis = fastify.getDecorator<Redis>("redis");
 
-            await redis.set('token_user_id', token)
+            await redis.set("token_user_id:" + username, token);
 
-            const cookie = 'token='
-                + token
-                + ';'
-                + 'httpOnly=true'
+            let session: { token: string; userId: string };
 
-            reply.header('set-cookie', cookie)
+            try {
+                const [_session] = await db
+                    .insert(metaSessions)
+                    .values({
+                        token,
+                        userId: user.userId,
+                    })
+                    .returning();
+
+                session = _session;
+            } catch (err) {
+                req.log.error({ err }, "Error while fetching the user");
+                if (err instanceof DrizzleQueryError) {
+                    throw fastify.httpErrors.badRequest();
+                }
+
+                throw fastify.httpErrors.internalServerError();
+            }
+
+            const cookie = "token=" + session.token + ";" + "httpOnly=true";
+
+            reply.header("set-cookie", cookie);
             // save token on redis
-            return reply.code(204).send()
-        }
-    })
+            return reply.code(204).send();
+        },
+    });
+
+    function parseCookies(request: FastifyRequest) {
+        const list = {};
+        const cookieHeader = request.headers?.cookie;
+        if (!cookieHeader) return list;
+
+        cookieHeader.split(`;`).forEach(function (cookie) {
+            let [name, ...rest] = cookie.split(`=`);
+            name = name?.trim();
+            if (!name) return;
+            const value = rest.join(`=`).trim();
+            if (!value) return;
+            // @ts-expect-error not typed
+            list[name] = decodeURIComponent(value);
+        });
+
+        return list;
+    }
 
     fastify.route({
-        method: 'GET',
-        url: 'sessions',
+        method: "GET",
+        url: "/sessions",
         schema: {
             response: {
-                204: S.null()
-            }
+                204: S.null(),
+            },
         },
-        handler: async function getMetaUserSession() {
+        handler: async function getMetaUserSession(req, reply) {
+            const cookie = parseCookies(req) as { token: string };
+            const token = cookie.token;
 
-        }
-    })
+            const config = fastify.getDecorator<Map<string, string | undefined>>("config");
+
+            const secret = config.get("JWT_SECRET");
+
+            if (!secret) {
+                throw fastify.httpErrors.internalServerError("No secret configured");
+            }
+
+            let decoded;
+            try {
+                req.log.debug('Token from request %s', token)
+                const _decoded = jwt.verify(token, secret);
+
+                decoded = _decoded;
+            } catch (err) {
+                req.log.warn({ err }, "Error while jwt verify");
+                throw fastify.httpErrors.unauthorized();
+            }
+
+            let user = { username: "", userId: "" };
+
+            if (typeof decoded !== "string" && "username" in decoded && "userId" in decoded) {
+                user.username = decoded.username;
+                user.userId = decoded.userId;
+            } else {
+                throw fastify.httpErrors.unauthorized();
+            }
+
+            let session: { token: string; userId: string };
+            try {
+                const [_session] = await db
+                    .select({
+                        token: metaSessions.token,
+                        userId: metaSessions.userId,
+                    })
+                    .from(metaSessions)
+                    .where(eq(metaSessions.token, token));
+
+                session = _session;
+            } catch (err) {
+                req.log.error({ err }, "Error while fetching the user");
+                if (err instanceof DrizzleQueryError) {
+                    throw fastify.httpErrors.badRequest();
+                }
+
+                throw fastify.httpErrors.internalServerError();
+            }
+
+            if (!session.token) {
+                throw fastify.httpErrors.unauthorized();
+            }
+
+            return {
+                ok: true,
+            };
+        },
+    });
 };
 
 export default auth;
