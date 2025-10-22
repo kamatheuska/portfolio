@@ -63,6 +63,26 @@ function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
     };
 }
 
+async function queryWithError<R = any>(query: Promise<R>, fastify: FastifyInstance, req: FastifyRequest) {
+    let result
+    try {
+        result = await query;
+    } catch (err) {
+        req.log.error({ err }, "Error while query DB");
+        if (err instanceof DrizzleQueryError) {
+            throw fastify.httpErrors.badRequest();
+        }
+
+        throw fastify.httpErrors.internalServerError();
+    }
+
+    if (!result) {
+        throw fastify.httpErrors.internalServerError('No returning from Query')
+    }
+
+    return result;
+
+}
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const db = fastify.getDecorator<PostgresJsDatabase>("db");
 
@@ -251,26 +271,12 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         },
         handler: async function deleteSession(req, reply) {
             const { token } = decodeToken(req, fastify)
-            let session: { token: string; userId: string };
-            try {
-                const [_session] = await db
-                    .delete(metaSessions)
-                    .where(eq(metaSessions.token, token))
-                    .returning()
+            const query = db
+                .delete(metaSessions)
+                .where(eq(metaSessions.token, token))
+                .returning()
 
-                session = _session;
-            } catch (err) {
-                req.log.error({ err }, "Error while fetching the user");
-                if (err instanceof DrizzleQueryError) {
-                    throw fastify.httpErrors.badRequest();
-                }
-
-                throw fastify.httpErrors.internalServerError();
-            }
-
-            if (!session) {
-                throw fastify.httpErrors.internalServerError('Could not delete token')
-            }
+            await queryWithError(query, fastify, req)
 
             const cookie = "x-auth-token=;expires=" + new Date(new Date().getTime()).toUTCString();
 
