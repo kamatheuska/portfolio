@@ -7,10 +7,13 @@ import { DrizzleQueryError } from "drizzle-orm";
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const db = fastify.getDecorator<PostgresJsDatabase>("db");
 
+    const usernameSchema = S.string().required()
+    const passwordSchema = S.string().required()
+
     fastify.route({
         method: "POST",
         schema: {
-            body: S.object().prop("username", S.string().required()).prop("password", S.string().required()),
+            body: S.object().prop("username", usernameSchema).prop("password", passwordSchema),
             response: {
                 204: S.null(),
             },
@@ -45,6 +48,34 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             return reply.code(204).send();
         },
     });
+
+    fastify.route({
+        method: 'POST',
+        url: 'sessions',
+        schema: {
+            body: S.object().prop("username", usernameSchema).prop("password", passwordSchema),
+            response: {
+                204: S.null()
+            }
+        },
+        handler: async function createSession(req, reply) {
+    
+            return reply.code(204).send()
+        }
+    })
+
+    fastify.route({
+        method: 'GET',
+        url: 'sessions',
+        schema: {
+            response: {
+                204: S.null()
+            }
+        },
+        handler: async function getMetaUserSession() {
+
+        }
+    })
 };
 
 export default auth;

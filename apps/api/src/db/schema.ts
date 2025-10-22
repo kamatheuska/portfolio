@@ -28,10 +28,8 @@ export const metaUsers = metaAuthSchema.table(
             .notNull(),
     },
     table => [
-        // Unique constraint (alternative syntax)
         unique("username_unique_idx").on(table.username),
 
-        // Check constraints for validation
         check("username_length_check", sql`length(username) >= 3`),
         check(
             "username_format_check",
@@ -39,12 +37,25 @@ export const metaUsers = metaAuthSchema.table(
         ),
         check("password_length_check", sql`length(password) >= 8`),
 
-        // Index for faster lookups
         index("username_idx").on(table.username),
     ],
 );
 export const metaSessions = metaAuthSchema.table("sessions", {
+    tokenId: uuid("token_id")
+        .default(sql`uuid_generate_v4()`)
+        .primaryKey()
+        .notNull(),
     token: varchar("token", { length: 256 }).notNull(),
+    userId: uuid("user_id")
+        .notNull(),
     createdAt: timestamp().default(sql`now()`),
     updatedAt: timestamp().default(sql`now()`),
-});
+},
+    table => [
+        unique("token_id_unique_idx").on(table.tokenId),
+        unique("token_unique_idx").on(table.token),
+
+        index("token_idx").on(table.token),
+    ],
+
+);
