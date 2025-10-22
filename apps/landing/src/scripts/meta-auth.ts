@@ -2,16 +2,32 @@ import { PUBLIC_API_BASE_URL } from "astro:env/client";
 
 const apiBaseURL = PUBLIC_API_BASE_URL ?? "";
 
-async function tryPostFetch(url: string, body: Record<string, any>, expectedStatus = 200) {
+async function tryFetch({
+    url,
+    body = null,
+    expectedStatus = 200,
+    method = 'GET'
+}: {
+    url: string;
+    body: Record<string, any>;
+    expectedStatus: number;
+    method: string;
+}) {
     let response;
     try {
         console.info("Form submitted");
+        const isUpdate = ['POST', 'PUT'].includes(method)
+
+        const headers = isUpdate ? {
+            "Content-Type": "application/json",
+        } : undefined
+        const updateBody = body ? JSON.stringify(body) : undefined;
+
         response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
+            method,
+            headers,
+            body: updateBody,
+            credentials: 'include'
         });
     } catch (error) {
         console.error("Error while tryPostFetch", error);
@@ -52,25 +68,25 @@ document.addEventListener("alpine:init", () => {
             return data;
         },
 
-        shortUrl: "",
-        originalUrl: "",
-        shortenedUrlHref: "",
         username: "",
         password: "",
         userCreated: false,
+        userLoggedIn: false,
+        hiddenSecret: null,
 
         async createMetaUser() {
             const url = `${apiBaseURL}/api/meta-auth/users`;
 
             try {
-                await tryPostFetch(
+                await tryFetch({
                     url,
-                    {
+                    expectedStatus: 204,
+                    method: 'POST',
+                    body: {
                         username: this.username,
                         password: this.password,
                     },
-                    204,
-                );
+                });
 
                 this.userCreated = true;
 
@@ -80,6 +96,46 @@ document.addEventListener("alpine:init", () => {
             }
         },
 
+        async createMetaSession() {
+            const url = `${apiBaseURL}/api/meta-auth/sessions`;
+
+            try {
+                await tryFetch({
+                    url,
+                    expectedStatus: 204,
+                    method: 'POST',
+                    body: {
+                        username: this.username,
+                        password: this.password,
+                    },
+                });
+
+                this.userLoggedIn = true;
+
+                alert("User logged in!");
+            } catch (error) {
+                alert("Error on user login", error.message);
+            }
+        },
+
+        async getMetaSession() {
+            const url = `${apiBaseURL}/api/meta-auth/sessions`;
+
+            try {
+                await tryFetch({
+                    url,
+                    expectedStatus: 200,
+                    method: 'GET'
+                });
+
+                this.hiddenSecret = "Not a big deal after all: 1234";
+
+                alert("User session succesfully fetched!");
+            } catch (error) {
+                alert("Error while fetching the user session", error.message);
+            }
+
+        },
         noop() {}
     }));
 });

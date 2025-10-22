@@ -7,6 +7,8 @@ import { Redis } from "ioredis";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
+const AUTH_COOKIE_NAME = 'x-auth-token';
+
 function parseCookies(request: FastifyRequest) {
     const list = {};
     const cookieHeader = request.headers?.cookie;
@@ -26,9 +28,15 @@ function parseCookies(request: FastifyRequest) {
 }
 
 function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
-    const cookie = parseCookies(req) as { token: string };
-    const token = cookie.token;
+    const cookie = parseCookies(req) as { [AUTH_COOKIE_NAME]: string };
+    const token = cookie[AUTH_COOKIE_NAME];
 
+    req.log.debug({ headers: req.headers, cookie }, 'headers and cookie')
+
+    if (!token) {
+        req.log.debug('No token on cookies')
+        throw fastify.httpErrors.unauthorized
+    }
     const secret = getEnv(fastify, "JWT_SECRET");
 
     let decoded;

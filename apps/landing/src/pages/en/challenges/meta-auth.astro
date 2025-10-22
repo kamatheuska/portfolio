@@ -12,73 +12,106 @@ import RootLayout from "../../../layouts/root-layout.astro";
         <div>
             <Menu />
             <Content>
-                <div class="p-8 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)]">
+                <div
+                    class="p-8 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)] text-blue-200"
+                    x-data="useMetaAuthForm"
+                >
                     <div class="flex items-end w-full justify-end">
                         <LinesMenu />
                     </div>
                     <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
                         Meta Auth
                     </h1>
+                    <div class="mb-8">
+                        <p>Do your own auth, they said...It would be easy, they said...</p>
+                        <p>Try our meta auth with JWT and fastify, source code in Github!</p>
+                    </div>
+                    <form
+                        class="text-blue-200 mb-8"
+                        method="post"
+                        @submit.prevent="noop"
+                        id="createMetaUserForm"
+                        x-show="!userCreated"
+                    >
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center gap-3 mb-4">
+                                <label for="url" class="grow"> Type a username </label>
+                                <input
+                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
+                                    id="username"
+                                    type="text"
+                                    minlength="3"
+                                    required
+                                    name="url"
+                                    x-model="username"
+                                    placeholder="michael.jackson"
+                                />
+                            </div>
+                            <div class="flex justify-between items-center gap-3">
+                                <label for="url" class="grow"> Type a password </label>
+                                <input
+                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
+                                    id="password"
+                                    minlength="8"
+                                    type="password"
+                                    required
+                                    x-model="password"
+                                    name="url"
+                                    placeholder="thriller123!"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <Button form="createMetaUserForm" @click="createMetaUser">Create User</Button>
+                        </div>
+                    </form>
                     <form
                         class="text-blue-200"
                         method="post"
                         @submit.prevent="noop"
-                        id="createMetaUserForm"
-                        x-data="useMetaAuthForm"
+                        id="createMetaSessionForm"
+                        x-show="userCreated && !userLoggedIn"
                     >
                         <div class="mb-8">
-                            <p>Do your own auth, they said...It would be easy, they said...</p>
-                            <p>Try our meta auth with JWT and fastify, source code in Github!</p>
-                        </div>
-                        <div x-show="!userCreated">
-                            <div class="mb-8">
-                                <div class="flex justify-between items-center gap-3 mb-4">
-                                    <label for="url" class="grow"> Type a username </label>
-                                    <input
-                                        class="grow bg-pink-100 text-blue-900 px-3 py-2"
-                                        id="username"
-                                        type="text"
-                                        minlength="3"
-                                        required
-                                        name="url"
-                                        x-model="username"
-                                        placeholder="michael.jackson"
-                                    />
-                                </div>
-                                <div class="flex justify-between items-center gap-3">
-                                    <label for="url" class="grow"> Type a password </label>
-                                    <input
-                                        class="grow bg-pink-100 text-blue-900 px-3 py-2"
-                                        id="password"
-                                        minlength="8"
-                                        type="password"
-                                        required
-                                        x-model="password"
-                                        name="url"
-                                        placeholder="thriller123!"
-                                    />
-                                </div>
+                            <div class="flex justify-between items-center gap-3 mb-4">
+                                <label for="url" class="grow"> Type a username </label>
+                                <input
+                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
+                                    id="login-username"
+                                    type="text"
+                                    minlength="3"
+                                    required
+                                    name="url"
+                                    x-model="username"
+                                    placeholder="michael.jackson"
+                                />
                             </div>
-                            <div>
-                                <Button form="createMetaUserForm" @click="createMetaUser">Create User</Button>
+                            <div class="flex justify-between items-center gap-3">
+                                <label for="url" class="grow"> Type a password </label>
+                                <input
+                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
+                                    id="login-password"
+                                    minlength="8"
+                                    type="password"
+                                    required
+                                    x-model="password"
+                                    name="url"
+                                    placeholder="thriller123!"
+                                />
                             </div>
                         </div>
-                        <div
-                            x-show="shortenedUrlHref"
-                            class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5"
-                        >
-                            <p>Now you can access it by going to:</p>
-                            <!-- eslint-disable-line -->
-                            <a
-                                class="text-pink-500 hover:text-green-400 transition-colors"
-                                target="_blank"
-                                x-bind:href="shortenedUrlHref"
-                                x-text="`/api/url-shortener/${shortUrl}`"
-                            >
-                                test
-                            </a>
+                        <div>
+                            <Button form="createMetaUserForm" @click="createMetaSession">Login User</Button>
                         </div>
                     </form>
+                    <div>
+                        <p class="font-bold mb-4">Hidden secret ???</p>
+
+                        <div x-show="!hiddenSecret">
+                            <Button @click="getMetaSession"> Show hidden Secret </Button>
+                        </div>
+                        <p x-text="hiddenSecret" x-show="hiddenSecret" class="text-3xl text-light-green font-bold"></p>
+                    </div>
                 </div>
                 <Background />
             </Content>

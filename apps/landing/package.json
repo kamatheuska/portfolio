@@ -8,6 +8,7 @@
         "build": "astro check && astro build",
         "preview": "astro preview",
         "lint": "eslint .",
+        "ssl": "local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 4322 --target 4321",
         "astro": "astro"
     },
     "dependencies": {
