@@ -28,13 +28,7 @@ function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
     const cookie = parseCookies(req) as { token: string };
     const token = cookie.token;
 
-    const config = fastify.getDecorator<Map<string, string | undefined>>("config");
-
-    const secret = config.get("JWT_SECRET");
-
-    if (!secret) {
-        throw fastify.httpErrors.internalServerError("No secret configured");
-    }
+    const secret = getEnv(fastify, 'JWT_SECRET')
 
     let decoded;
     try {
@@ -83,6 +77,19 @@ async function queryWithError<R = any>(query: Promise<R>, fastify: FastifyInstan
     return result;
 
 }
+
+function getEnv(fastify: FastifyInstance, env: string) {
+    const config = fastify.getDecorator<Map<string, string | undefined>>("config");
+
+    const secret = config.get(env);
+
+    if (!secret) {
+        throw fastify.httpErrors.internalServerError("No env for " + env);
+    }
+
+    return secret;
+}
+
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const db = fastify.getDecorator<PostgresJsDatabase>("db");
 
@@ -147,13 +154,7 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 throw fastify.httpErrors.unauthorized();
             }
 
-            const config = fastify.getDecorator<Map<string, string | undefined>>("config");
-
-            const secret = config.get("JWT_SECRET");
-
-            if (!secret) {
-                throw fastify.httpErrors.internalServerError("No secret configured");
-            }
+            const secret = getEnv(fastify, 'JWT_SECRET')
 
             const token = jwt.sign(
                 JSON.stringify({
