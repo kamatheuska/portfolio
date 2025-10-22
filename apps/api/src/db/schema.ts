@@ -40,6 +40,7 @@ export const metaUsers = metaAuthSchema.table(
         index("username_idx").on(table.username),
     ],
 );
+
 export const metaSessions = metaAuthSchema.table("sessions", {
     tokenId: uuid("token_id")
         .default(sql`uuid_generate_v4()`)

@@ -25,10 +25,3 @@ export default fp(async fastify => {
         process.exit(1);
     }
 }, metadata);
-
-// When using .decorate you have to specify added properties for Typescript
-declare module "fastify" {
-    export interface FastifyInstance {
-        env(): Map<string, string | undefined>;
-    }
-}

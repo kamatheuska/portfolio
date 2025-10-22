@@ -32,6 +32,7 @@ export const envConfig: Map<string, EnvVarConfig> = new Map([
     ["REDIS_HOST", { required: true }],
     ["REDIS_PASSWORD", { required: true }],
     ["REDIS_USERNAME", { required: true }],
+    ["JWT_SECRET", { required: true }],
     ["PORT", { default: "3000" }],
     ["NODE_ENV", { default: "development" }],
     ["LOG_LEVEL", { default: "info" }],
