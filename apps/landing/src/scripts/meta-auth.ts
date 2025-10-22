@@ -60,14 +60,6 @@ async function tryFetch({
 document.addEventListener("alpine:init", () => {
     // @ts-ignore
     Alpine.data("useMetaAuthForm", () => ({
-        data() {
-            // @ts-ignore
-            const inputs = Array.from(this.$el.querySelectorAll("input, textarea"));
-            // @ts-ignore
-            const data = inputs.reduce((object, key) => ({ ...object, [key.name]: key.value }), {});
-            return data;
-        },
-
         username: "",
         password: "",
         userCreated: false,
@@ -133,6 +125,34 @@ document.addEventListener("alpine:init", () => {
                 alert("User session succesfully fetched!");
             } catch (error) {
                 alert("Error while fetching the user session", error.message);
+            }
+
+        },
+
+        async deleteMetaSession() {
+            const url = `${apiBaseURL}/api/meta-auth/sessions`;
+
+            if (!this.userLoggedIn) {
+                alert("First login, then logout :)")
+                return
+            }
+
+            try {
+                await tryFetch({
+                    url,
+                    expectedStatus: 204,
+                    method: 'DELETE'
+                });
+
+                this.hiddenSecret = ""
+                this.username = ""
+                this.password = ""
+                this.userCreated = false
+                this.userLoggedIn = false
+
+                alert("User session succesfully deleted. Logged out!");
+            } catch (error) {
+                alert("Error while logout", error.message);
             }
 
         },

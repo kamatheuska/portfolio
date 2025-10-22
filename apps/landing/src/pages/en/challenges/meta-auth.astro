@@ -31,7 +31,6 @@ import RootLayout from "../../../layouts/root-layout.astro";
                         method="post"
                         @submit.prevent="noop"
                         id="createMetaUserForm"
-                        x-show="!userCreated"
                     >
                         <div class="mb-8">
                             <div class="flex justify-between items-center gap-3 mb-4">
@@ -61,47 +60,20 @@ import RootLayout from "../../../layouts/root-layout.astro";
                                 />
                             </div>
                         </div>
-                        <div>
-                            <Button form="createMetaUserForm" @click="createMetaUser">Create User</Button>
-                        </div>
-                    </form>
-                    <form
-                        class="text-blue-200"
-                        method="post"
-                        @submit.prevent="noop"
-                        id="createMetaSessionForm"
-                        x-show="userCreated && !userLoggedIn"
-                    >
-                        <div class="mb-8">
-                            <div class="flex justify-between items-center gap-3 mb-4">
-                                <label for="url" class="grow"> Type a username </label>
-                                <input
-                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
-                                    id="login-username"
-                                    type="text"
-                                    minlength="3"
-                                    required
-                                    name="url"
-                                    x-model="username"
-                                    placeholder="michael.jackson"
-                                />
+                        <div class="flex gap-2">
+                            <div class="grow" x-show="!userCreated">
+                                <Button form="createMetaUserForm" @click="createMetaUser">Create User</Button>
                             </div>
-                            <div class="flex justify-between items-center gap-3">
-                                <label for="url" class="grow"> Type a password </label>
-                                <input
-                                    class="grow bg-pink-100 text-blue-900 px-3 py-2"
-                                    id="login-password"
-                                    minlength="8"
-                                    type="password"
-                                    required
-                                    x-model="password"
-                                    name="url"
-                                    placeholder="thriller123!"
-                                />
+                            <div class="grow">
+                                <Button form="createMetaUserForm" @click="createMetaSession"
+                                    >Login User</Button
+                                >
                             </div>
-                        </div>
-                        <div>
-                            <Button form="createMetaUserForm" @click="createMetaSession">Login User</Button>
+                            <div class="grow">
+                                <Button form="createMetaUserForm" @click="deleteMetaSession"
+                                    >Logout User</Button
+                                >
+                            </div>
                         </div>
                     </form>
                     <div>
@@ -110,7 +82,12 @@ import RootLayout from "../../../layouts/root-layout.astro";
                         <div x-show="!hiddenSecret">
                             <Button @click="getMetaSession"> Show hidden Secret </Button>
                         </div>
-                        <p x-text="hiddenSecret" x-show="hiddenSecret" class="text-3xl text-light-green font-bold"></p>
+                        <p
+                            x-text="hiddenSecret"
+                            x-show="hiddenSecret"
+                            class="text-3xl text-light-green font-bold"
+                        >
+                        </p>
                     </div>
                 </div>
                 <Background />
