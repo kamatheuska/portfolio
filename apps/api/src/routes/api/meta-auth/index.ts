@@ -127,26 +127,20 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         },
         handler: async function createSession(req, reply) {
             const { username, password } = req.body as { username: string; password: string };
-            // verify username and password
-            let user: { userId: string; password: string };
-            try {
-                const [_user] = await db
-                    .select({
-                        userId: metaUsers.userId,
-                        password: metaUsers.password,
-                    })
-                    .from(metaUsers)
-                    .where(eq(metaUsers.username, username))
-                    .limit(1);
-                user = _user;
-            } catch (err) {
-                req.log.error({ err }, "Error while fetching the user");
-                if (err instanceof DrizzleQueryError) {
-                    throw fastify.httpErrors.badRequest();
-                }
 
-                throw fastify.httpErrors.internalServerError();
-            }
+            const query = db
+                .select({
+                    userId: metaUsers.userId,
+                    password: metaUsers.password,
+                })
+                .from(metaUsers)
+                .where(eq(metaUsers.username, username))
+                .limit(1);
+
+            const [user] = await queryWithError<{
+                userId: string;
+                password: string;
+            }[]>(query, fastify, req)
 
             // TODO: replace password by hashed password
             if (password !== user.password) {
@@ -161,8 +155,6 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 throw fastify.httpErrors.internalServerError("No secret configured");
             }
 
-            // create token for user
-            // TODO: use jsonwebtoken
             const token = jwt.sign(
                 JSON.stringify({
                     username,
@@ -175,31 +167,23 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 
             await redis.set("token_user_id:" + username, token);
 
-            let session: { token: string; userId: string };
+            const insertQuery = db
+                .insert(metaSessions)
+                .values({
+                    token,
+                    userId: user.userId,
+                })
+                .returning();
 
-            try {
-                const [_session] = await db
-                    .insert(metaSessions)
-                    .values({
-                        token,
-                        userId: user.userId,
-                    })
-                    .returning();
-
-                session = _session;
-            } catch (err) {
-                req.log.error({ err }, "Error while fetching the user");
-                if (err instanceof DrizzleQueryError) {
-                    throw fastify.httpErrors.badRequest();
-                }
-
-                throw fastify.httpErrors.internalServerError();
-            }
+            const [session] = await queryWithError<{
+                token: string;
+                userId: string;
+            }[]>(insertQuery, fastify, req)
 
             const cookie = "x-auth-token=" + session.token + ";" + "httpOnly=true";
 
             reply.header("set-cookie", cookie);
-            // save token on redis
+
             return reply.code(204).send();
         },
     });
