@@ -14,7 +14,8 @@
         "build:ts": "tsc",
         "watch:ts": "tsc -w",
         "dev:con": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
-        "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/server.js"
+        "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/server.js",
+        "format": "prettier ./src --write"
     },
     "keywords": [],
     "author": "",
