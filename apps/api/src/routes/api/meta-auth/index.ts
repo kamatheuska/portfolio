@@ -1,10 +1,67 @@
-import { FastifyPluginAsync, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyPluginAsync, FastifyRequest } from "fastify";
 import { S } from "fluent-json-schema";
 import { metaSessions, metaUsers } from "../../../db/schema.js";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { DrizzleQueryError, eq } from "drizzle-orm";
 import { Redis } from "ioredis";
 import jwt from "jsonwebtoken";
+
+function parseCookies(request: FastifyRequest) {
+    const list = {};
+    const cookieHeader = request.headers?.cookie;
+    if (!cookieHeader) return list;
+
+    cookieHeader.split(`;`).forEach(function (cookie) {
+        let [name, ...rest] = cookie.split(`=`);
+        name = name?.trim();
+        if (!name) return;
+        const value = rest.join(`=`).trim();
+        if (!value) return;
+        // @ts-expect-error not typed
+        list[name] = decodeURIComponent(value);
+    });
+
+    return list;
+}
+
+function decodeToken(req: FastifyRequest, fastify: FastifyInstance) {
+    const cookie = parseCookies(req) as { token: string };
+    const token = cookie.token;
+
+    const config = fastify.getDecorator<Map<string, string | undefined>>("config");
+
+    const secret = config.get("JWT_SECRET");
+
+    if (!secret) {
+        throw fastify.httpErrors.internalServerError("No secret configured");
+    }
+
+    let decoded;
+    try {
+        req.log.debug("Token from request %s", token);
+        const _decoded = jwt.verify(token, secret);
+
+        decoded = _decoded;
+    } catch (err) {
+        req.log.warn({ err }, "Error while jwt verify");
+        throw fastify.httpErrors.unauthorized();
+    }
+
+    let user = { username: "", userId: "" };
+
+    if (typeof decoded !== "string" && "username" in decoded && "userId" in decoded) {
+        user.username = decoded.username;
+        user.userId = decoded.userId;
+    } else {
+        throw fastify.httpErrors.unauthorized();
+    }
+
+    return {
+        token, 
+        decoded,
+        user
+    };
+}
 
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     const db = fastify.getDecorator<PostgresJsDatabase>("db");
@@ -131,31 +188,13 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 throw fastify.httpErrors.internalServerError();
             }
 
-            const cookie = "token=" + session.token + ";" + "httpOnly=true";
+            const cookie = "x-auth-token=" + session.token + ";" + "httpOnly=true";
 
             reply.header("set-cookie", cookie);
             // save token on redis
             return reply.code(204).send();
         },
     });
-
-    function parseCookies(request: FastifyRequest) {
-        const list = {};
-        const cookieHeader = request.headers?.cookie;
-        if (!cookieHeader) return list;
-
-        cookieHeader.split(`;`).forEach(function (cookie) {
-            let [name, ...rest] = cookie.split(`=`);
-            name = name?.trim();
-            if (!name) return;
-            const value = rest.join(`=`).trim();
-            if (!value) return;
-            // @ts-expect-error not typed
-            list[name] = decodeURIComponent(value);
-        });
-
-        return list;
-    }
 
     fastify.route({
         method: "GET",
@@ -166,35 +205,10 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             },
         },
         handler: async function getMetaUserSession(req, reply) {
-            const cookie = parseCookies(req) as { token: string };
-            const token = cookie.token;
+            const { token } = decodeToken(req, fastify)
 
-            const config = fastify.getDecorator<Map<string, string | undefined>>("config");
-
-            const secret = config.get("JWT_SECRET");
-
-            if (!secret) {
-                throw fastify.httpErrors.internalServerError("No secret configured");
-            }
-
-            let decoded;
-            try {
-                req.log.debug('Token from request %s', token)
-                const _decoded = jwt.verify(token, secret);
-
-                decoded = _decoded;
-            } catch (err) {
-                req.log.warn({ err }, "Error while jwt verify");
-                throw fastify.httpErrors.unauthorized();
-            }
-
-            let user = { username: "", userId: "" };
-
-            if (typeof decoded !== "string" && "username" in decoded && "userId" in decoded) {
-                user.username = decoded.username;
-                user.userId = decoded.userId;
-            } else {
-                throw fastify.httpErrors.unauthorized();
+            if (!token) {
+                throw fastify.httpErrors.unauthorized()
             }
 
             let session: { token: string; userId: string };
@@ -217,13 +231,53 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 throw fastify.httpErrors.internalServerError();
             }
 
-            if (!session.token) {
+            if (!session?.token) {
                 throw fastify.httpErrors.unauthorized();
             }
 
             return {
                 ok: true,
             };
+        },
+    });
+
+    fastify.route({
+        method: "DELETE",
+        url: "/sessions",
+        schema: {
+            response: {
+                204: S.null(),
+            },
+        },
+        handler: async function deleteSession(req, reply) {
+            const { token } = decodeToken(req, fastify)
+            let session: { token: string; userId: string };
+            try {
+                const [_session] = await db
+                    .delete(metaSessions)
+                    .where(eq(metaSessions.token, token))
+                    .returning()
+
+                session = _session;
+            } catch (err) {
+                req.log.error({ err }, "Error while fetching the user");
+                if (err instanceof DrizzleQueryError) {
+                    throw fastify.httpErrors.badRequest();
+                }
+
+                throw fastify.httpErrors.internalServerError();
+            }
+
+            if (!session) {
+                throw fastify.httpErrors.internalServerError('Could not delete token')
+            }
+
+            const cookie = "x-auth-token=;expires=" + new Date(new Date().getTime()).toUTCString();
+
+            reply.header("set-cookie", cookie);
+
+            return reply.code(204).send()
+            
         },
     });
 };
