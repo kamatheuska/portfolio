@@ -101,28 +101,16 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         handler: async function createMetaUser(req, reply) {
             const { username, password } = req.body as { username: string; password: string };
 
-            let created;
-            try {
-                const [user] = await db
-                    .insert(metaUsers)
-                    .values({
-                        username,
-                        password,
-                    })
-                    .returning();
+            const query = db
+                .insert(metaUsers)
+                .values({
+                    username,
+                    password,
+                })
+                .returning();
 
-                created = user;
-            } catch (err) {
-                req.log.error({ err });
-                if (err instanceof DrizzleQueryError) {
-                    throw fastify.httpErrors.badRequest();
-                }
-                throw fastify.httpErrors.internalServerError("Could not create user");
-            }
 
-            if (!created) {
-                throw fastify.httpErrors.internalServerError("Could not create user");
-            }
+            await queryWithError(query, fastify, req)
 
             return reply.code(204).send();
         },
