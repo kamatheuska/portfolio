@@ -84,7 +84,8 @@ const currentLocale = Astro.currentLocale ?? "en";
     </div>
 </div>
 
-<script define:vars={{ pulsarId, delay }}>
+<script define:vars={{ pulsarId, delay }} is:inline>
+
     document.addEventListener("DOMContentLoaded", () => {
         const PADDING = 20;
         const tooltipLabel = document.querySelector(`#${pulsarId} + div span`);
@@ -97,6 +98,8 @@ const currentLocale = Astro.currentLocale ?? "en";
         }
 
         // Animation using Web Animations API instead of motion library
+
+        // @ts-expect-error pulsarId is defined
         const pulsar = document.getElementById(pulsarId);
         if (pulsar) {
             pulsar.animate(

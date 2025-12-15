@@ -4,9 +4,8 @@ import icon from "astro-icon";
 
 import alpinejs from "@astrojs/alpinejs";
 
-import node from "@astrojs/node";
-
 import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
     integrations: [icon(), alpinejs()],

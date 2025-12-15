@@ -1,52 +1,18 @@
 ---
 import "../../styles/base.css";
-import { Icon } from "astro-icon/components";
 import Button from "../../components/button.astro";
 import Social from "../../components/base/social.astro";
 import Menu from "../../components/menu.astro";
 import RootLayout from "../../layouts/root-layout.astro";
 import Background from "../../components/background.astro";
 import Content from "../../components/content.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
-interface Social {
-    link: string;
-    title: string;
-    icon: string;
-}
-
-const social: Social[] = [
-    {
-        link: "mailto:nicolas@matizlab.com",
-        title: "Get in touch",
-        icon: "mdi:envelope",
-    },
-    {
-        link: "https://www.linkedin.com/in/nicolasramirezdev",
-        title: "Link to LinkedIn Profile",
-        icon: "mdi:linkedin",
-    },
-    {
-        link: "http://www.instagram.com/nicoramirezdev",
-        title: "Link to Instagram Profile",
-        icon: "mdi:instagram",
-    },
-    {
-        link: "https://www.github.com/kamatheuska",
-        title: "Link to Github Profile",
-        icon: "mdi:github",
-    },
-    {
-        link: "https://stackoverflow.com/u/7868769",
-        title: "Link to Stackoverflow Profile",
-        icon: "mdi:stack-overflow",
-    },
-];
+// import { getRelativeLocaleUrl } from "astro:i18n";
 
 export function getStaticPaths() {
     return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
 }
-const currentLocale = Astro.currentLocale ?? "en";
-const aboutURL = getRelativeLocaleUrl(currentLocale, "about");
+// const currentLocale = Astro.currentLocale ?? "en";
+// const aboutURL = getRelativeLocaleUrl(currentLocale, "about");
 
 // For client-side interactivity
 ---
