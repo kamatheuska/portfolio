@@ -27,11 +27,17 @@ import RootLayout from "../../../layouts/root-layout.astro";
                         <p>Try our meta auth with JWT and fastify, source code in Github!</p>
                     </div>
                     <form
-                        class="text-blue-200 mb-8"
+                        class="text-blue-200 mb-8 font-mono text-light-green font-bold"
                         method="post"
                         @submit.prevent="noop"
                         id="createMetaUserForm"
                     >
+                        <p class="flex items-center justify-end mb-4">
+                            <span> Meta System says: </span>
+                            <span
+                                class="min-w-32 min-h-8 px-2 py-1 backdrop-blur-[2px] bg-light-green text-blue-900"
+                                x-text="systemMessage"></span>
+                        </p>
                         <div class="mb-8">
                             <div class="flex justify-between items-center gap-3 mb-4">
                                 <label for="url" class="grow"> Type a username </label>
@@ -61,17 +67,25 @@ import RootLayout from "../../../layouts/root-layout.astro";
                             </div>
                         </div>
                         <div class="flex gap-2">
-                            <div class="grow" x-show="!userCreated">
-                                <Button form="createMetaUserForm" @click="createMetaUser">Create User</Button>
-                            </div>
-                            <div class="grow">
-                                <Button form="createMetaUserForm" @click="createMetaSession"
-                                    >Login User</Button
+                            <div class="grow w-full" x-show="!userCreated">
+                                <Button
+                                    class="w-full"
+                                    form="createMetaUserForm"
+                                    @click="createMetaUser($data)">Signup</Button
                                 >
                             </div>
-                            <div class="grow">
-                                <Button form="createMetaUserForm" @click="deleteMetaSession"
-                                    >Logout User</Button
+                            <div class="grow w-full">
+                                <Button
+                                    class="w-full"
+                                    form="createMetaUserForm"
+                                    @click="createMetaSession($data)">Login</Button
+                                >
+                            </div>
+                            <div class="grow" x-show="userLoggedIn">
+                                <Button
+                                    class="w-full"
+                                    form="createMetaUserForm"
+                                    @click="deleteMetaSession($data)">Logout</Button
                                 >
                             </div>
                         </div>

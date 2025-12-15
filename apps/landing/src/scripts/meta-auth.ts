@@ -4,14 +4,14 @@ const apiBaseURL = PUBLIC_API_BASE_URL ?? "";
 
 async function tryFetch({
     url,
-    body = null,
+    body,
     expectedStatus = 200,
     method = 'GET'
 }: {
     url: string;
-    body: Record<string, any>;
-    expectedStatus: number;
-    method: string;
+    body?: Record<string, any>;
+    expectedStatus?: number;
+    method?: string;
 }) {
     let response;
     try {
@@ -30,7 +30,6 @@ async function tryFetch({
             credentials: 'include'
         });
     } catch (error) {
-        console.error("Error while tryPostFetch", error);
         throw error;
     }
 
@@ -38,9 +37,6 @@ async function tryFetch({
         throw new Error("No response from api");
     }
 
-    if (response.status !== expectedStatus) {
-        throw new Error("Error on tryPostFetch");
-    }
 
     if (expectedStatus === 204) {
         return;
@@ -54,108 +50,137 @@ async function tryFetch({
         throw error;
     }
 
+    if (response.status !== expectedStatus) {
+        throw new Error(json.error.message);
+    }
+
     return json;
 }
+async function getMetaSession() {
+    const url = `${apiBaseURL}/api/meta-auth/sessions`;
+
+    try {
+        await tryFetch({
+            url,
+            expectedStatus: 200,
+            method: 'GET'
+        });
+
+    } catch (error) {
+        console.error("Error while fetching the user session", (error as Error).message);
+    }
+}
+
+async function createMetaUser({
+    username,
+    password
+}: {
+    username: string;
+    password: string;
+}) {
+    const url = `${apiBaseURL}/api/meta-auth/users`;
+
+    await tryFetch({
+        url,
+        expectedStatus: 204,
+        method: 'POST',
+        body: {
+            username,
+            password
+        },
+    });
+
+}
+
+async function createMetaSession({
+    username,
+    password
+}: {
+    username: string;
+    password: string;
+}) {
+    const url = `${apiBaseURL}/api/meta-auth/sessions`;
+
+    await tryFetch({
+        url,
+        expectedStatus: 204,
+        method: 'POST',
+        body: {
+            username,
+            password
+        },
+    });
+
+}
+
+
+async function deleteMetaSession() {
+    const url = `${apiBaseURL}/api/meta-auth/sessions`;
+
+    await tryFetch({
+        url,
+        expectedStatus: 204,
+        method: 'DELETE'
+    });
+}
+
+function noop() {}
 
 document.addEventListener("alpine:init", () => {
-    // @ts-ignore
+    // @ts-expect-error - Alpine is not typed
     Alpine.data("useMetaAuthForm", () => ({
         username: "",
         password: "",
+        systemMessage: "",
         userCreated: false,
-        userLoggedIn: false,
+        userLoggedIn: true,
         hiddenSecret: null,
-
-        async createMetaUser() {
-            const url = `${apiBaseURL}/api/meta-auth/users`;
-
+        createMetaUser,
+        async createMetaSession(data: any) {
+            this.systemMessage = 'Logging in...'
             try {
-                await tryFetch({
-                    url,
-                    expectedStatus: 204,
-                    method: 'POST',
-                    body: {
-                        username: this.username,
-                        password: this.password,
-                    },
-                });
-
-                this.userCreated = true;
-
-                alert("User created!");
-            } catch (error) {
-                alert("Error on user creation", error.message);
-            }
-        },
-
-        async createMetaSession() {
-            const url = `${apiBaseURL}/api/meta-auth/sessions`;
-
-            try {
-                await tryFetch({
-                    url,
-                    expectedStatus: 204,
-                    method: 'POST',
-                    body: {
-                        username: this.username,
-                        password: this.password,
-                    },
-                });
+                await createMetaSession(data)
 
                 this.userLoggedIn = true;
-
-                alert("User logged in!");
+                this.systemMessage = 'Success!'
             } catch (error) {
-                alert("Error on user login", error.message);
+                this.systemMessage = (error as Error).message
             }
         },
-
-        async getMetaSession() {
-            const url = `${apiBaseURL}/api/meta-auth/sessions`;
-
-            try {
-                await tryFetch({
-                    url,
-                    expectedStatus: 200,
-                    method: 'GET'
-                });
-
-                this.hiddenSecret = "Not a big deal after all: 1234";
-
-                alert("User session succesfully fetched!");
-            } catch (error) {
-                alert("Error while fetching the user session", error.message);
-            }
-
-        },
-
         async deleteMetaSession() {
-            const url = `${apiBaseURL}/api/meta-auth/sessions`;
-
-            if (!this.userLoggedIn) {
-                alert("First login, then logout :)")
-                return
-            }
+            this.systemMessage = 'Logout...'
 
             try {
-                await tryFetch({
-                    url,
-                    expectedStatus: 204,
-                    method: 'DELETE'
-                });
+                await deleteMetaSession();
 
-                this.hiddenSecret = ""
-                this.username = ""
-                this.password = ""
-                this.userCreated = false
-                this.userLoggedIn = false
-
-                alert("User session succesfully deleted. Logged out!");
+                this.userLoggedIn = false;
+                this.systemMessage = 'Bye bye!'
             } catch (error) {
-                alert("Error while logout", error.message);
+                this.systemMessage = (error as Error).message
             }
-
         },
-        noop() {}
+        async getMetaSession() {
+            this.systemMessage = 'Getting session...'
+            try {
+                await getMetaSession();
+
+                this.userLoggedIn = true;
+                this.systemMessage = 'Success!'
+            } catch (error) {
+                this.systemMessage = (error as Error).message
+                this.userLoggedIn = false;
+            }
+        },
+        noop,
     }));
+
+    // Not sure why this is needed
+    //
+    // const session = getMetaSession()
+    //     .then((session) => {
+    //         const userLoggedIn = true
+    //
+    //         // @ts-ignore
+    //     })
+
 });
