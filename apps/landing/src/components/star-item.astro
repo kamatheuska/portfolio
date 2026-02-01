@@ -28,15 +28,21 @@ const {
 const innerSize = `${radius}px`;
 const outerSize = `${radius + 5}px`;
 const pulsarId = `outer-pulsar-${itemId}`;
-const delay = getRandomNumber(10, 100) / 100;
+const containerId = `star-item-container-${itemId}`;
+const delay = getRandomNumber(0, 3000);
+const destination = {
+    x: label ? getRandomNumber(-100, 100) : getRandomNumber(-300, 300),
+    y: label ? getRandomNumber(-100, 100) : getRandomNumber(-300, 300),
+};
 const currentLocale = Astro.currentLocale ?? "en";
 ---
 
 <div
     class:list={[
-        "absolute transition-[visibility,opacity] duration-500 ease-linear",
+        "absolute transition-[visibility,opacity] duration-500 ease-linear translate-6",
         isHidden ? "invisible opacity-0" : "visible opacity-100",
     ]}
+    id={containerId}
     style={{
         top,
         left,
@@ -84,8 +90,7 @@ const currentLocale = Astro.currentLocale ?? "en";
     </div>
 </div>
 
-<script define:vars={{ pulsarId, delay }} is:inline>
-
+<script define:vars={{ pulsarId, delay, containerId, label, destination }} is:inline>
     document.addEventListener("DOMContentLoaded", () => {
         const PADDING = 20;
         const tooltipLabel = document.querySelector(`#${pulsarId} + div span`);
@@ -99,21 +104,37 @@ const currentLocale = Astro.currentLocale ?? "en";
 
         // Animation using Web Animations API instead of motion library
 
+        // @ts-expect-error containerId is defined
+        const container = document.getElementById(containerId);
+
+        // @ts-expect-error containerId is defined
+
+        if (container) {
+            container.animate([{ transform: `translate(${destination.x}px, ${destination.y}px)` }], {
+                delay,
+                duration: 45000,
+                easing: "ease-out",
+                iterations: Infinity,
+            });
+        }
+
         // @ts-expect-error pulsarId is defined
         const pulsar = document.getElementById(pulsarId);
-        if (pulsar) {
-            pulsar.animate(
-                [
-                    { transform: "scale(1)", opacity: 0.3 },
-                    { transform: "scale(1.9)", opacity: 0 },
-                ],
-                {
-                    delay,
-                    duration: 2000,
-                    easing: "ease-out",
-                    iterations: Infinity,
-                },
-            );
-        }
+        setTimeout(() => {
+            if (pulsar) {
+                pulsar.animate(
+                    [
+                        { transform: "scale(1)", opacity: 0.3 },
+                        { transform: "scale(1.9)", opacity: 0 },
+                    ],
+                    {
+                        delay,
+                        duration: 2000,
+                        easing: "ease-out",
+                        iterations: Infinity,
+                    },
+                );
+            }
+        }, delay);
     });
 </script>
