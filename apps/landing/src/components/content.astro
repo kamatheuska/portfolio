@@ -1,12 +1,20 @@
 ---
+interface Props {
+    showBackdrop: boolean;
+}
 
+const { showBackdrop } = Astro.props;
+
+let rootClasses =
+    "bg-aaradial from-blue-700 from-40% to-blue-800 to-90% w-full transition-all duration-500 ease-out";
+
+if (showBackdrop) {
+    rootClasses += " backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)]";
+}
 ---
 
 <div class="relative" :style="contentStyle">
-    <div
-        class="bg-aaradial from-blue-700 from-40% to-blue-800 to-90% w-full transition-all duration-500 ease-out"
-        data-backdrop
-    >
+    <div class={rootClasses} data-backdrop>
         <div class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]">
             <div
                 x-show="!isMenuOpen"

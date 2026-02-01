@@ -4,7 +4,6 @@ import Button from "../../components/button.astro";
 import Social from "../../components/base/social.astro";
 import Menu from "../../components/menu.astro";
 import RootLayout from "../../layouts/root-layout.astro";
-import Background from "../../components/background.astro";
 import Content from "../../components/content.astro";
 // import { getRelativeLocaleUrl } from "astro:i18n";
 
@@ -21,7 +20,7 @@ export function getStaticPaths() {
     <main class="text-right" x-data="stars">
         <div>
             <Menu />
-            <Content>
+            <Content showBackdrop>
                 <h3 class="text-light-green text-lg font-mono m-0">Hi! My name is</h3>
                 <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
                     Nicolas Ramirez
