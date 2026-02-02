@@ -12,26 +12,40 @@ const colors = {
     lightBrown: "#DDD4D4",
 } as const;
 
-const getPlaceholderStarItem = (color: string) => ({
-    color,
-    label: "",
-    id: null,
-    href: "/",
-    left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-    radius: getRandomNumber(1, 3),
-    top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
-});
+const getPlaceholderStarItem = (color: string) => {
+    const coordinates = {
+        x: getRandomNumber(5, 95),
+        y: getRandomNumber(5, 95),
+    };
+    return {
+        color,
+        coordinates,
+        href: "/",
+        id: null,
+        label: "",
+        left: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+        radius: getRandomNumber(1, 3),
+        top: `calc(95% - ${getRandomNumber(5, 95)}%)`,
+    };
+};
 
 const menuItems = [
-    {
-        id: "1",
-        color: colors.lightBlue,
-        href: "/",
-        label: "Home",
-        left: `calc(95% - ${getRandomNumber(70, 95)}%)`,
-        radius: getRandomNumber(5, 10),
-        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-    },
+    (() => {
+        const coordinates = {
+            x: getRandomNumber(70, 95),
+            y: getRandomNumber(50, 95),
+        };
+        return {
+            coordinates,
+            id: "1",
+            color: colors.lightBlue,
+            href: "/",
+            label: "Home",
+            radius: getRandomNumber(5, 10),
+            left: `calc(95% - ${coordinates.x}%)`,
+            top: `calc(95% - ${coordinates.y}%)`,
+        };
+    })(),
     getPlaceholderStarItem(colors.pink),
     getPlaceholderStarItem(colors.lightBlue),
     getPlaceholderStarItem(colors.lightBlue),
@@ -41,35 +55,56 @@ const menuItems = [
     getPlaceholderStarItem(colors.lightBlue),
     getPlaceholderStarItem(colors.lightBlue),
     getPlaceholderStarItem(colors.lightBlue),
-    {
-        id: "5",
-        color: colors.lightBlue,
-        label: "About",
-        href: "/about",
-        left: `calc(95% - ${getRandomNumber(30, 70)}%)`,
-        radius: getRandomNumber(5, 10),
-        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-    },
-    {
-        id: "6",
-        color: colors.lightBlue,
-        label: "Experience",
-        href: "/experience",
-        left: `calc(95% - ${getRandomNumber(5, 30)}%)`,
-        radius: getRandomNumber(5, 10),
-        top: `calc(95% - ${getRandomNumber(50, 95)}%)`,
-    },
+    (() => {
+        const coordinates = {
+            x: getRandomNumber(30, 70),
+            y: getRandomNumber(50, 95),
+        };
+        return {
+            coordinates,
+            id: "5",
+            color: colors.lightBlue,
+            label: "About",
+            href: "/about",
+            radius: getRandomNumber(5, 10),
+            left: `calc(95% - ${coordinates.x}%)`,
+            top: `calc(95% - ${coordinates.y}%)`,
+        };
+    })(),
+    (() => {
+        const coordinates = {
+            x: getRandomNumber(5, 30),
+            y: getRandomNumber(50, 95),
+        };
+        return {
+            coordinates,
+            id: "6",
+            color: colors.lightBlue,
+            label: "Experience",
+            href: "/experience",
+            radius: getRandomNumber(5, 10),
+            left: `calc(95% - ${coordinates.x}%)`,
+            top: `calc(95% - ${coordinates.y}%)`,
+        };
+    })(),
     getPlaceholderStarItem(colors.brown),
     getPlaceholderStarItem(colors.pink),
-    {
-        id: "9",
-        color: colors.lightBlue,
-        label: "Challenges",
-        href: "/challenges",
-        left: `calc(95% - ${getRandomNumber(5, 50)}%)`,
-        radius: getRandomNumber(5, 10),
-        top: `calc(95% - ${getRandomNumber(5, 50)}%)`,
-    },
+    (() => {
+        const coordinates = {
+            x: getRandomNumber(5, 50),
+            y: getRandomNumber(5, 50),
+        };
+        return {
+            coordinates,
+            id: "9",
+            color: colors.lightBlue,
+            label: "Challenges",
+            href: "/challenges",
+            radius: getRandomNumber(5, 10),
+            left: `calc(95% - ${coordinates.x}%)`,
+            top: `calc(95% - ${coordinates.y}%)`,
+        };
+    })(),
     getPlaceholderStarItem(colors.brown),
     getPlaceholderStarItem(colors.lightBlue),
     getPlaceholderStarItem(colors.lightBrown),
@@ -94,6 +129,7 @@ const menuItems = [
                         itemId={item.id ? Number(item.id) : index + 1000}
                         label={item.label}
                         href={item.href}
+                        coordinates={item.coordinates}
                     />
                     // <span
                     //     class="absolute"

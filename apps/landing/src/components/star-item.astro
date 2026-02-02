@@ -11,18 +11,23 @@ interface Props {
     label?: string;
     color?: string;
     href?: string;
+    coordinates: {
+        x: number;
+        y: number;
+    };
 }
 
 const {
-    itemId,
+    color = "black",
+    coordinates,
+    href = "/",
     isActive = false,
     isHidden = true,
-    top = "0",
+    itemId,
+    label = "",
     left = "0",
     radius = 10,
-    label = "",
-    color = "black",
-    href = "/",
+    top = "0",
 } = Astro.props;
 
 const innerSize = `${radius}px`;
@@ -31,8 +36,8 @@ const pulsarId = `outer-pulsar-${itemId}`;
 const containerId = `star-item-container-${itemId}`;
 const delay = getRandomNumber(0, 3000);
 const destination = {
-    x: label ? getRandomNumber(-100, 100) : getRandomNumber(-300, 300),
-    y: label ? getRandomNumber(-100, 100) : getRandomNumber(-300, 300),
+    x: label ? getRandomNumber(-200, -100) : getRandomNumber(-300, 300),
+    y: label ? getRandomNumber(-200, -100) : getRandomNumber(-300, 300),
 };
 const currentLocale = Astro.currentLocale ?? "en";
 ---
@@ -93,6 +98,7 @@ const currentLocale = Astro.currentLocale ?? "en";
 <script define:vars={{ pulsarId, delay, containerId, label, destination }} is:inline>
     document.addEventListener("DOMContentLoaded", () => {
         const PADDING = 20;
+        // @ts-expect-error: pulsarId is defined
         const tooltipLabel = document.querySelector(`#${pulsarId} + div span`);
 
         if (tooltipLabel) {
@@ -104,21 +110,19 @@ const currentLocale = Astro.currentLocale ?? "en";
 
         // Animation using Web Animations API instead of motion library
 
-        // @ts-expect-error containerId is defined
+        // @ts-expect-error: containerId is defined
         const container = document.getElementById(containerId);
-
-        // @ts-expect-error containerId is defined
 
         if (container) {
             container.animate([{ transform: `translate(${destination.x}px, ${destination.y}px)` }], {
                 delay,
-                duration: 45000,
+                duration: 85000,
                 easing: "ease-out",
                 iterations: Infinity,
             });
         }
 
-        // @ts-expect-error pulsarId is defined
+        // @ts-expect-error: pulsarId is defined
         const pulsar = document.getElementById(pulsarId);
         setTimeout(() => {
             if (pulsar) {
