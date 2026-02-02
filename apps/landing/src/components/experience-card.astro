@@ -19,7 +19,7 @@ const { date, workTitle, company, description, tags = [], link } = Astro.props;
             {date}
         </span>
     </header>
-    <div class="experience-content h-full">
+    <div class="h-full">
         {
             link ? (
                 <a href={link} target="_blank" rel="noopener noreferrer">
@@ -41,7 +41,7 @@ const { date, workTitle, company, description, tags = [], link } = Astro.props;
             )
         }
         <h4 class="m-0 text-light-green">{company}</h4>
-        <p class="text-blue-200">{description}</p>
+        <p class="text-blue-200 mb-4">{description}</p>
         <ul class="flex flex-wrap gap-1.5 p-0 text-sm list-none">
             {
                 tags.map(tag => (
@@ -51,10 +51,3 @@ const { date, workTitle, company, description, tags = [], link } = Astro.props;
         </ul>
     </div>
 </div>
-
-<style>
-    .experience-content h3,
-    .experience-content h4 {
-        margin: 0;
-    }
-</style>
