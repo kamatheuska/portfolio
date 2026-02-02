@@ -1,5 +1,5 @@
 const starMenuContainer = document.getElementById("starMenuContainer");
-console.log("star", starMenuContainer);
+
 if (!starMenuContainer) {
     throw new Error("No starMenu container");
 }
@@ -11,8 +11,7 @@ document.addEventListener("alpine:init", () => {
         backgroundStyle: "z-index: 10",
         starMenuStyle: "z-index: 20",
         contentStyle: "z-index: 30",
-        updateBackgroundStyles({ isMenuOpen }: { isMenuOpen: boolean }) {
-            console.log("current state", isMenuOpen);
+        updateBackgroundStyles() {
             this.isMenuOpen = !this.isMenuOpen;
             if (this.isMenuOpen) {
                 this.backgroundStyle = "z-index: 10";
