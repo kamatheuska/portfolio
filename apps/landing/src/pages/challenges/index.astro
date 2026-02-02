@@ -1,9 +1,9 @@
 ---
-import Background from "../../../components/background.astro";
-import Content from "../../../components/content.astro";
-import LinesMenu from "../../../components/lines-menu.astro";
-import Menu from "../../../components/menu.astro";
-import RootLayout from "../../../layouts/root-layout.astro";
+import Background from "../../components/background.astro";
+import Content from "../../components/content.astro";
+import LinesMenu from "../../components/lines-menu.astro";
+import Menu from "../../components/menu.astro";
+import RootLayout from "../../layouts/root-layout.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 const currentLocale = Astro.currentLocale ?? "en";
@@ -45,6 +45,6 @@ const currentLocale = Astro.currentLocale ?? "en";
             </Content>
             <Background />
         </div>
-        <script src="../../../scripts/star-menu-controller"></script>
+        <script src="../../scripts/star-menu-controller"></script>
     </main>
 </RootLayout>
