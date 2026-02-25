@@ -4,7 +4,7 @@ import crypto from "crypto";
 import util from "util";
 import dns from "dns";
 import { FastifyInstance } from "fastify";
-import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import { BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import { count, eq } from "drizzle-orm";
 import { urls } from "../../../db/schema.js";
 
@@ -51,7 +51,7 @@ export async function validateHostname(hostname = "") {
 
 async function shortUrlPlugin(fastify: FastifyInstance) {
     const log = fastify.log.child({ context: "shorturl" });
-    const db = fastify.getDecorator<PostgresJsDatabase>("db");
+    const db = fastify.getDecorator<BetterSQLite3Database>("db");
 
     fastify.setErrorHandler(getFccErrorHandler(fastify));
 

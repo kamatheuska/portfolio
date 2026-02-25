@@ -1,9 +1,8 @@
 import { FastifyInstance, FastifyPluginAsync, FastifyRequest } from "fastify";
 import { S } from "fluent-json-schema";
 import { metaSessions, metaUsers } from "../../../db/schema.js";
-import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import { BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import { DrizzleQueryError, eq } from "drizzle-orm";
-import { Redis } from "ioredis";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
@@ -99,7 +98,7 @@ function getEnv(fastify: FastifyInstance, env: string) {
 }
 
 const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-    const db = fastify.getDecorator<PostgresJsDatabase>("db");
+    const db = fastify.getDecorator<BetterSQLite3Database>("db");
 
     const usernameSchema = S.string().required();
     const passwordSchema = S.string().required();
@@ -179,10 +178,6 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 }),
                 secret,
             );
-
-            const redis = fastify.getDecorator<Redis>("redis");
-
-            await redis.set("token_user_id:" + username, token);
 
             const insertQuery = db
                 .insert(metaSessions)

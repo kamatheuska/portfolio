@@ -1,17 +1,15 @@
 import fp from "fastify-plugin";
-import { drizzle, PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import { drizzle, type BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
+import Database from "better-sqlite3";
+import type { Database as DatabaseType } from "better-sqlite3";
+import { sql } from "drizzle-orm";
 import closeWithGrace from "close-with-grace";
-import { type Sql } from "postgres";
 
 const metadata: fp.PluginMetadata = {
     name: "db-plugin",
     dependencies: ["env-plugin"],
 };
-/**
- * This plugins adds some utilities to handle http errors
- *
- * @see https://github.com/fastify/fastify-sensible
- */
+
 export default fp(async fastify => {
     fastify.log.info("Registering plugin %s", metadata.name);
     // @ts-expect-error not typed
@@ -23,16 +21,17 @@ export default fp(async fastify => {
         throw new Error("DATABASE_URL is not defined in environment variables");
     }
 
-    let db: PostgresJsDatabase & {
-        $client: Sql;
+    let db: BetterSQLite3Database & {
+        $client: DatabaseType;
     };
     fastify.log.debug("Connecting to DB");
     try {
-        db = drizzle(dbUrl);
+        const sqlite = new Database(dbUrl);
+        db = drizzle(sqlite);
 
-        await db.execute("SELECT 1 + 1");
+        db.run(sql`SELECT 1`);
 
-        fastify.log.debug("DB Connection stablished");
+        fastify.log.debug("DB Connection established");
         fastify.decorate("db", db);
 
         closeWithGrace(
@@ -42,7 +41,7 @@ export default fp(async fastify => {
                     fastify.log.error({ err, signal, manual }, "closing db plugin with grace due to error");
                 }
                 fastify.log.info({ signal, manual }, "closing db plugin with grace");
-                await db.$client.end();
+                db.$client.close();
             },
         );
     } catch (error) {
