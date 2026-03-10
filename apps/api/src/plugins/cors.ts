@@ -32,5 +32,7 @@ export default fp(async fastify => {
             // Generate an error on other origins, disabling access
             cb(new Error("Not allowed"), false);
         },
+        credentials: true,
+        methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     });
 }, metadata);
