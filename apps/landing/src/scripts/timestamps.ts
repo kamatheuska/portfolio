@@ -1,7 +1,6 @@
 import { PUBLIC_API_BASE_URL } from "astro:env/client";
 
 const apiBaseURL = PUBLIC_API_BASE_URL ?? "";
-console.log("api", apiBaseURL);
 document.addEventListener("alpine:init", () => {
     // @ts-ignore
     Alpine.data("useTimestampsForm", () => ({
@@ -20,7 +19,6 @@ document.addEventListener("alpine:init", () => {
         async generateTimestampForDate() {
             let response;
             try {
-                console.info("Form submitted");
                 response = await fetch(`${apiBaseURL}/api/timestamps/generate/${this.timestamp}`, {
                     method: "GET",
                 });
@@ -42,12 +40,10 @@ document.addEventListener("alpine:init", () => {
             }
 
             this.result = JSON.stringify(json, undefined, 2);
-            console.log("res", this.result);
         },
         async generateTimestamp() {
             let response;
             try {
-                console.info("Form submitted");
                 response = await fetch(`${apiBaseURL}/api/timestamps/generate`, {
                     method: "GET",
                 });
@@ -69,7 +65,6 @@ document.addEventListener("alpine:init", () => {
             }
 
             this.result = JSON.stringify(json, undefined, 2);
-            console.log("res", this.result);
         },
     }));
 });
