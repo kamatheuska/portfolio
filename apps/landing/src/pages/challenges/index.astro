@@ -9,11 +9,14 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 const currentLocale = Astro.currentLocale ?? "en";
 ---
 
-<RootLayout title="Coding Challenges - Nicolas Ramirez" description="FreeCodeCamp coding challenges and mini-projects including URL Shortener, Timestamps, File Metadata, and Meta Auth implementations.">
+<RootLayout
+    title="Coding Challenges - Nicolas Ramirez"
+    description="FreeCodeCamp coding challenges and mini-projects including URL Shortener, Timestamps, File Metadata, and Meta Auth implementations."
+>
     <main class="text-right" x-data="stars">
         <div>
             <Menu />
-            <Content>
+            <Content showBackdrop>
                 <LinesMenu />
                 <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">Challenges</h1>
                 <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">

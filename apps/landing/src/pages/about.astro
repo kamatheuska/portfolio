@@ -5,11 +5,14 @@ import Menu from "../components/menu.astro";
 import RootLayout from "../layouts/root-layout.astro";
 ---
 
-<RootLayout title="About - Nicolas Ramirez" description="Learn about Nicolas Ramirez, a full-stack software developer with experience in e-commerce, startups, and enterprise applications.">
+<RootLayout
+    title="About - Nicolas Ramirez"
+    description="Learn about Nicolas Ramirez, a full-stack software developer with experience in e-commerce, startups, and enterprise applications."
+>
     <main class="text-right" x-data="stars">
         <div>
             <Menu />
-            <Content>
+            <Content showBackdrop>
                 <LinesMenu />
                 <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">About</h1>
                 <div class="text-blue-200 w-[350px] md:text-lg mb-5 text-justify [&>p]:mb-5">
