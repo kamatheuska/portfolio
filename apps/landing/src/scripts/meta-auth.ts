@@ -198,8 +198,8 @@ document.addEventListener("alpine:init", () => {
             } finally {
                 this.clearMessages()
                 this.hiddenSecret = ''
-            this.userCreated = false;
-            this.userLoggedIn = false;
+                this.userCreated = false;
+                this.userLoggedIn = false;
             }
         },
         async checkSession() {

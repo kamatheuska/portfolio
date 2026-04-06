@@ -117,7 +117,8 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 
             const hash = crypto.createHash("sha256").update(password).digest("hex");
 
-            const query = db
+            try {
+                await db
                 .insert(metaUsers)
                 .values({
                     username,
@@ -125,7 +126,13 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 })
                 .returning();
 
-            await queryWithError(query, fastify, req);
+            } catch (error) {
+                req.log.error({ error }, 'Error while creating user');
+                if (error instanceof Error && 'code' in error && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+                    throw fastify.httpErrors.badRequest('Username already exists');
+                }
+            }
+
 
             return reply.code(204).send();
         },
