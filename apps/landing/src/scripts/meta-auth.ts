@@ -8,14 +8,13 @@ async function tryFetch({
     expectedStatus = 200,
     method = 'GET'
 }: {
-    url: string;
-    body?: Record<string, any>;
-    expectedStatus?: number;
-    method?: string;
-}) {
+        url: string;
+        body?: Record<string, any>;
+        expectedStatus?: number;
+        method?: string;
+    }) {
     let response;
     try {
-        console.info("Form submitted");
         const isUpdate = ['POST', 'PUT'].includes(method)
 
         const headers = isUpdate ? {
@@ -38,7 +37,7 @@ async function tryFetch({
     }
 
 
-    if (expectedStatus === 204) {
+    if (expectedStatus === 204 && response.status === 204) {
         return;
     }
 
@@ -51,33 +50,30 @@ async function tryFetch({
     }
 
     if (response.status !== expectedStatus) {
-        throw new Error(json.error.message);
+        throw new Error(json.message);
     }
+
 
     return json;
 }
 async function getMetaSession() {
     const url = `${apiBaseURL}/api/meta-auth/sessions`;
 
-    try {
-        await tryFetch({
-            url,
-            expectedStatus: 200,
-            method: 'GET'
-        });
+    await tryFetch({
+        url,
+        expectedStatus: 200,
+        method: 'GET'
+    });
 
-    } catch (error) {
-        console.error("Error while fetching the user session", (error as Error).message);
-    }
 }
 
 async function createMetaUser({
     username,
     password
 }: {
-    username: string;
-    password: string;
-}) {
+        username: string;
+        password: string;
+    }) {
     const url = `${apiBaseURL}/api/meta-auth/users`;
 
     await tryFetch({
@@ -96,9 +92,9 @@ async function createMetaSession({
     username,
     password
 }: {
-    username: string;
-    password: string;
-}) {
+        username: string;
+        password: string;
+    }) {
     const url = `${apiBaseURL}/api/meta-auth/sessions`;
 
     await tryFetch({
@@ -146,6 +142,7 @@ document.addEventListener("alpine:init", () => {
             } catch (error) {
                 this.systemMessage = (error as Error).message
             }
+            this.hiddenSecret = ''
         },
         async deleteMetaSession() {
             this.systemMessage = 'Logout...'
@@ -158,6 +155,7 @@ document.addEventListener("alpine:init", () => {
             } catch (error) {
                 this.systemMessage = (error as Error).message
             }
+            this.hiddenSecret = ''
         },
         async getMetaSession() {
             this.systemMessage = 'Getting session...'
@@ -166,9 +164,11 @@ document.addEventListener("alpine:init", () => {
 
                 this.userLoggedIn = true;
                 this.systemMessage = 'Success!'
+                this.hiddenSecret = 'This is the hidden secret'
             } catch (error) {
                 this.systemMessage = (error as Error).message
                 this.userLoggedIn = false;
+                this.hiddenSecret = ''
             }
         },
         noop,
