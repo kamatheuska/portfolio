@@ -1,7 +1,6 @@
 import { PUBLIC_API_BASE_URL } from "astro:env/client";
 
 const apiBaseURL = PUBLIC_API_BASE_URL ?? "";
-console.log("api", apiBaseURL);
 document.addEventListener("alpine:init", () => {
     // @ts-ignore
     Alpine.data("useUrlShortenerForm", () => ({
@@ -20,7 +19,6 @@ document.addEventListener("alpine:init", () => {
         async post() {
             let response;
             try {
-                console.info("Form submitted");
                 response = await fetch(`${apiBaseURL}/api/url-shortener`, {
                     method: "POST",
                     headers: {

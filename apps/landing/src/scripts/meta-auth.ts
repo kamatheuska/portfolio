@@ -1,3 +1,4 @@
+import { init } from "astro/virtual-modules/prefetch.js";
 import { PUBLIC_API_BASE_URL } from "astro:env/client";
 
 const apiBaseURL = PUBLIC_API_BASE_URL ?? "";
@@ -76,6 +77,8 @@ async function createMetaUser({
     }) {
     const url = `${apiBaseURL}/api/meta-auth/users`;
 
+    if (!username || !password) return;
+
     await tryFetch({
         url,
         expectedStatus: 204,
@@ -95,6 +98,7 @@ async function createMetaSession({
         username: string;
         password: string;
     }) {
+
     const url = `${apiBaseURL}/api/meta-auth/sessions`;
 
     await tryFetch({
@@ -123,44 +127,95 @@ async function deleteMetaSession() {
 function noop() {}
 
 document.addEventListener("alpine:init", () => {
+    
     // @ts-expect-error - Alpine is not typed
     Alpine.data("useMetaAuthForm", () => ({
         username: "",
         password: "",
         systemMessage: "",
         userCreated: false,
-        userLoggedIn: true,
-        hiddenSecret: null,
-        createMetaUser,
+        userLoggedIn: false,
+        hiddenSecret: "",
+        async createMetaUser() {
+            if (!this.username || !this.password) return;
+
+            this.systemMessage = 'Creating user...'
+
+            try {
+                await createMetaUser({
+                    username: this.username,
+                    password: this.password
+                })
+
+                this.userCreated = true;
+                this.systemMessage = `User ${this.username} created!`
+
+            } catch (error) {
+                this.systemMessage = (error as Error).message
+            } finally {
+                this.clearMessages(2000)
+            }
+        },
+        init() {
+            console.log('init', this.userLoggedIn)
+            this.checkSession()
+        },
         async createMetaSession(data: any) {
+            if (!data.username || !data.password) return;
+
             this.systemMessage = 'Logging in...'
             try {
                 await createMetaSession(data)
 
                 this.userLoggedIn = true;
                 this.systemMessage = 'Success!'
+
             } catch (error) {
                 this.systemMessage = (error as Error).message
+            } finally {
+                this.clearMessages()
+                this.hiddenSecret = ''
             }
-            this.hiddenSecret = ''
+        },
+        clearMessages(timeout = 1500) {
+            setTimeout(() => {
+                this.systemMessage = ''
+            }, timeout)
         },
         async deleteMetaSession() {
             this.systemMessage = 'Logout...'
 
             try {
-                await deleteMetaSession();
+                await deleteMetaSession()
 
                 this.userLoggedIn = false;
                 this.systemMessage = 'Bye bye!'
+
+                this.clearMessages()
+
             } catch (error) {
                 this.systemMessage = (error as Error).message
+            } finally {
+                this.clearMessages()
+                this.hiddenSecret = ''
+            this.userCreated = false;
+            this.userLoggedIn = false;
             }
-            this.hiddenSecret = ''
+        },
+        async checkSession() {
+            try {
+                await getMetaSession()
+
+                this.userLoggedIn = true;
+            } catch (error) {
+                this.userLoggedIn = false;
+                this.hiddenSecret = ''
+            }
         },
         async getMetaSession() {
             this.systemMessage = 'Getting session...'
             try {
-                await getMetaSession();
+                await getMetaSession()
 
                 this.userLoggedIn = true;
                 this.systemMessage = 'Success!'
@@ -173,14 +228,5 @@ document.addEventListener("alpine:init", () => {
         },
         noop,
     }));
-
-    // Not sure why this is needed
-    //
-    // const session = getMetaSession()
-    //     .then((session) => {
-    //         const userLoggedIn = true
-    //
-    //         // @ts-ignore
-    //     })
 
 });

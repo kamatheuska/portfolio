@@ -35,13 +35,13 @@ import RootLayout from "../../layouts/root-layout.astro";
                         @submit.prevent="noop"
                         id="createMetaUserForm"
                     >
-                        <p class="flex items-center justify-end mb-4">
-                            <span> Meta System says: </span>
+                        <p class="flex items-center mb-4 w-full gap-4">
+                            <span> System says: </span>
                             <span
-                                class="min-w-32 min-h-8 px-2 py-1 backdrop-blur-[2px] bg-light-green text-blue-900"
+                                class="flex items-center justify-center min-w-32 min-h-14 text-center px-2 py-1 backdrop-blur-[2px] bg-light-green text-blue-900 w-full text-xl"
                                 x-text="systemMessage"></span>
                         </p>
-                        <div class="mb-8">
+                        <div class="mb-8" x-show="!userCreated || !userLoggedIn" x-cloak>
                             <div class="flex justify-between items-center gap-3 mb-4">
                                 <label for="url" class="grow"> Type a username </label>
                                 <input
@@ -69,46 +69,61 @@ import RootLayout from "../../layouts/root-layout.astro";
                                 />
                             </div>
                         </div>
-                        <div class="flex gap-2">
-                            <div class="grow w-full" x-show="!userCreated">
-                                <Button
-                                    class="w-full"
-                                    form="createMetaUserForm"
-                                    @click="createMetaUser($data)">Signup</Button
-                                >
+                        <div class="flex gap-2 flex-col" x-show="!userCreated || !userLoggedIn" x-cloak>
+                            <div class="flex gap-2">
+                                <div class="grow w-full" x-show="!userCreated && !userLoggedIn" x-cloak>
+                                    <Button
+                                        class="w-full"
+                                        type="submit"
+                                        form="createMetaUserForm"
+                                        @click="createMetaUser($data)">Signup</Button
+                                    >
+                                </div>
+                                <div class="grow w-full">
+                                    <Button
+                                        class="w-full"
+                                        form="createMetaUserForm"
+                                        type="submit"
+                                        @click="createMetaSession($data)">Login</Button
+                                    >
+                                </div>
                             </div>
-                            <div class="grow w-full">
-                                <Button
-                                    class="w-full"
-                                    form="createMetaUserForm"
-                                    @click="createMetaSession($data)">Login</Button
-                                >
+                            <div x-show="!hiddenSecret" class="grow w-full">
+                                <Button class="w-full" @click="getMetaSession"> Show Secret </Button>
                             </div>
-                            <div class="grow" x-show="userLoggedIn">
-                                <Button
-                                    class="w-full"
-                                    form="createMetaUserForm"
-                                    @click="deleteMetaSession($data)">Logout</Button
-                                >
+                        </div>
+                        <div class="flex gap-2 flex-col" x-show="userLoggedIn" x-cloak>
+                            <p class="text-light-green text-md font-mono m-0 text-xl text-center py-10">
+                                You are logged in as <strong x-text="username"></strong>
+                            </p>
+                            <div class="flex gap-2">
+                                <div class="grow w-full">
+                                    <Button
+                                        class="w-full"
+                                        type="submit"
+                                        form="createMetaUserForm"
+                                        @click="deleteMetaSession($data)">Logout</Button
+                                    >
+                                </div>
                             </div>
+                            <div x-show="!hiddenSecret" class="grow w-full">
+                                <Button variant="ghost" class="w-full" @click="getMetaSession">
+                                    Show Secret
+                                </Button>
+                            </div>
+                            <p
+                                x-text="hiddenSecret"
+                                x-show="hiddenSecret"
+                                class="pt-10 text-2xl text-light-green font-bold text-center"
+                            >
+                            </p>
                         </div>
                     </form>
-                    <div>
-                        <div x-show="!hiddenSecret">
-                            <Button @click="getMetaSession"> Show hidden Secret </Button>
-                        </div>
-                        <p
-                            x-text="hiddenSecret"
-                            x-show="hiddenSecret"
-                            class="text-3xl text-light-green font-bold"
-                        >
-                        </p>
-                    </div>
+                    <Background />
                 </div>
-                <Background />
+                <script src="../../scripts/star-menu-controller"></script>
+                <script src="../../scripts/meta-auth"></script>
             </Content>
-            <script src="../../scripts/star-menu-controller"></script>
-            <script src="../../scripts/meta-auth"></script>
         </div>
     </main>
 </RootLayout>
