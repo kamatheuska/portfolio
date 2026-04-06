@@ -1,0 +1,5 @@
+# Allow all search engine crawlers to access all parts of the website
+User-agent: *
+Allow: /
+
+Sitemap: https://nicolasramirez.dev/sitemap-index.xml

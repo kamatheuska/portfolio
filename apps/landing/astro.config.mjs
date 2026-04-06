@@ -6,9 +6,12 @@ import alpinejs from "@astrojs/alpinejs";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
-    integrations: [icon(), alpinejs()],
+    integrations: [icon(), alpinejs(), sitemap()],
+    site: "https://nicolasramirez.dev",
 
     vite: {
         plugins: [tailwindcss()],
