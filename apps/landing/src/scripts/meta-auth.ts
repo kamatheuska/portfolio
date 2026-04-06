@@ -7,27 +7,29 @@ async function tryFetch({
     url,
     body,
     expectedStatus = 200,
-    method = 'GET'
+    method = "GET",
 }: {
-        url: string;
-        body?: Record<string, any>;
-        expectedStatus?: number;
-        method?: string;
-    }) {
+    url: string;
+    body?: Record<string, any>;
+    expectedStatus?: number;
+    method?: string;
+}) {
     let response;
     try {
-        const isUpdate = ['POST', 'PUT'].includes(method)
+        const isUpdate = ["POST", "PUT"].includes(method);
 
-        const headers = isUpdate ? {
-            "Content-Type": "application/json",
-        } : undefined
+        const headers = isUpdate
+            ? {
+                  "Content-Type": "application/json",
+              }
+            : undefined;
         const updateBody = body ? JSON.stringify(body) : undefined;
 
         response = await fetch(url, {
             method,
             headers,
             body: updateBody,
-            credentials: 'include'
+            credentials: "include",
         });
     } catch (error) {
         throw error;
@@ -36,7 +38,6 @@ async function tryFetch({
     if (!response) {
         throw new Error("No response from api");
     }
-
 
     if (expectedStatus === 204 && response.status === 204) {
         return;
@@ -54,7 +55,6 @@ async function tryFetch({
         throw new Error(json.message);
     }
 
-
     return json;
 }
 async function getMetaSession() {
@@ -63,18 +63,11 @@ async function getMetaSession() {
     await tryFetch({
         url,
         expectedStatus: 200,
-        method: 'GET'
+        method: "GET",
     });
-
 }
 
-async function createMetaUser({
-    username,
-    password
-}: {
-        username: string;
-        password: string;
-    }) {
+async function createMetaUser({ username, password }: { username: string; password: string }) {
     const url = `${apiBaseURL}/api/meta-auth/users`;
 
     if (!username || !password) return;
@@ -82,37 +75,27 @@ async function createMetaUser({
     await tryFetch({
         url,
         expectedStatus: 204,
-        method: 'POST',
+        method: "POST",
         body: {
             username,
-            password
+            password,
         },
     });
-
 }
 
-async function createMetaSession({
-    username,
-    password
-}: {
-        username: string;
-        password: string;
-    }) {
-
+async function createMetaSession({ username, password }: { username: string; password: string }) {
     const url = `${apiBaseURL}/api/meta-auth/sessions`;
 
     await tryFetch({
         url,
         expectedStatus: 204,
-        method: 'POST',
+        method: "POST",
         body: {
             username,
-            password
+            password,
         },
     });
-
 }
-
 
 async function deleteMetaSession() {
     const url = `${apiBaseURL}/api/meta-auth/sessions`;
@@ -120,14 +103,16 @@ async function deleteMetaSession() {
     await tryFetch({
         url,
         expectedStatus: 204,
-        method: 'DELETE'
+        method: "DELETE",
     });
 }
 
 function noop() {}
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 document.addEventListener("alpine:init", () => {
-    
     // @ts-expect-error - Alpine is not typed
     Alpine.data("useMetaAuthForm", () => ({
         username: "",
@@ -139,94 +124,106 @@ document.addEventListener("alpine:init", () => {
         async createMetaUser() {
             if (!this.username || !this.password) return;
 
-            this.systemMessage = 'Creating user...'
+            this.systemMessage = "Creating user...";
 
             try {
                 await createMetaUser({
                     username: this.username,
-                    password: this.password
-                })
+                    password: this.password,
+                });
 
                 this.userCreated = true;
-                this.systemMessage = `User ${this.username} created!`
-
+                this.systemMessage = `User ${this.username} created!`;
             } catch (error) {
-                this.systemMessage = (error as Error).message
+                this.systemMessage = (error as Error).message;
             } finally {
-                this.clearMessages(2000)
+                this.clearMessages(2000);
             }
         },
-        init() {
-            console.log('init', this.userLoggedIn)
-            this.checkSession()
+        async init() {
+            this.checkSession();
+            await delay(1000);
+            this.systemMessage = "hi!";
+            await delay(2000);
+            this.systemMessage = "try to signup a new user";
+            await delay(1000);
+            this.systemMessage = "try to signup a new user.";
+            await delay(1000);
+            this.systemMessage = "try to signup a new user..";
+            await delay(1000);
+            this.systemMessage = "try to signup a new user...";
+            await delay(2000);
+            this.systemMessage = "Or login, if you have an account!";
+            await delay(2000);
+            this.systemMessage = "";
         },
         async createMetaSession(data: any) {
             if (!data.username || !data.password) return;
 
-            this.systemMessage = 'Logging in...'
+            this.systemMessage = "Logging in...";
             try {
-                await createMetaSession(data)
+                await createMetaSession(data);
 
                 this.userLoggedIn = true;
-                this.systemMessage = 'Success!'
-
+                this.userCreated = true;
+                this.systemMessage = "Success!";
             } catch (error) {
-                this.systemMessage = (error as Error).message
+                this.systemMessage = (error as Error).message;
             } finally {
-                this.clearMessages()
-                this.hiddenSecret = ''
+                this.clearMessages();
+                this.hiddenSecret = "";
             }
         },
         clearMessages(timeout = 1500) {
             setTimeout(() => {
-                this.systemMessage = ''
-            }, timeout)
+                this.systemMessage = "";
+            }, timeout);
         },
         async deleteMetaSession() {
-            this.systemMessage = 'Logout...'
+            this.systemMessage = "Logout...";
 
             try {
-                await deleteMetaSession()
+                await deleteMetaSession();
 
                 this.userLoggedIn = false;
-                this.systemMessage = 'Bye bye!'
+                this.systemMessage = "Bye bye!";
+                this.username = "";
+                this.password = "";
 
-                this.clearMessages()
-
+                this.clearMessages();
             } catch (error) {
-                this.systemMessage = (error as Error).message
+                this.systemMessage = (error as Error).message;
             } finally {
-                this.clearMessages()
-                this.hiddenSecret = ''
+                this.clearMessages();
+                this.hiddenSecret = "";
                 this.userCreated = false;
                 this.userLoggedIn = false;
             }
         },
         async checkSession() {
             try {
-                await getMetaSession()
+                await getMetaSession();
 
                 this.userLoggedIn = true;
             } catch (error) {
                 this.userLoggedIn = false;
-                this.hiddenSecret = ''
+                this.hiddenSecret = "";
             }
         },
         async getMetaSession() {
-            this.systemMessage = 'Getting session...'
+            this.systemMessage = "Getting session...";
             try {
-                await getMetaSession()
+                await getMetaSession();
 
                 this.userLoggedIn = true;
-                this.systemMessage = 'Success!'
-                this.hiddenSecret = 'This is the hidden secret'
+                this.systemMessage = "Success!";
+                this.hiddenSecret = "This is the hidden secret";
             } catch (error) {
-                this.systemMessage = (error as Error).message
+                this.systemMessage = (error as Error).message;
                 this.userLoggedIn = false;
-                this.hiddenSecret = ''
+                this.hiddenSecret = "";
             }
         },
         noop,
     }));
-
 });

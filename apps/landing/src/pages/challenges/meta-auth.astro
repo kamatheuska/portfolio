@@ -38,7 +38,7 @@ import RootLayout from "../../layouts/root-layout.astro";
                         <p class="flex items-center mb-4 w-full gap-4">
                             <span> System says: </span>
                             <span
-                                class="flex items-center justify-center min-w-32 min-h-14 text-center px-2 py-1 backdrop-blur-[2px] bg-light-green text-blue-900 w-full text-xl"
+                                class="flex items-center justify-center min-w-32 min-h-14 text-center px-2 py-1 backdrop-blur-[2px] bg-light-green text-blue-900 w-full lg"
                                 x-text="systemMessage"></span>
                         </p>
                         <div class="mb-8" x-show="!userCreated || !userLoggedIn" x-cloak>
@@ -71,7 +71,7 @@ import RootLayout from "../../layouts/root-layout.astro";
                         </div>
                         <div class="flex gap-2 flex-col" x-show="!userCreated || !userLoggedIn" x-cloak>
                             <div class="flex gap-2">
-                                <div class="grow w-full" x-show="!userCreated && !userLoggedIn" x-cloak>
+                                <div class="grow w-full" x-show="!userCreated && !userLoggedIn">
                                     <Button
                                         class="w-full"
                                         type="submit"
@@ -88,8 +88,10 @@ import RootLayout from "../../layouts/root-layout.astro";
                                     >
                                 </div>
                             </div>
-                            <div x-show="!hiddenSecret" class="grow w-full">
-                                <Button class="w-full" @click="getMetaSession"> Show Secret </Button>
+                            <div x-show="!hiddenSecret " class="grow w-full">
+                                <Button variant="ghost" class="w-full" @click="getMetaSession">
+                                    Show Secret
+                                </Button>
                             </div>
                         </div>
                         <div class="flex gap-2 flex-col" x-show="userLoggedIn" x-cloak>

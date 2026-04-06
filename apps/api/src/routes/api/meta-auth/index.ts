@@ -166,6 +166,10 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 }[]
             >(query, fastify, req);
 
+            if (!user) {
+                throw fastify.httpErrors.unauthorized();
+            }
+
             const hash = crypto.createHash("sha256").update(password).digest("hex");
 
             // TODO: replace password by hashed password
@@ -186,7 +190,8 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 secret,
             );
 
-            const insertQuery = db
+            try {
+                await db
                 .insert(metaSessions)
                 .values({
                     token,
@@ -194,20 +199,26 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
                 })
                 .returning();
 
+
+            } catch (error) {
+                req.log.error({ error }, 'Error while creating session');
+                if (error instanceof Error && 'code' in error && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+                    throw fastify.httpErrors.badRequest('There is already a session for this user');
+                }
+
+                throw fastify.httpErrors.internalServerError();
+
+            }
+
             req.log.debug("Insert of session succesful!");
 
-            const [session] = await queryWithError<
-                {
-                    token: string;
-                    userId: string;
-                }[]
-            >(insertQuery, fastify, req);
-
-            const cookie = "x-auth-token=" + session.token + ";" + "httpOnly=true";
+            const cookie = "x-auth-token=" + token + ";" + "httpOnly=true";
 
             reply.header("set-cookie", cookie);
 
             return reply.code(204).send();
+
+
         },
     });
 
