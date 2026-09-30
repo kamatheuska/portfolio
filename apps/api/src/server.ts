@@ -16,7 +16,7 @@ const app = fastify({
 app.register(appService);
 
 closeWithGrace(
-    { delay: Number(process.env.FASTIFY_CLOSE_GRACE_DELAY) ?? 500 },
+    { delay: Number(process.env.FASTIFY_CLOSE_GRACE_DELAY ?? 500) },
     async function ({ signal, err, manual }) {
         if (err) {
             app.log.error({ err, signal, manual }, "closing with grace due to error");
@@ -43,18 +43,19 @@ try {
     app.log.debug("Environment variables loaded:");
 } catch (error) {
     app.log.error({ err: error }, "Environment validation failed:");
-    process.exit(1);
+    throw error;
 }
 // Access values with type safety
 const port = Number(env.get("PORT"));
 const host = process.env.NODE_ENV === "development" ? "localhost" : (process.env.HOST ?? "0.0.0.0");
 
-app.log.info(`Starting server on ${host}:${port} in ${env.get("NODE_ENV")} mode`);
 app.listen({ port, host }, err => {
     if (err) {
         app.log.fatal({ err }, "Error starting server:");
-        process.exit(1);
+        throw err;
     }
+
+    app.log.info(`Starting server on ${host}:${port} in ${env.get("NODE_ENV")} mode`);
 });
 
 export { evaluateEnv, EnvVarConfig };

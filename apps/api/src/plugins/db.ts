@@ -46,7 +46,7 @@ export default fp(async fastify => {
         );
     } catch (error) {
         fastify.log.error({ err: error }, "Error on connecting to the database:");
-        process.exit(1);
+        throw error;
     }
 }, metadata);
 

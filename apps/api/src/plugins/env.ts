@@ -22,6 +22,6 @@ export default fp(async fastify => {
         });
     } catch (error) {
         fastify.log.error({ err: error }, "Environment validation failed:");
-        process.exit(1);
+        throw error;
     }
 }, metadata);

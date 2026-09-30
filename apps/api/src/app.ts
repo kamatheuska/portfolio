@@ -14,6 +14,7 @@ export type AppOptions = {
 const options: AppOptions = {};
 
 const app: FastifyPluginAsync<AppOptions> = async (fastify, opts): Promise<void> => {
+    fastify.log.info("Registering plugins and routes...");
     // Place here your custom code!
 
     // Do not touch the following lines
