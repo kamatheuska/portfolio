@@ -1,182 +1,172 @@
 {
-  "version": "6",
-  "dialect": "sqlite",
-  "id": "400c6763-8223-4659-bf85-c7ce6973701e",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "tables": {
-    "sessions": {
-      "name": "sessions",
-      "columns": {
-        "token_id": {
-          "name": "token_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(lower(hex(randomblob(16))))"
+    "version": "6",
+    "dialect": "sqlite",
+    "id": "400c6763-8223-4659-bf85-c7ce6973701e",
+    "prevId": "00000000-0000-0000-0000-000000000000",
+    "tables": {
+        "sessions": {
+            "name": "sessions",
+            "columns": {
+                "token_id": {
+                    "name": "token_id",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(lower(hex(randomblob(16))))"
+                },
+                "token": {
+                    "name": "token",
+                    "type": "text(256)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false,
+                    "default": "(unixepoch())"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false,
+                    "default": "(unixepoch())"
+                }
+            },
+            "indexes": {
+                "token_id_unique_idx": {
+                    "name": "token_id_unique_idx",
+                    "columns": ["token_id"],
+                    "isUnique": true
+                },
+                "token_unique_idx": {
+                    "name": "token_unique_idx",
+                    "columns": ["token"],
+                    "isUnique": true
+                },
+                "token_idx": {
+                    "name": "token_idx",
+                    "columns": ["token"],
+                    "isUnique": false
+                }
+            },
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
         },
-        "token": {
-          "name": "token",
-          "type": "text(256)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+        "users": {
+            "name": "users",
+            "columns": {
+                "user_id": {
+                    "name": "user_id",
+                    "type": "text",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(lower(hex(randomblob(16))))"
+                },
+                "username": {
+                    "name": "username",
+                    "type": "text(32)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "password": {
+                    "name": "password",
+                    "type": "text(255)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(unixepoch())"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(unixepoch())"
+                }
+            },
+            "indexes": {
+                "username_unique_idx": {
+                    "name": "username_unique_idx",
+                    "columns": ["username"],
+                    "isUnique": true
+                },
+                "username_idx": {
+                    "name": "username_idx",
+                    "columns": ["username"],
+                    "isUnique": false
+                }
+            },
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "(unixepoch())"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "(unixepoch())"
+        "url": {
+            "name": "url",
+            "columns": {
+                "original": {
+                    "name": "original",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "short": {
+                    "name": "short",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "hex": {
+                    "name": "hex",
+                    "type": "text(32)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
         }
-      },
-      "indexes": {
-        "token_id_unique_idx": {
-          "name": "token_id_unique_idx",
-          "columns": [
-            "token_id"
-          ],
-          "isUnique": true
-        },
-        "token_unique_idx": {
-          "name": "token_unique_idx",
-          "columns": [
-            "token"
-          ],
-          "isUnique": true
-        },
-        "token_idx": {
-          "name": "token_idx",
-          "columns": [
-            "token"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
     },
-    "users": {
-      "name": "users",
-      "columns": {
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(lower(hex(randomblob(16))))"
-        },
-        "username": {
-          "name": "username",
-          "type": "text(32)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "password": {
-          "name": "password",
-          "type": "text(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch())"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(unixepoch())"
-        }
-      },
-      "indexes": {
-        "username_unique_idx": {
-          "name": "username_unique_idx",
-          "columns": [
-            "username"
-          ],
-          "isUnique": true
-        },
-        "username_idx": {
-          "name": "username_idx",
-          "columns": [
-            "username"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+    "views": {},
+    "enums": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
     },
-    "url": {
-      "name": "url",
-      "columns": {
-        "original": {
-          "name": "original",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "short": {
-          "name": "short",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "hex": {
-          "name": "hex",
-          "type": "text(32)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+    "internal": {
+        "indexes": {}
     }
-  },
-  "views": {},
-  "enums": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
-    "indexes": {}
-  }
 }

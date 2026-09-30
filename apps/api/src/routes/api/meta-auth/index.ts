@@ -119,20 +119,18 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 
             try {
                 await db
-                .insert(metaUsers)
-                .values({
-                    username,
-                    password: hash,
-                })
-                .returning();
-
+                    .insert(metaUsers)
+                    .values({
+                        username,
+                        password: hash,
+                    })
+                    .returning();
             } catch (error) {
-                req.log.error({ error }, 'Error while creating user');
-                if (error instanceof Error && 'code' in error && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-                    throw fastify.httpErrors.badRequest('Username already exists');
+                req.log.error({ error }, "Error while creating user");
+                if (error instanceof Error && "code" in error && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
+                    throw fastify.httpErrors.badRequest("Username already exists");
                 }
             }
-
 
             return reply.code(204).send();
         },
@@ -192,22 +190,19 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 
             try {
                 await db
-                .insert(metaSessions)
-                .values({
-                    token,
-                    userId: user.userId,
-                })
-                .returning();
-
-
+                    .insert(metaSessions)
+                    .values({
+                        token,
+                        userId: user.userId,
+                    })
+                    .returning();
             } catch (error) {
-                req.log.error({ error }, 'Error while creating session');
-                if (error instanceof Error && 'code' in error && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-                    throw fastify.httpErrors.badRequest('There is already a session for this user');
+                req.log.error({ error }, "Error while creating session");
+                if (error instanceof Error && "code" in error && error.code === "SQLITE_CONSTRAINT_UNIQUE") {
+                    throw fastify.httpErrors.badRequest("There is already a session for this user");
                 }
 
                 throw fastify.httpErrors.internalServerError();
-
             }
 
             req.log.debug("Insert of session succesful!");
@@ -217,8 +212,6 @@ const auth: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
             reply.header("set-cookie", cookie);
 
             return reply.code(204).send();
-
-
         },
     });
 

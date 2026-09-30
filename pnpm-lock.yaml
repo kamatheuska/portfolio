@@ -1,158 +1,349 @@
 ---
-lockfileVersion: '9.0'
+lockfileVersion: "9.0"
 
 importers:
-
-  .:
-    configDependencies: {}
-    packageManagerDependencies:
-      pnpm:
-        specifier: 12.8.2
-        version: 12.8.2
+    .:
+        configDependencies: {}
+        packageManagerDependencies:
+            pnpm:
+                specifier: 12.8.2
+                version: 12.8.2
 
 packages:
+    "@pnpm/exe.android-arm64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-b0gzsJQuxYCX1Pokkf9z+lvajgb5bqBExjmw4kj8H4Bwd2AfH8TkQVxDtrHGptEdkuwokEUSERdpNbRok2cc6Q==,
+            }
+        cpu: [arm64]
+        os: [android]
 
-  '@pnpm/exe.android-arm64@12.8.2':
-    resolution: {integrity: sha512-b0gzsJQuxYCX1Pokkf9z+lvajgb5bqBExjmw4kj8H4Bwd2AfH8TkQVxDtrHGptEdkuwokEUSERdpNbRok2cc6Q==}
-    cpu: [arm64]
-    os: [android]
+    "@pnpm/exe.android-x64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-j7dzfFMc0XxwhbFvslb06r51tdIlaQQpHUcIrpM7b4ACRYr+LgrpQIB7fI8SdlqPLvsFrrzNYIZXLQN6Kc+xbQ==,
+            }
+        cpu: [x64]
+        os: [android]
 
-  '@pnpm/exe.android-x64@12.8.2':
-    resolution: {integrity: sha512-j7dzfFMc0XxwhbFvslb06r51tdIlaQQpHUcIrpM7b4ACRYr+LgrpQIB7fI8SdlqPLvsFrrzNYIZXLQN6Kc+xbQ==}
-    cpu: [x64]
-    os: [android]
+    "@pnpm/exe.darwin-arm64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-J3cmPRwOVXnPspYeQ3OwwrR8Di9GWRA1aBWD/T1go/4KiD5dvwmE1Q0nW7+F2vAz7FRDRt/91/ZaAujdLX8PIA==,
+            }
+        cpu: [arm64]
+        os: [darwin]
 
-  '@pnpm/exe.darwin-arm64@12.8.2':
-    resolution: {integrity: sha512-J3cmPRwOVXnPspYeQ3OwwrR8Di9GWRA1aBWD/T1go/4KiD5dvwmE1Q0nW7+F2vAz7FRDRt/91/ZaAujdLX8PIA==}
-    cpu: [arm64]
-    os: [darwin]
+    "@pnpm/exe.darwin-x64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-+6UGMD/E7CfzYPqePOkVtWSpDeP7YV5L2k2IwDJykYZ4HH17aYUNGH1FHJSiBTZ/GjLAtdxy0X625sj/wm0w8w==,
+            }
+        cpu: [x64]
+        os: [darwin]
 
-  '@pnpm/exe.darwin-x64@12.8.2':
-    resolution: {integrity: sha512-+6UGMD/E7CfzYPqePOkVtWSpDeP7YV5L2k2IwDJykYZ4HH17aYUNGH1FHJSiBTZ/GjLAtdxy0X625sj/wm0w8w==}
-    cpu: [x64]
-    os: [darwin]
+    "@pnpm/exe.freebsd-x64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-5fg6lDYuxaPSZawglnhtZMUJI+tgJxybI1DbrKDpQ1v6jitEOptzyMIsrisKVg1sWwO9lbIW+OnQC7OC29ZbOA==,
+            }
+        cpu: [x64]
+        os: [freebsd]
 
-  '@pnpm/exe.freebsd-x64@12.8.2':
-    resolution: {integrity: sha512-5fg6lDYuxaPSZawglnhtZMUJI+tgJxybI1DbrKDpQ1v6jitEOptzyMIsrisKVg1sWwO9lbIW+OnQC7OC29ZbOA==}
-    cpu: [x64]
-    os: [freebsd]
+    "@pnpm/exe.linux-arm64-musl@12.8.2":
+        resolution:
+            {
+                integrity: sha512-HLOlwfubM+29gs++BDUFejTb09E9aN+4EVzOANU1V9BtoUpY0itBKXeLcxUVTtWwtfAdTUJwmgK6sNgZHC8xBg==,
+            }
+        cpu: [arm64]
+        os: [linux]
+        libc: [musl]
 
-  '@pnpm/exe.linux-arm64-musl@12.8.2':
-    resolution: {integrity: sha512-HLOlwfubM+29gs++BDUFejTb09E9aN+4EVzOANU1V9BtoUpY0itBKXeLcxUVTtWwtfAdTUJwmgK6sNgZHC8xBg==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
+    "@pnpm/exe.linux-arm64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-Q7wIusa83KRHg8MV4hbZq1Ua8pgiET2hJc6U49cd1BWxqob3lwiPg90WLZ5qqYvXM4yytLUSxsMTQlsTWjgsrA==,
+            }
+        cpu: [arm64]
+        os: [linux]
+        libc: [glibc]
 
-  '@pnpm/exe.linux-arm64@12.8.2':
-    resolution: {integrity: sha512-Q7wIusa83KRHg8MV4hbZq1Ua8pgiET2hJc6U49cd1BWxqob3lwiPg90WLZ5qqYvXM4yytLUSxsMTQlsTWjgsrA==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
+    "@pnpm/exe.linux-ppc64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-QQhbXz7q/YK/xkTarU4wv4++aZjVOTZ8BrgLopuJkGdFNtJHJWeXA8cm/SLXir4KTb+pMyc/+Ece44pobEMbkA==,
+            }
+        cpu: [ppc64]
+        os: [linux]
+        libc: [glibc]
 
-  '@pnpm/exe.linux-ppc64@12.8.2':
-    resolution: {integrity: sha512-QQhbXz7q/YK/xkTarU4wv4++aZjVOTZ8BrgLopuJkGdFNtJHJWeXA8cm/SLXir4KTb+pMyc/+Ece44pobEMbkA==}
-    cpu: [ppc64]
-    os: [linux]
-    libc: [glibc]
+    "@pnpm/exe.linux-riscv64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-gfoFW48o3SHMM6hsTKYwobtGKzMR8y+8A9fuXcc0YMdJubR3BmCtzyUa98IWcxM+kE0mKwQYvzxjeaAVppX7qA==,
+            }
+        cpu: [riscv64]
+        os: [linux]
+        libc: [glibc]
 
-  '@pnpm/exe.linux-riscv64@12.8.2':
-    resolution: {integrity: sha512-gfoFW48o3SHMM6hsTKYwobtGKzMR8y+8A9fuXcc0YMdJubR3BmCtzyUa98IWcxM+kE0mKwQYvzxjeaAVppX7qA==}
-    cpu: [riscv64]
-    os: [linux]
-    libc: [glibc]
+    "@pnpm/exe.linux-s390x@12.8.2":
+        resolution:
+            {
+                integrity: sha512-O786sSXtm9Qs5BiUQMKaOGU9n7/UwGzYSTAP2+ltaNMeOTrJSkl9QszOMzlK31/JfTnV4F5dg9PQN2pWdW4aOQ==,
+            }
+        cpu: [s390x]
+        os: [linux]
+        libc: [glibc]
 
-  '@pnpm/exe.linux-s390x@12.8.2':
-    resolution: {integrity: sha512-O786sSXtm9Qs5BiUQMKaOGU9n7/UwGzYSTAP2+ltaNMeOTrJSkl9QszOMzlK31/JfTnV4F5dg9PQN2pWdW4aOQ==}
-    cpu: [s390x]
-    os: [linux]
-    libc: [glibc]
+    "@pnpm/exe.linux-x64-musl@12.8.2":
+        resolution:
+            {
+                integrity: sha512-GJ9ZkN9RVlu1LGRYTFjp7c/QAbSYaaVzplP00m4ijKdiv+fGeINeIETBR5MdUZ8biPZf7MJFoKHhMnz88JIj5A==,
+            }
+        cpu: [x64]
+        os: [linux]
+        libc: [musl]
 
-  '@pnpm/exe.linux-x64-musl@12.8.2':
-    resolution: {integrity: sha512-GJ9ZkN9RVlu1LGRYTFjp7c/QAbSYaaVzplP00m4ijKdiv+fGeINeIETBR5MdUZ8biPZf7MJFoKHhMnz88JIj5A==}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
+    "@pnpm/exe.linux-x64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-2rjP1HbpSMeSyfbP2CcGG0L2+r+9gHKAjYCZZQj/3SdQBywugJ9aa5OWyPp6yz0Z5xd7tKdUtQJh09TnZOUhwA==,
+            }
+        cpu: [x64]
+        os: [linux]
+        libc: [glibc]
 
-  '@pnpm/exe.linux-x64@12.8.2':
-    resolution: {integrity: sha512-2rjP1HbpSMeSyfbP2CcGG0L2+r+9gHKAjYCZZQj/3SdQBywugJ9aa5OWyPp6yz0Z5xd7tKdUtQJh09TnZOUhwA==}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
+    "@pnpm/exe.win32-arm64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-B1bszoDtTn4o6VGHAE/wrcjceW0zUsxIakTguK3vgbZZ4t6oCv+0d100gJzjmynxg9mHmBXH35JT87SGzyXE2g==,
+            }
+        cpu: [arm64]
+        os: [win32]
 
-  '@pnpm/exe.win32-arm64@12.8.2':
-    resolution: {integrity: sha512-B1bszoDtTn4o6VGHAE/wrcjceW0zUsxIakTguK3vgbZZ4t6oCv+0d100gJzjmynxg9mHmBXH35JT87SGzyXE2g==}
-    cpu: [arm64]
-    os: [win32]
+    "@pnpm/exe.win32-x64@12.8.2":
+        resolution:
+            {
+                integrity: sha512-rOZPUUTU1PHop5dsBQcdQZCnRp7Nz5/v0fnRJkL/4kgKPRONwzD809YwQ/s4mBdSgRY5CcGaYrzwOerp+pFbRg==,
+            }
+        cpu: [x64]
+        os: [win32]
 
-  '@pnpm/exe.win32-x64@12.8.2':
-    resolution: {integrity: sha512-rOZPUUTU1PHop5dsBQcdQZCnRp7Nz5/v0fnRJkL/4kgKPRONwzD809YwQ/s4mBdSgRY5CcGaYrzwOerp+pFbRg==}
-    cpu: [x64]
-    os: [win32]
-
-  pnpm@12.8.2:
-    resolution: {integrity: sha512-pZQWeWY9lSxfDsw4upivmLTcAblXgDVPaJTy+HOXPO8vfimJ19s+5Tk5OK4h9i/ga832hdR13a2CmmIJXSuLEQ==}
-    engines: {node: '>=18.*'}
-    hasBin: true
+    pnpm@12.8.2:
+        resolution:
+            {
+                integrity: sha512-pZQWeWY9lSxfDsw4upivmLTcAblXgDVPaJTy+HOXPO8vfimJ19s+5Tk5OK4h9i/ga832hdR13a2CmmIJXSuLEQ==,
+            }
+        engines: { node: ">=18.*" }
+        hasBin: true
 
 snapshots:
+    "@pnpm/exe.android-arm64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.android-arm64@12.8.2':
-    optional: true
+    "@pnpm/exe.android-x64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.android-x64@12.8.2':
-    optional: true
+    "@pnpm/exe.darwin-arm64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.darwin-arm64@12.8.2':
-    optional: true
+    "@pnpm/exe.darwin-x64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.darwin-x64@12.8.2':
-    optional: true
+    "@pnpm/exe.freebsd-x64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.freebsd-x64@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-arm64-musl@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-arm64-musl@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-arm64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-arm64@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-ppc64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-ppc64@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-riscv64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-riscv64@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-s390x@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-s390x@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-x64-musl@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-x64-musl@12.8.2':
-    optional: true
+    "@pnpm/exe.linux-x64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.linux-x64@12.8.2':
-    optional: true
+    "@pnpm/exe.win32-arm64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.win32-arm64@12.8.2':
-    optional: true
+    "@pnpm/exe.win32-x64@12.8.2":
+        optional: true
 
-  '@pnpm/exe.win32-x64@12.8.2':
-    optional: true
-
-  pnpm@12.8.2:
-    optionalDependencies:
-      '@pnpm/exe.android-arm64': 12.8.2
-      '@pnpm/exe.android-x64': 12.8.2
-      '@pnpm/exe.darwin-arm64': 12.8.2
-      '@pnpm/exe.darwin-x64': 12.8.2
-      '@pnpm/exe.freebsd-x64': 12.8.2
-      '@pnpm/exe.linux-arm64': 12.8.2
-      '@pnpm/exe.linux-arm64-musl': 12.8.2
-      '@pnpm/exe.linux-ppc64': 12.8.2
-      '@pnpm/exe.linux-riscv64': 12.8.2
-      '@pnpm/exe.linux-s390x': 12.8.2
-      '@pnpm/exe.linux-x64': 12.8.2
-      '@pnpm/exe.linux-x64-musl': 12.8.2
-      '@pnpm/exe.win32-arm64': 12.8.2
-      '@pnpm/exe.win32-x64': 12.8.2
+    pnpm@12.8.2:
+        optionalDependencies:
+            "@pnpm/exe.android-arm64": 12.8.2
+            "@pnpm/exe.android-x64": 12.8.2
+            "@pnpm/exe.darwin-arm64": 12.8.2
+            "@pnpm/exe.darwin-x64": 12.8.2
+            "@pnpm/exe.freebsd-x64": 12.8.2
+            "@pnpm/exe.linux-arm64": 12.8.2
+            "@pnpm/exe.linux-arm64-musl": 12.8.2
+            "@pnpm/exe.linux-ppc64": 12.8.2
+            "@pnpm/exe.linux-riscv64": 12.8.2
+            "@pnpm/exe.linux-s390x": 12.8.2
+            "@pnpm/exe.linux-x64": 12.8.2
+            "@pnpm/exe.linux-x64-musl": 12.8.2
+            "@pnpm/exe.win32-arm64": 12.8.2
+            "@pnpm/exe.win32-x64": 12.8.2
 
 ---
+lockfileVersion: "9.0"
+
+settings:
+    autoInstallPeers: true
+    excludeLinksFromLockfile: false
+
+importers:
+    .:
+        devDependencies:
+            prettier:
+                specifier: 3.3.3
+                version: 3.3.3
+            prettier-plugin-astro:
+                specifier: ^0.14.1
+                version: 0.14.1
+            prettier-plugin-tailwindcss:
+                specifier: ^0.6.14
+                version: 0.6.14(prettier-plugin-astro@0.14.1)(prettier@3.3.3)
+
+packages:
+    "@astrojs/compiler@2.13.1":
+        resolution:
+            {
+                integrity: sha512-f3FN83d2G/v32ipNClRKgYv30onQlMZX1vCeZMjPsMMPl1mDpmbl0+N5BYo4S/ofzqJyS5hvwacEo0CCVDn/Qg==,
+            }
+
+    prettier-plugin-astro@0.14.1:
+        resolution:
+            {
+                integrity: sha512-RiBETaaP9veVstE4vUwSIcdATj6dKmXljouXc/DDNwBSPTp8FRkLGDSGFClKsAFeeg+13SB0Z1JZvbD76bigJw==,
+            }
+        engines: { node: ^14.15.0 || >=16.0.0 }
+
+    prettier-plugin-tailwindcss@0.6.14:
+        resolution:
+            {
+                integrity: sha512-pi2e/+ZygeIqntN+vC573BcW5Cve8zUB0SSAGxqpB4f96boZF4M3phPVoOFCeypwkpRYdi7+jQ5YJJUwrkGUAg==,
+            }
+        engines: { node: ">=14.21.3" }
+        peerDependencies:
+            "@ianvs/prettier-plugin-sort-imports": "*"
+            "@prettier/plugin-hermes": "*"
+            "@prettier/plugin-oxc": "*"
+            "@prettier/plugin-pug": "*"
+            "@shopify/prettier-plugin-liquid": "*"
+            "@trivago/prettier-plugin-sort-imports": "*"
+            "@zackad/prettier-plugin-twig": "*"
+            prettier: ^3.0
+            prettier-plugin-astro: "*"
+            prettier-plugin-css-order: "*"
+            prettier-plugin-import-sort: "*"
+            prettier-plugin-jsdoc: "*"
+            prettier-plugin-marko: "*"
+            prettier-plugin-multiline-arrays: "*"
+            prettier-plugin-organize-attributes: "*"
+            prettier-plugin-organize-imports: "*"
+            prettier-plugin-sort-imports: "*"
+            prettier-plugin-style-order: "*"
+            prettier-plugin-svelte: "*"
+        peerDependenciesMeta:
+            "@ianvs/prettier-plugin-sort-imports":
+                optional: true
+            "@prettier/plugin-hermes":
+                optional: true
+            "@prettier/plugin-oxc":
+                optional: true
+            "@prettier/plugin-pug":
+                optional: true
+            "@shopify/prettier-plugin-liquid":
+                optional: true
+            "@trivago/prettier-plugin-sort-imports":
+                optional: true
+            "@zackad/prettier-plugin-twig":
+                optional: true
+            prettier-plugin-astro:
+                optional: true
+            prettier-plugin-css-order:
+                optional: true
+            prettier-plugin-import-sort:
+                optional: true
+            prettier-plugin-jsdoc:
+                optional: true
+            prettier-plugin-marko:
+                optional: true
+            prettier-plugin-multiline-arrays:
+                optional: true
+            prettier-plugin-organize-attributes:
+                optional: true
+            prettier-plugin-organize-imports:
+                optional: true
+            prettier-plugin-sort-imports:
+                optional: true
+            prettier-plugin-style-order:
+                optional: true
+            prettier-plugin-svelte:
+                optional: true
+
+    prettier@3.3.3:
+        resolution:
+            {
+                integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==,
+            }
+        engines: { node: ">=14" }
+        hasBin: true
+
+    s.color@0.0.15:
+        resolution:
+            {
+                integrity: sha512-AUNrbEUHeKY8XsYr/DYpl+qk5+aM+DChopnWOPEzn8YKzOhv4l2zH6LzZms3tOZP3wwdOyc0RmTciyi46HLIuA==,
+            }
+
+    sass-formatter@0.7.9:
+        resolution:
+            {
+                integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw==,
+            }
+
+    suf-log@2.5.3:
+        resolution:
+            {
+                integrity: sha512-KvC8OPjzdNOe+xQ4XWJV2whQA0aM1kGVczMQ8+dStAO6KfEB140JEVQ9dE76ONZ0/Ylf67ni4tILPJB41U0eow==,
+            }
+
+snapshots:
+    "@astrojs/compiler@2.13.1": {}
+
+    prettier-plugin-astro@0.14.1:
+        dependencies:
+            "@astrojs/compiler": 2.13.1
+            prettier: 3.3.3
+            sass-formatter: 0.7.9
+
+    prettier-plugin-tailwindcss@0.6.14(prettier-plugin-astro@0.14.1)(prettier@3.3.3):
+        dependencies:
+            prettier: 3.3.3
+        optionalDependencies:
+            prettier-plugin-astro: 0.14.1
+
+    prettier@3.3.3: {}
+
+    s.color@0.0.15: {}
+
+    sass-formatter@0.7.9:
+        dependencies:
+            suf-log: 2.5.3
+
+    suf-log@2.5.3:
+        dependencies:
+            s.color: 0.0.15

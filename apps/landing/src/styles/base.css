@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tailwindcss";
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
 
 @theme {
     /* Custom Colors */

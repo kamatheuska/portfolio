@@ -50,32 +50,32 @@ pnpm dev
 ### Minimal Config
 
 ```ts
-import { buildConfig } from 'payload'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { buildConfig } from "payload";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
-  admin: {
-    user: 'users',
-    importMap: {
-      baseDir: path.resolve(dirname),
+    admin: {
+        user: "users",
+        importMap: {
+            baseDir: path.resolve(dirname),
+        },
     },
-  },
-  collections: [Users, Media],
-  editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET,
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URL,
-  }),
-})
+    collections: [Users, Media],
+    editor: lexicalEditor(),
+    secret: process.env.PAYLOAD_SECRET,
+    typescript: {
+        outputFile: path.resolve(dirname, "payload-types.ts"),
+    },
+    db: mongooseAdapter({
+        url: process.env.DATABASE_URL,
+    }),
+});
 ```
 
 ## Essential Patterns
@@ -83,22 +83,22 @@ export default buildConfig({
 ### Basic Collection
 
 ```ts
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const Posts: CollectionConfig = {
-  slug: 'posts',
-  admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'author', 'status', 'createdAt'],
-  },
-  fields: [
-    { name: 'title', type: 'text', required: true },
-    { name: 'slug', type: 'text', unique: true, index: true },
-    { name: 'content', type: 'richText' },
-    { name: 'author', type: 'relationship', relationTo: 'users' },
-  ],
-  timestamps: true,
-}
+    slug: "posts",
+    admin: {
+        useAsTitle: "title",
+        defaultColumns: ["title", "author", "status", "createdAt"],
+    },
+    fields: [
+        { name: "title", type: "text", required: true },
+        { name: "slug", type: "text", unique: true, index: true },
+        { name: "content", type: "richText" },
+        { name: "author", type: "relationship", relationTo: "users" },
+    ],
+    timestamps: true,
+};
 ```
 
 For more collection patterns (auth, upload, drafts, live preview), see [COLLECTIONS.md](reference/COLLECTIONS.md).
@@ -128,19 +128,19 @@ For all field types (array, blocks, point, join, virtual, conditional, etc.), se
 
 ```ts
 export const Posts: CollectionConfig = {
-  slug: 'posts',
-  hooks: {
-    beforeChange: [
-      async ({ data, operation }) => {
-        if (operation === 'create') {
-          data.slug = slugify(data.title)
-        }
-        return data
-      },
-    ],
-  },
-  fields: [{ name: 'title', type: 'text' }],
-}
+    slug: "posts",
+    hooks: {
+        beforeChange: [
+            async ({ data, operation }) => {
+                if (operation === "create") {
+                    data.slug = slugify(data.title);
+                }
+                return data;
+            },
+        ],
+    },
+    fields: [{ name: "title", type: "text" }],
+};
 ```
 
 For all hook patterns, see [HOOKS.md](reference/HOOKS.md). For access control, see [ACCESS-CONTROL.md](reference/ACCESS-CONTROL.md).
@@ -148,25 +148,25 @@ For all hook patterns, see [HOOKS.md](reference/HOOKS.md). For access control, s
 ### Access Control with Type Safety
 
 ```ts
-import type { Access } from 'payload'
-import type { User } from '@/payload-types'
+import type { Access } from "payload";
+import type { User } from "@/payload-types";
 
 // Type-safe access control
 export const adminOnly: Access = ({ req }) => {
-  const user = req.user as User
-  return user?.roles?.includes('admin') || false
-}
+    const user = req.user as User;
+    return user?.roles?.includes("admin") || false;
+};
 
 // Row-level access control
 export const ownPostsOnly: Access = ({ req }) => {
-  const user = req.user as User
-  if (!user) return false
-  if (user.roles?.includes('admin')) return true
+    const user = req.user as User;
+    if (!user) return false;
+    if (user.roles?.includes("admin")) return true;
 
-  return {
-    author: { equals: user.id },
-  }
-}
+    return {
+        author: { equals: user.id },
+    };
+};
 ```
 
 ### Query Example
@@ -174,30 +174,30 @@ export const ownPostsOnly: Access = ({ req }) => {
 ```ts
 // Local API
 const posts = await payload.find({
-  collection: 'posts',
-  where: {
-    status: { equals: 'published' },
-    'author.name': { contains: 'john' },
-  },
-  depth: 2,
-  limit: 10,
-  sort: '-createdAt',
-})
+    collection: "posts",
+    where: {
+        status: { equals: "published" },
+        "author.name": { contains: "john" },
+    },
+    depth: 2,
+    limit: 10,
+    sort: "-createdAt",
+});
 
 // Query with populated relationships
 const post = await payload.findByID({
-  collection: 'posts',
-  id: '123',
-  depth: 2, // Populates relationships (default is 2)
-})
+    collection: "posts",
+    id: "123",
+    depth: 2, // Populates relationships (default is 2)
+});
 // Returns: { author: { id: "user123", name: "John" } }
 
 // Without depth, relationships return IDs only
 const post = await payload.findByID({
-  collection: 'posts',
-  id: '123',
-  depth: 0,
-})
+    collection: "posts",
+    id: "123",
+    depth: 0,
+});
 // Returns: { author: "user123" }
 ```
 
@@ -241,22 +241,22 @@ export default async function Page() {
 ```ts
 // ❌ SECURITY BUG: Passes user but ignores their permissions
 await payload.find({
-  collection: 'posts',
-  user: someUser, // Access control is BYPASSED!
-})
+    collection: "posts",
+    user: someUser, // Access control is BYPASSED!
+});
 
 // ✅ SECURE: Actually enforces the user's permissions
 await payload.find({
-  collection: 'posts',
-  user: someUser,
-  overrideAccess: false, // REQUIRED for access control
-})
+    collection: "posts",
+    user: someUser,
+    overrideAccess: false, // REQUIRED for access control
+});
 ```
 
 **When to use each:**
 
-- `overrideAccess: true` (default) - Server-side operations you trust (cron jobs, system tasks)
-- `overrideAccess: false` - When operating on behalf of a user (API routes, webhooks)
+-   `overrideAccess: true` (default) - Server-side operations you trust (cron jobs, system tasks)
+-   `overrideAccess: false` - When operating on behalf of a user (API routes, webhooks)
 
 See [QUERIES.md#access-control-in-local-api](reference/QUERIES.md#access-control-in-local-api).
 
@@ -267,28 +267,28 @@ See [QUERIES.md#access-control-in-local-api](reference/QUERIES.md#access-control
 ```ts
 // ❌ DATA CORRUPTION RISK: Separate transaction
 hooks: {
-  afterChange: [
-    async ({ doc, req }) => {
-      await req.payload.create({
-        collection: 'audit-log',
-        data: { docId: doc.id },
-        // Missing req - runs in separate transaction!
-      })
-    },
-  ]
+    afterChange: [
+        async ({ doc, req }) => {
+            await req.payload.create({
+                collection: "audit-log",
+                data: { docId: doc.id },
+                // Missing req - runs in separate transaction!
+            });
+        },
+    ];
 }
 
 // ✅ ATOMIC: Same transaction
 hooks: {
-  afterChange: [
-    async ({ doc, req }) => {
-      await req.payload.create({
-        collection: 'audit-log',
-        data: { docId: doc.id },
-        req, // Maintains atomicity
-      })
-    },
-  ]
+    afterChange: [
+        async ({ doc, req }) => {
+            await req.payload.create({
+                collection: "audit-log",
+                data: { docId: doc.id },
+                req, // Maintains atomicity
+            });
+        },
+    ];
 }
 ```
 
@@ -301,33 +301,33 @@ See [ADAPTERS.md#threading-req-through-operations](reference/ADAPTERS.md#threadi
 ```ts
 // ❌ INFINITE LOOP
 hooks: {
-  afterChange: [
-    async ({ doc, req }) => {
-      await req.payload.update({
-        collection: 'posts',
-        id: doc.id,
-        data: { views: doc.views + 1 },
-        req,
-      }) // Triggers afterChange again!
-    },
-  ]
+    afterChange: [
+        async ({ doc, req }) => {
+            await req.payload.update({
+                collection: "posts",
+                id: doc.id,
+                data: { views: doc.views + 1 },
+                req,
+            }); // Triggers afterChange again!
+        },
+    ];
 }
 
 // ✅ SAFE: Use context flag
 hooks: {
-  afterChange: [
-    async ({ doc, req, context }) => {
-      if (context.skipHooks) return
+    afterChange: [
+        async ({ doc, req, context }) => {
+            if (context.skipHooks) return;
 
-      await req.payload.update({
-        collection: 'posts',
-        id: doc.id,
-        data: { views: doc.views + 1 },
-        context: { skipHooks: true },
-        req,
-      })
-    },
-  ]
+            await req.payload.update({
+                collection: "posts",
+                id: doc.id,
+                data: { views: doc.views + 1 },
+                context: { skipHooks: true },
+                req,
+            });
+        },
+    ];
 }
 ```
 
@@ -360,14 +360,14 @@ src/
 ```ts
 // payload.config.ts
 export default buildConfig({
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-  // ...
-})
+    typescript: {
+        outputFile: path.resolve(dirname, "payload-types.ts"),
+    },
+    // ...
+});
 
 // Usage
-import type { Post, User } from '@/payload-types'
+import type { Post, User } from "@/payload-types";
 ```
 
 ## Common Gotchas
@@ -387,62 +387,62 @@ import type { Post, User } from '@/payload-types'
 
 ### Security
 
-- Default to restrictive access, gradually add permissions
-- Use `overrideAccess: false` when passing `user` to Local API
-- Field-level access only returns boolean (no query constraints)
-- Never trust client-provided data
-- Use `saveToJWT: true` for roles to avoid database lookups
+-   Default to restrictive access, gradually add permissions
+-   Use `overrideAccess: false` when passing `user` to Local API
+-   Field-level access only returns boolean (no query constraints)
+-   Never trust client-provided data
+-   Use `saveToJWT: true` for roles to avoid database lookups
 
 ### Performance
 
-- Index frequently queried fields
-- Use `select` to limit returned fields
-- Set `maxDepth` on relationships to prevent over-fetching
-- Prefer query constraints over async operations in access control
-- Cache expensive operations in `req.context`
+-   Index frequently queried fields
+-   Use `select` to limit returned fields
+-   Set `maxDepth` on relationships to prevent over-fetching
+-   Prefer query constraints over async operations in access control
+-   Cache expensive operations in `req.context`
 
 ### Data Integrity
 
-- Always pass `req` to nested operations in hooks
-- Use context flags to prevent infinite hook loops
-- Enable transactions for MongoDB (requires replica set) and Postgres
-- Use `beforeValidate` for data formatting
-- Use `beforeChange` for business logic
+-   Always pass `req` to nested operations in hooks
+-   Use context flags to prevent infinite hook loops
+-   Enable transactions for MongoDB (requires replica set) and Postgres
+-   Use `beforeValidate` for data formatting
+-   Use `beforeChange` for business logic
 
 ### Type Safety
 
-- Run `generate:types` after schema changes
-- Import types from generated `payload-types.ts`
-- Type your user object: `import type { User } from '@/payload-types'`
-- Use `as const` for field options
-- Use field type guards for runtime type checking
+-   Run `generate:types` after schema changes
+-   Import types from generated `payload-types.ts`
+-   Type your user object: `import type { User } from '@/payload-types'`
+-   Use `as const` for field options
+-   Use field type guards for runtime type checking
 
 ### Organization
 
-- Keep collections in separate files
-- Extract access control to `access/` directory
-- Extract hooks to `hooks/` directory
-- Use reusable field factories for common patterns
-- Document complex access control with comments
+-   Keep collections in separate files
+-   Extract access control to `access/` directory
+-   Extract hooks to `hooks/` directory
+-   Use reusable field factories for common patterns
+-   Document complex access control with comments
 
 ## Reference Documentation
 
-- **[FIELDS.md](reference/FIELDS.md)** - All field types, validation, admin options
-- **[FIELD-TYPE-GUARDS.md](reference/FIELD-TYPE-GUARDS.md)** - Type guards for runtime field type checking and narrowing
-- **[COLLECTIONS.md](reference/COLLECTIONS.md)** - Collection configs, auth, upload, drafts, live preview
-- **[HOOKS.md](reference/HOOKS.md)** - Collection hooks, field hooks, context patterns
-- **[ACCESS-CONTROL.md](reference/ACCESS-CONTROL.md)** - Collection, field, global access control, RBAC, multi-tenant
-- **[ACCESS-CONTROL-ADVANCED.md](reference/ACCESS-CONTROL-ADVANCED.md)** - Context-aware, time-based, subscription-based access, factory functions, templates
-- **[QUERIES.md](reference/QUERIES.md)** - Query operators, Local/REST/GraphQL APIs
-- **[ENDPOINTS.md](reference/ENDPOINTS.md)** - Custom API endpoints: authentication, helpers, request/response patterns
-- **[ADAPTERS.md](reference/ADAPTERS.md)** - Database, storage, email adapters, transactions
-- **[ADVANCED.md](reference/ADVANCED.md)** - Authentication, jobs, endpoints, components, plugins, localization
-- **[PLUGIN-DEVELOPMENT.md](reference/PLUGIN-DEVELOPMENT.md)** - Plugin architecture, monorepo structure, patterns, best practices
+-   **[FIELDS.md](reference/FIELDS.md)** - All field types, validation, admin options
+-   **[FIELD-TYPE-GUARDS.md](reference/FIELD-TYPE-GUARDS.md)** - Type guards for runtime field type checking and narrowing
+-   **[COLLECTIONS.md](reference/COLLECTIONS.md)** - Collection configs, auth, upload, drafts, live preview
+-   **[HOOKS.md](reference/HOOKS.md)** - Collection hooks, field hooks, context patterns
+-   **[ACCESS-CONTROL.md](reference/ACCESS-CONTROL.md)** - Collection, field, global access control, RBAC, multi-tenant
+-   **[ACCESS-CONTROL-ADVANCED.md](reference/ACCESS-CONTROL-ADVANCED.md)** - Context-aware, time-based, subscription-based access, factory functions, templates
+-   **[QUERIES.md](reference/QUERIES.md)** - Query operators, Local/REST/GraphQL APIs
+-   **[ENDPOINTS.md](reference/ENDPOINTS.md)** - Custom API endpoints: authentication, helpers, request/response patterns
+-   **[ADAPTERS.md](reference/ADAPTERS.md)** - Database, storage, email adapters, transactions
+-   **[ADVANCED.md](reference/ADVANCED.md)** - Authentication, jobs, endpoints, components, plugins, localization
+-   **[PLUGIN-DEVELOPMENT.md](reference/PLUGIN-DEVELOPMENT.md)** - Plugin architecture, monorepo structure, patterns, best practices
 
 ## Resources
 
-- llms-full.txt: <https://payloadcms.com/llms-full.txt>
-- Docs: <https://payloadcms.com/docs>
-- GitHub: <https://github.com/payloadcms/payload>
-- Examples: <https://github.com/payloadcms/payload/tree/3.x/examples>
-- Templates: <https://github.com/payloadcms/payload/tree/3.x/templates>
+-   llms-full.txt: <https://payloadcms.com/llms-full.txt>
+-   Docs: <https://payloadcms.com/docs>
+-   GitHub: <https://github.com/payloadcms/payload>
+-   Examples: <https://github.com/payloadcms/payload/tree/3.x/examples>
+-   Templates: <https://github.com/payloadcms/payload/tree/3.x/templates>
