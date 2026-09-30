@@ -1,8 +1,5 @@
 import fp from "fastify-plugin";
-import { drizzle, type BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
-import Database from "better-sqlite3";
-import type { Database as DatabaseType } from "better-sqlite3";
-import { sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/better-sqlite3";
 import closeWithGrace from "close-with-grace";
 
 const metadata: fp.PluginMetadata = {
@@ -15,21 +12,16 @@ export default fp(async fastify => {
     // @ts-expect-error not typed
     const config = fastify.config as unknown as Map<string, string | undefined>;
 
-    const dbUrl = config.get("DATABASE_URL");
+    const dbFileName = config.get("DB_FILE_NAME");
+    const dbAdminFileName = config.get("DB_ADMIN_FILE_NAME");
 
-    if (!dbUrl) {
-        throw new Error("DATABASE_URL is not defined in environment variables");
-    }
-
-    let db: BetterSQLite3Database & {
-        $client: DatabaseType;
-    };
     fastify.log.debug("Connecting to DB");
-    try {
-        const sqlite = new Database(dbUrl);
-        db = drizzle(sqlite);
 
-        db.run(sql`SELECT 1`);
+    try {
+        const db = drizzle(dbFileName);
+        const adminDb = drizzle(dbAdminFileName);
+
+        db.all("select 1");
 
         fastify.log.debug("DB Connection established");
         fastify.decorate("db", db);

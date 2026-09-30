@@ -28,7 +28,7 @@ closeWithGrace(
 
 // Example usage:
 export const envConfig: Map<string, EnvVarConfig> = new Map([
-    ["DATABASE_URL", { required: true }],
+    ["DB_FILE_NAME", { required: true }],
     ["JWT_SECRET", { required: true }],
     ["PORT", { default: "3000" }],
     ["NODE_ENV", { default: "development" }],

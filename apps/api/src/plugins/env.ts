@@ -5,11 +5,6 @@ const metadata: fp.PluginMetadata = {
     name: "env-plugin",
 };
 
-/**
- * This plugins adds some utilities to handle http errors
- *
- * @see https://github.com/fastify/fastify-sensible
- */
 export default fp(async fastify => {
     try {
         fastify.log.info("Registering plugin %s", metadata.name);
