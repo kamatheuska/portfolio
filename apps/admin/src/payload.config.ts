@@ -5,9 +5,10 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
 
-import { Users } from "./collections/Users";
-import { Media } from "./collections/Media";
-import { Settings } from "./globals/Settings";
+import { Users } from "./collections/users";
+import { Media } from "./collections/media";
+import { Settings } from "./globals/settings";
+import { HomeLinks } from "./collections/home-links";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -25,7 +26,7 @@ export default buildConfig({
             key: "seed",
         },
     ],
-    collections: [Users, Media],
+    collections: [Users, Media, HomeLinks],
     globals: [Settings],
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || "",
