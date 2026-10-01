@@ -8,7 +8,9 @@ const metadata: fp.PluginMetadata = {
 };
 
 export default fp(async fastify => {
-    fastify.log.info("Registering plugin %s", metadata.name);
+    const logger = fastify.log.child({ plugin: metadata.name });
+
+    logger.info("Registering plugin %s", metadata.name);
     // @ts-expect-error not typed
     const config = fastify.config as unknown as Map<string, string | undefined>;
 
@@ -23,35 +25,43 @@ export default fp(async fastify => {
         throw new Error("DB_ADMIN_FILE_NAME is not defined in the environment");
     }
 
-    fastify.log.debug("Connecting to DB");
+    logger.debug("Connecting to DB");
+
+    let db;
+    let adminDb;
 
     try {
-        const db = drizzle(dbFileName);
-        const adminDb = drizzle(dbAdminFileName);
+        db = drizzle(dbFileName);
+        adminDb = drizzle(dbAdminFileName);
+    } catch (error) {
+        logger.error({ err: error }, "Error while connecting to the database");
+        throw error;
+    }
 
+    closeWithGrace(
+        { delay: Number(process.env.FASTIFY_CLOSE_GRACE_DELAY) ?? 500 },
+        async function ({ signal, err, manual }) {
+            if (err) {
+                logger.error({ err, signal, manual }, "closing db plugin with grace due to error");
+            }
+            logger.info({ signal, manual }, "closing db plugin with grace");
+            db.$client.close();
+            adminDb.$client.close();
+        },
+    );
+
+    try {
         db.all("select 1");
 
-        fastify.log.debug("App Database Connection established");
+        logger.debug("App Database Connection established");
         fastify.decorate("db", db);
 
         adminDb.all("select 1");
 
-        fastify.log.debug("Admin Database Connection established");
+        logger.debug("Admin Database Connection established");
         fastify.decorate("adminDb", adminDb);
-
-        closeWithGrace(
-            { delay: Number(process.env.FASTIFY_CLOSE_GRACE_DELAY) ?? 500 },
-            async function ({ signal, err, manual }) {
-                if (err) {
-                    fastify.log.error({ err, signal, manual }, "closing db plugin with grace due to error");
-                }
-                fastify.log.info({ signal, manual }, "closing db plugin with grace");
-                db.$client.close();
-                adminDb.$client.close();
-            },
-        );
     } catch (error) {
-        fastify.log.error({ err: error }, "Error on connecting to the database:");
+        logger.error({ err: error }, "Error while connecting to the database");
         throw error;
     }
 }, metadata);

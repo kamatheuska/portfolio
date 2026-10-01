@@ -2,37 +2,14 @@
 import { Icon } from "astro-icon/components";
 
 interface Social {
-    link: string;
-    title: string;
+    href: string;
+    aria_label: string;
     icon: string;
 }
-const social: Social[] = [
-    {
-        link: "mailto:nicolas@matizlab.com",
-        title: "Get in touch",
-        icon: "mdi:envelope",
-    },
-    {
-        link: "https://www.linkedin.com/in/nicolasramirezdev",
-        title: "Link to LinkedIn Profile",
-        icon: "mdi:linkedin",
-    },
-    {
-        link: "http://www.instagram.com/nicoramirezdev",
-        title: "Link to Instagram Profile",
-        icon: "mdi:instagram",
-    },
-    {
-        link: "https://www.github.com/kamatheuska",
-        title: "Link to Github Profile",
-        icon: "mdi:github",
-    },
-    {
-        link: "https://stackoverflow.com/u/7868769",
-        title: "Link to Stackoverflow Profile",
-        icon: "mdi:stack-overflow",
-    },
-];
+
+const response = await fetch("http://localhost:3001/api/settings/home-links");
+const data = (await response.json()) as { records: Social[] };
+const social: Social[] = response.ok ? data.records : [];
 ---
 
 <ul class="mt-0 text-2xl flex mb-5">
@@ -40,9 +17,9 @@ const social: Social[] = [
         social.map((item, index) => (
             <li class={index !== social.length - 1 ? "mr-4" : ""}>
                 <a
-                    href={item.link}
+                    href={item.href}
                     target="_blank"
-                    aria-label={item.title}
+                    aria-label={item.aria_label}
                     class="text-pink-500 hover:text-green-400 transition-colors"
                 >
                     <Icon name={item.icon} class="w-8 h-8" />

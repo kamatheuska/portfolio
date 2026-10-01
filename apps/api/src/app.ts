@@ -2,6 +2,12 @@ import * as path from "node:path";
 import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import { FastifyPluginAsync } from "fastify";
 import { fileURLToPath } from "node:url";
+import cors from "./plugins/cors.js";
+import db from "./plugins/db.js";
+import env from "./plugins/env.js";
+import helmet from "./plugins/helmet.js";
+import multipart from "./plugins/multipart.js";
+import sensible from "./plugins/sensible.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,11 +24,12 @@ const app: FastifyPluginAsync<AppOptions> = async (fastify, opts): Promise<void>
 
     logger.info("Registering plugins...");
 
-    void fastify.register(AutoLoad, {
-        dir: path.join(__dirname, "plugins"),
-        options: opts,
-        forceESM: true,
-    });
+    fastify.register(env, opts);
+    fastify.register(cors, opts);
+    fastify.register(helmet, opts);
+    fastify.register(multipart, opts);
+    fastify.register(sensible);
+    fastify.register(db, opts);
 
     logger.info("Registering routes...");
 
