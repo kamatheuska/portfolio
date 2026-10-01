@@ -15,6 +15,14 @@ export default fp(async fastify => {
     const dbFileName = config.get("DB_FILE_NAME");
     const dbAdminFileName = config.get("DB_ADMIN_FILE_NAME");
 
+    if (!dbFileName) {
+        throw new Error("DB_FILE_NAME is not defined in the environment");
+    }
+
+    if (!dbAdminFileName) {
+        throw new Error("DB_ADMIN_FILE_NAME is not defined in the environment");
+    }
+
     fastify.log.debug("Connecting to DB");
 
     try {
@@ -23,8 +31,13 @@ export default fp(async fastify => {
 
         db.all("select 1");
 
-        fastify.log.debug("DB Connection established");
+        fastify.log.debug("App Database Connection established");
         fastify.decorate("db", db);
+
+        adminDb.all("select 1");
+
+        fastify.log.debug("Admin Database Connection established");
+        fastify.decorate("adminDb", adminDb);
 
         closeWithGrace(
             { delay: Number(process.env.FASTIFY_CLOSE_GRACE_DELAY) ?? 500 },
@@ -34,6 +47,7 @@ export default fp(async fastify => {
                 }
                 fastify.log.info({ signal, manual }, "closing db plugin with grace");
                 db.$client.close();
+                adminDb.$client.close();
             },
         );
     } catch (error) {

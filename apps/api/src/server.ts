@@ -29,6 +29,7 @@ closeWithGrace(
 // Example usage:
 export const envConfig: Map<string, EnvVarConfig> = new Map([
     ["DB_FILE_NAME", { required: true }],
+    ["DB_ADMIN_FILE_NAME", { required: true }],
     ["JWT_SECRET", { required: true }],
     ["PORT", { default: "3000" }],
     ["NODE_ENV", { default: "development" }],
@@ -40,7 +41,7 @@ let env: Map<string, string | undefined>;
 
 try {
     env = evaluateEnv(envConfig);
-    app.log.debug("Environment variables loaded:");
+    app.log.debug("Environment variables loaded");
 } catch (error) {
     app.log.error({ err: error }, "Environment validation failed:");
     throw error;

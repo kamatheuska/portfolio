@@ -14,29 +14,25 @@ export type AppOptions = {
 const options: AppOptions = {};
 
 const app: FastifyPluginAsync<AppOptions> = async (fastify, opts): Promise<void> => {
-    fastify.log.info("Registering plugins and routes...");
-    // Place here your custom code!
+    const logger = fastify.log.child({ module: "app" });
 
-    // Do not touch the following lines
+    logger.info("Registering plugins...");
 
-    // This loads all plugins defined in plugins
-    // those should be support plugins that are reused
-    // through your application
-    // eslint-disable-next-line no-void
     void fastify.register(AutoLoad, {
         dir: path.join(__dirname, "plugins"),
         options: opts,
         forceESM: true,
     });
 
-    // This loads all plugins defined in routes
-    // define your routes in one of these
-    // eslint-disable-next-line no-void
-    await fastify.register(AutoLoad, {
+    logger.info("Registering routes...");
+
+    fastify.register(AutoLoad, {
         dir: path.join(__dirname, "routes"),
         options: opts,
         forceESM: true,
     });
+
+    logger.info("App setup complete.");
 };
 
 export default app;
