@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
 
+import { triggerDeployAfterChange, triggerDeployAfterDelete } from "../hooks/trigger-deploy";
+
 export const HomeLinks: CollectionConfig = {
     slug: "home-links",
     dbName: "home_links",
@@ -12,6 +14,10 @@ export const HomeLinks: CollectionConfig = {
     },
     access: {
         read: () => true,
+    },
+    hooks: {
+        afterChange: [triggerDeployAfterChange],
+        afterDelete: [triggerDeployAfterDelete],
     },
     fields: [
         {

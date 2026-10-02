@@ -1,5 +1,7 @@
 import type { GlobalConfig } from "payload";
 
+import { triggerDeployGlobalAfterChange } from "../hooks/trigger-deploy";
+
 export const Settings: GlobalConfig = {
     slug: "settings",
     dbName: "settings",
@@ -9,6 +11,9 @@ export const Settings: GlobalConfig = {
     },
     access: {
         read: () => true,
+    },
+    hooks: {
+        afterChange: [triggerDeployGlobalAfterChange],
     },
     fields: [
         {
