@@ -10,7 +10,8 @@ export const Settings: GlobalConfig = {
         group: "Settings",
     },
     access: {
-        read: () => true,
+        read: ({ req: { user } }) => Boolean(user),
+        update: ({ req: { user } }) => Boolean(user),
     },
     hooks: {
         afterChange: [triggerDeployGlobalAfterChange],
