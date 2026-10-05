@@ -102,6 +102,27 @@
           "autoincrement": false,
           "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
+        "enable_a_p_i_key": {
+          "name": "enable_a_p_i_key",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "api_key": {
+          "name": "api_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "api_key_index": {
+          "name": "api_key_index",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "email": {
           "name": "email",
           "type": "text",
@@ -918,6 +939,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "17a85490-ae0b-4e94-bbb0-9714c2e6df44",
+  "id": "8a58db3a-0ba1-41c5-be7d-6d3cc701e653",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

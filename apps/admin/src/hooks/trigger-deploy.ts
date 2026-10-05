@@ -48,6 +48,7 @@ function scheduleDeploy(payload: Payload) {
     const token = process.env.CLOUDFLARE_API_TOKEN;
     const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
     const project = process.env.CLOUDFLARE_PAGES_PROJECT;
+    const appEnv = process.env.APP_ENV;
 
     if (!token || !accountId || !project) {
         if (!warnedDisabled) {
@@ -60,6 +61,13 @@ function scheduleDeploy(payload: Payload) {
     }
 
     payload.logger.info("Scheduling Cloudflare Pages deployment trigger");
+
+    if (appEnv !== "production") {
+        payload.logger.info(
+            `Cloudflare Pages deployment trigger skipped: APP_ENV is set to "${appEnv}" (not "production")`,
+        );
+        return;
+    }
 
     const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/pages/projects/${project}/deployments`;
 

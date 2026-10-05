@@ -50,6 +50,9 @@ export const users = sqliteTable(
         createdAt: text("created_at")
             .notNull()
             .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
+        enableAPIKey: integer("enable_a_p_i_key", { mode: "boolean" }),
+        apiKey: text("api_key"),
+        apiKeyIndex: text("api_key_index"),
         email: text("email").notNull(),
         resetPasswordToken: text("reset_password_token"),
         resetPasswordExpiration: text("reset_password_expiration").default(
