@@ -30,6 +30,14 @@ export default defineConfig({
                 access: "public",
                 optional: true,
             }),
+            ADMIN_BASE_URL: envField.string({
+                context: "server",
+                access: "public",
+            }),
+            ADMIN_API_KEY: envField.string({
+                context: "server",
+                access: "secret",
+            }),
         },
     },
     i18n: {

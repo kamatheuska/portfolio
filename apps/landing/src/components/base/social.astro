@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { adminFetchJson } from "../../lib/admin-client";
 
 interface Social {
     href: string;
@@ -7,9 +8,15 @@ interface Social {
     icon: string;
 }
 
-const response = await fetch("http://localhost:3001/api/settings/home-links");
-const data = (await response.json()) as { records: Social[] };
-const social: Social[] = response.ok ? data.records : [];
+let social: Social[] = [];
+try {
+    const data = await adminFetchJson<{ records: Social[] }>(
+        "/api/settings/home-links",
+    );
+    social = data.records ?? [];
+} catch (error) {
+    console.error("Failed to load social links", error);
+}
 ---
 
 <ul class="mt-0 text-2xl flex mb-5">
