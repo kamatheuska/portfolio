@@ -14,7 +14,7 @@ for file in "${required_files[@]}"; do
 done
 
 echo "=== Building Docker images from docker-compose.yml ==="
-docker-compose build
+docker compose build
 
 echo "=== Saving Docker image to archive ==="
 docker save "${IMAGE_NAME}:${IMAGE_TAG}" > "image.tar"
