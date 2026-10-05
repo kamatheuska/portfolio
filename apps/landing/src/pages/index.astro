@@ -5,6 +5,7 @@ import Social from "../components/base/social.astro";
 import Menu from "../components/menu.astro";
 import RootLayout from "../layouts/root-layout.astro";
 import Content from "../components/content.astro";
+import { adminFetchJson } from "../lib/admin-client";
 // import { getRelativeLocaleUrl } from "astro:i18n";
 
 export function getStaticPaths() {
@@ -14,6 +15,19 @@ export function getStaticPaths() {
 // const aboutURL = getRelativeLocaleUrl(currentLocale, "about");
 
 // For client-side interactivity
+interface Setting {
+    id: number;
+    homeHeading?: string | null;
+    updatedAt?: string | null;
+    createdAt?: string | null;
+}
+let homeHeading: string | null = null;
+try {
+    const data = await adminFetchJson<Setting>("/api/globals/settings");
+    homeHeading = data.homeHeading ?? null;
+} catch (error) {
+    console.error("Failed to load social links", error);
+}
 ---
 
 <RootLayout
@@ -28,9 +42,7 @@ export function getStaticPaths() {
                 <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">
                     Nicolas Ramirez
                 </h1>
-                <p class="text-light-blue max-w-[350px] md:text-lg mb-5">
-                    I am Software Developer specialized on creating great products for the web
-                </p>
+                <p class="text-light-blue max-w-[350px] md:text-lg mb-5">{homeHeading}</p>
                 <Social />
                 <div class="transition-opacity duration-300">
                     <Button @click="updateBackgroundStyles($data)"> Start </Button>
