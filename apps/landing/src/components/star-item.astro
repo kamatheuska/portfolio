@@ -69,8 +69,7 @@ const currentLocale = Astro.currentLocale ?? "en";
                     height: innerSize,
                     backgroundColor: color,
                 }}
-            >
-            </div>
+            ></div>
             <div
                 id={pulsarId}
                 class="absolute rounded-full opacity-30"
@@ -79,26 +78,23 @@ const currentLocale = Astro.currentLocale ?? "en";
                     height: outerSize,
                     backgroundColor: color,
                 }}
-            >
-            </div>
-            {
-                label && (
-                    <div
-                        class:list={[
-                            "absolute top-[30px] transition-transform duration-200 ease-in text-sm md:text-base",
-                            isActive && "text-white scale-150",
-                        ]}
-                    >
-                        <div class="relative">
-                            <a href={getRelativeLocaleUrl(currentLocale, href)}>
-                                <span class="absolute uppercase font-mono font-black tracking-[3px] text-pink-500">
-                                    {label}
-                                </span>
-                            </a>
-                        </div>
+            ></div>
+            {label && (
+                <div
+                    class:list={[
+                        "absolute top-[30px] transition-transform duration-200 ease-in text-sm md:text-base",
+                        isActive && "text-white scale-150",
+                    ]}
+                >
+                    <div class="relative">
+                        <a href={getRelativeLocaleUrl(currentLocale, href)}>
+                            <span class="absolute uppercase font-mono font-black tracking-[3px] text-pink-500">
+                                {label}
+                            </span>
+                        </a>
                     </div>
-                )
-            }
+                </div>
+            )}
         </div>
     </div>
 </star-item>

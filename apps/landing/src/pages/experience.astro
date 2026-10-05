@@ -101,20 +101,18 @@ const experiences = [
                 <h1 class="text-pink-400 font-bold font-serif text-[12vw] md:text-[6vw] m-0">Experience</h1>
 
                 <ul>
-                    {
-                        experiences.map(experience => (
-                            <li class="mb-5">
-                                <ExperienceCard
-                                    workTitle={experience.workTitle}
-                                    company={experience.company}
-                                    date={experience.date}
-                                    description={experience.description}
-                                    tags={experience.tags}
-                                    link={experience.link}
-                                />
-                            </li>
-                        ))
-                    }
+                    {experiences.map(experience => (
+                        <li class="mb-5">
+                            <ExperienceCard
+                                workTitle={experience.workTitle}
+                                company={experience.company}
+                                date={experience.date}
+                                description={experience.description}
+                                tags={experience.tags}
+                                link={experience.link}
+                            />
+                        </li>
+                    ))}
                 </ul>
             </Content>
         </div>

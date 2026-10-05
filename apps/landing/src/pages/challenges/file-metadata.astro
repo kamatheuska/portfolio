@@ -45,7 +45,9 @@ import RootLayout from "../../layouts/root-layout.astro";
                             <p x-show="file" x-text="file"></p>
                         </div>
                         <div class="flex gap-4 mb-4">
-                            <Button x-show="file" @click="analyseFile">Analyse</Button>
+                            <Button x-show="file" @click="analyseFile">
+                                Analyse
+                            </Button>
                         </div>
                         <div>
                             <pre class="text-left" x-text="result"></pre>

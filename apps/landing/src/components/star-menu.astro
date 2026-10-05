@@ -112,27 +112,23 @@ const menuItems = [
 ];
 ---
 
-<div
-    class="absolute w-full h-screen visible opacity-100 transition-[visibility,opacity] duration-500 ease-linear md:flex md:justify-center"
->
+<div class="absolute w-full h-screen visible opacity-100 transition-[visibility,opacity] duration-500 ease-linear md:flex md:justify-center">
     <div class="h-full fixed w-full p-5 pt-24">
         <div class="relative h-full w-full">
-            {
-                menuItems.map((item, index) => (
-                    <StarItem
-                        top={item.top}
-                        left={item.left}
-                        isActive={false}
-                        radius={item.radius}
-                        color={item.color}
-                        isHidden={false}
-                        itemId={item.id ? Number(item.id) : index + 1000}
-                        label={item.label}
-                        href={item.href}
-                        coordinates={item.coordinates}
-                    />
-                ))
-            }
+            {menuItems.map((item, index) => (
+                <StarItem
+                    top={item.top}
+                    left={item.left}
+                    isActive={false}
+                    radius={item.radius}
+                    color={item.color}
+                    isHidden={false}
+                    itemId={item.id ? Number(item.id) : index + 1000}
+                    label={item.label}
+                    href={item.href}
+                    coordinates={item.coordinates}
+                />
+            ))}
         </div>
     </div>
 </div>

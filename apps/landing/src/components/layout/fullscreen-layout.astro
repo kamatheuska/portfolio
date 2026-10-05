@@ -16,24 +16,22 @@ const { showBackdrop = true, showMenuIcon = false } = Astro.props;
 <div>
     <StarMenu />
     <div data-backdrop-container>
-        {
-            showBackdrop ? (
-                <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
-                    <main class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]">
-                        {showMenuIcon && (
-                            <header class="flex flex-col mb-12 font-black text-neutral-200 items-end">
-                                <div class="text-3xl cursor-pointer" data-menu-toggle>
-                                    <Icon name="uil:bars" />
-                                </div>
-                            </header>
-                        )}
-                        <slot />
-                    </main>
-                </div>
-            ) : (
-                <BackButton data-back-button />
-            )
-        }
+        {showBackdrop ? (
+            <div class="backdrop-blur-sm w-full transition-all duration-500 ease-out" data-backdrop>
+                <main class="min-h-screen flex justify-center items-end p-4 flex-col relative md:max-w-[50%]">
+                    {showMenuIcon && (
+                        <header class="flex flex-col mb-12 font-black text-neutral-200 items-end">
+                            <div class="text-3xl cursor-pointer" data-menu-toggle>
+                                <Icon name="uil:bars" />
+                            </div>
+                        </header>
+                    )}
+                    <slot />
+                </main>
+            </div>
+        ) : (
+            <BackButton data-back-button />
+        )}
     </div>
 </div>
 
