@@ -9,11 +9,11 @@ services:
             - .env.prod
         # No ports exposed directly - accessed through the api nginx at /cms
         expose:
-            - "3001"
+            - "3000"
         environment:
             - NODE_ENV=production
             - DATABASE_URL=file:/data/admin.db
-            - PORT=3001
+            - PORT=3000
         volumes:
             - sqlite_data:/data
             - media:/app/media
