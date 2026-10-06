@@ -8,6 +8,8 @@ const dirname = path.dirname(__filename);
 
 const nextConfig: NextConfig = {
     output: "standalone",
+    // Served behind the api nginx at /cms
+    basePath: "/cms",
     images: {
         localPatterns: [
             {
