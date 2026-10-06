@@ -24,7 +24,7 @@ echo "=== Creating deployment package ==="
 # Create temporary directory for packaging
 TEMP_DIR=$(mktemp -d)
 DEPLOY_DIR="${TEMP_DIR}/portfolio-api"
-mkdir -p "${DEPLOY_DIR}/ssl"
+mkdir -p "${DEPLOY_DIR}"
 
 # Copy files to deployment directory
 cp "image.tar" "${DEPLOY_DIR}/"
@@ -32,11 +32,6 @@ cp "docker-compose.prod.yml" "${DEPLOY_DIR}/docker-compose.yml"
 cp "nginx.conf" "${DEPLOY_DIR}/"
 cp ".env.prod" "${DEPLOY_DIR}/"
 cp "./scripts/start.sh" "${DEPLOY_DIR}/"
-
-if [[ -d "ssl" && "$(ls -A ssl 2>/dev/null)" ]]; then
-    cp -r ssl/* "${DEPLOY_DIR}/ssl/"
-    echo "Included SSL certificates"
-fi
 
 tar -czf "${ARCHIVE_NAME}" -C "${TEMP_DIR}" "portfolio-api"
 rm -rf "${TEMP_DIR}" "image.tar"

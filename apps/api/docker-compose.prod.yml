@@ -12,12 +12,14 @@ services:
             - "3000"
         environment:
             - NODE_ENV=production
-            - DATABASE_URL=/data/portfolio.db
+            - DB_FILE_NAME=/data/app.db
+            - DB_ADMIN_FILE_NAME=/data/admin.db
             - FASTIFY_CLOSE_GRACE_DELAY=500
             - LOG_LEVEL=debug
             - PORT=3000
         volumes:
-            - sqlite_data:/data
+            # Host directory shared with portfolio-admin (app.db + admin.db)
+            - /opt/portfolio/data:/data
         networks:
             - app-network
         healthcheck:
@@ -37,20 +39,16 @@ services:
         image: nginx:alpine
         restart: unless-stopped
         ports:
+            - "80:80"
             - "443:443"
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro
-            - ./ssl:/etc/nginx/ssl:ro
+            - /opt/portfolio/ssl:/etc/nginx/ssl:ro
             - /opt/portfolio-api/apps/api/logs/nginx:/var/log/nginx
         networks:
             - app-network
         depends_on:
             - api
-
-volumes:
-    # Named volume for SQLite database persistence
-    sqlite_data:
-        driver: local
 
 networks:
     app-network:

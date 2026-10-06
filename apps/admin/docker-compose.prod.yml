@@ -15,15 +15,13 @@ services:
             - DATABASE_URL=file:/data/admin.db
             - PORT=3000
         volumes:
-            - sqlite_data:/data
+            # Host directory shared with portfolio-api (admin.db + app.db)
+            - /opt/portfolio/data:/data
             - media:/app/media
         networks:
             - app-network
 
 volumes:
-    # Named volume for SQLite database persistence
-    sqlite_data:
-        driver: local
     # Named volume for uploaded media files
     media:
         driver: local
