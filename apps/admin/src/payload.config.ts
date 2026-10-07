@@ -9,6 +9,7 @@ import { Users } from "./collections/users";
 import { Media } from "./collections/media";
 import { Settings } from "./globals/settings";
 import { HomeLinks } from "./collections/home-links";
+import { Posts } from "./collections/posts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -30,7 +31,7 @@ export default buildConfig({
             key: "seed-homepage-data",
         },
     ],
-    collections: [Users, Media, HomeLinks],
+    collections: [Users, Media, HomeLinks, Posts],
     globals: [Settings],
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || "",
@@ -38,6 +39,8 @@ export default buildConfig({
         outputFile: path.resolve(dirname, "payload-types.ts"),
     },
     db: sqliteAdapter({
+        // Schema is managed through migrations; dev push conflicts with them
+        push: false,
         client: {
             url: process.env.DATABASE_URL || "",
         },

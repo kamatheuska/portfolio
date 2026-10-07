@@ -105,3 +105,22 @@ export const triggerDeployGlobalAfterChange: GlobalAfterChangeHook = ({ doc, req
     if (!req.context.skipDeploy) scheduleDeploy(req.payload);
     return doc;
 };
+
+// For collections with drafts: only rebuild when published content changes
+export function triggerDeployAfterPublishedChange({
+    doc,
+    previousDoc,
+    req,
+}: Parameters<CollectionAfterChangeHook>[0]) {
+    const affectsPublished = doc?._status === "published" || previousDoc?._status === "published";
+    if (affectsPublished && !req.context.skipDeploy) scheduleDeploy(req.payload);
+    return doc;
+}
+
+export function triggerDeployAfterPublishedDelete({
+    doc,
+    req,
+}: Parameters<CollectionAfterDeleteHook>[0]) {
+    if (doc?._status === "published" && !req.context.skipDeploy) scheduleDeploy(req.payload);
+    return doc;
+}

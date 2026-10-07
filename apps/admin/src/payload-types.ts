@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     'home-links': HomeLink;
+    posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'home-links': HomeLinksSelect<false> | HomeLinksSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -186,6 +188,63 @@ export interface HomeLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  heroImage: number | Media;
+  /**
+   * Short summary shown on post lists and cards
+   */
+  excerpt?: string | null;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Defaults to the post title
+   */
+  metaTitle?: string | null;
+  /**
+   * Defaults to the excerpt
+   */
+  metaDescription?: string | null;
+  /**
+   * Defaults to the hero image
+   */
+  ogImage?: (number | null) | Media;
+  /**
+   * Only set when the post was first published elsewhere
+   */
+  canonicalUrl?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  /**
+   * Set automatically on first publish
+   */
+  publishedAt?: string | null;
+  tags?: string[] | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -219,6 +278,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'home-links';
         value: number | HomeLink;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -317,6 +380,27 @@ export interface HomeLinksSelect<T extends boolean = true> {
   href?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  heroImage?: T;
+  excerpt?: T;
+  body?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  ogImage?: T;
+  canonicalUrl?: T;
+  generateSlug?: T;
+  slug?: T;
+  publishedAt?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
