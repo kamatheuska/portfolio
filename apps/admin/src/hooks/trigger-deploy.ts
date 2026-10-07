@@ -48,7 +48,7 @@ function scheduleDeploy(payload: Payload) {
     const token = process.env.CLOUDFLARE_API_TOKEN;
     const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
     const project = process.env.CLOUDFLARE_PAGES_PROJECT;
-    const appEnv = process.env.APP_ENV;
+    const appEnv = process.env.APP_ENV ?? "production";
 
     if (!token || !accountId || !project) {
         if (!warnedDisabled) {
@@ -60,7 +60,20 @@ function scheduleDeploy(payload: Payload) {
         return;
     }
 
-    payload.logger.info("Scheduling Cloudflare Pages deployment trigger");
+    const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/pages/projects/${project}/deployments`;
+    payload.logger.info(
+        {
+            context: {
+                url,
+                deployDebounceMs: DEPLOY_DEBOUNCE_MS,
+                appEnv,
+                project,
+                accountId: accountId.slice(0, 4) + "...",
+                token: token.slice(0, 4) + "...",
+            },
+        },
+        `Scheduling Cloudflare Pages deployment trigger for ${url} in ${DEPLOY_DEBOUNCE_MS}ms`,
+    );
 
     if (appEnv !== "production") {
         payload.logger.info(
@@ -68,8 +81,6 @@ function scheduleDeploy(payload: Payload) {
         );
         return;
     }
-
-    const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/pages/projects/${project}/deployments`;
 
     clearTimeout(timer);
     timer = setTimeout(() => {
