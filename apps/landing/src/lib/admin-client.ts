@@ -35,10 +35,29 @@ export async function adminFetch(
     const timeout = AbortSignal.timeout(timeoutMs);
     const signal = init.signal ? AbortSignal.any([init.signal, timeout]) : timeout;
 
+    // TODO: remove build debug logs
+    console.log("[admin-client] request", {
+        url,
+        hasApiKey: Boolean(ADMIN_API_KEY),
+        apiKeyLength: ADMIN_API_KEY?.length ?? 0,
+    });
+
     let response: Response;
     try {
         response = await fetch(url, { ...init, headers, signal });
+        console.log("[admin-client] response", {
+            url,
+            status: response.status,
+        });
     } catch (error) {
+        const cause = (error as { cause?: unknown }).cause;
+        console.error("[admin-client] fetch threw", {
+            url,
+            error,
+            cause,
+            nestedErrors:
+                cause instanceof AggregateError ? cause.errors : undefined,
+        });
         const message = timeout.aborted
             ? `Request timed out after ${timeoutMs}ms`
             : "Request failed";
