@@ -16,8 +16,8 @@ done
 echo "=== Building Docker images from docker-compose.prod.yml ==="
 docker compose -f docker-compose.prod.yml build
 
-echo "=== Saving Docker image to archive ==="
-docker save "${IMAGE_NAME}:${IMAGE_TAG}" > "image.tar"
+echo "=== Saving Docker images to archive ==="
+docker save "${IMAGE_NAME}:${IMAGE_TAG}" "${IMAGE_NAME}-migrations:${IMAGE_TAG}" > "image.tar"
 
 echo "=== Creating deployment package ==="
 

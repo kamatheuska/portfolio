@@ -5,11 +5,37 @@ services:
             context: .
             dockerfile: ./Dockerfile
         restart: unless-stopped
+        depends_on:
+            migrations:
+                condition: service_completed_successfully
         env_file:
             - .env.prod
         # No ports exposed directly - accessed through the api nginx at /cms
         expose:
             - "3000"
+        environment:
+            - NODE_ENV=production
+            - DATABASE_URL=file:/data/admin.db
+            - PORT=3000
+        volumes:
+            # Host directory shared with portfolio-api (admin.db + app.db)
+            - /opt/portfolio/data:/data
+            - media:/app/media
+        networks:
+            - app-network
+
+    migrations:
+        image: avatarkorranika/portfolio-admin-migrations:latest
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            target: migrations
+        restart: "no"
+        # Runs as root; hand the db (and its dir, for SQLite journal files) to the
+        # admin runtime user (nextjs, uid 1001) so the app can write to it
+        command: ["sh", "-c", "pnpm payload migrate && chown 1001:1001 /data /data/admin.db*"]
+        env_file:
+            - .env.prod
         environment:
             - NODE_ENV=production
             - DATABASE_URL=file:/data/admin.db
