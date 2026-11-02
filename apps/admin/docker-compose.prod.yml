@@ -66,8 +66,11 @@ services:
             - "127.0.0.1:8080:8080"
         environment:
             - DOZZLE_NO_ANALYTICS=true
+            # Login required; users come from dozzle-users.yml (`make dozzle-user`)
+            - DOZZLE_AUTH_PROVIDER=simple
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./dozzle-users.yml:/data/users.yml:ro
 
 volumes:
     # Named volume for uploaded media files

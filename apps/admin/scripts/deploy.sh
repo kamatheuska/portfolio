@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Check for required files
 echo "=== Checking required files ==="
-required_files=("docker-compose.prod.yml" ".env.prod" "Dockerfile" "scripts/start.sh")
+required_files=("docker-compose.prod.yml" ".env.prod" "Dockerfile" "scripts/start.sh" "dozzle-users.yml")
 for file in "${required_files[@]}"; do
     if [[ ! -f "$file" ]]; then
         echo "Missing required file: $file"
@@ -30,6 +30,7 @@ mkdir -p "${DEPLOY_DIR}"
 cp "image.tar" "${DEPLOY_DIR}/"
 cp "docker-compose.prod.yml" "${DEPLOY_DIR}/docker-compose.yml"
 cp ".env.prod" "${DEPLOY_DIR}/"
+cp "dozzle-users.yml" "${DEPLOY_DIR}/"
 cp "scripts/start.sh" "${DEPLOY_DIR}/"
 
 if [[ -f "nginx.conf" ]]; then

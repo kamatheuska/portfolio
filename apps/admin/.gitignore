@@ -49,3 +49,6 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Dozzle login users (password hashes), created with `make dozzle-user`
+dozzle-users.yml
