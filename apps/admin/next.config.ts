@@ -10,13 +10,6 @@ const nextConfig: NextConfig = {
     output: "standalone",
     // Served behind the api nginx at /cms
     basePath: "/cms",
-    images: {
-        localPatterns: [
-            {
-                pathname: "/api/media/file/**",
-            },
-        ],
-    },
     webpack: webpackConfig => {
         webpackConfig.resolve.extensionAlias = {
             ".cjs": [".cts", ".cjs"],

@@ -39,7 +39,8 @@ export async function getPublishedPosts() {
     return data.docs;
 }
 
-// Media urls come back relative to the admin (e.g. /cms/api/media/file/x.png)
+// Media urls are absolute Cloudinary urls; resolving against the admin base
+// is kept for any relative url (new URL leaves absolute ones untouched)
 export function mediaUrl(media: number | Media | null | undefined) {
     if (!media || typeof media === "number" || !media.url) return undefined;
     return new URL(media.url, ADMIN_BASE_URL).toString();

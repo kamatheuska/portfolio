@@ -28,7 +28,6 @@ services:
         volumes:
             # Host directory shared with portfolio-api (admin.db + app.db)
             - /opt/portfolio/data:/data
-            - media:/app/media
         networks:
             - app-network
 
@@ -52,7 +51,6 @@ services:
         volumes:
             # Host directory shared with portfolio-api (admin.db + app.db)
             - /opt/portfolio/data:/data
-            - media:/app/media
         networks:
             - app-network
 
@@ -71,11 +69,6 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
             - ./dozzle-users.yml:/data/users.yml:ro
-
-volumes:
-    # Named volume for uploaded media files
-    media:
-        driver: local
 
 networks:
     # Network created by the portfolio-api compose project, shared with its nginx

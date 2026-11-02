@@ -1,4 +1,5 @@
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
@@ -10,6 +11,7 @@ import { Media } from "./collections/media";
 import { Settings } from "./globals/settings";
 import { HomeLinks } from "./collections/home-links";
 import { Posts } from "./collections/posts";
+import { cloudinaryAdapter } from "./lib/cloudinary-adapter";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -46,5 +48,16 @@ export default buildConfig({
         },
     }),
     sharp,
-    plugins: [],
+    plugins: [
+        cloudStoragePlugin({
+            collections: {
+                media: {
+                    adapter: cloudinaryAdapter,
+                    disableLocalStorage: true,
+                    // Store/return the Cloudinary URL directly instead of proxying through /api/media/file
+                    disablePayloadAccessControl: true,
+                },
+            },
+        }),
+    ],
 });
