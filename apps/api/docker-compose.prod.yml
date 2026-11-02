@@ -1,3 +1,10 @@
+# Rotate container logs (json-file driver): keep at most 3 x 10MB per container
+x-logging: &default-logging
+    driver: json-file
+    options:
+        max-size: "10m"
+        max-file: "3"
+
 services:
     api:
         image: avatarkorranika/portfolio-api:latest
@@ -5,6 +12,7 @@ services:
             context: .
             dockerfile: ./Dockerfile
         restart: unless-stopped
+        logging: *default-logging
         env_file:
             - .env.prod
         # No ports exposed directly - accessed through nginx
@@ -38,6 +46,7 @@ services:
     nginx:
         image: nginx:alpine
         restart: unless-stopped
+        logging: *default-logging
         ports:
             - "80:80"
             - "443:443"

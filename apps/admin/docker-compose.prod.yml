@@ -1,3 +1,10 @@
+# Rotate container logs (json-file driver): keep at most 3 x 10MB per container
+x-logging: &default-logging
+    driver: json-file
+    options:
+        max-size: "10m"
+        max-file: "3"
+
 services:
     admin:
         image: avatarkorranika/portfolio-admin:latest
@@ -5,6 +12,7 @@ services:
             context: .
             dockerfile: ./Dockerfile
         restart: unless-stopped
+        logging: *default-logging
         depends_on:
             migrations:
                 condition: service_completed_successfully
@@ -31,6 +39,7 @@ services:
             dockerfile: ./Dockerfile
             target: migrations
         restart: "no"
+        logging: *default-logging
         # Runs as root; hand the db (and its dir, for SQLite journal files) to the
         # admin runtime user (nextjs, uid 1001) so the app can write to it
         command: ["sh", "-c", "pnpm payload migrate && chown 1001:1001 /data /data/admin.db*"]
@@ -50,6 +59,7 @@ services:
     dozzle:
         image: amir20/dozzle:v11.4.0
         restart: unless-stopped
+        logging: *default-logging
         # Bound to localhost only - not reachable from outside the VPS.
         # Access it through the SSH tunnel: `make logs` from the repo root.
         ports:
