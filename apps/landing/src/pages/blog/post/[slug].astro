@@ -1,0 +1,141 @@
+---
+import Content from "../../../components/content.astro";
+import Menu from "../../../components/menu.astro";
+import RootLayout from "../../../layouts/root-layout.astro";
+import { lexicalToHtml } from "../../../lib/lexical-to-html";
+import { getPublishedPosts, mediaUrl, type Post } from "../../../lib/posts";
+
+// Fetched at build time; a failing admin request fails the build
+export async function getStaticPaths() {
+    const posts = await getPublishedPosts();
+    console.log(`Found ${posts.length} published posts for static paths.`);
+    return posts.map(post => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+interface Props {
+    post: Post;
+}
+
+const { post } = Astro.props;
+
+const heroImage = typeof post.heroImage === "object" ? post.heroImage : undefined;
+const heroUrl = mediaUrl(post.heroImage);
+const bodyHtml = lexicalToHtml(post.body);
+const publishedDate = post.publishedAt
+    ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+      })
+    : null;
+---
+
+<RootLayout
+    title={`${post.metaTitle || post.title} - Nicolas Ramirez`}
+    description={post.metaDescription || post.excerpt}
+    ogImage={mediaUrl(post.ogImage) ?? heroUrl}
+    canonicalUrl={post.canonicalUrl}
+>
+    <main class="text-right h-full" x-data="stars">
+        <div>
+            <Menu />
+            <Content>
+                <article class="text-left w-full">
+                    <header class="text-right mb-6">
+                        {publishedDate && (
+                            <time datetime={post.publishedAt} class="text-sm font-black text-light-green">
+                                {publishedDate}
+                            </time>
+                        )}
+                        <h1 class="text-pink-400 font-bold font-serif text-[10vw] md:text-[4vw] m-0 leading-tight">
+                            {post.title}
+                        </h1>
+                        {post.excerpt && <p class="text-light-blue md:text-lg mt-2">{post.excerpt}</p>}
+                        {post.tags && post.tags.length > 0 && (
+                            <ul class="flex flex-wrap justify-end gap-1.5 p-0 mt-3 text-sm list-none">
+                                {post.tags.map(tag => (
+                                    <li class="bg-emerald-800 text-emerald-300 px-2.5 py-1.5 rounded-2xl">{tag}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </header>
+
+                    {heroUrl && (
+                        <img
+                            src={heroUrl}
+                            alt={heroImage?.alt ?? ""}
+                            width={heroImage?.width ?? undefined}
+                            height={heroImage?.height ?? undefined}
+                            class="w-full h-auto rounded-2xl mb-6"
+                        />
+                    )}
+
+                    <div
+                        class="post-body rounded-2xl p-4 pb-6 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)] text-blue-200"
+                        set:html={bodyHtml}
+                    />
+                </article>
+            </Content>
+        </div>
+        <script src="../../../scripts/star-menu-controller"></script>
+    </main>
+</RootLayout>
+
+<style>
+    .post-body :global(p) {
+        margin: 0 0 1rem;
+    }
+    .post-body :global(h2),
+    .post-body :global(h3),
+    .post-body :global(h4) {
+        color: var(--color-pink-300);
+        font-family: var(--font-family-serif);
+        margin: 1.5rem 0 0.75rem;
+    }
+    .post-body :global(h2) {
+        font-size: 1.75rem;
+    }
+    .post-body :global(h3) {
+        font-size: 1.375rem;
+    }
+    .post-body :global(ul),
+    .post-body :global(ol) {
+        margin: 0 0 1rem;
+        padding-left: 1.5rem;
+    }
+    .post-body :global(ul) {
+        list-style: disc;
+    }
+    .post-body :global(ol) {
+        list-style: decimal;
+    }
+    .post-body :global(a) {
+        color: var(--color-light-green);
+        text-decoration: underline;
+    }
+    .post-body :global(blockquote) {
+        border-left: 3px solid var(--color-pink-400);
+        padding-left: 1rem;
+        margin: 0 0 1rem;
+        font-style: italic;
+    }
+    .post-body :global(code) {
+        font-family: var(--font-family-mono);
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.25rem;
+    }
+    .post-body :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 1rem;
+        margin: 0 0 1rem;
+    }
+    .post-body :global(hr) {
+        border-color: rgba(149, 188, 204, 0.3);
+        margin: 1.5rem 0;
+    }
+</style>

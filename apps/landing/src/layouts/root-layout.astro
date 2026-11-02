@@ -1,6 +1,13 @@
 ---
 import "../styles/base.css";
-const { title, description } = Astro.props;
+interface Props {
+    title: string;
+    description?: string | null;
+    ogImage?: string;
+    canonicalUrl?: string | null;
+}
+
+const { title, description, ogImage, canonicalUrl } = Astro.props;
 ---
 
 <html lang="en" class="test">
@@ -11,6 +18,8 @@ const { title, description } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <link rel="sitemap" href="/sitemap-index.xml" />
         {description && <meta name="description" content={description} />}
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <link
             href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@100;400;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet"
