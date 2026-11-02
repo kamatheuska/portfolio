@@ -58,12 +58,15 @@ echo "=== Cleaning up local archive ${ARCHIVE_NAME} ==="
 rm -f "${ARCHIVE_NAME}"
 
 echo "=== Deployment package sent successfully! ==="
-echo ""
-echo "To deploy on the remote server:"
-echo "  ssh ${REMOTE_USER}@${REMOTE_HOST}"
-echo "  cd ${REMOTE_PATH}"
-echo "  rm -rf portfolio-admin"
-echo "  tar -xzf ${ARCHIVE_NAME}"
-echo "  rm -f ${ARCHIVE_NAME}"
-echo "  cd portfolio-admin"
-echo "  ./start.sh"
+
+echo "=== Starting deployment on ${REMOTE_HOST} ==="
+# -t allocates a tty so sudo in start.sh can prompt for a password
+ssh -t -p "${SSH_PORT}" "${REMOTE_USER}@${REMOTE_HOST}" "set -e
+cd $(printf %q "${REMOTE_PATH}")
+rm -rf portfolio-admin
+tar -xzf $(printf %q "${ARCHIVE_NAME}")
+rm -f $(printf %q "${ARCHIVE_NAME}")
+cd portfolio-admin
+./start.sh"
+
+echo "=== Deployment finished ==="
