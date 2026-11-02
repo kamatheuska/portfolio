@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Check for required files
 echo "=== Checking required files ==="
-required_files=("docker-compose.prod.yml" ".env.prod" "Dockerfile" "../api/scripts/start.sh")
+required_files=("docker-compose.prod.yml" ".env.prod" "Dockerfile" "scripts/start.sh")
 for file in "${required_files[@]}"; do
     if [[ ! -f "$file" ]]; then
         echo "Missing required file: $file"
@@ -14,10 +14,10 @@ for file in "${required_files[@]}"; do
 done
 
 echo "=== Building Docker images from docker-compose.prod.yml ==="
-docker compose -f docker-compose.prod.yml build admin
+docker compose -f docker-compose.prod.yml build admin migrations
 
 echo "=== Saving Docker images to archive ==="
-docker save "${IMAGE_NAME}:${IMAGE_TAG}"  > "image.tar"
+docker save "${IMAGE_NAME}:${IMAGE_TAG}" "${IMAGE_NAME}-migrations:${IMAGE_TAG}" > "image.tar"
 
 echo "=== Creating deployment package ==="
 
@@ -30,7 +30,7 @@ mkdir -p "${DEPLOY_DIR}"
 cp "image.tar" "${DEPLOY_DIR}/"
 cp "docker-compose.prod.yml" "${DEPLOY_DIR}/docker-compose.yml"
 cp ".env.prod" "${DEPLOY_DIR}/"
-cp "../api/scripts/start.sh" "${DEPLOY_DIR}/"
+cp "scripts/start.sh" "${DEPLOY_DIR}/"
 
 if [[ -f "nginx.conf" ]]; then
     cp "nginx.conf" "${DEPLOY_DIR}/"
