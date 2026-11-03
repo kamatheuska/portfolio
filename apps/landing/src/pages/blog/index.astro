@@ -1,5 +1,6 @@
 ---
 import Content from "../../components/content.astro";
+import LinesMenu from "../../components/lines-menu.astro";
 import Menu from "../../components/menu.astro";
 import RootLayout from "../../layouts/root-layout.astro";
 import { formatPostDate, getPublishedPosts } from "../../lib/posts";
@@ -17,6 +18,7 @@ const posts = await getPublishedPosts();
         <div>
             <Menu />
             <Content showBackdrop centered>
+                <LinesMenu icon="mdi:menu" class="text-5xl text-blue-700 hover:text-pink-700" />
                 <h1 class="text-blue-700 font-bold font-serif text-[12vw] md:text-[6vw] m-0">Blog</h1>
 
                 {posts.length === 0 ? (
