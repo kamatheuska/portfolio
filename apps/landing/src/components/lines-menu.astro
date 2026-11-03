@@ -1,7 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
+
+interface Props {
+    /** Icon color/size classes; defaults to the dark-theme pink */
+    class?: string;
+    /** Iconify icon name */
+    icon?: string;
+}
+
+const { class: className = "text-pink-400", icon = "uil:bars" } = Astro.props;
 ---
 
 <div class="text-3xl cursor-pointer">
-    <Icon name="uil:bars" @click="updateBackgroundStyles($data)" class="text-pink-400" />
+    <Icon name={icon} @click="updateBackgroundStyles($data)" class={className} />
 </div>

@@ -1,0 +1,65 @@
+---
+import Content from "../../components/content.astro";
+import Menu from "../../components/menu.astro";
+import RootLayout from "../../layouts/root-layout.astro";
+import { formatPostDate, getPublishedPosts } from "../../lib/posts";
+
+// Fetched at build time; a failing admin request fails the build
+const posts = await getPublishedPosts();
+---
+
+<RootLayout
+    title="Blog - Nicolas Ramirez"
+    description="Articles by Nicolas Ramirez about software development, the web, and building products."
+    bodyClass="theme-paper"
+>
+    <main class="text-right h-full" x-data="stars">
+        <div>
+            <Menu />
+            <Content showBackdrop centered>
+                <h1 class="text-blue-700 font-bold font-serif text-[12vw] md:text-[6vw] m-0">Blog</h1>
+
+                {posts.length === 0 ? (
+                    <p class="text-slate-700 md:text-lg">No posts yet.</p>
+                ) : (
+                    <ul class="w-full p-0 list-none">
+                        {posts.map(post => {
+                            const publishedDate = formatPostDate(post.publishedAt);
+                            return (
+                                <li class="mb-5">
+                                    <a
+                                        href={`/blog/posts/${post.slug}`}
+                                        class="group block rounded-2xl p-4 pb-6 text-left transition-colors hover:bg-[rgba(43,76,89,0.06)]"
+                                    >
+                                        {publishedDate && (
+                                            <time
+                                                datetime={post.publishedAt}
+                                                class="text-sm font-black text-dark-green"
+                                            >
+                                                {publishedDate}
+                                            </time>
+                                        )}
+                                        <h2 class="m-0 text-blue-800 font-bold font-serif text-2xl group-hover:text-pink-700">
+                                            {post.title}
+                                        </h2>
+                                        {post.excerpt && <p class="text-slate-700 mt-2 mb-0">{post.excerpt}</p>}
+                                        {post.tags && post.tags.length > 0 && (
+                                            <ul class="flex flex-wrap gap-1.5 p-0 mt-3 text-sm list-none">
+                                                {post.tags.map(tag => (
+                                                    <li class="bg-emerald-100 text-emerald-800 px-2.5 py-1.5 rounded-2xl">
+                                                        {tag}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </a>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </Content>
+        </div>
+        <script src="../../scripts/star-menu-controller"></script>
+    </main>
+</RootLayout>

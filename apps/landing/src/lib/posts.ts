@@ -45,3 +45,12 @@ export function mediaUrl(media: number | Media | null | undefined) {
     if (!media || typeof media === "number" || !media.url) return undefined;
     return new URL(media.url, ADMIN_BASE_URL).toString();
 }
+
+export function formatPostDate(publishedAt: string | null | undefined) {
+    if (!publishedAt) return null;
+    return new Date(publishedAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+}

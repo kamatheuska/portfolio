@@ -70,3 +70,30 @@
         transform: scale(0.99);
     }
 }
+
+/*
+ * "Warm paper" light theme (blog pages). Unlayered so it overrides the
+ * shared components' dark-theme utility classes.
+ */
+.theme-paper {
+    background-color: #f1ebdd;
+    background-image: linear-gradient(to bottom, #fbf8f1, #f1ebdd);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Content backdrop: light veil instead of the teal one */
+.theme-paper [data-backdrop] {
+    background-color: rgb(255 255 255 / 0.4);
+}
+
+/*
+ * Star menu colors are inline and tuned for dark backgrounds; darken them
+ * (keeping their hue) so stars, labels and the Back button stay visible.
+ * Applied to inner elements: a filter on a positioned ancestor would become
+ * the containing block for the menu's fixed/absolute layers.
+ */
+.theme-paper [id^="star-item-container-"] > div,
+.theme-paper [data-menu-toggle] {
+    filter: brightness(0.45) saturate(1.4);
+}

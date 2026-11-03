@@ -1,9 +1,10 @@
 ---
 import Content from "../../../components/content.astro";
+import LinesMenu from "../../../components/lines-menu.astro";
 import Menu from "../../../components/menu.astro";
 import RootLayout from "../../../layouts/root-layout.astro";
 import { lexicalToHtml } from "../../../lib/lexical-to-html";
-import { getPublishedPosts, mediaUrl, type Post } from "../../../lib/posts";
+import { formatPostDate, getPublishedPosts, mediaUrl, type Post } from "../../../lib/posts";
 
 // Fetched at build time; a failing admin request fails the build
 export async function getStaticPaths() {
@@ -24,13 +25,7 @@ const { post } = Astro.props;
 const heroImage = typeof post.heroImage === "object" ? post.heroImage : undefined;
 const heroUrl = mediaUrl(post.heroImage);
 const bodyHtml = lexicalToHtml(post.body);
-const publishedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-      })
-    : null;
+const publishedDate = formatPostDate(post.publishedAt);
 ---
 
 <RootLayout
@@ -38,26 +33,28 @@ const publishedDate = post.publishedAt
     description={post.metaDescription || post.excerpt}
     ogImage={mediaUrl(post.ogImage) ?? heroUrl}
     canonicalUrl={post.canonicalUrl}
+    bodyClass="theme-paper"
 >
     <main class="text-right h-full" x-data="stars">
         <div>
             <Menu />
-            <Content>
-                <article class="text-left w-full">
+            <Content showBackdrop centered>
+                <LinesMenu icon="mdi:menu" class="text-5xl text-blue-700 hover:text-pink-700" />
+                <article class="text-left w-full md:py-16">
                     <header class="text-right mb-6">
                         {publishedDate && (
-                            <time datetime={post.publishedAt} class="text-sm font-black text-light-green">
+                            <time datetime={post.publishedAt} class="text-base font-black text-dark-green">
                                 {publishedDate}
                             </time>
                         )}
-                        <h1 class="text-pink-400 font-bold font-serif text-[10vw] md:text-[4vw] m-0 leading-tight">
+                        <h1 class="text-blue-700 font-bold font-serif text-[10vw] md:text-[4vw] m-0 leading-tight">
                             {post.title}
                         </h1>
-                        {post.excerpt && <p class="text-light-blue md:text-lg mt-2">{post.excerpt}</p>}
+                        {post.excerpt && <p class="text-slate-700 md:text-lg mt-2">{post.excerpt}</p>}
                         {post.tags && post.tags.length > 0 && (
-                            <ul class="flex flex-wrap justify-end gap-1.5 p-0 mt-3 text-sm list-none">
+                            <ul class="flex flex-wrap justify-end gap-1.5 p-0 mt-3 text-base list-none">
                                 {post.tags.map(tag => (
-                                    <li class="bg-emerald-800 text-emerald-300 px-2.5 py-1.5 rounded-2xl">{tag}</li>
+                                    <li class="bg-emerald-100 text-emerald-800 px-2.5 py-1.5 rounded-2xl">{tag}</li>
                                 ))}
                             </ul>
                         )}
@@ -74,7 +71,7 @@ const publishedDate = post.publishedAt
                     )}
 
                     <div
-                        class="post-body rounded-2xl p-4 pb-6 backdrop-blur-[10px] bg-[rgba(30,53,62,0.3)] text-blue-200"
+                        class="post-body font-serif text-slate-800 text-lg leading-relaxed md:text-xl"
                         set:html={bodyHtml}
                     />
                 </article>
@@ -86,20 +83,21 @@ const publishedDate = post.publishedAt
 
 <style>
     .post-body :global(p) {
-        margin: 0 0 1rem;
+        margin: 0 0 1.25rem;
     }
     .post-body :global(h2),
     .post-body :global(h3),
     .post-body :global(h4) {
-        color: var(--color-pink-300);
+        color: var(--color-blue-700);
         font-family: var(--font-family-serif);
+        font-weight: 700;
         margin: 1.5rem 0 0.75rem;
     }
     .post-body :global(h2) {
-        font-size: 1.75rem;
+        font-size: 1.875rem;
     }
     .post-body :global(h3) {
-        font-size: 1.375rem;
+        font-size: 1.5rem;
     }
     .post-body :global(ul),
     .post-body :global(ol) {
@@ -113,18 +111,18 @@ const publishedDate = post.publishedAt
         list-style: decimal;
     }
     .post-body :global(a) {
-        color: var(--color-light-green);
+        color: var(--color-dark-green);
         text-decoration: underline;
     }
     .post-body :global(blockquote) {
-        border-left: 3px solid var(--color-pink-400);
+        border-left: 3px solid var(--color-pink-600);
         padding-left: 1rem;
         margin: 0 0 1rem;
         font-style: italic;
     }
     .post-body :global(code) {
         font-family: var(--font-family-mono);
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.06);
         padding: 0.1rem 0.3rem;
         border-radius: 0.25rem;
     }
@@ -135,7 +133,7 @@ const publishedDate = post.publishedAt
         margin: 0 0 1rem;
     }
     .post-body :global(hr) {
-        border-color: rgba(149, 188, 204, 0.3);
+        border-color: rgba(43, 76, 89, 0.2);
         margin: 1.5rem 0;
     }
 </style>

@@ -5,9 +5,17 @@ interface Props {
     description?: string | null;
     ogImage?: string;
     canonicalUrl?: string | null;
+    /** Background/theme classes for <body>; defaults to the dark teal gradient */
+    bodyClass?: string;
 }
 
-const { title, description, ogImage, canonicalUrl } = Astro.props;
+const {
+    title,
+    description,
+    ogImage,
+    canonicalUrl,
+    bodyClass = "bg-radial from-blue-700 via-blue-700 to-blue-800",
+} = Astro.props;
 ---
 
 <html lang="en" class="test">
@@ -21,13 +29,13 @@ const { title, description, ogImage, canonicalUrl } = Astro.props;
         {ogImage && <meta property="og:image" content={ogImage} />}
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@100;400;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@100;400;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet"
         />
 
         <title>{title}</title>
     </head>
-    <body class="bg-radial min-h-full h-screen text-custom-gray font-sans from-blue-700 via-blue-700 to-blue-800">
+    <body class:list={["min-h-full h-screen text-custom-gray font-sans", bodyClass]}>
         <slot />
     </body>
 </html>

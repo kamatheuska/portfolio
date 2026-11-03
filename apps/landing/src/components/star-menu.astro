@@ -108,6 +108,22 @@ const menuItems = [
     getPlaceholderStarItem(colors.brown),
     getPlaceholderStarItem(colors.lightBlue),
     getPlaceholderStarItem(colors.lightBrown),
+    (() => {
+        const coordinates = {
+            x: getRandomNumber(30, 70),
+            y: getRandomNumber(50, 95),
+        };
+        return {
+            coordinates,
+            id: "5",
+            color: colors.lightBlue,
+            label: "Blog",
+            href: "/blog",
+            radius: getRandomNumber(5, 10),
+            left: `calc(95% - ${coordinates.x}%)`,
+            top: `calc(95% - ${coordinates.y}%)`,
+        };
+    })(),
     getPlaceholderStarItem(colors.lightBrown),
 ];
 ---
