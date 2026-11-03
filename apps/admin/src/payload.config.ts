@@ -32,6 +32,10 @@ export default buildConfig({
             scriptPath: path.resolve(dirname, "./scripts/seed-homepage-data.ts"),
             key: "seed-homepage-data",
         },
+        {
+            scriptPath: path.resolve(dirname, "./scripts/seed-posts.ts"),
+            key: "seed-posts",
+        },
     ],
     collections: [Users, Media, HomeLinks, Posts],
     globals: [Settings],
