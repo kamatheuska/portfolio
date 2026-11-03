@@ -72,6 +72,30 @@
 }
 
 /*
+ * Cross-document view transitions: both pages of a same-origin navigation
+ * opt in here, so moving between the dark teal pages and the paper-themed
+ * blog cross-fades the old page (and its background) into the new one.
+ * Unsupported browsers simply navigate without the animation.
+ */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 600ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+/*
  * "Warm paper" light theme (blog pages). Unlayered so it overrides the
  * shared components' dark-theme utility classes.
  */
