@@ -15,9 +15,11 @@ interface Props {
         x: number;
         y: number;
     };
+    animation?: "wander" | "burst";
 }
 
 const {
+    animation = "wander",
     color = "black",
     href = "/",
     isActive = false,
@@ -34,10 +36,32 @@ const outerSize = `${radius + 5}px`;
 const pulsarId = `outer-pulsar-${itemId}`;
 const containerId = `star-item-container-${itemId}`;
 const delay = getRandomNumber(0, 3000);
-const destination = {
-    x: label ? getRandomNumber(-200, -100) : getRandomNumber(-300, 300),
-    y: label ? getRandomNumber(-200, -100) : getRandomNumber(-300, 300),
-};
+const range = label ? 120 : 250;
+function getWaypoint() {
+    return {
+        x: Math.round(getRandomNumber(-range, range)),
+        y: Math.round(getRandomNumber(-range, range)),
+    };
+}
+const waypoints = Array.from({ length: Math.round(getRandomNumber(3, 4)) }, getWaypoint);
+function getRandomFloat(min: number, max: number) {
+    return Math.random() * (max - min) + min;
+}
+function getBurstDestination() {
+    const angle = getRandomFloat(0, Math.PI * 2);
+    // Far enough to always leave the viewport, so stars never visibly stop.
+    const distance = 150;
+    return {
+        x: Number((Math.cos(angle) * distance).toFixed(2)),
+        y: Number((Math.sin(angle) * distance).toFixed(2)),
+    };
+}
+const burst = getBurstDestination();
+const duration =
+    animation === "burst"
+        ? // Constant slow speed: 0.3–0.6 vmax per second.
+          Math.round((150 / getRandomFloat(0.5, 0.9)) * 1000)
+        : Math.round(getRandomNumber(30000, 45000));
 const currentLocale = Astro.currentLocale ?? "en";
 ---
 
@@ -45,8 +69,10 @@ const currentLocale = Astro.currentLocale ?? "en";
     data-pulsar-id={pulsarId}
     data-container-id={containerId}
     data-delay={delay}
-    data-destination-x={destination.x}
-    data-destination-y={destination.y}
+    data-waypoints={JSON.stringify(waypoints)}
+    data-duration={duration}
+    data-animation={animation}
+    data-burst={JSON.stringify(burst)}
     data-current-locale={currentLocale}
 >
     <div
@@ -105,10 +131,10 @@ const currentLocale = Astro.currentLocale ?? "en";
             const pulsarId = this.dataset.pulsarId;
             const delay = Number(this.dataset.delay);
             const containerId = this.dataset.containerId;
-            const destination = {
-                x: this.dataset.destinationX,
-                y: this.dataset.destinationY,
-            };
+            const duration = Number(this.dataset.duration);
+            const waypoints: { x: number; y: number }[] = JSON.parse(this.dataset.waypoints ?? "[]");
+            const animation = this.dataset.animation ?? "wander";
+            const burst: { x: number; y: number } = JSON.parse(this.dataset.burst ?? '{"x":0,"y":0}');
 
             if (!containerId || !pulsarId) return;
 
@@ -124,18 +150,35 @@ const currentLocale = Astro.currentLocale ?? "en";
                 }
 
                 // Animation using Web Animations API instead of motion library
-                const container = document.getElementById(containerId);
+                const container = this.querySelector<HTMLElement>(`#${containerId}`);
 
-                if (container) {
-                    container.animate([{ transform: `translate(${destination.x}px, ${destination.y}px)` }], {
+                if (container && animation === "burst") {
+                    container.animate(
+                        [
+                            { transform: "translate(0, 0)" },
+                            { transform: `translate(${burst.x}vmax, ${burst.y}vmax)` },
+                        ],
+                        {
+                            delay,
+                            duration,
+                            easing: "linear",
+                            fill: "forwards",
+                        },
+                    );
+                } else if (container) {
+                    const points = [{ x: 0, y: 0 }, ...waypoints, { x: 0, y: 0 }];
+                    const keyframes = points.map(point => ({
+                        transform: `translate(${point.x}px, ${point.y}px)`,
+                        easing: "ease-in-out",
+                    }));
+                    container.animate(keyframes, {
                         delay,
-                        duration: 85000,
-                        easing: "ease-out",
+                        duration,
                         iterations: Infinity,
                     });
                 }
 
-                const pulsar = document.getElementById(pulsarId);
+                const pulsar = this.querySelector<HTMLElement>(`#${pulsarId}`);
                 setTimeout(() => {
                     if (pulsar) {
                         pulsar.animate(

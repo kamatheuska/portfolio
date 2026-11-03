@@ -2,6 +2,12 @@
 import { Icon } from "astro-icon/components";
 import Button from "./button.astro";
 import StarMenu from "./star-menu.astro";
+
+interface Props {
+    starAnimation?: "wander" | "burst";
+}
+
+const { starAnimation = "wander" } = Astro.props;
 ---
 
 <div class="relative" id="starMenuContainer" :style="starMenuStyle">
@@ -26,5 +32,5 @@ import StarMenu from "./star-menu.astro";
             </Button>
         </div>
     </header>
-    <StarMenu />
+    <StarMenu animation={starAnimation} />
 </div>

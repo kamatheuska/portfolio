@@ -3,6 +3,13 @@
 import { getRandomNumber } from "../utils";
 import StarItem from "./star-item.astro";
 
+interface Props {
+    animation?: "wander" | "burst";
+}
+
+const { animation = "wander" } = Astro.props;
+const isBurst = animation === "burst";
+
 const colors = {
     lightBlue: "#95BCCC",
     pink: "#FCDCDC",
@@ -115,7 +122,7 @@ const menuItems = [
         };
         return {
             coordinates,
-            id: "5",
+            id: "10",
             color: colors.lightBlue,
             label: "Blog",
             href: "/blog",
@@ -133,8 +140,9 @@ const menuItems = [
         <div class="relative h-full w-full">
             {menuItems.map((item, index) => (
                 <StarItem
-                    top={item.top}
-                    left={item.left}
+                    top={isBurst ? "50%" : item.top}
+                    left={isBurst ? "50%" : item.left}
+                    animation={animation}
                     isActive={false}
                     radius={item.radius}
                     color={item.color}
